@@ -4,6 +4,7 @@
 	3. Lihat Service package
 	4. Ganti MODE UPDATE jika sudah terinstalasi dengan benar (ApplicationContext.xml).
 	5. NON Aktivkan INIT class InitDB ketika mode UPDATE
+	6. Username and Password Login
 	
 ### Buat Database Baru 
 	contoh: bankmegaspring	
@@ -31,3 +32,6 @@
 		dst...
 	}
 
+### Username and Password Login
+	* username : root@bankmega.com
+	* password : 12345
