@@ -5,20 +5,20 @@
 	4. Ganti MODE UPDATE jika sudah terinstalasi dengan benar (ApplicationContext.xml).
 	5. NON Aktivkan INIT class InitDB ketika mode UPDATE
 	
-## Buat Database Baru 
+### Buat Database Baru 
 	contoh: bankmegaspring	
 
-## Run Program 2x karena :
-### 1. Mode Hibernate ddl auto adalah CREATE
-### 2. masih error ketika jika hiberante tidak menemukan table yang akan di drop.
+### Run Program 2x karena :
+#### 1. Mode Hibernate ddl auto adalah CREATE
+#### 2. masih error ketika jika hiberante tidak menemukan table yang akan di drop.
 
-## Lihat Service package 
-### terdapat class iniDB pada service komponent utama untuk USER LOGIN
+### Lihat Service package 
+#### terdapat class iniDB pada service komponent utama untuk USER LOGIN
 	ini berfungsi untuk menginsert data login untuk pertama kali (HIBERNATE MODE CREATE)
 	
-## Ganti MODE UPDATE jika sudah terinstalasi dengan benar (ApplicationContext.xml).
+### Ganti MODE UPDATE jika sudah terinstalasi dengan benar (ApplicationContext.xml).
 
-##	NON Aktivkan INIT class InitDB ketika mode UPDATE 
+###	NON Aktivkan INIT class InitDB ketika mode UPDATE 
 	NON Aktivkan INIT class InitDB agar tidak terjadi duplicate key dengan marker comment, seperti berikut :
 	@PostConstruct
 	public void init(){
