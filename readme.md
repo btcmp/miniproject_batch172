@@ -1,5 +1,5 @@
 # Instalasi
-	1. Buat Database Baru
+	1. Buat Database Baru mysql : bankmegaspring 
 	2. Run Program 2x
 	3. Lihat Service package
 	4. Ganti MODE UPDATE jika sudah terinstalasi dengan benar (ApplicationContext.xml).
