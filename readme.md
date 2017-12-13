@@ -9,11 +9,11 @@
 	contoh: bankmegaspring	
 
 ### Run Program 2x karena :
-#### 1. Mode Hibernate ddl auto adalah CREATE
-#### 2. masih error ketika jika hiberante tidak menemukan table yang akan di drop.
+	1. Mode Hibernate ddl auto adalah CREATE
+	2. masih error ketika jika hiberante tidak menemukan table yang akan di drop.
 
 ### Lihat Service package 
-#### terdapat class iniDB pada service komponent utama untuk USER LOGIN
+	terdapat class iniDB pada service komponent utama untuk USER LOGIN
 	ini berfungsi untuk menginsert data login untuk pertama kali (HIBERNATE MODE CREATE)
 	
 ### Ganti MODE UPDATE jika sudah terinstalasi dengan benar (ApplicationContext.xml).
