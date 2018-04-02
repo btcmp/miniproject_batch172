@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: myremote
-Build-Jdk: 1.8.0_60
+Built-By: arrizaqu
+Build-Jdk: 10
 Created-By: Maven Integration for Eclipse
 
