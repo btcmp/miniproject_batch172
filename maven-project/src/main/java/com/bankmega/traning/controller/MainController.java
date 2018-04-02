@@ -9,10 +9,4 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/testmap")
 public class MainController {
 
-	@RequestMapping
-	@ResponseBody
-	public String index() {
-		System.out.println("working loh.. ");
-		return "ok.. jalan koq..";
-	}
 }

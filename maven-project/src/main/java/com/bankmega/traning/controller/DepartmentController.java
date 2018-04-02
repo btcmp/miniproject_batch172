@@ -2,6 +2,7 @@ package com.bankmega.traning.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bankmega.traning.dao.DepartmentDao;
 import com.bankmega.traning.model.Department;
 import com.bankmega.traning.model.Employee;
+import com.bankmega.traning.model.User;
 import com.bankmega.traning.service.DepartmentService;
 
 @Controller
@@ -28,6 +30,9 @@ public class DepartmentController {
 	@Autowired
 	DepartmentService departmentService;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
 	@ModelAttribute("deptForm")
 	public Department deptForm(){
 		return new Department();
@@ -35,6 +40,8 @@ public class DepartmentController {
 	
 	@RequestMapping
 	public String index(Model model){
+		User applicationUser =  (User) httpSession.getAttribute("application-user");
+		System.out.println("application username : "+ applicationUser.getUsername());
 		List<Department> departments = departmentService.getAllDepartments();
 		model.addAttribute("departments", departments);
 		return "department";

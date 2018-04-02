@@ -13,10 +13,16 @@
 		<property name="prefix">
 			<value>/WEB-INF/pages/</value>
 		</property>
+		<property name="order" value="2"></property>
 		<property name="suffix">
 			<value>.jsp</value>
 		</property>
 	</bean>
+	 <bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		  <property name="order" value="1"></property>
+		  <property name="basename" value="views"></property>
+	  </bean>
 
 	<mvc:annotation-driven>
 	  <mvc:message-converters>

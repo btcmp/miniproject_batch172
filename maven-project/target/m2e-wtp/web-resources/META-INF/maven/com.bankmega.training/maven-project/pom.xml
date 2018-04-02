@@ -264,7 +264,24 @@
 	    <groupId>org.hibernate</groupId>
 	    <artifactId>hibernate-validator</artifactId>
 	    <version>4.0.2.GA</version>
-	</dependency>	
+	</dependency>
+	<!-- export -->
+	<!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+	<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.14</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.9</version>
+		</dependency>		
   </dependencies>
   <build>
     <finalName>maven-project</finalName>
