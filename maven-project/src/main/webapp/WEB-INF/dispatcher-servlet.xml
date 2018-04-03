@@ -13,7 +13,6 @@
 		<property name="prefix">
 			<value>/WEB-INF/pages/</value>
 		</property>
-		<property name="order" value="2"></property>
 		<property name="suffix">
 			<value>.jsp</value>
 		</property>
