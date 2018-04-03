@@ -8,7 +8,6 @@
 /home/arrizaqu/git/example-spring/maven-project/src/main/java/com/bankmega/traning/dao/UserDao.java
 /home/arrizaqu/git/example-spring/maven-project/src/main/java/com/bankmega/traning/dao/DepartmentDaoImpl.java
 /home/arrizaqu/git/example-spring/maven-project/src/main/java/com/bankmega/traning/service/UserAccountService.java
-/home/arrizaqu/git/example-spring/maven-project/src/main/java/com/bankmega/traning/controller/PDFController.java
 /home/arrizaqu/git/example-spring/maven-project/src/main/java/com/bankmega/traning/service/InitDB.java
 /home/arrizaqu/git/example-spring/maven-project/src/main/java/com/bankmega/traning/controller/EmployeeController.java
 /home/arrizaqu/git/example-spring/maven-project/src/main/java/com/bankmega/traning/controller/DepartmentController.java
