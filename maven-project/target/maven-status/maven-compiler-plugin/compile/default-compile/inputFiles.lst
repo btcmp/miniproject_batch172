@@ -13,10 +13,13 @@ C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\dao\RoleDaoImpl.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\controller\MasterUnitController.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\controller\SuccessAuthListener.java
+C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\dao\MasterProductDaoImpl.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\controller\ControllerTheme.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\dao\RoleDao.java
+C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\model\MasterProduct.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\dao\DepartmentDao.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\dao\UserDaoImpl.java
+C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\service\MasterProductService.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\export\DepartmentXlsView.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\dao\MasterUnitDao.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\model\MasterUnit.java
@@ -25,6 +28,8 @@ C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\controller\DepartmentController.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\controller\Main.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\dao\UserDao.java
+C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\dao\MasterProductDao.java
+C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\marcomm\controller\MasterProductController.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\dao\EmployeeDaoImpl.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\dao\DepartmentDaoImpl.java
 C:\Users\Irman\git\miniproject_batch172\maven-project\src\main\java\com\bankmega\traning\model\User.java
