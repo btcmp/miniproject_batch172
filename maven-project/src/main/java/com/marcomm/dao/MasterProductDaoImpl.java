@@ -54,7 +54,7 @@ public class MasterProductDaoImpl implements MasterProductDao{
 					String endCode = prefix+String.format("%04d",increment);
 					System.out.println(prefix);
 					System.out.println(angka);
-					System.out.println(endCode);
+					System.out.println(endCode); 
 					return endCode;
 				}
 				
