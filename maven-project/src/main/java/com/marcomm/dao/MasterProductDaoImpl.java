@@ -2,6 +2,7 @@ package com.marcomm.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,12 @@ public class MasterProductDaoImpl implements MasterProductDao{
 	SessionFactory sessionFactory;	
 	
 	public void save(MasterProduct masterProduct) {
+		String hql = "INSERT INTO MasterProduct(code, name, description,createdBy,createdDate,updatedBy,updatedDate)";
 		Session session = sessionFactory.getCurrentSession();
-		session.save(masterProduct);
+		
+		Query query = session.createQuery(hql); 
+		int result = query.executeUpdate();
+		System.out.println("Rows affected: " + result);
 	}
 
 	public List<MasterProduct> getAll(MasterProduct masterProduct) {
