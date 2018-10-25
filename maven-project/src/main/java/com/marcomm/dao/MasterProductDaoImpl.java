@@ -1,5 +1,6 @@
 package com.marcomm.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -17,12 +18,11 @@ public class MasterProductDaoImpl implements MasterProductDao{
 	SessionFactory sessionFactory;	
 	
 	public void save(MasterProduct masterProduct) {
-		String hql = "INSERT INTO MasterProduct(code, name, description,createdBy,createdDate,updatedBy,updatedDate)";
+		masterProduct.setCreatedBy("Admin");
+		Date now = new Date();
+		masterProduct.setCreatedDate(now);
 		Session session = sessionFactory.getCurrentSession();
-		
-		Query query = session.createQuery(hql); 
-		int result = query.executeUpdate();
-		System.out.println("Rows affected: " + result);
+		session.saveOrUpdate(masterProduct);
 	}
 
 	public List<MasterProduct> getAll(MasterProduct masterProduct) {

@@ -66,6 +66,26 @@ $(document).ready(function(){
 		 
 		$('#addProductModal').modal();
 	 });
+	$('#addBtnModal').on('click', function(){
+		var product = {
+				code : $('#productcode').val(),
+				name : $('#productname').val(),
+				description : $('#description').val()
+		}
+		$.ajax({
+			url : '${pageContext.request.contextPath}/product/save',
+			type : 'POST',
+			contentType : 'application/json',
+			data : JSON.stringify(product),
+			success : function(data){
+				console.log("data telah disimpan");
+				$('#addProductModal').modal('hide');
+			},
+			error : function(){
+				console.log("data error");
+			}
+		});
+	});
 })
 	
 </script>
