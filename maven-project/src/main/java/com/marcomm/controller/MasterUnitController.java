@@ -21,7 +21,7 @@ public class MasterUnitController {
 	@Autowired
 	MasterUnitService masterUnitService;
 	 
-	//Welcome
+	//Welcome Mesage
 	@RequestMapping
 	@ResponseBody
 	public String index() {
