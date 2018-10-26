@@ -17,23 +17,18 @@ public class MasterProduct {
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int id;
-	@Column(unique=true)
-	//@NotEmpty
+	@Column(unique=true,nullable=false)
 	private String code;
-	@Column(name="name",unique=true)
-	//@NotEmpty
+	@Column(name="name",nullable=false)
 	private String name;
 	@Column(name="description")
 	private String description;
-	@Column(name="is_delete",columnDefinition="number(1,0) default 0")
-	//@NotEmpty
+	@Column(name="is_delete",columnDefinition="number(1,0) default 0",nullable=false)
 	private boolean isDelete;
-	@Column(name="created_by")
-	//@NotEmpty
+	@Column(name="created_by",nullable=false)
 	private String createdBy;
-	@Column(name="created_date")
+	@Column(name="created_date",nullable=false)
 	@Temporal(TemporalType.DATE)
-	//@NotEmpty
 	private Date createdDate;
 	@Column(name="updated_by")
 	private String updatedBy;
