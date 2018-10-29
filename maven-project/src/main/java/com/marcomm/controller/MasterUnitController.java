@@ -1,6 +1,6 @@
 package com.marcomm.controller;
 
-import java.util.Date;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,21 +21,17 @@ public class MasterUnitController {
 	@Autowired
 	MasterUnitService masterUnitService;
 	 
-	//coba lagi ya  push 
+	//Welcome Mesage
 	@RequestMapping
 	@ResponseBody
 	public String index() {
-		return "Selamat Datang !!";
+		return "Selamat Datang Admin :) !!";
 	} 
 	
 	//save data
 	@RequestMapping(value = "/save", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveMasterUnit(@RequestBody MasterUnit masterUnit) {
-		//set date
-		Date date = new Date();
-		masterUnit.setCreatedDate(date);
-		masterUnit.setUpdatedDate(date);
 		masterUnitService.saveMasterUnit(masterUnit);
 	}
 }

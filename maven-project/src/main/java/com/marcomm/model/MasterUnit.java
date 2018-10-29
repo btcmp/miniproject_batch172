@@ -17,35 +17,25 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class MasterUnit {
 	//id
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	//code --->baca dulu tentang hql
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@NotNull
-	@NotEmpty
 	private String code;
 	//name
-	@Column(length=50)
-	@NotNull
-	@NotEmpty
+	@Column(length=50, nullable=false, unique=true)
 	private String name;
 	//description
 	@Column
 	private String description;
 	//isDelete
-	@Column(name="is_delete")
-	@NotNull
-	@NotEmpty
+	@Column(name="is_delete", nullable=false)
 	private boolean isDelete;
 	//created by
-	@Column(name="created_by", length=50)
-	@NotNull
-	@NotEmpty
+	@Column(name="created_by", length=50, nullable=false)
 	private String createdBy;
 	//created date
-	@Column(name="created_date")
-	@NotNull
-	@NotEmpty
+	@Column(name="created_date", nullable=false)
 	private Date createdDate;
 	//updated by
 	@Column(name="updated_by", length=50)
@@ -56,6 +46,7 @@ public class MasterUnit {
 	
 	
 	/* SETTER DAN GETTER */
+	
 	public int getId() {
 		return id;
 	}
