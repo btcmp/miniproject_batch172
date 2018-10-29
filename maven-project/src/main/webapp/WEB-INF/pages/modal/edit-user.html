@@ -1,0 +1,122 @@
+<div class="modal fade bd-example-modal-lg" id="editUserModal"
+	tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+	aria-hidden="true">
+
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div
+				class="modal-header bg-primary text-white border border-bottom-0 border-dark">
+				<h5 class="modal-title" id="addProductModalTitle">Tambah User</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div
+				class="modal-body border border-bottom-0 border-top-0 border-dark">
+
+
+
+
+
+				<form>
+					<input type="hidden" id="EditId"/>
+					<!-- <input type="hidden" id="EditCreatedDate"/> -->
+					<input type="hidden" id="EditCreatedBy"/>
+					 
+					<div class="row">
+
+						<div class="col">
+							<div class="form-group row">
+								<label for="employeeEdit" class="col-sm-3 col-form-label">
+									Employee </label>
+								<div class="col-sm-9">
+
+									<select class="custom-select" id="employeeEdit">
+										<option selected>Choose...</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+									</select>
+
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col">
+							<div class="form-group row">
+								<label for="usernameEdit" class="col-sm-4 col-form-label">
+									User Name </label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="usernameEdit"
+										placeholder="User name...">
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="form-group row">
+								<label for="roleEdit" class="col-sm-3 col-form-label"> Role</label>
+								<div class="col-sm-9">
+									<select class="custom-select" id="roleEdit">
+										<option selected>Choose...</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+									</select>
+
+								</div>
+
+							</div>
+
+						</div>
+						<div class="col">
+							<div class="form-group row">
+								<label for="passwordEdit" class="col-sm-4 col-form-label">
+									Password </label>
+								<div class="col-sm-8">
+									<input id="passwordEdit" type="password" class="form-control"
+										name="password" placeholder="pass">
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="row justify-content-end">
+
+						<div class="col-8">
+							<div class="form-group row">
+								<label for="rpassword" class="col-sm-4 col-form-label">
+									Re-type Password:</label>
+								<div class="col-sm-8">
+									<input id="rpasswordEdit" type="password" class="form-control"
+										name="rpassword" placeholder="re-type pass">
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					
+					
+					
+ 				</form>
+			</div>
+			<div class="modal-footer border border-top-0 border-dark">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="editButnModal">Edit
+					User</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+ 

@@ -30,7 +30,7 @@
 				<value>com.bankmega.traning.model.Department</value>
 				<value>com.marcomm.model.MasterUnit</value>
 				<value>com.marcomm.model.MasterProduct</value>
-
+				<value>com.marcomm.model.MasterUser</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
