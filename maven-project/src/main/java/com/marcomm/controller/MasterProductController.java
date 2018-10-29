@@ -52,7 +52,11 @@ public class MasterProductController {
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteProduct(@RequestBody MasterProduct masterProduct) {
-		System.out.println(masterProduct);
 		productService.delete(masterProduct);
+	}
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void updateProduct(@RequestBody MasterProduct masterProduct) {
+		productService.update(masterProduct);
 	}
 }

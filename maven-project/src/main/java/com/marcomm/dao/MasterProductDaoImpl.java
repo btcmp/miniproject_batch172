@@ -53,8 +53,12 @@ public class MasterProductDaoImpl implements MasterProductDao{
 	}
 
 	public void update(MasterProduct masterProduct) {
-		// TODO Auto-generated method stub
-		
+		// TODO update
+		masterProduct.setUpdatedBy("Admin");
+		Date now = new Date();
+		masterProduct.setUpdatedDate(now);
+		Session session = sessionFactory.getCurrentSession();
+		session.update(masterProduct);
 	}
 
 	public String getCodeById() {

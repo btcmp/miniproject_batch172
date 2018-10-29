@@ -9,10 +9,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link href="${pageContext.request.contextPath}/resources/assets/css/dashboard.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 </head>
 <body>
 	<div class="container-fluid">
@@ -36,7 +35,7 @@
 					</div>
 			</nav><!-- END DASHBOARD -->
 			<div role="main" class="col-md-9 ml-sm-auto col-lg-10">
-				<div class="card text-white bg-primary mb-3" style="width: 100%;">
+				<div class="card text-white bg-primary mb-3">
 					<div class="card-header">List Company</div>
 				</div>
 				<nav aria-label="breadcrumb">
@@ -46,34 +45,65 @@
 						<li class="breadcrumb-item active" aria-current="page">Data</li>
 					</ol>
 				</nav>
-				<div class="row d-flex justify-content-end" style="float:right;padding-bottom:10px;">
-			<div class="col">
-				<button class="btn btn-primary" id="addBtn" type="submit" style="width:100px;">Add</button>
-			</div>
-		</div>
+<!-- 				<div class="row d-flex justify-content-end" style="float:right;padding-bottom:10px;"> -->
+<!-- 			<div class="col"> -->
+<!-- 				<button class="btn btn-primary" id="addBtn" type="submit" style="width:100px;">Add</button> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 		
-			<div class="row d-flex justify-content-end" style="width: 100%; margin : auto; padding-bottom:10px;">
-					<form class="form-inline">
-						<div class="col">
-							<input type="text" class="form-control"
-								placeholder="Select Product Code" style="padding-right:30px;">
-						</div>
-						<div class="col">
-							<input type="text" class="form-control"
-								placeholder="Select Product Name" style="padding-right:30px;">
-						</div>
-						<div class="col">
-							<input type="text" class="form-control"
-								placeholder="Created Date" style="padding-right:30px;">
-						</div>
-						<div class="col">
-							<input type="text" class="form-control" placeholder="Created By" style="padding-right:30px;">
-						</div>
-						<a class="btn btn-warning" id="searchBtn" href="#" style="width:100px;">Search</a>
-					</form>
-				</div>
-		
-				<table id="productTable" class="table">
+<!-- 			<div class="row d-flex justify-content-end" style="width: 100%; margin : auto; padding-bottom:10px;"> -->
+<!-- 					<form class="form-inline" id="tb-input"> -->
+<!-- 						<div class="col"> -->
+<!-- 							<input type="text" class="form-control column_filter" -->
+<!-- 								placeholder="Product Code" id="code" name="data1" data='1' style="padding-right:10px;"> -->
+<!-- 						</div> -->
+<!-- 						<div class="col"> -->
+<!-- 							<input type="text" class="form-control column_filter" -->
+<!-- 								placeholder="Product Name" id="data2" data='2' style="padding-right:10px;"> -->
+<!-- 						</div> -->
+<!-- 						<div class="col"> -->
+<!-- 							<input type="text" class="form-control" -->
+<!-- 								placeholder="Description" id="searchDesc" style="padding-right:10px;"> -->
+<!-- 						</div> -->
+<!-- 						<div class="col"> -->
+<!-- 							<input type="text" class="form-control" -->
+<!-- 								placeholder="Created By" id="searchCreatedBy" -->
+<!-- 								style="padding-right:10px;width:100px;"> -->
+<!-- 						</div> -->
+<!-- 						<div class="col"> -->
+<!-- 							<input type="text" id="createdDate" class="form-control" placeholder="Created Date" id="searchCreatedDate" style="padding-right:10px;width:120px;"> -->
+<!-- 						</div> -->
+<!-- 						<a class="btn btn-warning" id="searchBtn" href="#" style="width:100px;">Search</a> -->
+<!-- 					</form> -->
+<!-- 				</div> -->
+				<table id="inputTable" class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th><button class="btn btn-primary" id="addBtn" type="submit" style="width:100px;">Add</button></th>
+					</tr>
+					<tr>
+						<th></th>
+						<th><input type="text" class="form-control column_filter"
+								placeholder="Product Code" id="code" name="data1" data='1' style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control column_filter"
+								placeholder="Product Name" id="data2" data='2' style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control"
+								placeholder="Description" id="searchDesc" style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control"
+								placeholder="Created By" id="searchCreatedBy"
+								style="padding-right:10px;width:100px;"></th>
+						<th><input type="text" id="createdDate" class="form-control" placeholder="Created Date" id="searchCreatedDate" style="padding-right:10px;width:120px;"></th>
+						<th><a class="btn btn-warning" id="searchBtn" href="#" style="width:100px;">Search</a></th>
+					</tr>
+				</thead>
+				</table>
+				<table id="productTable" class="table DataTable">
 				<thead class="thead-light">
 					<tr>
 						<th>No.</th>
@@ -93,6 +123,7 @@
 	<%@include file="/WEB-INF/pages/modal/add-product.html"%>
 	<%@include file="/WEB-INF/pages/modal/delete-product.html"%>
     <%@include file="/WEB-INF/pages/modal/view-product.html"%>
+    <%@include file="/WEB-INF/pages/modal/update-product.html"%>
 	</div>
 	
 </body>
@@ -111,11 +142,18 @@
 <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-notify.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
 <!-- Material Dashboard javascript methods -->
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	//datepicker
+	$('#createdDate').datepicker();
 	loadData();
+	//search
+	
+	//view
 	$(document).on('click','.btn-view-product',function(){
 								var id = $(this).attr('id');
 								$.ajax({
@@ -131,6 +169,52 @@ $(document).ready(function(){
 								});
 								$('#viewProductModal').modal();
 							});
+	//update
+	$(document).on('click','.btn-update-product',function(){
+								var id = $(this).attr('id');
+								$.ajax({
+									url :'${pageContext.request.contextPath}/product/getbyid/'+id,
+									type:'GET',
+									success: function(data){
+										$('#idUpdate').val(data.id);
+										$('#codeUpdate').val(data.code);
+										$('#nameUpdate').val(data.name);
+										$('#descUpdate').val(data.description);
+										$('#crUpdate').val(data.createdBy);
+										$('#dateUpdate').val(data.createdDate);
+									},
+									dataType:'json'
+								});
+								$('#updateProductModal').modal();
+	});
+	$('#updateBtnModal').click(function(){
+		var validate = $('#updateForm').parsley();
+    	if(validate.validate()){  
+		var product ={
+				id:parseInt($('#idUpdate').val()),
+				code:$('#codeUpdate').val(),
+				name:$('#nameUpdate').val(),
+				description:$('#descUpdate').val(),
+				'delete' : false,
+				createdBy:$('#crUpdate').val(),
+				createdDate:$('#dateUpdate').val()
+		}
+		$.ajax({
+			url :'${pageContext.request.contextPath}/product/update',
+			type:'POST',
+			contentType:'application/json',
+			data:JSON.stringify(product),
+			success:function(data){
+				loadData();
+				$('#updateProductModal').modal('hide');
+				
+			},
+			error : function(){
+				console.log("data error");
+			}
+		});
+    	}
+	});
 	//delete product
 	$(document).on('click','.btn-delete-product',function(){
 								var id = $(this).attr('id');
@@ -151,7 +235,7 @@ $(document).ready(function(){
 								});
 								$('#deleteProductModal').modal();
 							});
-	$('#btnDelete').click(function(){	
+	$('#btnDeleteModal').click(function(){
 		var product ={
 				id:parseInt($('#idDelete').val()),
 				code:$('#codeDelete').val(),
@@ -177,8 +261,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
-	
 	//get code send to modal
 	$(document).on('click','#addBtn',function(){
 		 $.ajax({
@@ -230,6 +312,7 @@ $(document).ready(function(){
 			success : function(data){
 				console.log("data telah disimpan");
 				convertToTable(data);
+				
 			},
 			error : function(){
 				console.log("data error");
@@ -239,40 +322,65 @@ $(document).ready(function(){
 	}
 	//convert to table
 	function convertToTable(data){
-		var oTable = $('#productTable');
-		var tBody = oTable.find('tBody');
-		tBody.find('tr').remove();
-		$.each(data,function(index,product){
+		if ( $.fn.dataTable.isDataTable( '#productTable' ) ) {
+		    oTable = $('#productTable').DataTable();
+		}
+		else {
+			oTable = $('#productTable').DataTable({
+				"searching": false,
+				'sDom':'tip',
+				'ordering':false
+			});
+		}
+		 $( '#inputTable thead'  ).on( 'keyup', "#searchBtn",function () {
+			   
+		        oTable
+		            .column(1)
+		            .search($("#data"+i).val() )
+		            .draw();
+		    } );
+// 		var tBody = oTable.find('tBody');
+// 		tBody.find('tr').remove();
+		oTable.rows( 'tr' ).remove();
+		$.each(data,function(index,product){	
 			index++;
-			var tRow = '<tr>';
-			tRow +='<td>';
-			tRow +=index;
-			tRow +='</td>';
-			tRow +='<td>';
-			tRow +=product.code;
-			tRow +='</td>';
-			tRow +='<td>';
-			tRow +=product.name;
-			tRow +='</td>';
-			tRow +='<td>';
-			tRow +=product.description;
-			tRow +='</td>';
-			tRow +='<td>';
-			tRow +=product.createdBy;
-			tRow +='</td>';
-			tRow +='<td>';
-			tRow +=product.createdDate;
-			tRow +='</td>';
-			tRow +='<td>';
-			tRow +='<a id="'+product.id+'" href="#" class="btn btn-warning btn-edit-product" style="color: #e01616;">E</a>';
+			var tRow ='<a id="'+product.id+'" href="#" class="btn btn-warning btn-update-product" style="color: #e01616;">E</a>';
 			tRow +=' ';
 			tRow +='<a id="'+product.id+'" href="#" class="btn btn-warning btn-view-product" style="color: #e01616;">V</a>';
 			tRow +=' ';
 			tRow +='<a id="'+product.id+'" href="#" class="btn btn-warning btn-delete-product" style="color: #e01616;">D</a>';
-			tRow +='</td>';
-			tRow +='</tr>';
-			tBody.append(tRow);
+			oTable.row.add([index,product.code,product.name,product.description,product.createdBy,product.createdDate,tRow]);
+
+// 			var tRow = '<tr>';
+// 			tRow +='<td>';
+// 			tRow +=index;
+// 			tRow +='</td>';
+// 			tRow +='<td>';
+// 			tRow +=product.code;
+// 			tRow +='</td>';
+// 			tRow +='<td>';
+// 			tRow +=product.name;
+// 			tRow +='</td>';
+// 			tRow +='<td>';
+// 			tRow +=product.description;
+// 			tRow +='</td>';
+// 			tRow +='<td>';
+// 			tRow +=product.createdBy;
+// 			tRow +='</td>';
+// 			tRow +='<td>';
+// 			tRow +=product.createdDate;
+// 			tRow +='</td>';
+// 			tRow +='<td>';
+// 			tRow +='<a id="'+product.id+'" href="#" class="btn btn-warning btn-edit-product" style="color: #e01616;">E</a>';
+// 			tRow +=' ';
+// 			tRow +='<a id="'+product.id+'" href="#" class="btn btn-warning btn-view-product" style="color: #e01616;">V</a>';
+// 			tRow +=' ';
+// 			tRow +='<a id="'+product.id+'" href="#" class="btn btn-warning btn-delete-product" style="color: #e01616;">D</a>';
+// 			tRow +='</td>';
+// 			tRow +='</tr>';
+// 			tBody.append(tRow);
 		});
+		oTable.draw();
 	}
 })
 	
