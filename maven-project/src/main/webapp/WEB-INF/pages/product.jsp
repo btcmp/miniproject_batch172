@@ -6,72 +6,132 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Product</title>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link href="${pageContext.request.contextPath}/resources/assets/css/dashboard.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
 </head>
 <body>
-	<div id="container" style="width: 90%; margin: auto">
-		<!-- start navbar -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-			<a class="navbar-brand" href="#">MARCOMM172</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-item nav-link active" href="#">Home</a> <a
-						class="nav-item nav-link" href="#">Product</a> <a
-						class="nav-item nav-link" href="#">Logout</a>
+	<div class="container-fluid">
+		<div class="row">
+		<!-- DASHBOARD -->
+			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link active" href="#">
+								 Dashboard
+								<span class="sr-only">(current)</span>
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="#"> Master
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">
+								Products
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="#"> Transaction	
+						</a></li>
+					</ul>
+					</div>
+			</nav><!-- END DASHBOARD -->
+			<div role="main" class="col-md-9 ml-sm-auto col-lg-10">
+				<div class="card text-white bg-primary mb-3" style="width: 100%;">
+					<div class="card-header">List Company</div>
 				</div>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item"><a href="#">Library</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Data</li>
+					</ol>
+				</nav>
+				<div class="row d-flex justify-content-end" style="float:right;padding-bottom:10px;">
+			<div class="col">
+				<button class="btn btn-primary" id="addBtn" type="submit" style="width:100px;">Add</button>
 			</div>
-			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search">
-				<button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
-		</nav>
-		<!-- end navbar -->
-		<!-- start add and search button -->
-		<div class="row" style="height: 50px;"></div>
-		<div class="row justify-content-md-end" style="padding-bottom:10px">
-			<button type="button" class="btn btn-primary"
-				id="addBtn" style="width:80px">Add</button>
 		</div>
-		<div class="row justify-content-md-end" style="padding-bottom:10px">
-			<button type="button" class="btn btn-primary" data-toggle="modal"
-				data-target="#searchProductModal" style="width:80px">Search</button>
+		
+			<div class="row d-flex justify-content-end" style="width: 100%; margin : auto; padding-bottom:10px;">
+					<form class="form-inline">
+						<div class="col">
+							<input type="text" class="form-control"
+								placeholder="Select Product Code" style="padding-right:30px;">
+						</div>
+						<div class="col">
+							<input type="text" class="form-control"
+								placeholder="Select Product Name" style="padding-right:30px;">
+						</div>
+						<div class="col">
+							<input type="text" class="form-control"
+								placeholder="Created Date" style="padding-right:30px;">
+						</div>
+						<div class="col">
+							<input type="text" class="form-control" placeholder="Created By" style="padding-right:30px;">
+						</div>
+						<a class="btn btn-warning" id="searchBtn" href="#" style="width:100px;">Search</a>
+					</form>
+				</div>
+		
+				<table id="productTable" class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>No.</th>
+						<th>Product Code</th>
+						<th>Product Name</th>
+						<th>Description</th>
+						<th>Created By</th>
+						<th>Created Date</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			</div>
 		</div>
-		<!-- end of add and search button -->
-		<hr />
-		<table id="productTable" class="table">
-			<thead class="thead-light">
-				<tr>
-					<th>No.</th>
-					<th>Product Code</th>
-					<th>Product Name</th>
-					<th>Description</th>
-					<th>Created By</th>
-					<th>Created Date</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-	</div>
 	<%@include file="/WEB-INF/pages/modal/add-product.html"%>
 	<%@include file="/WEB-INF/pages/modal/delete-product.html"%>
+    <%@include file="/WEB-INF/pages/modal/view-product.html"%>
+	</div>
+	
 </body>
+<!--   Core JS Files   -->
+<script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<!--  Charts Plugin -->
+<script src="${pageContext.request.contextPath}/resources/assets/js/chartist.min.js"></script>
+<!--  Dynamic Elements plugin -->
+<script src="${pageContext.request.contextPath}/resources/assets/js/arrive.min.js"></script>
+<!--  PerfectScrollbar Library -->
+<script src="${pageContext.request.contextPath}/resources/assets/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script>
+<!--  Notifications Plugin    -->
+<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-notify.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
+<!-- Material Dashboard javascript methods -->
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	loadData();
+	$(document).on('click','.btn-view-product',function(){
+								var id = $(this).attr('id');
+								$.ajax({
+									url : '${pageContext.request.contextPath}/product/getbyid/'+id,
+									type : 'GET',
+									success : function(data) {
+										$('#codeView').val(data.code);
+										$('#nameView').val(data.name);
+										$('#descView').val(data.description);
+										console.log(data);
+									},
+									dataType : 'json'
+								});
+								$('#viewProductModal').modal();
+							});
 	//delete product
-	
 	$(document).on('click','.btn-delete-product',function(){
 								var id = $(this).attr('id');
 								$.ajax({
@@ -97,7 +157,7 @@ $(document).ready(function(){
 				code:$('#codeDelete').val(),
 				name:$('#nameDelete').val(),
 				description:$('#descDelete').val(),
-				delete : true,
+				'delete' : true,
 				createdBy:$('#crDelete').val(),
 				createdDate:$('#dateDelete').val()
 		}
@@ -120,7 +180,7 @@ $(document).ready(function(){
 	
 	
 	//get code send to modal
-	$("#addBtn").on('click', function(){
+	$(document).on('click','#addBtn',function(){
 		 $.ajax({
 			 url : '${pageContext.request.contextPath}/product/getcode',
 			 type: 'GET',
@@ -129,33 +189,39 @@ $(document).ready(function(){
 			 },
 			 dataType: 'json'
 		 })
-		 
+ 	   	$('#productname').removeClass('is-invalid')
+ 	   	
 		$('#addProductModal').modal();
 	 });
-	$('#addBtnModal').on('click', function(){
-		var product = {
-				code : $('#productcode').val(),
-				name : $('#productname').val(),
-				description : $('#description').val()
-		}
-		$.ajax({
-			url : '${pageContext.request.contextPath}/product/save',
-			type : 'POST',
-			contentType : 'application/json',
-			data : JSON.stringify(product),
-			success : function(data){
-				console.log("data telah disimpan");
-				loadData();
-				$('#addProductModal').modal('hide');
-				$('#productcode').val("");
-				$('#productname').val("");
-				$('#description').val("");
-			},
-			error : function(){
-				console.log("data error");
-			}
-		});
-	});
+	//validasi
+ 	$('#addBtnModal').on('click', function(){
+ 		//Fetch form to apply custom Bootstrap validation
+ 	    var validate = $('#addForm').parsley();
+    	if(validate.validate()){    		
+    		var product = {
+    				code : $('#productcode').val(),
+    				name : $('#productname').val(),
+    				description : $('#description').val()
+    			}
+    		$.ajax({
+    			url : '${pageContext.request.contextPath}/product/save',
+    			type : 'POST',
+    			contentType : 'application/json',
+    			data : JSON.stringify(product),
+    			success : function(data){
+    				console.log("data telah disimpan");
+    				loadData();
+    				$('#addProductModal').modal('hide');
+    				$('#productcode').val("");
+    				$('#productname').val("");
+    				$('#description').val("");
+    			},
+    			error : function(){
+    				console.log("data error");
+    			}
+    		});	
+ 	    }
+ 	});
 	//Load Data
 	function loadData(){
 		$.ajax({
