@@ -31,6 +31,7 @@
 				<value>com.marcomm.model.MasterUnit</value>
 				<value>com.marcomm.model.MasterProduct</value>
 				<value>com.marcomm.model.MasterUser</value>
+				<value>com.marcomm.model.Company</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

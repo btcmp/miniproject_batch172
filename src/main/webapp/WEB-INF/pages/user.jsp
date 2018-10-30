@@ -40,7 +40,7 @@
 		<div class="row" style="height: 50px;"></div>
 				<div class="row" style="float:right; padding-bottom:10px; padding-top:10px">
 			<div class="col">
-				<a class="btn btn-primary" id="btn-add" href="#">Add</a>
+				<a class="btn btn-primary" id="addBtn" href="#">Add</a>
 			</div>
 		</div> 
 
