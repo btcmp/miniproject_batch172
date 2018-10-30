@@ -72,7 +72,6 @@ public class InitDB {
 	public String encodePassword(String pass){
 		BCryptPasswordEncoder passwordEncode = new BCryptPasswordEncoder();
 		String thePassword = passwordEncode.encode(pass);
-		
 		return thePassword;
 	}
 	

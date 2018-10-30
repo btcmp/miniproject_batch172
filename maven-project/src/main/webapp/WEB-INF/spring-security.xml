@@ -8,13 +8,15 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<http auto-config="true" use-expressions="true">	
-		<intercept-url pattern="/dashboard**" access="isAuthenticated()"/>
-		<intercept-url pattern="/account/**" access="isAuthenticated()"/>
-		<intercept-url pattern="/employee/**" access="hasRole('ROLE_ADMIN') and hasRole('ROLE_STAFF')"/>
-		<intercept-url pattern="/department/**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/user/**" access="hasRole('1')"/>
+		<intercept-url pattern="/product/**" access="hasRole('1')"/>
+		<intercept-url pattern="/unit/**" access="hasRole('1')"/>
+		<intercept-url pattern="/menu/**" access="hasRole('1')"/>
+		<intercept-url pattern="/menuaccess/**" access="hasRole('1')"/>
+		<intercept-url pattern="/company/**" access="hasRole('1')"/>
 		<form-login
 		    login-page="/login"
-		    default-target-url="/dashboard"
+		    default-target-url="/user"
 			authentication-failure-url="/login?error"
 			username-parameter="username"
 			password-parameter="password" />
@@ -37,15 +39,12 @@
 			<password-encoder hash="bcrypt" />
 			<jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query=
-					"select username,password, enabled from users where username=?"
+					"select username,password from m_users where username=?"
 				authorities-by-username-query=
 					"select 
 					  au.username, 
-					  r.role_name FROM user_roles ur
-					inner join users au
-					on ur.user_id = au.id
-					inner join role r
-					on ur.role_id = r.id where au.username = ? " />
+					  au.m_role_id FROM m_user au
+					  where au.username = ? " />
 		</authentication-provider>
 	</authentication-manager>
 </beans:beans>

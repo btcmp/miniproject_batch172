@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterUser;
+import com.marcomm.service.InitDBMarcom;
 
 @Repository
 public  class MasterUserDaoImpl implements MasterUserDao{
@@ -29,6 +30,7 @@ public  class MasterUserDaoImpl implements MasterUserDao{
 		masterUser.setCreatedBy("admin");
 		masterUser.setUpdatedBy("admin");
 		masterUser.setIsDelete(0);
+		masterUser.setPassword(InitDBMarcom.encodePassword(masterUser.getPassword()));
 		Session session= sessionFactory.getCurrentSession();
 		session.save(masterUser);
 	}
@@ -65,6 +67,7 @@ public  class MasterUserDaoImpl implements MasterUserDao{
 		masterUser.setCreatedDate(date);
 		masterUser.setUpdatedBy("admin");
 		masterUser.setIsDelete(0);
+		masterUser.setPassword(InitDBMarcom.encodePassword(masterUser.getPassword()));
 		Session session=sessionFactory.getCurrentSession();
 		session.update(masterUser);
 	}

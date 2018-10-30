@@ -16,7 +16,7 @@
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper">
 					<div class="brand">
-						<img src="${pageContext.request.contextPath}/resources/assets/login/img/logo.jpg">
+					<%-- 	<img src="${pageContext.request.contextPath}/resources/assets/login/img/logo.jpg"> --%>
 					</div>
 					<div class="card fat">
 						<div class="card-body">
@@ -25,9 +25,9 @@
 							<form name='loginForm' action="<c:url value='j_spring_security_check' />" method="POST">
 							 
 								<div class="form-group">
-									<label for="email">E-Mail Address</label>
+									<label for="username">UserName Address</label>
 
-									<input id="email" type="email" class="form-control" name="username" value="" required autofocus>
+									<input id="text" type="text" class="form-control" name="username" value="" required autofocus>
 								</div>
 
 								<div class="form-group">
