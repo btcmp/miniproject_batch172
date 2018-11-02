@@ -3,7 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.bankmega.training</groupId>
   <artifactId>maven-project</artifactId>
-  <packaging>war</packaging>
+  <packaging>war</packaging> 
+  
   <version>0.0.1-SNAPSHOT</version>
   <name>maven-project Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -11,7 +12,7 @@
   		<org.springframework.security.version>3.2.3.RELEASE</org.springframework.security.version>
 		<org.springframework.version>4.2.6.RELEASE</org.springframework.version>
 	</properties>
-  <dependencies>
+  <dependencies> 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
