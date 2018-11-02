@@ -16,21 +16,22 @@ import javax.persistence.TemporalType;
 public class MasterProduct {
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Column(columnDefinition="number(11)")
 	private int id;
-	@Column(unique=true,nullable=false)
+	@Column(unique=true,nullable=false,length=50)
 	private String code;
-	@Column(name="name",nullable=false)
+	@Column(name="name",nullable=false,length=50)
 	private String name;
-	@Column(name="description")
+	@Column(name="description",length=255)
 	private String description;
 	@Column(name="is_delete",columnDefinition="number(1,0) default 0",nullable=false)
 	private boolean isDelete;
-	@Column(name="created_by",nullable=false)
+	@Column(name="created_by",nullable=false,length=50)
 	private String createdBy;
 	@Column(name="created_date",nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
-	@Column(name="updated_by")
+	@Column(name="updated_by",length=50)
 	private String updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)

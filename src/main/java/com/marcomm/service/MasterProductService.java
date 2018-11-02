@@ -28,7 +28,13 @@ public class MasterProductService {
 	public void delete(MasterProduct masterProduct) {
 		productDao.delete(masterProduct);
 	}
+	public void update(MasterProduct masterProduct) {
+		productDao.update(masterProduct);
+	}
 	public MasterProduct getById(int id) {
 		return productDao.getById(id);
+	}
+	public List<MasterProduct> getByName(String name) {
+		return productDao.getByName(name);
 	}
 }

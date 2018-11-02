@@ -45,14 +45,23 @@ public class MasterProductController {
 	}
 	@RequestMapping(value="/getbyid/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public MasterProduct getEmpById(@PathVariable("id") int id) {
+	public MasterProduct getById(@PathVariable("id") int id) {
 		MasterProduct master = productService.getById(id);
 		return master;
+	}
+	@RequestMapping(value="/getbyname/{name}",method=RequestMethod.GET)
+	@ResponseBody
+	public List<MasterProduct> getByName(@PathVariable("name") String name){
+		return productService.getByName(name);
 	}
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteProduct(@RequestBody MasterProduct masterProduct) {
-		System.out.println(masterProduct);
 		productService.delete(masterProduct);
+	}
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void updateProduct(@RequestBody MasterProduct masterProduct) {
+		productService.update(masterProduct);
 	}
 }
