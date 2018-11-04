@@ -21,7 +21,7 @@ import com.marcomm.service.MasterUnitService;
  
 
 @Controller
-@RequestMapping("/unit")
+@RequestMapping("/masterunit")
 public class MasterUnitController {
 	
 	@Autowired
