@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository; 
 
-import com.marcomm.model.TransDesign;
+import com.marcomm.model.TransaksiDesign;
 
  
 
@@ -23,29 +23,29 @@ public class TransDesignDaoImpl implements TransDesignDao {
 
 	
 	
-	public void save(TransDesign tDesign) {
+	public void save(TransaksiDesign tDesign) {
 		Session session=sessionFactory.getCurrentSession();
 		session.save(tDesign);	
 	}
 
-	public void delete(TransDesign tDesign) {
+	public void delete(TransaksiDesign tDesign) {
 		Session session=sessionFactory.getCurrentSession();
 		session.update(tDesign);
 	}
 	
 
-	public void update(TransDesign tDesign) {
+	public void update(TransaksiDesign tDesign) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public TransDesign getById(int id) {
+	public TransaksiDesign getById(int id) {
 		Session session=sessionFactory.getCurrentSession();
-		return session.get(TransDesign.class, id);
+		return session.get(TransaksiDesign.class, id);
 	}
 
 	
-	public List<TransDesign> getAll() {
+	public List<TransaksiDesign> getAll() {
 		return null;
 	}
 

@@ -47,7 +47,7 @@ public class InitDBMarcom {
 		
 		//insert user
 		MasterUser userAdmin = new MasterUser();
-		userAdmin.setUsername("bootcamp172"); 
+		userAdmin.setUsername("Administrator"); 
 		userAdmin.setPassword(encodePassword("12345"));
 		userAdmin.setmEmployeeId(1);
 		userAdmin.setmRole(role1);

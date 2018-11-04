@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "T_Design")
-public class TransDesign {
+public class TransaksiDesign {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	@NotNull
