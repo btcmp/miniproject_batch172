@@ -23,6 +23,12 @@
 			<!-- TRANSAKSI SOUVENIR -->
 		<intercept-url pattern="/transaksisouvenir*"
 			access="hasRole('ROLE_ADMIN')" />
+			<!-- MASTER UNIT -->
+			<intercept-url pattern="/unit*"
+			access="hasRole('ROLE_ADMIN')" />
+			<!-- TRANSAKSI SOUVENIR -->
+			<intercept-url pattern="/transaksisouvenir*"
+			access="hasRole('ROLE_ADMIN')" />
 		 
 		<form-login login-page="/login"
 			default-target-url="/user"
