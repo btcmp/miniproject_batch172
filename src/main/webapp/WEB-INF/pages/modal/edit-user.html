@@ -35,10 +35,9 @@
 								 
 									<select class="custom-select" id="employeeEdit">
 										<option selected>Choose...</option>
-										<option value="Anies">Anis</option>
-										<option value="Jokowi">Jokowi</option>
-										<option value="Blusukan">Blusukan</option>
-										<option value="aHoak">ahoak</option>
+									<c:forEach var="employee" items="${employees}">
+											<option value="${employee.id}">${employee.employeeName}</option>
+										</c:forEach>
 									</select>
 
 								</div>
@@ -68,9 +67,9 @@
 									 
 									<select class="custom-select" id="roleEdit">
 										<option selected>Choose...</option>
-										<option value="ROLE_ADMIN">ROLE_ADMIN</option>
-										<option value="ROLE_STAFF">ROLE_STAFF</option>
-										<option value="ROLE_REQUEST">ROLE_REQUEST</option>
+										<c:forEach var="role" items="${roles}">
+											<option value="${role.id}">${role.roleName}</option>
+										</c:forEach>
 									</select>
 
 								</div>

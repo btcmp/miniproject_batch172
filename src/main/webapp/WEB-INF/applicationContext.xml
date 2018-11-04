@@ -35,6 +35,10 @@
 				<value>com.marcomm.model.MasterMenu</value>
 				<value>com.marcomm.model.MasterMenuAccess</value>
 				<value>com.marcomm.model.Event</value>
+				<value>com.marcomm.model.MasterUser</value>
+				<value>com.marcomm.model.TransDesign</value>
+				<value>com.marcomm.model.MasterEmployee</value>
+				<value>com.marcomm.model.MasterRole</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

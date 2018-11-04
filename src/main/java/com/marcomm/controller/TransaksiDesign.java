@@ -1,4 +1,4 @@
-package com.marcomm.controller;
+/*package com.marcomm.controller;
 
 import java.util.List;
 
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
- 
+
 import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
 import com.marcomm.service.MasterUserService;
 
 @Controller
-@RequestMapping("/user")
-public class MasterUserController {
-	
+@RequestMapping("/transaksidesign")
+public class TransaksiDesign {
+
 	@Autowired
 	MasterUserService userService;
 	
@@ -57,30 +57,7 @@ public class MasterUserController {
 		MasterUser master = userService.getById(id);
 		return master;
 	}
-	/*, method=RequestMethod.DELETE*/
-/*	@RequestMapping(value="/delete/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable int id){
-		UserService.delete(id);
-	}*/
-	
-	/*@RequestMapping(value="/delete",method=RequestMethod.POST)*/
-	@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.OK)
-	public void deleteProduct(@PathVariable ("id") int id) {
-		userService.delete(id);
-	}
-	
-	@RequestMapping(value="/update", method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	public void update(@RequestBody MasterUser masterUser) {
-		userService.update(masterUser);
-	}
-	
-	 
-	
-	
-	
 
 
 }
+*/

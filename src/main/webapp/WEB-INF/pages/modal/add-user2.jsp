@@ -1,4 +1,8 @@
-<div class="modal fade bd-example-modal-lg" id="viewUserModal"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false"%>
+<div class="modal fade bd-example-modal-lg" id="addUserModal"
 	tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 	aria-hidden="true">
 
@@ -19,28 +23,23 @@
 
 
 
-				<form>
-					<input type="hidden" id="viewId"/>
-					<!-- <input type="hidden" id="EditCreatedDate"/> -->
-					<input type="hidden" id="viewCreatedBy"/>
-					 
+				<form id="addUserForm"    data-parsley-validate>
+
 					<div class="row">
 
 						<div class="col">
 							<div class="form-group row">
-								<label for="employeeView" class="col-sm-3 col-form-label">
+								<label for="employee" class="col-sm-3 col-form-label">
 									Employee </label>
-								<div class="col-sm-9">
+								<div class=" form-group col-sm-9">
 
-								<select class="custom-select" id="employeeView">
-										<option selected>Choose...</option>
-											<option value="" selected>Choose...</option>
+									<select class="custom-select" id="employee" required>
+										<option value="" selected>Choose...</option>
 											<c:forEach var="employee" items="${employees}">
 											<option value="${employee.id}">${employee.employeeName}</option>
 										</c:forEach>
-									</select>
-									
-									
+									</select> 
+
 								</div>
 							</div>
 
@@ -48,11 +47,11 @@
 
 						<div class="col">
 							<div class="form-group row">
-								<label for="usernameView" class="col-sm-3 col-form-label">
+								<label for="username" class="col-sm-3 col-form-label">
 									User Name </label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="usernameView"
-										placeholder="User name..." disabled>
+									<input type="text" class="form-control" id="username"
+										placeholder="User name..." required> 
 								</div>
 
 							</div>
@@ -63,16 +62,14 @@
 					<div class="row">
 						<div class="col">
 							<div class="form-group row">
-								<label for="roleView" class="col-sm-3 col-form-label"> Role</label>
-								<div class="col-sm-9">
-									 
-									<select class="custom-select" id="roleView">
-										<option selected>Choose...</option>
+								<label for="role" class="col-sm-3 col-form-label"> Role</label>
+								<div class=" form-group col-sm-9">
+									<select class="custom-select" id="role" required>
+										<option value="" selected>Choose...</option>
 										<c:forEach var="role" items="${roles}">
 											<option value="${role.id}">${role.roleName}</option>
 										</c:forEach>
 									</select>
-
 								</div>
 
 							</div>
@@ -80,17 +77,18 @@
 						</div>
 						<div class="col">
 							<div class="form-group row">
-								<label for="passwordView" class="col-sm-3 col-form-label">
+								<label for="password" class="col-sm-3 col-form-label">
 									Password </label>
 								<div class="col-sm-9">
-									<input id="passwordView" type="password" class="form-control"
-										name="password" placeholder="pass" disabled>
+									<input id="password" type="password" class="form-control"
+										name="password" placeholder="pass" required data-parsley-pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*" required-message="wajib isi" required data-parsley-pattern-message="harus mengandung huruf kecil, angka dan kapital">
 								</div>
 							</div>
 
 						</div>
 
 					</div>
+
 					<div class="row justify-content-end">
 
 						<div class="col-8">
@@ -98,22 +96,30 @@
 								<label for="rpassword" class="col-sm-2 col-form-label">
 									Re-type Password:</label>
 								<div class="col-sm-10">
-									<input id="rpasswordView" type="password" class="form-control"
-										name="rpassword" placeholder="re-type pass" disabled>
+									<input id="rpassword" type="password" class="form-control"
+										name="rpassword" placeholder="re-type pass" required  data-parsley-equalto="#password" data-parsley-equalto-message="harus sama dengan password"> 
 								</div>
 							</div>
 
 						</div>
 
 					</div>
-					
-					
-					
- 				</form>
+
+
+
+					<!-- 	<div class="form-group row">
+						<label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="description"
+								placeholder="deskripsi">
+						</div>
+					</div> -->
+				</form>
 			</div>
 			<div class="modal-footer border border-top-0 border-dark">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				 
+				<button type="button" class="btn btn-primary" id="addButnModal">Add
+					User</button>
 			</div>
 		</div>
 	</div>

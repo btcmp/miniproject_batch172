@@ -1,12 +1,17 @@
 package com.marcomm.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.MasterUserDao;
+import com.marcomm.model.MasterEmployee;
+import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
 
 @Service
@@ -16,6 +21,10 @@ public class MasterUserService {
 	@Autowired
 	MasterUserDao userDao;
 
+	
+	 
+	
+	
 	public void save(MasterUser masterUser) {
 		userDao.save(masterUser);
 		// TODO Auto-generated method stub
@@ -41,6 +50,17 @@ public class MasterUserService {
 		// TODO Auto-generated method stub
 		userDao.update(masterUser);
 	}
+
+	public List<MasterRole> getAllRole() {
+		 
+		return userDao.getAllRole();
+	}
+
+	public List<MasterEmployee> getAllEmployee() {
+	 
+		return userDao.getAllEmployee();
+	}
 	
+ 
 	 
 }
