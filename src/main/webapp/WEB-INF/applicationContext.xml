@@ -30,16 +30,22 @@
 				<value>com.bankmega.traning.model.Department</value>
 				<value>com.marcomm.model.MasterUnit</value>
 				<value>com.marcomm.model.MasterProduct</value>
-				<value>com.marcomm.model.MasterUser</value>
 				<value>com.marcomm.model.Company</value>
 				<value>com.marcomm.model.MasterMenu</value>
 				<value>com.marcomm.model.MasterMenuAccess</value>
 				<value>com.marcomm.model.TransaksiSouvenir</value>
+				<value>com.marcomm.model.Event</value>
+				<value>com.marcomm.model.MasterUser</value>
+				<value>com.marcomm.model.TransDesign</value>
+				<value>com.marcomm.model.MasterEmployee</value>
+				<value>com.marcomm.model.MasterRole</value>
+				<value>com.marcomm.model.MasterSouvenir</value>
+
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext

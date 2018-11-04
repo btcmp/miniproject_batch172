@@ -18,6 +18,8 @@ public interface CompanyDao {
 
 	public void delete(int id);
 
+	public List<Company> getCompanyByName(String firstName);
+
 
 	
 

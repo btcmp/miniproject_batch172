@@ -1,5 +1,6 @@
 package com.marcomm.dao;
 
+import java.awt.image.RescaleOp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +95,19 @@ public class CompanyDaoImpl implements CompanyDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.update(company);
+	}
+
+	
+	public List<Company> getCompanyByName(String firstName) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Company.class);
+		
+		Criterion criterionAnd = Restrictions.and(Restrictions.ilike("name", firstName+" %"), Restrictions.eq("isDelete", false));
+		Criterion criterionOr = Restrictions.or(criterionAnd, Restrictions.ilike("name", firstName));
+		List<Company> nameCompany = criteria.add(criterionOr).list();
+		return nameCompany;
+		
 	}
 
 }

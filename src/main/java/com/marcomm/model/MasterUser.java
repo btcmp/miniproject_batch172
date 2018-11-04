@@ -1,25 +1,21 @@
 package com.marcomm.model;
 
-import java.util.Date;
-import java.util.List;
+import java.util.Date; 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.ResultCheckStyle;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+ 
 
 @Entity
 /*@SQLDelete(sql="UPDATE M_User SET is_delete=1 where id=?", check = ResultCheckStyle.COUNT)
@@ -34,12 +30,11 @@ public class MasterUser {
 	private String username;
 	@NotNull
 	private String password;
-	@Column(name = "m_role_id")
-	@NotNull
-	private String mRoleId;
+
 	@Column(name = "m_employee_id")
 	@NotNull
-	private String mEmployeeId;
+	private int mEmployeeId;
+	
 	@Column(name = "is_delete" , nullable=false, columnDefinition="number(1,0) default 0" )
 	private int isDelete;
 	@Column(name = "created_by")
@@ -55,85 +50,137 @@ public class MasterUser {
 	@Column(name = "updated_date")
  
 	private Date updatedDate;
+	
+	
+	 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="M_ROLE_ID")
+	
+	private MasterRole mRole;
+
+
 
 	public int getId() {
 		return id;
 	}
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
 
 	public String getUsername() {
 		return username;
 	}
 
+
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getmRoleId() {
-		return mRoleId;
-	}
 
-	public void setmRoleId(String mRoleId) {
-		this.mRoleId = mRoleId;
-	}
 
-	public String getmEmployeeId() {
+	public int getmEmployeeId() {
 		return mEmployeeId;
 	}
 
-	public void setmEmployeeId(String mEmployeeId) {
+
+
+	public void setmEmployeeId(int mEmployeeId) {
 		this.mEmployeeId = mEmployeeId;
 	}
+
+
 
 	public int getIsDelete() {
 		return isDelete;
 	}
 
+
+
 	public void setIsDelete(int isDelete) {
 		this.isDelete = isDelete;
 	}
+
+
 
 	public String getCreatedBy() {
 		return createdBy;
 	}
 
+
+
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+
+
 
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 
+
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
+
 
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
 
+
+
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+
 
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
+
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
+
+
+	public MasterRole getmRole() {
+		return mRole;
+	}
+
+
+
+	public void setmRole(MasterRole mRole) {
+		this.mRole = mRole;
+	}
+	
+	//id=MasterUser.getMRole().getName();
+	 
+
+	 
 }

@@ -58,6 +58,13 @@ public class CompanyController {
 		return company;
 	}
 	
+	//getbyname
+	@RequestMapping(value="/searchnamecompany/{name}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Company> getCompanyByName(@PathVariable("name") String name){
+		return companyService.getCompanyByName(name);
+	}
+	
 	//update data
 	@RequestMapping(value="/updatecompany/{id}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
