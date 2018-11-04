@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
 <meta charset="ISO-8859-1">
 <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/assets/img/favicon.png" />
 <title>Product</title>
@@ -39,6 +44,8 @@
 								Products
 						</a></li>
 						<li class="nav-item"><a class="nav-link text-white" href="http://localhost:8433/maven-project/design"> Transaction	
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
 						</a></li>
 					</ul>
 					</div>
