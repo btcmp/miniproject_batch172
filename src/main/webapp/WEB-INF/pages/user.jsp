@@ -258,7 +258,7 @@ $(document).ready(function(){
 						mEmployeeId : $('#employeeEdit').val(),
 						mRole :{
 							id: $('#roleEdit').val()
-						}
+						} 
 						
 				 
 				}
