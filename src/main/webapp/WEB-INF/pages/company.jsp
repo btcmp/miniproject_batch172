@@ -6,16 +6,40 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>List Company</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+<link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<style>
+	input.parsley-error
+		{
+		  color: #B94A48 !important;
+		  background-color: #F2DEDE !important;
+		  border: 1px solid #EED3D7 !important;
+		}
+</style>
 </head>
 <body>
-	<div id = "container" style="width : 1000px; margin: auto">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>	
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+	
+	<div id = "container">
 		<!-- HEADER -->		
-		<div class="card text-white bg-primary mb-3" style="width: 100%;">
+		<div class="card text-white bg-primary mb-3" style="width: 100%">
   			<div class="card-header">List Company</div>
 		</div>
 		
 		<!-- NAV -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    <ul class="navbar-nav mr-auto">
 		      <li class="nav-item">
@@ -37,35 +61,58 @@
 		  </div>
 		</nav>
 		
-		<!-- BUTTON ADD -->
-		<div class="row" style="float:right; padding-bottom:10px; padding-top:10px">
-			<div class="col">
-				<a class="btn btn-primary" id="btn-add" href="#">Add</a>
-			</div>
+		<!-- BUTTON ADD DAN NOTIFICATION -->
+		<div class="form-row" style="float:right; padding:5px;">
+			<a class="btn btn-primary" id="btn-add" href="#" style="width:100px;">Add</a>
+		</div>
+		<div class="form-row" style="float:left; padding:10px;">
+			<a id="notification" class="text-white bg-info border rounded"></a>
 		</div>
 		
 		<!-- FORM -->		
 		<form>
-			<div class="row" style="width: 100%; margin : auto">
-   				<div class="col">
-      				<input type="text" class="form-control" placeholder="Select Company Code">
-   				</div>
-    			<div class="col">
-      				<input type="text" class="form-control" placeholder="Select Company Name">
-    			</div>
-    			<div class="col">
-      				<input type="text" class="form-control" placeholder="Created Date">
-    			</div>
-    			<div class="col">
-      				<input type="text" class="form-control" placeholder="Created By">
-    			</div>
-    			<a class="btn btn-warning" id="btn-search" href="#">Search</a>	
-  			</div>
+		  <div class="form-row" style="width: 100%; margin:auto;">
+		    <div class="col">
+		      <input type="text" class="form-control" placeholder="- Select Company Code -" id="data1" data-index="1">
+		    </div>
+		    <div class="col">
+		      <input type="text" class="form-control" placeholder="- Select Company Name -" id="data2"data-index="2">
+		    </div>
+		    <div class="col">
+		      <input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="3">
+		    </div>
+		    <div class="col">
+		      <input type="text" class="form-control" placeholder="Created By" id="data4" data-index="4">
+		    </div>
+		     <a class="btn btn-warning" id="btn-search" href="#" style="width:100px;">Search</a>
+		  </div>
 		</form>
-		<hr/>
 		
-		<!-- TABLE -->
-		<table class="table table-striped table-hover" id="compTable" style="width : 100%">
+		<!-- TABLE INPUT 
+		<table id="inputTable" style="width: 95%; margin: auto">
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th><button class="btn btn-primary" id="btn-add" type="submit" style="width:100%;">Add</button></th>
+			</tr>
+			<tr>
+				<th></th>
+				<th><input type="text" class="form-control" placeholder="- Select Company Code -" id="data1" data-index="1" style="padding-right:10px;width:100%;"></th>
+				<th><input type="text" class="form-control" placeholder="- Select Company Name -" id="data2"data-index="2" style="padding-right:10px;width:100%;"></th>
+				<th><input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="3" style="padding-right:10px;width:70%;"></th>
+				<th><input type="text" class="form-control" placeholder="Created By" id="data4" data-index="4" style="padding-right:10px;width:100%;"></th>
+				<th><button class="btn btn-warning" id="btn-search" type="submit" style="width:100%;">Search</button></th>
+			</tr>
+		</thead>
+		</table>
+		-->
+				
+		<!-- TABLE TAMPILAN -->
+		<table class="table table-striped table-hover" id="companyTable" style="width: 100%">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -80,175 +127,14 @@
 			</tbody>
 		</table>
 	</div>
-		
-		<!-- MODAL ADD COMPANY-->
-		<div class="modal fade" id="addCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-lg" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLongTitle">Add Data Company</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		        <input type="hidden" id="AddButton"/>
-		        <div class="form-row">
-		       		<label for="companycode" class="col-sm-2 col-form-label">Company Code</label>
-		            	<div class="col-sm-4">
- 							<input type="text" id="companycode" class="form-control" placeholder="Auto Generated" disabled>
- 						</div>
- 					<label for="companyname" class="col-sm-2 col-form-label">Company Name</label>
-				    	<div class="col-sm-4">
-				      		<input type="text" id="companyname" class="form-control" placeholder="Type Company Name">
-				    	</div>
-				</div>
-				<div class="form-row" style="margin-top: 10px">
-				 	<label for="companyemail" class="col-sm-2 col-form-label">Email</label>
-					    <div class="col-sm-4">
-					      	<input type="text" id="companyemail" class="form-control" placeholder="Type Email">
- 						</div>
- 				  	<label for="companyaddress" class="col-sm-2 col-form-label">Address</label>	
-					    <div class="col-sm-4">
-							<input style="height:100px"" type="text" id="companyaddress" class="form-control" placeholder="Type Address">
-				    	</div>
-				</div>
-				<div class="form-row" style="margin-top: -50px">
-					<label for="companyphone" class="col-sm-2 col-form-label">Phone</label>
-					    <div class="col-sm-4">
-					      	<input type="text" id="companyphone" class="form-control" placeholder="Type Phone">
- 						</div>
-				</div>
-		      </div>
-		      <div class="modal-footer">
-		     	<button type="button" class="btn btn-primary btn-add-comp">Save</button>
-		        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		
-		<!-- MODAL VIEW COMPANY-->
-		<div class="modal fade" id="viewCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-lg" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLongTitle">View Data Company</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		        <input type="hidden" id="ViewButton"/>
-		        <div class="form-row">
-		       		<label for="companycode" class="col-sm-2 col-form-label">Company Code</label>
-		            	<div class="col-sm-4">
- 							<input type="text" id="companycodeView" class="form-control" placeholder="Auto Generated" disabled>
- 						</div>
- 					<label for="companyname" class="col-sm-2 col-form-label">Company Name</label>
-				    	<div class="col-sm-4">
-				      		<input type="text" id="companynameView" class="form-control" placeholder="Type Company Name" disabled>
-				    	</div>
-					</div>
-				<div class="form-row" style="margin-top: 10px">
-				 	<label for="companyemail" class="col-sm-2 col-form-label">Email</label>
-					    <div class="col-sm-4">
-					      	<input type="text" id="companyemailView" class="form-control" placeholder="Type Email" disabled>
- 						</div>
- 		 		  	<label for="companyaddress" class="col-sm-2 col-form-label">Address</label>	
-					    <div class="col-sm-4">
-					    	<input style="height:100px"" type="text" id="companyaddressView" class="form-control" placeholder="Type Address" disabled>
-					   	</div>
-				</div>
-				<div class="form-row" style="margin-top: -50px">
-					<label for="companyphone" class="col-sm-2 col-form-label">Phone</label>
-					    <div class="col-sm-4">
-					      	<input type="text" id="companyphoneView" class="form-control" placeholder="Type Phone" disabled>
- 						</div>
- 				</div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		
-		<!-- MODAL EDIT COMPANY-->
-		<div class="modal fade" id="editCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-lg" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Company</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		        <input type="hidden" id="EditButton"/>
-		        <div class="form-row">
-		       		<label for="companycode" class="col-sm-2 col-form-label">Company Code</label>
-		            	<div class="col-sm-4">
- 							<input type="text" id="companycodeEdit" class="form-control" placeholder="Auto Generated" disabled>
- 						</div>
- 					<label for="companyname" class="col-sm-2 col-form-label">Company Name</label>
-				    	<div class="col-sm-4">
-				      		<input type="text" id="companynameEdit" class="form-control" placeholder="Type Company Name">
-				    	</div>
-				</div>
-				<div class="form-row" style="margin-top: 10px">
-				 	<label for="companyemail" class="col-sm-2 col-form-label">Email</label>
-					    <div class="col-sm-4">
-					      	<input type="text" id="companyemailEdit" class="form-control" placeholder="Type Email">
- 						</div>
- 				  	<label for="companyaddress" class="col-sm-2 col-form-label">Address</label>	
-					    <div class="col-sm-4">
-							<input style="height:100px"" type="text" id="companyaddressEdit" class="form-control" placeholder="Type Address">
-				    	</div>
-				</div>
-				<div class="form-row" style="margin-top: -50px">
-					<label for="companyphone" class="col-sm-2 col-form-label">Phone</label>
-					    <div class="col-sm-4">
-					      	<input type="text" id="companyphoneEdit" class="form-control" placeholder="Type Phone">
- 						</div>
-				</div>
-		      </div>
-		      <div class="modal-footer">
-		     	<button type="button" class="btn btn-primary btn-edit-comp">Update</button>
-		        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		
-		<!-- MODAL DELETE COMPANY -->
-		<div class="modal fade" id="deleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-sm" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLongTitle">Delete Data Company</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		        <input type="hidden" id="DeleteButton"/>
-		        <p>Are you sure to delete this data?</p>
-		      </div>
-		      <div class="modal-footer">
-		     	<button type="button" class="btn btn-primary" id="btn-delete-comp">Delete</button>
-		        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		
-		
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	
-	<script type="text/javascript">
+
+	<%@include file="/WEB-INF/pages/modal/company-add.html"%>
+	<%@include file="/WEB-INF/pages/modal/company-view.html"%>
+	<%@include file="/WEB-INF/pages/modal/company-edit.html"%>
+	<%@include file="/WEB-INF/pages/modal/company-delete.html"%>
+
+</body>	
+<script type="text/javascript">
 	
 	/* var button = document.getElementById('btn-add');
 	button.addEventListener('click', function(){
@@ -257,6 +143,32 @@
 	
 	$(document).ready(function(){
 		loadData();
+		
+		//DATEPICKER
+		$('#data3').datepicker({
+			format: 'yyyy-mm-dd',
+			autoclose: true,
+			uiLibrary: 'bootstrap4'
+		});
+		
+		//VALIDATOR ADD UNIQUE FIRST NAME
+		Parsley.addValidator('namecheck', {
+			validateString : function(value){
+				var splitname = value.split(" ");
+				before = $.ajax({
+					url: '${pageContext.request.contextPath}/company/searchnamecompany/' +splitname[0],
+					dataType: 'json',
+					type: 'GET',
+				});
+				return before.then(function(data){
+					if(data.length==0){
+						return true	
+					} else {
+						return $.Deferred().reject()
+					}
+				});
+			}
+		});
 		
 		//BUTTON POP UP ADD
 		$('#btn-add').on('click', function(){
@@ -268,11 +180,22 @@
 				},
 				dataType: 'json'
 			});
+			$('#addForm').parsley().reset();
+			$('#companyname').val();
+			$('#companyemail').val();
+			$('#companyaddress').val();
+			$('#companyphone').val();
 			$('#addCompanyModal').modal();
 		});
 		
 		//BUTTON SAVE PADA MODAL ADD UNTUK SAVE DATA
 		$('.btn-add-comp').on('click', function(){
+			var validate = $('#addForm').parsley();
+			validate.validate();
+		});
+		
+		//SAVE WHEN VALIDATION SUCCESS
+		$('#addForm').parsley().on('form:success', function(){
 			var company = {
 					code : $('#companycode').val(),
 					name : $('#companyname').val(),
@@ -280,6 +203,11 @@
 					address : $('#companyaddress').val(),
 					phone : $('#companyphone').val()
 			};
+			
+			//NOTIFICATION
+			document.getElementById("notification").innerHTML = "Data Saved! New company has been added with code: "+company.code+"!";
+			$('#notification').show('slow').delay(1500).hide('slow');
+			
 			console.log(company);
 			$.ajax({
 				url:'${pageContext.request.contextPath}/company/savecompany',
@@ -300,8 +228,8 @@
 				}
 			});
 			$('#addCompanyModal').modal('hide');
-
 		});
+		
 		
 		//GETALL DATA LOAD DATA
 		function loadData(){
@@ -320,16 +248,30 @@
 		}
 		
 		//CONVERT TO TABLE
+		
+		oTable = $('#companyTable').DataTable({
+			'sDom' : 'tip',
+			'ordering' : false
+		});
+		
 		function convertToTable(data){
-			var oTable = $('#compTable');
-			var tBody = oTable.find('tBody');
+			var oTable = $('#companyTable').DataTable();
 			
-			tBody.find('tr').remove();
+			//var tBody = oTable.find('tBody');
+			//tBody.find('tr').remove();
 			
+			oTable.rows('tr').remove();
 			$.each(data, function(index, company){
 				console.log(index, company);
 				index++;
-			var tableRow = '<tr>';
+			var tableRow = "<a id="+company.id+" class = 'btn-view-comp'><span class='oi oi-magnifying-glass'></span></a>";
+				tableRow += " ";
+				tableRow += "<a id="+company.id+" class = 'btn-edit-comp'><span class='oi oi-pencil'></span></a>";
+				tableRow += " ";
+				tableRow += "<a id="+company.id+" class = 'btn-delete-comp'><span class='oi oi-trash'></span></a>";
+				oTable.row.add([index,company.code,company.name,company.createdDate,company.createdBy,tableRow]);
+				
+			/* var tableRow = '<tr>';
 				tableRow += '<td>';
 					tableRow += index;
 				tableRow += '</td>';
@@ -351,9 +293,20 @@
 					tableRow += "<a id="+company.id+" class = 'btn btn-danger btn-sm btn-delete-comp'>Delete</a>";
 				tableRow += "</td>";
 				tableRow += '</tr>';
-			tBody.append(tableRow);
+			tBody.append(tableRow); */
 			});
+			oTable.draw();
 		}
+		
+		//BUTTON SEARCH
+		$('#btn-search').on('click', function(){
+			for(var i = 1; i <= 5; i++){
+				oTable
+				.column($('#data'+i).data('index'))
+				.search($('#data'+i).val())
+				.draw()
+			}
+		});
 		
 		//BUTTON POP UP VIEW
 		$(document).on('click', '.btn-view-comp', function(){
@@ -400,28 +353,51 @@
 			$('#editCompanyModal').modal();
 		});
 		
-		//BUTTON UPDATE PADA MODAL ADD UNTUK UPDATE DATA
-		$('.btn-edit-comp').click(function(){
-			var company = {
-				id : $('#EditButton').val(),
-				code : $('#companycodeEdit').val(),
-				name : $('#companynameEdit').val(),
-				email : $('#companyemailEdit').val(),
-				address : $('#companyaddressEdit').val(),
-				phone : $('#companyphoneEdit').val()
-			};
-				console.log(company);
+		$(document).on('click', '#btn-edit-comp', function(){			
 			$.ajax({
-				url: '${pageContext.request.contextPath}/company/updatecompany/' +company.id,
-				type: 'POST',
-				contentType: 'application/json',
-				data: JSON.stringify(company),
-				success: function(data){
-					console.log('data berhasil disimpan');
-					loadData();
-				}
+				success: function(output){
+					$('#EditButton').val(output.id);
+				},
+				dataType: 'json'
 			});
+			
+			/* var con =confirm("delete?");
+			if(con==true){} */
+			
 			$('#editCompanyModal').modal('hide');
+			$('#edit2CompanyModal').modal();
+		});
+		
+		//BUTTON UPDATE PADA MODAL ADD UNTUK UPDATE DATA
+		$('.btn-edit2-comp').click(function(){
+			var validate = $('#editForm').parsley();
+			if(validate.validate()){
+				var company = {
+						id : $('#EditButton').val(),
+						code : $('#companycodeEdit').val(),
+						name : $('#companynameEdit').val(),
+						email : $('#companyemailEdit').val(),
+						address : $('#companyaddressEdit').val(),
+						phone : $('#companyphoneEdit').val()
+					};
+					
+				//NOTIFICATION
+				document.getElementById("notification").innerHTML = "Data Updated! Data company has been updated!";
+				$('#notification').show('slow').delay(1500).hide('slow');
+				
+				console.log(company);
+					$.ajax({
+						url: '${pageContext.request.contextPath}/company/updatecompany/' +company.id,
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify(company),
+						success: function(data){
+							console.log('data berhasil disimpan');
+							loadData();
+						}
+					});
+					$('#edit2CompanyModal').modal('hide');
+			}
 		});
 		
 		//BUTTON POP UP DELETE
@@ -443,8 +419,13 @@
 		//BUTTON DELETE UNTUK DELETE DATA
 		$('#btn-delete-comp').click(function(){
 			var company = {
-				id: $('#DeleteButton').val()	
+				id: $('#DeleteButton').val()
 			};
+			
+			//NOTIFICATION
+			document.getElementById("notification").innerHTML = "Data Deleted! Data company has been deleted!";
+			$('#notification').show('slow').delay(1500).hide('slow');
+			
 			$.ajax({
 				url: '${pageContext.request.contextPath}/company/deletecompany/' +company.id,
 				type: 'DELETE',
@@ -459,5 +440,4 @@
 		});
 	});
 	</script>			
-</body>
 </html>

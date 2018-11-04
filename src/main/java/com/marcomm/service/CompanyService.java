@@ -58,5 +58,10 @@ public class CompanyService {
 		companyDao.delete(id);
 	}
 
+	public List<Company> getCompanyByName(String name) {
+		// TODO Auto-generated method stub
+		return companyDao.getCompanyByName(name);
+	}
+
 
 }

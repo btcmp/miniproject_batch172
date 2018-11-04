@@ -34,6 +34,7 @@
 				<value>com.marcomm.model.Company</value>
 				<value>com.marcomm.model.MasterMenu</value>
 				<value>com.marcomm.model.MasterMenuAccess</value>
+				<value>com.marcomm.model.Event</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
