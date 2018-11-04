@@ -256,7 +256,10 @@ $(document).ready(function(){
 						username : $('#usernameEdit').val(),
 						password : $('#passwordEdit').val(),
 						mEmployeeId : $('#employeeEdit').val(),
-						mRoleId : $('#roleEdit').val()
+						mRole :{
+							id: $('#roleEdit').val()
+						}
+						
 				 
 				}
 				$.ajax({
