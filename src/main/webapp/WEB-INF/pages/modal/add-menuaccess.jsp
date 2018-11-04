@@ -15,23 +15,32 @@
  						<input type="text" id="menucode" class="form-control" placeholder="Auto Generated" readonly>
  						</div>
  						<label for="menuaccess">Menu Access</label>
-			<div class="custom-control custom-checkbox">
-    				     
+			 <%-- <div class="custom-control custom-checkbox">
     				<!--  <label class="custom-control-label" for="defaultUnchecked"></label> -->
     				<c:forEach var="menu" items="${masterMenus}">
-    				 <!--  <input type="checkbox" class="custom-control-input" id="defaultUnchecked">-->
-    				   <input type="checkbox" class="custom-control-input" id="${menu.id}">  
-    				  <label class="custom-control-label" for="defaultUnchecked">${menu.name}</label>
+    				   <!-- <input type="checkbox" class="custom-control-input"> --> 
+    				    <input type="checkbox" class="custom-control-input" id="${menu.id}">  
+    				  <label class="custom-control-label">${menu.name}</label>
+    				   <label>${menu.id}</label> 
     				  <br>
     				</c:forEach>
-    				
-    				<!-- <select class="custom-select" id="menu" required> -->
-					<%-- <c:forEach var="menu" items="${masterMenus}">
-						<option value="${menu.id}">${menu.name}</option>
-						
-					</c:forEach>
-					 --%><!-- </select> -->
-				</div>
+				</div> --%> 
+				
+			 <div class="input-group mb-4"> 
+  		<div class="input-group-row">
+  		<c:forEach var="menu" items="${masterMenus}">
+    		<div class="input-group-text">
+      		<input type="checkbox" aria-label="Checkbox for following text input">
+      		<%-- <label class="custom-control-label">${menu.name}</label> --%>
+      		<form:option value="${menu.id }">
+				<c:out value="${menu.name}"></c:out>
+			</form:option>
+      		<br>
+    		</div>
+    		</c:forEach>
+  		</div>
+  			<!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+				 </div> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
