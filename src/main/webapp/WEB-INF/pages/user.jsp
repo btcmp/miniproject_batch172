@@ -27,6 +27,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+<link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
@@ -384,11 +385,11 @@ $(document).ready(function(){
 		oTable.rows( 'tr' ).remove();
 		$.each(data,function(index,user){	
 			index++;
-			var tRow ='<a id="'+user.id+'" href="#" class="btn btn-warning btn-edit-user" style="color: #e01616;">E</a>';
+			var tRow ='<a id="'+user.id+'" href="#" class="btn-edit-user"><span class="oi oi-pencil"></span></a>';
 			tRow +=' ';
-			tRow +='<a id="'+user.id+'" href="#" class="btn btn-warning btn-view-user" style="color: #e01616;">V</a>';
+			tRow +='<a id="'+user.id+'" href="#" class="btn-view-user"><span class="oi oi-magnifying-glass"></span></a>';
 			tRow +=' ';
-			tRow +='<a id="'+user.id+'" href="#" class="btn btn-warning btn-delete-user" style="color: #e01616;">D</a>';
+			tRow +='<a id="'+user.id+'" href="#" class="btn-delete-user"><span class="oi oi-trash"></span></a>';
 			 oTable.row.add([index,user.mEmployeeId, user.mRole.roleName,user.mEmployeeId,user.username,user.createdDate,user.createdBy,tRow]);
 		
 /* 		var oTable = $('#userTable');
