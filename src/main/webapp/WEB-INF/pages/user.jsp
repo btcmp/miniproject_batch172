@@ -451,7 +451,7 @@ $(document).ready(function(){
 			tRow +='<a id="'+user.id+'" href="#" class="btn-view-user"><span class="oi oi-magnifying-glass"></span></a>';
 			tRow +=' ';
 			tRow +='<a id="'+user.id+'" href="#" class="btn-delete-user"><span class="oi oi-trash"></span></a>';
-			 oTable.row.add([index,user.employee.employeeName, user.mRole.roleName,user.employee.employeeName,user.username,user.createdDate,user.createdBy,tRow]);
+			 oTable.row.add([index,user.employee.employeeName, user.mRole.roleName,user.employee.company.name,user.username,user.createdDate,user.createdBy,tRow]);
 		
 /* 		var oTable = $('#userTable');
 		var tBody = oTable.find('tBody');

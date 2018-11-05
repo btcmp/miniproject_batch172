@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="M_EMPLOYEE")
 public class MasterEmployee {
- 
+  
 	@Id
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.TABLE)
