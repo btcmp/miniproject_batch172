@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="M_COMPANY")
-public class Company {
+public class MasterCompany {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)

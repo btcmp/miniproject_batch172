@@ -14,15 +14,16 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.marcomm.model.Company;
+import com.marcomm.model.MasterCompany;
+import com.marcomm.service.FungsiService;
 
 @Repository
-public class CompanyDaoImpl implements CompanyDao {
+public class MasterCompanyDaoImpl implements MasterCompanyDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
 
-	public void save(Company company) {
+	public void save(MasterCompany company) {
 		// TODO Auto-generated method stub
 		company.setIsDelete(false);
 		
@@ -37,21 +38,21 @@ public class CompanyDaoImpl implements CompanyDao {
 		session.save(company);
 	}
 
-	public List<Company> getAll() {
+	public List<MasterCompany> getAll() {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Company.class);
+		Criteria criteria = session.createCriteria(MasterCompany.class);
 		
-		List<Company> companies = criteria.add(Restrictions.eq("isDelete", false)).addOrder(Order.asc("id")).list();
+		List<MasterCompany> companies = criteria.add(Restrictions.eq("isDelete", false)).addOrder(Order.asc("id")).list();
 	
 		return companies;
 	}
 	
 	public String getCodeCompany() {
 		// TODO Auto-generated method stub
-		String hql = "from Company ORDER BY id DESC";
+		String hql = "from MasterCompany ORDER BY id DESC";
 		Session session = sessionFactory.getCurrentSession();
-		Company comp = (Company) session.createQuery(hql).setMaxResults(1).uniqueResult();
+		MasterCompany comp = (MasterCompany) session.createQuery(hql).setMaxResults(1).uniqueResult();
 		if(comp==null) {
 			return "CP0001";
 		}else {
@@ -63,14 +64,14 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 	}
 
-	public Company getCompanyById(int id) {
+	public MasterCompany getCompanyById(int id) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Company comp = session.get(Company.class, id);
+		MasterCompany comp = session.get(MasterCompany.class, id);
 		return comp;
 	}
 
-	public void update(Company comp) {
+	public void update(MasterCompany comp) {
 		// TODO Auto-generated method stub
 		comp.setIsDelete(false);
 	
@@ -87,7 +88,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
 	public void delete(int id) {
 		// TODO Auto-generated method stub
-		Company company = new Company();
+		MasterCompany company = new MasterCompany();
 		company = getCompanyById(id);
 		company.setIsDelete(true);
 		Date now = new Date();
@@ -98,14 +99,14 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	
-	public List<Company> getCompanyByName(String firstName) {
+	public List<MasterCompany> getCompanyByName(String firstName) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Company.class);
+		Criteria criteria = session.createCriteria(MasterCompany.class);
 		
 		Criterion criterionAnd = Restrictions.and(Restrictions.ilike("name", firstName+" %"), Restrictions.eq("isDelete", false));
 		Criterion criterionOr = Restrictions.or(criterionAnd, Restrictions.ilike("name", firstName));
-		List<Company> nameCompany = criteria.add(criterionOr).list();
+		List<MasterCompany> nameCompany = criteria.add(criterionOr).list();
 		return nameCompany;
 		
 	}

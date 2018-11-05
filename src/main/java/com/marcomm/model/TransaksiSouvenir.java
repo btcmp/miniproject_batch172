@@ -33,6 +33,7 @@ public class TransaksiSouvenir {
 	@Column(nullable=false, length=11)
 	private String type;
 	
+	
 	@Column(name="t_event_id", length=50)
 	private	int tEventId;
 	

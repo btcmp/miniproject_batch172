@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="T_EVENT")
-public class Event {
+public class TransaksiEvent {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)

@@ -153,6 +153,14 @@ $(document).ready(function(){
 	});
 	var Id = 1; // used by the addFile() function to keep track of IDs
 	$(document).on('click','#addBtn',function(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/design/getcode',
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				$('#transactionCode').val(data);
+			}
+		});
 		$('#addDesignTransactionModal').modal();
 	});	
 	$('#addItemBtn').on('click',function(){
@@ -198,7 +206,17 @@ $(document).ready(function(){
 		var id = $(this).attr('id');
 		$('#items-'+id).remove();
 	});
-	
+	$(document).on('change','#productItem',function(){
+		var select = productItem;
+		var productId = select[select.selectedIndex].value;
+		$.ajax({
+			url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+			type : 'GET',
+			success : function(data){
+				$('#description').val(data.description);
+			}
+		});
+	});
 });
 
 </script>

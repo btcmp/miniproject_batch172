@@ -353,6 +353,8 @@
 			$('#editCompanyModal').modal();
 		});
 		
+		
+		//BUTTON POP UP UPDATE
 		$(document).on('click', '#btn-edit-comp', function(){			
 			$.ajax({
 				success: function(output){
@@ -419,11 +421,12 @@
 		//BUTTON DELETE UNTUK DELETE DATA
 		$('#btn-delete-comp').click(function(){
 			var company = {
-				id: $('#DeleteButton').val()
+				id: $('#DeleteButton').val(),
+				code : $('#companycodeDelete').val()
 			};
 			
 			//NOTIFICATION
-			document.getElementById("notification").innerHTML = "Data Deleted! Data company has been deleted!";
+			document.getElementById("notification").innerHTML = "Data Deleted! Data company with code"+company.code+"has been deleted!";
 			$('#notification').show('slow').delay(1500).hide('slow');
 			
 			$.ajax({
