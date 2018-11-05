@@ -58,55 +58,31 @@
 				</ul>
 			</div>
 		</nav>
-		<br>
-		<!-- end navbar -->
-		<!-- start add and search button -->
-		<!-- <div class="row" style="height: 50px;"></div>
-				<div class="row" style="float:right; padding-bottom:10px; padding-top:10px">
-			<div class="col">
-				<a class="btn btn-primary" id="addBtn" href="#">Add</a>
-			</div>
-		</div> 
-
-			<form>
-			<div class="row" style="width: 100%; margin : auto">
-   				<div class="col">
-      				<input type="text" class="form-control" placeholder="Select Unit Code">
-   				</div>
-    			<div class="col">
-      				<input type="text" class="form-control" placeholder="Select Unit Name">
-    			</div>
-    			<div class="col">
-      				<input type="text" class="form-control" placeholder="Created">
-    			</div>
-    			<div class="col">
-      				<input type="text" class="form-control" placeholder="Created By">
-    			</div>
-    			<a class="btn btn-warning" id="btn-search" href="#">Search</a>	
-  			</div>
-		</form> -->
-		<!-- logout -->
-		<div>
-
-			<div class="form-row text-white"
-				style="float: left; padding-left: 20px">
-				<p id="user-login" id="username" class="text-primary">Selamat
-					Datang User!</p>
-			</div>
-			<div class="form-row" style="float: right; padding: 5px;">
-				<form action="${logoutUrl}" method="post" id="logoutForm">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" /> <input class="btn btn-warning"
-						type="submit" value="logout" style="width: 100px;" />
-				</form>
-			</div>
-
-		</div>
 		 
+		<!-- logout -->
+		<br>
+		 
+		<p style="float: left; width: 40%;" id="user-login" id="username" class="text-primary">Selamat
+			Datang User!</p>
 
 
-		<table style="width:100%">
+		<form action="${logoutUrl}" method="post" id="logoutForm"
+			style="float: right; width: 50%;">
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" /> <input style="float: right; width: 78px;"
+				class="btn btn-warning" type="submit" value="logout" />
+		</form>
+		<br>
+		<br>
+		<br>
+		
+
+		<table style="width:100%"  >
 			<thead>
+				
+				
+				<thead>
+			 
 				<tr>
 					<th></th>
 					<th></th>
@@ -115,12 +91,17 @@
 					<th></th>
 					<th></th>
 					<th></th>
-					<th><a class="btn btn-primary"
-						id="addBtn" href="#" style="width: 100px;">Add</a></th>
+					<th>
+						<div>
+							<a class="btn btn-primary  " id="addBtn" href="#"
+								style="float: right; padding: 5px; width: 100%;">Add</a>
+						</div>
+					</th>
 				</tr>
 				<tr>
 					<th></th>
-					<th> <select class="form-control" id="data1" data-index="1" style="padding-right: 10px; width: 100%;">
+					<th><select class="form-control" id="data1" data-index="1"
+						style="padding-right: 10px; width: 100%;">
 							<option value="" selected>-select employee here-</option>
 							<c:forEach var="employee" items="${allEmployee}">
 								<option value="${employee.employeeName}">${employee.employeeName}</option>
@@ -134,9 +115,13 @@
 								<option value="${role.roleName}">${role.roleName}</option>
 							</c:forEach>
 					</select></th>
-					<th><input type="text" class="form-control"
-						placeholder="Company" id="data3" data-index="3"
-						style="padding-right: 10px; width: 100%;"></th>
+					<th><select class="form-control" id="data3" data-index="3"
+						style="padding-right: 10px; width: 100%;">
+							<option value="" selected>-select cmpny-</option>
+							<c:forEach var="company" items="${compenies}">
+								<option value="${company.name}">${company.name}</option>
+							</c:forEach>
+					</select></th>
 					<th><input type="text" class="form-control"
 						placeholder="User Name" id="data4" data-index="4"
 						style="padding-right: 10px; width: 100%;"></th>
@@ -147,7 +132,7 @@
 						placeholder="Created By" id="data6" data-index="6"
 						style="padding-right: 10px; width: 100%;"></th>
 					<th><a class="btn btn-warning" id="btn-search" href="#"
-						style="width: 100px;">Search</a></th>
+						style="float: right; padding: 5px; width: 100%;">Search</a></th>
 				</tr>
 			</thead>
 		</table>
