@@ -31,26 +31,32 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
-	<div id="container" style="width: 90%; margin: auto">
-		<!-- start navbar -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-			<a class="navbar-brand" href="#">MARCOMM172</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-				
-					<a class="nav-item nav-link active" href="#">Home</a> <a
-						class="nav-item nav-link" href="#">User</a>
-				</div>
+	<div id="container" style="width: 100%; margin: auto">
+		<!-- HEADER -->
+		<div class="card text-white bg-primary mb-3" style="width: 100%">
+  			<div class="card-header">List User</div>
+		</div>
+		
+		<!-- NAV -->
+		<nav class="navbar navbar-expand-lg navbar-light bg-light"
+			style="width: 100%">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link disabled" href="#">/</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Master</a></li>
+					<li class="nav-item"><a class="nav-link disabled" href="#">/</a>
+					</li>
+					<li class="nav-item active"><a class="nav-link" href="#">List
+							User <span class="sr-only">(current)</span>
+					</a></li>
+				</ul>
 			</div>
-
 		</nav>
 		<br>
 		<!-- end navbar -->
@@ -79,54 +85,69 @@
     			<a class="btn btn-warning" id="btn-search" href="#">Search</a>	
   			</div>
 		</form> -->
-		
-		<p id="user-login" id="username" style="width: 50%;" class="text-primary" >Selamat Datang User!</p>
-		<form action="${logoutUrl}" method="post" id="logoutForm">
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" /> <input class="btn btn-warning" type="submit"   value="logout" />
-					</form>
-					<br>
-										 
-		<table>
+		<!-- logout -->
+		<div>
+
+			<div class="form-row text-white"
+				style="float: left; padding-left: 20px">
+				<p id="user-login" id="username" class="text-primary">Selamat
+					Datang User!</p>
+			</div>
+			<div class="form-row" style="float: right; padding: 5px;">
+				<form action="${logoutUrl}" method="post" id="logoutForm">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" /> <input class="btn btn-warning"
+						type="submit" value="logout" style="width: 100px;" />
+				</form>
+			</div>
+
+		</div>
+		 
+
+
+		<table style="width:100%">
 			<thead>
-				<tr class="justify-content-end">
-					<th >     </th>
+				<tr>
 					<th></th>
 					<th></th>
 					<th></th>
 					<th></th>
 					<th></th>
 					<th></th>
-					<th  ><a class="btn btn-primary justify-content-end"
-						id="addBtn" href="#">Add</a></th>
+					<th></th>
+					<th><a class="btn btn-primary"
+						id="addBtn" href="#" style="width: 100px;">Add</a></th>
 				</tr>
 				<tr>
 					<th></th>
-					<th style="padding-left: 55px; padding-right: 5px;"><input
-						type="text" class="form-conthol" placeholder="Employee"
-						id="data1" data-index="1"
-						style="padding-right: 45px; width: 100%;"></th>
-					<th style="padding-left: 10px; padding-right: 5px;"><input
-						type="text" class="form-conthol" placeholder="Role" id="data2"
-						data-index="2" style="padding-right: 45px; width: 100%;"></th>
-					<th style="padding-left: 10px; padding-right: 5px;"><input
-						type="text" class="form-conthol" placeholder="Company"
-						id="data3" data-index="3"
-						style="padding-right: 45px; width: 100%;"></th>
-					<th style="padding-left: 10px; padding-right: 5px;"><input
-						type="text" class="form-conthol" placeholder="User Name"
-						id="data4" data-index="4"
-						style="padding-right: 45px; width: 100%;"></th>
-					<th style="padding-left: 10px; padding-right: 5px;"><input
-						type="text" class="form-conthol date-picker" placeholder="Created Date"
-						id="data5" data-index="5"
-						style="padding-right: 45px; width: 100%;"></th>
-					<th style="padding-left: 10px; padding-right: 5px;"><input
-						type="text" class="form-conthol" placeholder="Created By"
-						id="data6" data-index="6"
-						style="padding-right: 45px; width: 100%;"></th>
-					<th style="padding-left: 10px;"><a class="btn btn-warning"
-						id="btn-search" href="#">Search</a></th>
+					<th> <select class="form-control" id="data1" data-index="1" style="padding-right: 10px; width: 100%;">
+							<option value="" selected>-select employee here-</option>
+							<c:forEach var="employee" items="${allEmployee}">
+								<option value="${employee.employeeName}">${employee.employeeName}</option>
+							</c:forEach>
+					</select></th>
+
+					<th><select class="form-control" id="data2" data-index="2"
+						style="padding-right: 10px; width: 100%;">
+							<option value="" selected>-select role here-</option>
+							<c:forEach var="role" items="${roles}">
+								<option value="${role.roleName}">${role.roleName}</option>
+							</c:forEach>
+					</select></th>
+					<th><input type="text" class="form-control"
+						placeholder="Company" id="data3" data-index="3"
+						style="padding-right: 10px; width: 100%;"></th>
+					<th><input type="text" class="form-control"
+						placeholder="User Name" id="data4" data-index="4"
+						style="padding-right: 10px; width: 100%;"></th>
+					<th><input type="text" class="form-control date-picker"
+						placeholder="Created Date" id="data5" data-index="5"
+						style="padding-right: 10px; width: 75%;"></th>
+					<th><input type="text" class="form-control"
+						placeholder="Created By" id="data6" data-index="6"
+						style="padding-right: 10px; width: 100%;"></th>
+					<th><a class="btn btn-warning" id="btn-search" href="#"
+						style="width: 100px;">Search</a></th>
 				</tr>
 			</thead>
 		</table>
@@ -155,22 +176,24 @@
 					<th>username</th>
 					<th>Created Date</th>
 					<th>Created By</th>
-					<th>Action</th>				
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
 			</tbody>
 		</table>
 	</div>
-	
+
 	<%@include file="/WEB-INF/pages/modal/add-user2.jsp"%>
 	<%@include file="/WEB-INF/pages/modal/edit-user.html"%>
 	<%@include file="/WEB-INF/pages/modal/view-user.html"%>
 </body>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script>
- 
+<script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 	loadData();
@@ -178,8 +201,34 @@ $(document).ready(function(){
 	/* date picker */
 	/* $('#createdDate').datepicker(); */
 	 $('.date-picker').datepicker({
-    format: 'yyyy-mm-dd' 
+    format: 'yyyy-mm-dd' ,
+    autoclose: true,
+	uiLibrary: 'bootstrap4',
 }); 
+	
+	//
+	//addvalidate
+      Parsley.addValidator('namecheck',{
+    	validateString: function(value){
+    	var namesplitcek = value.split(" ");
+    	splitcek = namesplitcek[0];
+    	 xhr= $.ajax({
+    			url : '${pageContext.request.contextPath}/user/getbyname/'+splitcek,
+    			dataType : 'json',
+    			type : 'GET'
+    		});
+    	 return xhr.then(function(data){
+    		 if($('#nameUpdateCheck').val()==1){
+    			 $('#nameUpdateCheck').val(0)
+    		 	 return true
+    	   	 }else if(data.length==0){
+    			 return true 
+    		 }else{
+    			 return $.Deferred().reject()
+    		 }
+    	 });
+    	}
+    	});
 	
 	/* membuat objek tabel */
 	oTable = $('#userTable').DataTable({
@@ -320,42 +369,46 @@ $(document).ready(function(){
 	 $('#addButnModal').on('click', function(){
 		
 		var validate= 		 $('#addUserForm').parsley();
-		
-		 if(validate.validate()){
-			 var user = {
-						username : $('#username').val(),
-						password : $('#password').val(),
-						employee :{
-							id: $('#employee').val()
-						},
-						mRole :{
-							id: $('#role').val()
-						}
-				 
-				}
-				$.ajax({
-					 headers: {
-					        'X-CSRFToken': $('meta[name="token"]').attr('content')
-					    },
-					url : '${pageContext.request.contextPath}/user/save',
-					type : 'POST',
-					contentType : 'application/json',
-					data : JSON.stringify(user),
-					success : function(data){
-						console.log("data telah disimpan");
-						$('#addUserModal').modal('hide');
-						 window.location = "${pageContext.request.contextPath}/user";
-						/*  loadData();  */
-
-					},
-					error : function(){
-						$('#addUserModal').modal('hide');
-						console.log("data error");
-					}
-				});
-		}
-		
+		validate.validate();		
 	}); 
+	
+	$('#addUserForm').parsley().on('form:success', function(){
+		 var user = {
+					username : $('#username').val(),
+					password : $('#password').val(),
+					employee :{
+						id: $('#employee').val()
+					},
+					mRole :{
+						id: $('#role').val()
+					}
+			 
+			}
+			$.ajax({
+				 headers: {
+				        'X-CSRFToken': $('meta[name="token"]').attr('content')
+				    },
+				url : '${pageContext.request.contextPath}/user/save',
+				type : 'POST',
+				contentType : 'application/json',
+				data : JSON.stringify(user),
+				success : function(data){
+					console.log("data telah disimpan");
+					$('#addUserModal').modal('hide');
+					 window.location = "${pageContext.request.contextPath}/user";
+					/*  loadData();  */
+
+				},
+				error : function(){
+					$('#addUserModal').modal('hide');
+					console.log("data error");
+				}
+			});
+	
+	});
+	
+	
+	
 	
 	
 	 /* ini adalah fungsi get user login dr controller */

@@ -20,6 +20,11 @@ public class MasterEmployeeService {
 	@Autowired
 	MasterUserDao userDao;
 	
+	public List<MasterEmployee> getAllEmployee() {
+		 
+		return employeeDao.getAllEmployee();
+	}
+	
 	public List<MasterEmployee> getEmployeesNotInUser(){
 		List<MasterUser> users= userDao.getAll();
 		List<Integer> idEmployees= new ArrayList();
