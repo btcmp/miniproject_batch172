@@ -1,64 +1,44 @@
 package com.marcomm.controller;
-/*package com.marcomm.controller;
+
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.marcomm.model.MasterEmployee;
-import com.marcomm.model.MasterRole;
-import com.marcomm.model.MasterUser;
-import com.marcomm.service.MasterUserService;
+import com.marcomm.model.MasterProduct;
+import com.marcomm.model.TransaksiEvent;
+import com.marcomm.service.MasterProductService;
+import com.marcomm.service.TransaksiDesignService;
+import com.marcomm.service.TransaksiEventService;
 
 @Controller
-@RequestMapping("/transaksidesign")
-public class TransaksiDesign {
-
+@RequestMapping("/design")
+public class TransaksiDesignController {
+	
 	@Autowired
-	MasterUserService userService;
-	
+	MasterProductService masterProductService;
+	@Autowired
+	TransaksiEventService eventService;
+	@Autowired
+	TransaksiDesignService transaksiDesignService;
 	@RequestMapping
-	public String index(Model model) {
-		List<MasterRole> roles= userService.getAllRole();
-		List<MasterEmployee> employees= userService.getAllEmployee();
-		model.addAttribute("roles", roles);
-		model.addAttribute("employees", employees);
-		return "user";
-		
+	public ModelAndView index() {
+		ModelAndView modelAndView = new ModelAndView("transaksidesign");
+		List<MasterProduct> products = masterProductService.getAll();
+		List<TransaksiEvent> events = eventService.getAllService();
+		modelAndView.addObject("events", events);
+		modelAndView.addObject("products", products);
+		return modelAndView;
 	}
 	
-	@RequestMapping(value="/save", method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	public void save(@RequestBody MasterUser masterUser) {
-		userService.save(masterUser);
-	}
-	
-	
-	
-	@RequestMapping(value="/getall",method=RequestMethod.GET)
+	@RequestMapping(value="/getcode",method=RequestMethod.GET)
 	@ResponseBody
-	public List<MasterUser> getAllUser(){
-		return userService.getAll();
+	public String getCode() {
+		return transaksiDesignService.getCodeById();
 	}
-	
-	
-	
-	@RequestMapping(value="/getbyid/{id}", method=RequestMethod.GET)
-	@ResponseBody
-	public MasterUser getEmpById(@PathVariable("id") int id) {
-		MasterUser master = userService.getById(id);
-		return master;
-	}
-
-
 }
-*/

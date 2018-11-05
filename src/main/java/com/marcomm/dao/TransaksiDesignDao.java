@@ -10,6 +10,7 @@ public interface TransaksiDesignDao {
 	public void delete (TransaksiDesign tDesign);
 	public void update (TransaksiDesign tDesign);
 	public TransaksiDesign getById(int id);
+	public String getCodeById();
 	public List<TransaksiDesign> getAll();
 	
 }

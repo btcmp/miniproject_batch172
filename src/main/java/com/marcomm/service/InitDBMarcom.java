@@ -47,7 +47,7 @@ public class InitDBMarcom {
 		
 		//insert user
 		MasterUser userAdmin = new MasterUser();
-		userAdmin.setUsername("aaaaa"); 
+		userAdmin.setUsername("Administrator"); 
 		userAdmin.setPassword(encodePassword("12345"));
 		userAdmin.setmEmployeeId(1);
 		userAdmin.setmRole(role1);
@@ -60,7 +60,7 @@ public class InitDBMarcom {
 		employee1.setId(1);
 		employee1.setEmployeeName("anggi");
 		initDBService.saveEmployee(employee1);
-		employee2.setEmployeeName("diaz");
+		employee2.setEmployeeName("Diaz Fatahillah");
 		initDBService.saveEmployee(employee2);
 		employee3.setEmployeeName("Shinta");
 		initDBService.saveEmployee(employee3);

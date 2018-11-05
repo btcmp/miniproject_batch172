@@ -35,10 +35,13 @@
 				<value>com.marcomm.model.MasterMenu</value>
 				<value>com.marcomm.model.MasterMenuAccess</value>
 				<value>com.marcomm.model.TransaksiEvent</value>
+				<value>com.marcomm.model.TransaksiSouvenir</value>
 				<value>com.marcomm.model.MasterUser</value>
 				<value>com.marcomm.model.TransaksiDesign</value>
 				<value>com.marcomm.model.MasterEmployee</value>
 				<value>com.marcomm.model.MasterRole</value>
+				<value>com.marcomm.model.MasterSouvenir</value>
+
 			</list>
 		</property>
 		<property name="hibernateProperties">

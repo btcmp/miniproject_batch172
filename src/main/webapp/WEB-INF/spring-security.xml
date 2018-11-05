@@ -15,6 +15,24 @@
 			access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/event"
 			access="hasRole('ROLE_ADMIN')" />
+			<!-- MASTER PRODUCT -->
+		<intercept-url pattern="/product*"
+			access="hasRole('ROLE_ADMIN')" />
+			<!-- TRANSAKSI DESIGN -->
+		<intercept-url pattern="/design*"
+			access="hasRole('ROLE_ADMIN')" />
+			<!-- MASTER UNIT -->
+		<intercept-url pattern="/unit*"
+			access="hasRole('ROLE_ADMIN')" />
+			<!-- TRANSAKSI SOUVENIR -->
+		<intercept-url pattern="/transaksisouvenir*"
+			access="hasRole('ROLE_ADMIN')" />
+			<!-- MASTER UNIT -->
+			<intercept-url pattern="/unit*"
+			access="hasRole('ROLE_ADMIN')" />
+			<!-- TRANSAKSI SOUVENIR -->
+			<intercept-url pattern="/transaksisouvenir*"
+			access="hasRole('ROLE_ADMIN')" />
 		 
 		<form-login login-page="/login"
 			default-target-url="/user"

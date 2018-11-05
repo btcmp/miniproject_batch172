@@ -13,16 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterProduct;
+import com.marcomm.service.FungsiService;
 
 @Repository
 public class MasterProductDaoImpl implements MasterProductDao{
 
 	@Autowired
 	SessionFactory sessionFactory;	
-	
 	public void save(MasterProduct masterProduct) {
 		// TODO save data
-		masterProduct.setCreatedBy("Admin");
+		masterProduct.setCreatedBy(FungsiService.getUserLog());
 		Date now = new Date();
 		masterProduct.setCreatedDate(now);
 		Session session = sessionFactory.getCurrentSession();
@@ -61,7 +61,6 @@ public class MasterProductDaoImpl implements MasterProductDao{
 				if (masterProduct==null) {
 					return "PR0001";
 				} else {
-					System.out.println(masterProduct.getCode());
 					String prefix = masterProduct.getCode().substring(0, 2);
 					String angka = masterProduct.getCode().substring(2);
 					int increment = Integer.valueOf(angka)+1;

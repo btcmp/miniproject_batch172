@@ -89,6 +89,9 @@ public class TransaksiDesignService {
 		return tDesignDao.getById(id);
 	}
 
+	public String getCodeById() {
+		return tDesignDao.getCodeById();
+	}
 	 
 
 }
