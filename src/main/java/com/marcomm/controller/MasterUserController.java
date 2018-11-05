@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
+import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.MasterUserService;
 
 @Controller
@@ -24,13 +25,17 @@ public class MasterUserController {
 	
 	@Autowired
 	MasterUserService userService;
+	@Autowired
+	MasterEmployeeService employeeService;
 	
+	 
 	@RequestMapping
 	public String index(Model model) {
 		List<MasterRole> roles= userService.getAllRole();
-		List<MasterEmployee> employees= userService.getAllEmployee();
-		model.addAttribute("roles", roles);
-		model.addAttribute("employees", employees);
+		 List<MasterEmployee> employees= employeeService.getEmployeesNotInUser();
+		
+		model.addAttribute("roles", roles); 
+		model.addAttribute("employees", employees); 
 		return "user";
 		
 	}

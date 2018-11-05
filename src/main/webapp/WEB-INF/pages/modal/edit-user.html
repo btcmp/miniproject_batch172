@@ -34,7 +34,7 @@
 
 								 
 									<select class="custom-select" id="employeeEdit">
-										<option selected>Choose...</option>
+										<option id="employeeEditPost" selected>Choose...</option>
 									<c:forEach var="employee" items="${employees}">
 											<option value="${employee.id}">${employee.employeeName}</option>
 										</c:forEach>

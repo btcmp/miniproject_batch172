@@ -208,8 +208,8 @@ $(document).ready(function(){
 			type : 'GET',
 			success : function(data) {
 				 ;
-				 $('#employeeView').val(data.mEmployeeId);
-				 $('#roleView').val(data.mRole.id);
+				 $('#employeeView').val(data.employee.employeeName);
+				 $('#roleView').val(data.mRole.roleName);
 				 $('#usernameView').val(data.username);
 				 $('#passwordView').val(data.password);
 				 $('#rpasswordView').val(data.password);
@@ -235,10 +235,11 @@ $(document).ready(function(){
 										$('#EditId').val(data.id);
 										/* $('#EditCreatedDate').val(data.createdDate); */
 										$('#EditCreatedBy').val(data.createdBy);
-										 $('#employeeEdit').val(data.mEmployeeId);
+										 $('#employeeEditPost').html(data.employee.employeeName).val(data.employee.id);
 										 $('#roleEdit').val(data.mRole.id);
 										 $('#usernameEdit').val(data.username);
 										 $('#passwordEdit').val(data.password);
+										 $('#rpasswordEdit').val(data.password);
 										console.log(data);
 										$('#editUserModal').modal();
 									},
@@ -255,8 +256,10 @@ $(document).ready(function(){
 						/* createdDate : $('#EditCreatedDate').val(), */
 						createdBy : $('#EditCreatedBy').val(),
 						username : $('#usernameEdit').val(),
-						password : $('#passwordEdit').val(),
-						mEmployeeId : $('#employeeEdit').val(),
+						password : $('#passwordEdit').val(), 
+						employee :{
+							id: $('#employeeEdit').val()
+						} ,
 						mRole :{
 							id: $('#roleEdit').val()
 						} 
@@ -271,7 +274,8 @@ $(document).ready(function(){
 					success : function(data){
 						console.log("data telah diupdate");
 						$('#editUserModal').modal('hide');
-						loadData();
+
+						 window.location = "${pageContext.request.contextPath}/user";
 					},
 					error : function(){
 						console.log("data error");
@@ -321,7 +325,9 @@ $(document).ready(function(){
 			 var user = {
 						username : $('#username').val(),
 						password : $('#password').val(),
-						mEmployeeId : $('#employee').val(),
+						employee :{
+							id: $('#employee').val()
+						},
 						mRole :{
 							id: $('#role').val()
 						}
@@ -338,7 +344,9 @@ $(document).ready(function(){
 					success : function(data){
 						console.log("data telah disimpan");
 						$('#addUserModal').modal('hide');
-						 loadData(); 
+						 window.location = "${pageContext.request.contextPath}/user";
+						/*  loadData();  */
+
 					},
 					error : function(){
 						$('#addUserModal').modal('hide');
@@ -390,7 +398,7 @@ $(document).ready(function(){
 			tRow +='<a id="'+user.id+'" href="#" class="btn-view-user"><span class="oi oi-magnifying-glass"></span></a>';
 			tRow +=' ';
 			tRow +='<a id="'+user.id+'" href="#" class="btn-delete-user"><span class="oi oi-trash"></span></a>';
-			 oTable.row.add([index,user.mEmployeeId, user.mRole.roleName,user.mEmployeeId,user.username,user.createdDate,user.createdBy,tRow]);
+			 oTable.row.add([index,user.employee.employeeName, user.mRole.roleName,user.employee.employeeName,user.username,user.createdDate,user.createdBy,tRow]);
 		
 /* 		var oTable = $('#userTable');
 		var tBody = oTable.find('tBody');

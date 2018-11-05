@@ -32,13 +32,15 @@
 									Employee </label>
 								<div class="col-sm-9">
 
-								<select class="custom-select" id="employeeView">
-										<option selected>Choose...</option>
-											<option value="" selected>Choose...</option>
+								<!-- <select class="custom-select" id="employeeViewSelect" value="1"> 
+											<option value="1" id= "employeeView">Choose...</option>
 											<c:forEach var="employee" items="${employees}">
 											<option value="${employee.id}">${employee.employeeName}</option>
 										</c:forEach>
-									</select>
+									</select> -->
+									
+									<input type="text" class="form-control" id="employeeView"
+										placeholder="User name..." disabled>
 									
 									
 								</div>
@@ -66,12 +68,15 @@
 								<label for="roleView" class="col-sm-3 col-form-label"> Role</label>
 								<div class="col-sm-9">
 									 
-									<select class="custom-select" id="roleView">
+									 		<input type="text" class="form-control" id="roleView"
+										placeholder="User name..." disabled>
+									 
+								<!-- 	<select class="custom-select" id="roleView" readonly>
 										<option selected>Choose...</option>
 										<c:forEach var="role" items="${roles}">
-											<option value="${role.id}">${role.roleName}</option>
+											<option value="${role.id}" readonly>${role.roleName}</option>
 										</c:forEach>
-									</select>
+									</select> -->
 
 								</div>
 

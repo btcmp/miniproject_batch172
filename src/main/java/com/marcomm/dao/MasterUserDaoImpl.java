@@ -87,6 +87,7 @@ public class MasterUserDaoImpl implements MasterUserDao {
 		List<MasterEmployee> listEmployee = session.createCriteria(MasterEmployee.class).list();
 		return listEmployee;
 	}
+	
 
  
 
