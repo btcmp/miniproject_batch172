@@ -238,6 +238,7 @@ $(document).ready(function(){
 				$('#description').val('');
 				
 				$('#addUnitModal').modal('hide');
+			
 				//modal data saved pop up
 				/* $('#dataAddedModal').modal();
 				setTimeout(function(){

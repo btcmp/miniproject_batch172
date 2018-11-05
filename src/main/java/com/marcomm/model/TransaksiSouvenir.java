@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,9 +35,10 @@ public class TransaksiSouvenir {
 	@Column(nullable=false, length=11)
 	private String type;
 	
-	
-	@Column(name="t_event_id", length=50)
-	private	int tEventId;
+	//@Column(name="t_event_id", length=50)
+	@ManyToOne
+	@JoinColumn(name="t_event_id")
+	private	TransaksiEvent transaksiEvent;
 	
 	@Column(name="request_by", length=50, nullable=false)
 	private int requestBy;
@@ -120,12 +123,12 @@ public class TransaksiSouvenir {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int gettEventId() {
+	/*public int gettEventId() {
 		return tEventId;
 	}
 	public void settEventId(int tEventId) {
 		this.tEventId = tEventId;
-	}
+	}*/
 	public int getRequestBy() {
 		return requestBy;
 	}
@@ -240,6 +243,12 @@ public class TransaksiSouvenir {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
+
+	public TransaksiEvent getTransaksiEvent() {
+		return transaksiEvent;
+	}
+	public void setTransaksiEvent(TransaksiEvent transaksiEvent) {
+		this.transaksiEvent = transaksiEvent;
+	}
 
 }
