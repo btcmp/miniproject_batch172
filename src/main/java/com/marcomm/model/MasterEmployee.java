@@ -31,6 +31,10 @@ public class MasterEmployee {
 	@OneToOne
 	private MasterUser user;
 
+	@ManyToOne
+	@Column(name="Company_id")
+	private MasterCompany company;
+
 	public int getId() {
 		return id;
 	}
@@ -54,11 +58,15 @@ public class MasterEmployee {
 	public void setUser(MasterUser user) {
 		this.user = user;
 	}
+
+	public MasterCompany getCompany() {
+		return company;
+	}
+
+	public void setCompany(MasterCompany company) {
+		this.company = company;
+	}
 	
 	
-	
-	 
-	 
-	 
 	
 }
