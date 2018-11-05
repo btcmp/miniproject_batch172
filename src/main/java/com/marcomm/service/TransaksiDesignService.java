@@ -8,20 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.MasterUserDao;
-import com.marcomm.dao.TransDesignDao;
+import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.model.MasterUser;
-import com.marcomm.model.TransDesign;
+import com.marcomm.model.TransaksiDesign;
 
 @Service
 @Transactional
-public class TransDesignService {
+public class TransaksiDesignService {
 
 	@Autowired
-	TransDesignDao tDesignDao;
+	TransaksiDesignDao tDesignDao;
 	Date dateNow= new Date();
 	
 	
-	public void add(TransDesign tDesign) {
+	public void add(TransaksiDesign tDesign) {
 		tDesign.setCreatedDate(dateNow);
 		tDesign.setUpdatedDate(dateNow);
 		tDesign.setRequestDate(dateNow);
@@ -36,9 +36,9 @@ public class TransDesignService {
 	}
 	
 	
-	public void edit(TransDesign tDesign) {
+	public void edit(TransaksiDesign tDesign) {
 		
-		TransDesign tDesignOld=tDesignDao.getById(tDesign.getId());
+		TransaksiDesign tDesignOld=tDesignDao.getById(tDesign.getId());
 		
 		tDesignOld.setUpdatedDate(dateNow); 
 		tDesignOld.setUpdatedBy(FungsiService.getUserLog());
@@ -51,9 +51,9 @@ public class TransDesignService {
 		// TODO Auto-generated method stub
 	}
 	
-	public void approve(TransDesign tDesign) {
+	public void approve(TransaksiDesign tDesign) {
 		
-		TransDesign tDesignOld=tDesignDao.getById(tDesign.getId());
+		TransaksiDesign tDesignOld=tDesignDao.getById(tDesign.getId());
 		tDesignOld.setUpdatedDate(dateNow); 
 		tDesignOld.setApprovedDate(dateNow);
 		tDesignOld.setUpdatedBy(FungsiService.getUserLog());
@@ -68,7 +68,7 @@ public class TransDesignService {
 	
 	
 	
-	public void delete(TransDesign tDesign) {
+	public void delete(TransaksiDesign tDesign) {
 		tDesign.setCreatedDate(dateNow);
 		tDesign.setUpdatedDate(dateNow); 
 		tDesign.setUpdatedBy(FungsiService.getUserLog());
@@ -78,13 +78,13 @@ public class TransDesignService {
 		// TODO Auto-generated method stub
 	}
 	
-	public List<TransDesign> getAll() {
+	public List<TransaksiDesign> getAll() {
 		
 		return tDesignDao.getAll();
 	}
 
 	
-	public TransDesign getById(int id) {
+	public TransaksiDesign getById(int id) {
 		// TODO Auto-generated method stub
 		return tDesignDao.getById(id);
 	}

@@ -6,22 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.marcomm.dao.EventDao;
-import com.marcomm.model.Event;
+import com.marcomm.dao.TransaksiEventDao;
+import com.marcomm.model.TransaksiEvent;
 
 @Service
 @Transactional
-public class EventService {
+public class TransaksiEventService {
 
 	@Autowired
-	EventDao eventDao;
+	TransaksiEventDao eventDao;
 
-	public void saveEvent(Event event) {
+	public void saveEvent(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		eventDao.save(event);
 	}
 
-	public List<Event> getAllService() {
+	public List<TransaksiEvent> getAllService() {
 		// TODO Auto-generated method stub
 		return eventDao.getAll();
 	}
