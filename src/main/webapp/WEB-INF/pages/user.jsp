@@ -219,7 +219,7 @@ $(document).ready(function(){
 			dataType : 'json'
 		});
 	
-	});
+	}); 
 	
 	
 	
