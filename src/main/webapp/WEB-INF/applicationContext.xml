@@ -42,7 +42,6 @@
 				<value>com.marcomm.model.MasterRole</value>
 				<value>com.marcomm.model.MasterSouvenir</value>
 				<value>com.marcomm.model.TransaksiSouvenirItem</value>
-
 			</list>
 		</property>
 		<property name="hibernateProperties">

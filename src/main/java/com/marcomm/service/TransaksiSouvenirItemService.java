@@ -28,6 +28,7 @@ public class TransaksiSouvenirItemService {
 		transaksiSouvenirItem.setCreatedDate(date);
 		transaksiSouvenirItem.setDelete(false);
 		transaksiSouvenirItemDao.save(transaksiSouvenirItem);
+		
 	}
 
 

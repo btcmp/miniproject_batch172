@@ -6,7 +6,6 @@ import com.marcomm.model.TransaksiSouvenirItem;
 
 public interface TransaksiSouvenirItemDao {
 	
-	
 	public void save(TransaksiSouvenirItem transaksiSouvenirItem);
 	
 	

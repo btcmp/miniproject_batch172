@@ -20,12 +20,10 @@ public class TransaksiSouvenirItemController {
 	@Autowired
 	TransaksiSouvenirService transaksiSouvenirService;
 	
-	
 	@RequestMapping
 	public String Index(){
 	
 		return "souveniritem";
-		
 	}
 
 }

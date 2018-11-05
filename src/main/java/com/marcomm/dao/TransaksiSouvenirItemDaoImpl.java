@@ -19,7 +19,6 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 		Session session=sessionFactory.getCurrentSession();
 		session.save(transaksiSouvenirItem);
 		
-		
 	}
 
 	public List<TransaksiSouvenirItem> getAllSouvenirItem() {
