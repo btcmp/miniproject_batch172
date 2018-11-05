@@ -152,6 +152,7 @@ $(document).ready(function(){
 		uiLibrary: 'bootstrap4'
 	});
 	var Id = 1; // used by the addFile() function to keep track of IDs
+	var index = 0;
 	$(document).on('click','#addBtn',function(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/design/getcode',
@@ -161,27 +162,42 @@ $(document).ready(function(){
 				$('#transactionCode').val(data);
 			}
 		});
+		$.ajax({
+			url : '${pageContext.request.contextPath}/design/getrequestby',
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				$('#requestBy').val(data);
+			}
+		})
+		var now = new Date();
+		var tahun = now.getFullYear();
+		var bulan = now.getMonth();
+		var tanggal = now.getDate();
+		var formatTanggal = ("0"+tanggal).slice(-2);
+		$('#requestDate').val(tahun+'-'+bulan+'-'+formatTanggal);
 		$('#addDesignTransactionModal').modal();
 	});	
 	$('#addItemBtn').on('click',function(){
 
 		    Id++; // increment fileId to get a unique ID for the new element
+		    index++;
 		  	var oTable = $('#itemsTable');
 		    var tBody = oTable.find('tbody');
 		    var tRow =	'<tr id="items-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="items" style="width:150px">'+
+			tRow += '<td><select class="custom-select" id="productItem'+Id+'" name="details['+index+'].mProductId" style="width:150px">'+
 							'<option value="" selected>Choose...</option>'+
 								'<c:forEach var="product" items="${products}">'+
 								'<option value="${product.id}">${product.name}</option>'+
 							'</c:forEach>'+
 						'</select></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="description" readonly></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Title"></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Request PIC"></td>';
-			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" placeholder="Due Date"></td>';
-			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" placeholder="Start Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" placeholder="End Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Note"></td>';
+			tRow += '<td><input type="text" class="form-control" id="description'+Id+'" placeholder="description" readonly></td>';
+			tRow += '<td><input type="text" class="form-control" name="details['+index+'].titleItem" placeholder="Title"></td>';
+			tRow += '<td><input type="text" class="form-control" name="details['+index+'].requestPic" placeholder="Request PIC"></td>';
+			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" name="details['+index+'].requestDueDate" placeholder="Due Date"></td>';
+			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" name="details['+index+'].startDate" placeholder="Start Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" name="details['+index+'].endDate" placeholder="End Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" name="details['+index+'].note" placeholder="Note"></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="btn-update-design"><span class="oi oi-pencil"></span></a>';
 			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
 			tRow +=	'</tr>';
@@ -201,19 +217,45 @@ $(document).ready(function(){
 				autoclose:true,
 				uiLibrary: 'bootstrap4'
 			});
+			$('#productItem'+Id).on('change',function(){
+				var select = this;
+				var productId = select[select.selectedIndex].value;
+				$.ajax({
+					url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+					type : 'GET',
+					success : function(data){
+						$('#description'+Id).val(data.description);
+					}
+				});
+			});
+			
 	});
+	$('#addFormDesign').submit(function(){
+		var data =  $(this).serializeArray();
+	    var indexed_array = {};
+
+	    $.map(data, function(n, i){
+	        indexed_array[n['name']] = n['value'];
+	    });
+		//var data = $(this).serialize();
+		var dataJson = indexed_array;
+		var dataJson2 = JSON.stringify(dataJson);
+		console.log(dataJson2)
+		return false;
+	});
+
 	$(document).on('click','.btn-delete-design',function(){
 		var id = $(this).attr('id');
 		$('#items-'+id).remove();
 	});
-	$(document).on('change','#productItem',function(){
-		var select = productItem;
+	$('#productItem1').on('change',function(){
+		var select = this;
 		var productId = select[select.selectedIndex].value;
 		$.ajax({
 			url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
 			type : 'GET',
 			success : function(data){
-				$('#description').val(data.description);
+				$('#description1').val(data.description);
 			}
 		});
 	});

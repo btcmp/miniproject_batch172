@@ -20,7 +20,7 @@ public class MasterEmployee {
 
 	@Id
 	@NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id;
 	@Column(name="employee_name")
 	private String employeeName;

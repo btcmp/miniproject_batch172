@@ -37,11 +37,11 @@ public class InitDBMarcom {
 		MasterRole role2=new MasterRole();
 		MasterRole role3=new MasterRole();
 		role1.setId(1);
-		role1.setRoleName("ROLE_ADMIN"); 
+		role1.setRoleName("Administrator"); 
 		initDBService.saveRole(role1);
-		role2.setRoleName("ROLE_STAFF");
+		role2.setRoleName("Staff");
 		initDBService.saveRole(role2);
-		role3.setRoleName("ROLE_REQUEST");
+		role3.setRoleName("Requester");
 		initDBService.saveRole(role3);
 		
 		
@@ -58,7 +58,7 @@ public class InitDBMarcom {
 		MasterEmployee employee2=new MasterEmployee();
 		MasterEmployee employee3=new MasterEmployee();
 		employee1.setId(1);
-		employee1.setEmployeeName("anggi");
+		employee1.setEmployeeName("Anggi");
 		initDBService.saveEmployee(employee1);
 		employee2.setEmployeeName("Diaz Fatahillah");
 		initDBService.saveEmployee(employee2);
