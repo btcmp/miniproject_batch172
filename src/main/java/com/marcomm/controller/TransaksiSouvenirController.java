@@ -23,9 +23,8 @@ public class TransaksiSouvenirController {
 	TransaksiSouvenirService transaksiSouvenirService;
 	
 	@RequestMapping
-	@ResponseBody
 	public String index() {
-		return "selamat datang di transaksi souvenir rev1";
+		return "transaksi_souvenir";
 	}
 	
 	/*SAVE*/

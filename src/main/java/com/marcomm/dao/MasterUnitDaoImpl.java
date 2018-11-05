@@ -13,12 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterUnit;
+import com.marcomm.service.FungsiService;
 
 @Repository
 public class MasterUnitDaoImpl implements MasterUnitDao{
 
 	@Autowired
 	SessionFactory sessionFactory;
+	
+	@Autowired
+	FungsiService fungsiService;
 	
 	/*save data*/
 	public void saveMasterUnit(MasterUnit masterUnit) {
@@ -31,8 +35,8 @@ public class MasterUnitDaoImpl implements MasterUnitDao{
 		//set code
 		//masterUnit.setCode(getCode());
 		//session user login ---> belum fix
-		masterUnit.setCreatedBy("admin");
-		masterUnit.setUpdatedBy("admin");
+		masterUnit.setCreatedBy(fungsiService.getUserLog());
+		masterUnit.setUpdatedBy(fungsiService.getUserLog());
 		Session session = sessionFactory.getCurrentSession();
 		session.save(masterUnit);	
 	}
