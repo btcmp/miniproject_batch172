@@ -20,5 +20,7 @@ public interface MasterUserDao {
 	public List<MasterRole> getAllRole();
 
 	public List<MasterEmployee> getAllEmployee();
+
+	public List<MasterUser> getByName(String name);
  
 }

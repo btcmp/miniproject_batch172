@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,9 +32,14 @@ public class MasterUser {
 	@NotNull
 	private String password;
 
-	@Column(name = "m_employee_id")
+	/*@Column(name = "m_employee_id")
 	@NotNull
-	private int mEmployeeId;
+	private int mEmployeeId;*/
+	
+	@OneToOne
+	@JoinColumn(name="M_EMPLOYEE_ID")
+	private MasterEmployee employee;
+	
 	
 	@Column(name = "is_delete" , nullable=false, columnDefinition="number(1,0) default 0" )
 	private int isDelete;
@@ -97,14 +103,14 @@ public class MasterUser {
 
 
 
-	public int getmEmployeeId() {
-		return mEmployeeId;
+	public MasterEmployee getEmployee() {
+		return employee;
 	}
 
 
 
-	public void setmEmployeeId(int mEmployeeId) {
-		this.mEmployeeId = mEmployeeId;
+	public void setEmployee(MasterEmployee employee) {
+		this.employee = employee;
 	}
 
 
@@ -178,7 +184,7 @@ public class MasterUser {
 	public void setmRole(MasterRole mRole) {
 		this.mRole = mRole;
 	}
-	
+	 
 	//id=MasterUser.getMRole().getName();
 	 
 

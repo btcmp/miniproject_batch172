@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.marcomm.model.TransaksiSouvenir;
 
-public interface TransaksiSouvenirDao {
-	
+public interface TransaksiSouvenirDao {	
+
 	/*SAVE*/
 	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir);
 
@@ -20,6 +20,9 @@ public interface TransaksiSouvenirDao {
 
 	/*DELETE*/
 	public void deleteTransSouvenir(TransaksiSouvenir transaksiSouvenir);
+	
+	/*GET CODE*/
+	public String getCodeTrans();
 
 	
 	

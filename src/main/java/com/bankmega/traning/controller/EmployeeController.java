@@ -36,86 +36,86 @@ import com.bankmega.traning.service.EmployeeService;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
-
-	@InitBinder
-	public void dataBinding(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, "birthDate", new CustomDateEditor(dateFormat, true));
-	} 
-	
-	@Autowired
-	EmployeeService employeeService;
-	
-	@Autowired
-	DepartmentService departmentService;
-	
-	@ModelAttribute("employeeForm")
-	public Employee getEmployeeForm(){
-		return new Employee();
-	}
-	
-	@RequestMapping
-	public String getIndex(Model model){
-		List<Employee> employees = employeeService.getAllEmployee();
-		List<Department> departments = departmentService.getAllDepartments();
-		model.addAttribute("employees", employees);
-		model.addAttribute("departments", departments);
-		
-		return "employee-fd";
-	}
-	
-	//do save
-	@RequestMapping(value="/dosave", method=RequestMethod.POST)
-	public String save(@Valid @ModelAttribute("employeeForm") Employee employee, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
-
-		if(bindingResult.hasErrors()){
-			List<Employee> employees = employeeService.getAllEmployee();
-			List<Department> departments = departmentService.getAllDepartments();
-			model.addAttribute("employees", employees);
-			model.addAttribute("departments", departments);
-			
-			return "employee-fd";
-		}
-		employeeService.save(employee);
-		
-		redirectAttributes.addFlashAttribute("message", "Employee berhasil ditambahkan");
-		return "redirect:/employee";
-	}
-		
-	/*@RequestMapping
-	public String index(Model model){
-		
-		List<Employee> employees = employeeService.getAllEmployee();
-		model.addAttribute("employees", employees);
-		
-		return "employee";
-	}*/
-	
-	@RequestMapping(value="/save", method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	public void save(@RequestBody Employee employee ){
-			employeeService.save(employee);	
-	}
-	
-	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable int id){
-		employeeService.delete(id);
-	}
-	
-	@RequestMapping(value="/get/{id}", method=RequestMethod.GET)
-	@ResponseBody
-	public Employee getEmployeeById(@PathVariable int id){
-		Employee employee = employeeService.getEmployeeById(id);
-		
-		return employee;
-	}
-	
-	@RequestMapping(value="/example", method=RequestMethod.GET)
-	@ResponseBody
-	public String getExample(@RequestParam("data") String data){
-		System.out.println(""+ data);
-		return "value:  "+ data;
-	}
+//
+//	@InitBinder
+//	public void dataBinding(WebDataBinder binder) {
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//		dateFormat.setLenient(false);
+//		binder.registerCustomEditor(Date.class, "birthDate", new CustomDateEditor(dateFormat, true));
+//	} 
+//	
+//	@Autowired
+//	EmployeeService employeeService;
+//	
+//	@Autowired
+//	DepartmentService departmentService;
+//	
+//	@ModelAttribute("employeeForm")
+//	public Employee getEmployeeForm(){
+//		return new Employee();
+//	}
+//	
+//	@RequestMapping
+//	public String getIndex(Model model){
+//		List<Employee> employees = employeeService.getAllEmployee();
+//		List<Department> departments = departmentService.getAllDepartments();
+//		model.addAttribute("employees", employees);
+//		model.addAttribute("departments", departments);
+//		
+//		return "employee-fd";
+//	}
+//	
+//	//do save
+//	@RequestMapping(value="/dosave", method=RequestMethod.POST)
+//	public String save(@Valid @ModelAttribute("employeeForm") Employee employee, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+//
+//		if(bindingResult.hasErrors()){
+//			List<Employee> employees = employeeService.getAllEmployee();
+//			List<Department> departments = departmentService.getAllDepartments();
+//			model.addAttribute("employees", employees);
+//			model.addAttribute("departments", departments);
+//			
+//			return "employee-fd";
+//		}
+//		employeeService.save(employee);
+//		
+//		redirectAttributes.addFlashAttribute("message", "Employee berhasil ditambahkan");
+//		return "redirect:/employee";
+//	}
+//		
+//	/*@RequestMapping
+//	public String index(Model model){
+//		
+//		List<Employee> employees = employeeService.getAllEmployee();
+//		model.addAttribute("employees", employees);
+//		
+//		return "employee";
+//	}*/
+//	
+//	@RequestMapping(value="/save", method=RequestMethod.POST)
+//	@ResponseStatus(HttpStatus.OK)
+//	public void save(@RequestBody Employee employee ){
+//			employeeService.save(employee);	
+//	}
+//	
+//	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+//	@ResponseStatus(HttpStatus.OK)
+//	public void delete(@PathVariable int id){
+//		employeeService.delete(id);
+//	}
+//	
+//	@RequestMapping(value="/get/{id}", method=RequestMethod.GET)
+//	@ResponseBody
+//	public Employee getEmployeeById(@PathVariable int id){
+//		Employee employee = employeeService.getEmployeeById(id);
+//		
+//		return employee;
+//	}
+//	
+//	@RequestMapping(value="/example", method=RequestMethod.GET)
+//	@ResponseBody
+//	public String getExample(@RequestParam("data") String data){
+//		System.out.println(""+ data);
+//		return "value:  "+ data;
+//	}
 }

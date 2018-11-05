@@ -51,7 +51,10 @@
 									User Name </label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" id="username"
-										placeholder="User name..." required> 
+										placeholder="User name..." data-parsley-required  data-parsley-required-message="tidak boleh kosong"
+										data-parsley-minlength="8" data-parsley-minlength-message="minimal 8 karakter"
+										data-parsley-namecheck data-parsley-namecheck-message="Nama produk sudah ada"
+										> 
 								</div>
 
 							</div>

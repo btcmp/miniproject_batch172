@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.marcomm.dao.EmployeeDao;
 import com.marcomm.dao.MasterUserDao;
 import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterRole;
@@ -21,6 +22,8 @@ public class MasterUserService {
 	@Autowired
 	MasterUserDao userDao;
 
+	@Autowired
+	EmployeeDao employeeDao;
 	
 	 
 	
@@ -59,6 +62,11 @@ public class MasterUserService {
 	public List<MasterEmployee> getAllEmployee() {
 	 
 		return userDao.getAllEmployee();
+	}
+
+	public List<MasterUser> getByName(String username) {
+		// TODO Auto-generated method stub
+		return userDao.getByName(username);
 	}
 	
  

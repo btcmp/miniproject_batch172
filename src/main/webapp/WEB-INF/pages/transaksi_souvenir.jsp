@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page isELIgnored="false"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,8 @@
 <!-- css data table -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<!-- link css dashboard -->
+<link href="${pageContext.request.contextPath}/resources/assets/css/dashboard.css" rel="stylesheet" />
 
 <!-- parsley style -->
 <style>
@@ -28,105 +32,79 @@
 </style>
 <body>
 <body>
-<!-- Container -->
-<div id = "container-fluid" style="width : 80%; margin: auto">
-		<!-- HEADER -->		
-		<div class="card text-white bg-primary mb-3" style="width: 100%;">
-  			<div class="card-header">List Unit</div>
+<div class="container-fluid">
+		<div class="row">
+		<!-- DASHBOARD -->
+			<nav class="col-md-2 d-none d-md-block bg-primary sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link text-white" href="#">
+								 Dashboard	
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="#"> Master
+						</a></li>
+						<li class="nav-item"><a class="nav-link bg-warning text-white" href="#">
+								Souvenir
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="#"> Transaction	
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
+						</a></li>
+					</ul>
+					</div>
+			</nav><!-- END DASHBOARD -->
+			
+			<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
+				<div class="card text-white bg-primary mb-3">
+					<div class="card-header">List Souvenir Stock</div>
+				</div>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item"><a href="#">Master</a></li>
+						<li class="breadcrumb-item active" aria-current="page">List Souvenir Stock</li>
+					</ol>
+				</nav>
+				<table id="inputTable">
+				<thead>
+					<tr>
+						<th colspan="6"><p id="notif" style="width: 70%;display:none; padding-bottom: 10px; margin-bottom: 5px;" class="text-white bg-info border rounded form-control"></p></th>
+						<th><button class="btn btn-primary" id="addBtn" type="submit" style="width:100px; padding-bottom: 10px; margin-bottom: 5px;">Add</button></th>
+					</tr>
+					<tr>
+						<th></th>
+						<th><input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1"></th>
+						<th><input type="text" class="form-control" placeholder="Received By" id="data2" data-index="2"></th>
+						<th><input type="text" class="form-control"	placeholder="Received Date" id="data3" data-index="3" ></th>
+						<th><input type="text" class="form-control" placeholder="Created " id="data4" data-index="4"></th>
+						<th><input type="text" class="form-control" placeholder="Created By" id="data5" data-index="5"></th>
+						<th><a class="btn btn-warning" id="searchBtn" href="#" style="width:100px;">Search</a></th>
+					</tr>
+				</thead>
+				</table>
+				<table id="transSouTable" class="table DataTable mt-1">
+				<thead class="thead-light">
+					<tr>
+						<th>No.</th>
+						<th>Transaction Code</th>
+						<th>Received By</th>
+						<th>Received Date</th>
+						<th>Created Date</th>
+						<th>Created By</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			</div>
 		</div>
-<!-- end container -->
-
-		<!-- START NAVBAR -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<ul class="navbar-nav mr-auto">
-		      		<li class="nav-item">
-		        		<a class="nav-link" href="#">Home</a>
-		      		</li>
-		      		<li class="nav-item">
-		        		<a class="nav-link disabled" href="#">/</a>
-		      		</li>
-		      		<li class="nav-item">
-		        		<a class="nav-link" href="#">Master</a>
-		      		</li>
-		      		<li class="nav-item">
-		        		<a class="nav-link disabled" href="#">/</a>
-		      		</li>
-		      		<li class="nav-item active">
-		        		<a class="nav-link" href="#">List Souvenir Stock <span class="sr-only">(current)</span></a>
-		      		</li>
-		    	</ul>
-			</div>
-		</nav>
-		<!-- END NAVBAR -->
-
-<!-- BUTTON ADD -->
-	<form>
-		<div class="row" style="float:right; padding-bottom:10px; padding-top:10px">
-			<div class="col">
-				<a class="btn btn-primary" id="btn-add" href="#">Add</a>
-			</div>
-		</div> 
-		<div class="row" style="float:left; padding-bottom:10px; padding-top:10px">
-			<div class="col">
-				<p id="notif" style="width:100%; display:"none" class="text-white bg-info border rounded"></p>
-			</div>
-		</div> 
-	</form>
+	</div>
+	
+	
 		
-<!-- END BUTTON ADD -->
-
-<!-- FORM -->		
-		<form>
-			<div class="row" style="width: 100%; margin : auto">
-   				<div class="col">
-      				<input type="text" class="form-control" id="data1" data-index="1" placeholder="Transaction Code">
-   				</div>
-    			<div class="col">
-      				<input type="text" class="form-control" id="data2" data-index="2" placeholder="Received By">
-    			</div>
-    			<div class="col">
-      				<input type="text" class="form-control" id="data3" data-index="3" placeholder="Received Date">
-    			</div>
-    			<div class="col">
-      				<input type="text" class="form-control" id="data4" data-index="4" placeholder="Created">
-    			</div>
-    			<div class="col">
-      				<input type="text" class="form-control" id="data5" data-index="5" placeholder="Created By">
-    			</div>
-    			<a class="btn btn-warning" id="btn-search-unit" href="#">Search</a>	
-  			</div>
-		</form>
-		<hr/>
-<!-- END FORM -->
-
-<!-- TABLE -->
-		<table class="table table-striped table-hover DataTable" id="unitTable" style="width : 100%">
-			<thead>
-				<tr>
-					<th>No</th>
-					<th>Transaction Code</th>
-					<th>Received By</th>
-					<th>Received Date</th>
-					<th>Created Date</th>
-					<th>Created By</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-
-			</tbody>
-		</table>
-
-<!-- END TABLE -->
-
 </body>
+
 <!-- jquery link -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -144,5 +122,66 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+
+<!-- INCLUDE FILE -->
+<%@include file="/WEB-INF/pages/modal/modal_transaksi_souvenir.jsp" %>
+
+<!-- CODE JAVA SCRIPT START HERE -->
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/* DATE PICKER */
+	//created date
+	$('#data4').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		uiLibrary : 'bootstrap4'
+	});
+	//received date
+	$('#data3').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		uiLibrary : 'bootstrap4'
+	});
+	/* BUTTON POP UP ADD */
+	var Id = 1; //digunakan untuk menentukan id pada saat additem modal
+	$(document).on('click', '#addBtn', function(){
+		//tulis disini fungsi get code
+		$.ajax({
+			url : '${pageContext.request.contextPath}/transaksisouvenir/getcode',
+			type : 'GET',
+			success : function(data){
+				$('#transactionCode').val(data);
+			},
+			dataType : 'json'
+		});	
+		$('#addTranSouModal').modal();
+	});
+	
+	//add item modal
+	$(document).on('click', '#btnAddModalTransSou', function(){
+		Id++; //increment id add item modal
+		var oTable = $('#modalTableSouTrans');
+		var tBody = oTable.find('tbody');
+		var tRow = '<tr id="items'+Id+'">';
+			tRow += '<td><input type="text" class="form-control" placeholder="Souvenir Name"></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Qty"></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Note"></td>';
+			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>'+' ';
+			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>';
+			tRow += '</tr>';
+			tBody.append(tRow);
+	});
+	//remove added item
+	$(document).on('click', '.deleteBtnModalTransS', function(){
+		var id = $(this).attr('id');
+		$('#items'+id).remove();
+		});	
+
+	
+}) /* batas akhir ready function */
+
+</script>
 
 </html>

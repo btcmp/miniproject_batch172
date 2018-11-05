@@ -359,7 +359,7 @@
 		}); 
 	//ngesave EDIT
 	 $('#btn-edit-sv').on('click',function(){
-		var validate = $('#addForm').parsley();
+		var validate = $('#editForm').parsley();
 	 	if (validate.validate()){
 	 		var svnr= {
 	 				id:parseInt($('#editsvnrid').val()),
@@ -429,7 +429,7 @@
 			code:$('#deleteSvnrCode').val(),
 			name:$('#deleteSvnrName').val(),
 			masterUnit : {
-				id :$('#deleteSnvrUnit').val()
+				id :parseInt($('#deleteSnvrUnit').val())
 			},
 			description:$('#deleteSvnrDescription').val(),
 			quantity:parseInt($('#deleteSvnrQuantity').val()),

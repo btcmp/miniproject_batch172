@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
  
 import com.marcomm.model.MasterEmployee;
+import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
+import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.MasterUserService;
 
 @Controller
@@ -24,13 +26,19 @@ public class MasterUserController {
 	
 	@Autowired
 	MasterUserService userService;
+	@Autowired
+	MasterEmployeeService employeeService;
 	
+	 
 	@RequestMapping
 	public String index(Model model) {
 		List<MasterRole> roles= userService.getAllRole();
-		List<MasterEmployee> employees= userService.getAllEmployee();
-		model.addAttribute("roles", roles);
-		model.addAttribute("employees", employees);
+		 List<MasterEmployee> employeesNoUse= employeeService.getEmployeesNotInUser();
+		List<MasterEmployee> allEmployee= employeeService.getAllEmployee();
+		model.addAttribute("roles", roles); 
+		model.addAttribute("employees", employeesNoUse); 
+
+		model.addAttribute("allEmployee", allEmployee); 
 		return "user";
 		
 	}
@@ -57,6 +65,13 @@ public class MasterUserController {
 		MasterUser master = userService.getById(id);
 		return master;
 	}
+	
+	@RequestMapping(value="/getbyname/{username}",method=RequestMethod.GET)
+	@ResponseBody
+	public List<MasterUser> getByName(@PathVariable("username") String username){
+		return userService.getByName(username);
+	}
+	
 	/*, method=RequestMethod.DELETE*/
 /*	@RequestMapping(value="/delete/{id}")
 	@ResponseStatus(HttpStatus.OK)
