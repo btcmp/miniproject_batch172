@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.marcomm.model.FormTransaksiDesign;
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.MasterProductService;
@@ -36,9 +38,19 @@ public class TransaksiDesignController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="/save",method=RequestMethod.POST)
+	@ResponseBody
+	public void save(@RequestBody FormTransaksiDesign dataForm) {
+		
+	}
 	@RequestMapping(value="/getcode",method=RequestMethod.GET)
 	@ResponseBody
 	public String getCode() {
 		return transaksiDesignService.getCodeById();
+	}
+	@RequestMapping(value="/getrequestby",method=RequestMethod.GET)
+	@ResponseBody
+	public String getRequestBy() {
+		return transaksiDesignService.getRequestBy();
 	}
 }

@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.marcomm.model.TransaksiDesign;
+import com.marcomm.service.FungsiService;
 
  
 
@@ -19,24 +20,9 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 	@Autowired
 	SessionFactory sessionFactory;
 
-
-
-	
-	
 	public void save(TransaksiDesign tDesign) {
 		Session session=sessionFactory.getCurrentSession();
 		session.save(tDesign);	
-	}
-
-	public void delete(TransaksiDesign tDesign) {
-		Session session=sessionFactory.getCurrentSession();
-		session.update(tDesign);
-	}
-	
-
-	public void update(TransaksiDesign tDesign) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public TransaksiDesign getById(int id) {
@@ -66,6 +52,11 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 			String fullCode = kodeDepan+currentDate+String.format("%05d", increment);
 		return fullCode;
 		}
+	}
+
+	public String getRequestBy() {
+		String user = FungsiService.getUserLog();
+		return user;
 	}
 
 }

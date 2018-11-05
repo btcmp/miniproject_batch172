@@ -55,9 +55,7 @@ public class TransaksiDesign {
 	@Column(name = "reject_reason")
 	private String rejectReason;
 
-	
-
-	@Column(name = "is_delete")
+	@Column(name = "is_delete",columnDefinition="number(1,0) default 0",nullable=false)
 	private boolean isDelete;
 
 	@NotNull
