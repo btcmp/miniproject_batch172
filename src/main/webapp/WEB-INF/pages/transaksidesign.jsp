@@ -171,8 +171,8 @@ $(document).ready(function(){
 			tRow += '<td><input type="text" class="form-control" placeholder="Title"></td>';
 			tRow += '<td><input type="text" class="form-control" placeholder="Request PIC"></td>';
 			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" placeholder="Due Date"></td>';
-			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" placeholder="Start Date" readonly></td>';
-			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" placeholder="End Date" readonly></td>';
+			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" placeholder="Start Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" placeholder="End Date" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" placeholder="Note"></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="btn-update-design"><span class="oi oi-pencil"></span></a>';
 			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
@@ -193,7 +193,11 @@ $(document).ready(function(){
 				autoclose:true,
 				uiLibrary: 'bootstrap4'
 			});
-	})
+	});
+	$(document).on('click','.btn-delete-design',function(){
+		var id = $(this).attr('id');
+		$('#items-'+id).remove();
+	});
 	
 });
 

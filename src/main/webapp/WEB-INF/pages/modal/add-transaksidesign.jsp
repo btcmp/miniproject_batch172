@@ -56,7 +56,7 @@
 					<div class="bg-light border rounded" style="height: 50%;">
 						<div class="row">
 							<a class="btn btn-primary text-white" id="addItemBtn"
-								style="width: 100px; margin: 10px;">Add</a>
+								style="width: 100px; margin:20px;">Add</a>
 						</div>
 						<table id="itemsTable">
 						<thead>
@@ -73,7 +73,7 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr id="items-1">
+						<tr id="items">
 						<td><select class="custom-select" id="items" style="width:150px">
 										<option value="" selected>Choose...</option>
 											<c:forEach var="product" items="${products}">
@@ -85,11 +85,11 @@
 						<td><input type="text" class="form-control" placeholder="Title"></td>
 						<td><input type="text" class="form-control" placeholder="Request PIC"></td>
 						<td><input type="text" class="form-control" id="duedate1" placeholder="Due Date"></td>
-						<td><input type="text" class="form-control" id="startdate1" placeholder="Start Date" readonly></td>
-						<td><input type="text" class="form-control" id="enddate1" placeholder="End Date" readonly></td>
+						<td><input type="text" class="form-control" id="startdate1" placeholder="Start Date" disabled></td>
+						<td><input type="text" class="form-control" id="enddate1" placeholder="End Date" disabled></td>
 						<td><input type="text" class="form-control" placeholder="Note"></td>
-						<td><a href="#" class="btn-update-design"><span class="oi oi-pencil"></span></a>
-						<a href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a>
+						<td><a href="#" id="1" class="btn-update-design"><span class="oi oi-pencil"></span></a>
+						<a href="#" id="1" class="btn-delete-design"><span class="oi oi-trash"></span></a>
 						</td>
 						</tr>
 						</tbody>
