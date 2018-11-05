@@ -1,5 +1,6 @@
 package com.marcomm.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,15 +12,15 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.marcomm.model.Event;
+import com.marcomm.model.TransaksiEvent;
 
 @Repository
-public class EventDaoImpl implements EventDao {
+public class TransaksiEventDaoImpl implements TransaksiEventDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
 
-	public void save(Event event) {
+	public void save(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
 		
@@ -38,28 +39,32 @@ public class EventDaoImpl implements EventDao {
 				
 	}
 
-	public List<Event> getAll() {
+	public List<TransaksiEvent> getAll() {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Event.class);
+		Criteria criteria = session.createCriteria(TransaksiEvent.class);
 		
-		List<Event> events = criteria.add(Restrictions.eq("isDelete", false)).addOrder(Order.asc("id")).list();
+		List<TransaksiEvent> events = criteria.add(Restrictions.eq("isDelete", false)).addOrder(Order.asc("id")).list();
 		
 		return events;
 	}
 
 	public String getCodeEvent() {
 		// TODO Auto-generated method stub
-		String hql = "from Event ORDER BY id DESC";
+		String hql = "from TransaksiEvent ORDER BY id DESC";
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyy");
+		String currentDate = format.format(new Date());
+		String kodeDepan = "TRWOEV";
 		Session session = sessionFactory.getCurrentSession();
-		Event event = (Event) session.createQuery(hql).setMaxResults(1).uniqueResult();
+		TransaksiEvent event = (TransaksiEvent) session.createQuery(hql).setMaxResults(1).uniqueResult();
 		if(event==null) {
-			return "TRWOEVDDMMYY00001";
+			String angka = "00001";
+			String fullCode = kodeDepan+currentDate+angka;
+			return fullCode;
 		} else {
-			String prefix = event.getCode().substring(0, 12);
 			String angka = event.getCode().substring(12);
 			int increment = Integer.valueOf(angka)+1;
-			String endCode = prefix+String.format("%05d", increment);
+			String endCode = kodeDepan+currentDate+String.format("%05d", increment);
 			return endCode;
 		}
 		

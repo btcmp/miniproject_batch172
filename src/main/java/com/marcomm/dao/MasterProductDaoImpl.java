@@ -20,8 +20,6 @@ public class MasterProductDaoImpl implements MasterProductDao{
 
 	@Autowired
 	SessionFactory sessionFactory;	
-	@Autowired
-	FungsiService fungsiService;
 	public void save(MasterProduct masterProduct) {
 		// TODO save data
 		masterProduct.setCreatedBy(FungsiService.getUserLog());
@@ -63,7 +61,6 @@ public class MasterProductDaoImpl implements MasterProductDao{
 				if (masterProduct==null) {
 					return "PR0001";
 				} else {
-					System.out.println(masterProduct.getCode());
 					String prefix = masterProduct.getCode().substring(0, 2);
 					String angka = masterProduct.getCode().substring(2);
 					int increment = Integer.valueOf(angka)+1;

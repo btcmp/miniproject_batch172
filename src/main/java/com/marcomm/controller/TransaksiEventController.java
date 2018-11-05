@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.marcomm.model.Event;
-import com.marcomm.service.EventService;
+import com.marcomm.model.TransaksiEvent;
+import com.marcomm.service.TransaksiEventService;
 
 @Controller
 @RequestMapping("/event")
-public class EventController {
+public class TransaksiEventController {
 	
 	@Autowired
-	EventService eventService;
+	TransaksiEventService eventService;
 	
 	@RequestMapping
 	public String index() {
@@ -29,15 +29,15 @@ public class EventController {
 	//save data
 	@RequestMapping(value="/saveevent", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void save(@RequestBody Event event) {
+	public void save(@RequestBody TransaksiEvent event) {
 		eventService.saveEvent(event);
 	}
 	
 	//get all data
 	@RequestMapping(value="/getallevent", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Event> getAllEvent(){
-		List<Event> events = eventService.getAllService();
+	public List<TransaksiEvent> getAllEvent(){
+		List<TransaksiEvent> events = eventService.getAllService();
 		return events;
 	}
 	

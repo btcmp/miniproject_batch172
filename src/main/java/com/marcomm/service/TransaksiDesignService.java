@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.MasterUserDao;
-import com.marcomm.dao.TransDesignDao;
+import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiDesign;
 
 @Service
 @Transactional
-public class TransDesignService {
+public class TransaksiDesignService {
 
 	@Autowired
-	TransDesignDao tDesignDao;
+	TransaksiDesignDao tDesignDao;
 	Date dateNow= new Date();
 	
 	
@@ -89,6 +89,9 @@ public class TransDesignService {
 		return tDesignDao.getById(id);
 	}
 
+	public String getCodeById() {
+		return tDesignDao.getCodeById();
+	}
 	 
 
 }

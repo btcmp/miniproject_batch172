@@ -6,34 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.marcomm.dao.CompanyDao;
-import com.marcomm.model.Company;
+import com.marcomm.dao.MasterCompanyDao;
+import com.marcomm.model.MasterCompany;
 
 @Service
 @Transactional
-public class CompanyService {
+public class MasterCompanyService {
 
 	@Autowired
-	CompanyDao companyDao;
+	MasterCompanyDao companyDao;
 
-	public void saveCompany(Company company) {
+	public void saveCompany(MasterCompany company) {
 		// TODO Auto-generated method stub
 		companyDao.save(company);
 	}
 
-	public List<Company> getAllService() {
+	public List<MasterCompany> getAllService() {
 		// TODO Auto-generated method stub
 		return companyDao.getAll();
 	}
 
-	public Company getCompanyById(int id) {
+	public MasterCompany getCompanyById(int id) {
 		// TODO Auto-generated method stub
 		return companyDao.getCompanyById(id);
 	}
 
-	public void update(int id, Company company) {
+	public void update(int id, MasterCompany company) {
 		// TODO Auto-generated method stub
-		Company comp = companyDao.getCompanyById(id);
+		MasterCompany comp = companyDao.getCompanyById(id);
 		comp.setCode(company.getCode());
 		comp.setName(company.getName());
 		comp.setAddress(company.getAddress());
@@ -58,7 +58,7 @@ public class CompanyService {
 		companyDao.delete(id);
 	}
 
-	public List<Company> getCompanyByName(String name) {
+	public List<MasterCompany> getCompanyByName(String name) {
 		// TODO Auto-generated method stub
 		return companyDao.getCompanyByName(name);
 	}

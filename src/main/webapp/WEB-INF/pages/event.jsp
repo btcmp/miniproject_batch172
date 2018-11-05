@@ -172,9 +172,14 @@ $(document).ready(function(){
 			},
 			dataType: 'json'
 		});
-		$('#requestby').val();
+		var now = new Date();
+		var year = now.getFullYear();
+		var month = now.getMonth();
+		var date = now.getDate();
+		var formattedDate = ("0"+date).slice(-2);
+		$('#requestby').val("1");
 		$('#eventname').val();
-		$('#requestdate').val();
+		$('#requestdate').val(year+'-'+month+'-'+formattedDate);
 		$('#eventplace').val();
 		$('#note').val();
 		$('#eventstartdate').val();

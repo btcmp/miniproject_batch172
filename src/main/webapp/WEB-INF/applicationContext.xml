@@ -30,11 +30,12 @@
 				<value>com.bankmega.traning.model.Department</value>
 				<value>com.marcomm.model.MasterUnit</value>
 				<value>com.marcomm.model.MasterProduct</value>
-				<value>com.marcomm.model.Company</value>
+				<value>com.marcomm.model.MasterUser</value>
+				<value>com.marcomm.model.MasterCompany</value>
 				<value>com.marcomm.model.MasterMenu</value>
 				<value>com.marcomm.model.MasterMenuAccess</value>
+				<value>com.marcomm.model.TransaksiEvent</value>
 				<value>com.marcomm.model.TransaksiSouvenir</value>
-				<value>com.marcomm.model.Event</value>
 				<value>com.marcomm.model.MasterUser</value>
 				<value>com.marcomm.model.TransaksiDesign</value>
 				<value>com.marcomm.model.MasterEmployee</value>
