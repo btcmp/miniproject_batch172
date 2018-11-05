@@ -121,6 +121,8 @@
 	</div>
 
 	<%@include file="/WEB-INF/pages/modal/event-add.html"%>
+	<%@include file="/WEB-INF/pages/modal/event-view.html"%>
+	<%@include file="/WEB-INF/pages/modal/event-edit.html"%>
 
 </body>
 
@@ -174,7 +176,7 @@ $(document).ready(function(){
 		});
 		var now = new Date();
 		var year = now.getFullYear();
-		var month = now.getMonth();
+		var month = now.getMonth()+1;
 		var date = now.getDate();
 		var formattedDate = ("0"+date).slice(-2);
 		$('#requestby').val("1");
@@ -264,14 +266,91 @@ $(document).ready(function(){
 			console.log(index, event);
 			index++;
 		
-			var tableRow = "<a id="+event.id+" class='btn-view-comp'><span class='oi oi-magnifying-glass'></span></a>";
+			var tableRow = "<a id="+event.id+" class='btn-view-event'><span class='oi oi-magnifying-glass'></span></a>";
 				tableRow += " ";
-				tableRow += "<a id="+event.id+" class='btn-edit-comp'><span class='oi oi-pencil'></span></a>";
+				tableRow += "<a id="+event.id+" class='btn-edit-event'><span class='oi oi-pencil'></span></a>";
 				oTable.row.add([index,event.code,event.requestBy,event.requestDate,event.status,event.createdDate,event.createdBy,tableRow]);
 		});
 				oTable.draw();
 	}
-
+	
+	//BUTTON POP UP VIEW
+	$(document).on('click', '.btn-view-event', function(){
+		var id = $(this).attr('id');
+		console.log(id);
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+			type: 'GET',
+			success: function(output){
+				console.log(output);
+				$('#ViewButton').val(output.id);
+				$('#transactioncodeView').val(output.code);
+				$('#requestbyView').val(output.requestBy);
+				$('#eventnameView').val(output.eventName);
+				$('#requestdateView').val(output.requestDate);
+				$('#eventplaceView').val(output.place);
+				$('#noteView').val(output.note);
+				$('#eventstartdateView').val(output.startDate);
+				$('#eventenddateView').val(output.endDate);
+				$('#budgetView').val(output.budget);
+				$('#statusView').val(output.status);
+				$('#assigntoView').val(output.assignTo);
+			},
+			dataType: 'json'
+		});
+		$('#viewEventModal').modal();
+	});
+	
+	//BUTTON POP UP EDIT
+	$(document).on('click', '.btn-edit-event', function(){
+		var id = $(this).attr('id');
+		console.log(id);
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+			type: 'GET',
+			success: function(output){
+				console.log(output);
+				$('#EditButton').val(output.id);
+				$('#transactioncodeEdit').val(output.code);
+				$('#requestbyEdit').val(output.requestBy);
+				$('#eventnameEdit').val(output.eventName);
+				$('#requestdateEdit').val(output.requestDate);
+				$('#eventplaceEdit').val(output.place);
+				$('#noteEdit').val(output.note);
+				$('#eventstartdateEdit').val(output.startDate);
+				$('#eventenddateEdit').val(output.endDate);
+				$('#budgetEdit').val(output.budget);
+				$('#statusEdit').val(output.status);
+			},
+			dataType: 'json'
+		});
+		$('#editEventModal').modal();
+	});
+	
+	//BUTTON UPDATE TO UPDATE DATA
+	$('#btn-edit-event').on('click', function(){
+		var event = {
+				id: $('#EditButton').val();
+				code: $('#transactioncodeEdit').val();
+				requestBy: $('#requestbyEdit').val();
+				eventName: $('#eventnameEdit').val();
+				requestDate: $('#requestdateEdit').val();
+				place: $('#eventplaceEdit').val();
+				note: $('#noteEdit').val();
+				startDate: $('#eventstartdateEdit').val();
+				endDate: $('#eventenddateEdit').val();
+				budget: $('#budgetEdit').val();
+				status: $('#statusEdit').val();
+		};
+		console.log(event);
+		
+		$.ajax({
+			url: ''
+		});
+	});
+	
 });
 </script>
 </html>

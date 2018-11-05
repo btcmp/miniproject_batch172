@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -32,7 +33,7 @@ public class MasterEmployee {
 	private MasterUser user;
 
 	@ManyToOne
-	@Column(name="Company_id")
+	@JoinColumn(name="company_id")
 	private MasterCompany company;
 
 	public int getId() {

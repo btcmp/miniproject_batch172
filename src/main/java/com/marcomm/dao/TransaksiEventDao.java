@@ -12,4 +12,6 @@ public interface TransaksiEventDao {
 
 	public String getCodeEvent();
 
+	public TransaksiEvent getEventById(int id);
+
 }

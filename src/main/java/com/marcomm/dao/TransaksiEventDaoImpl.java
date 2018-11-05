@@ -69,4 +69,12 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		}
 		
 	}
+
+	@Override
+	public TransaksiEvent getEventById(int id) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		TransaksiEvent event = session.get(TransaksiEvent.class, id);
+		return event;
+	}
 }

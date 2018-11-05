@@ -30,4 +30,9 @@ public class TransaksiEventService {
 		// TODO Auto-generated method stub
 		return eventDao.getCodeEvent();
 	}
+
+	public TransaksiEvent getEventById(int id) {
+		// TODO Auto-generated method stub
+		return eventDao.getEventById(id);
+	}
 }

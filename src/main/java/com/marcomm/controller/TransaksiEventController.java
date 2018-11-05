@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,5 +47,13 @@ public class TransaksiEventController {
 	@ResponseBody
 	public String getCode() {
 		return eventService.getCode();
+	}
+	
+	//getid atau search
+	@RequestMapping(value="/searchevent/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public TransaksiEvent getEventById(@PathVariable("id") int id) {
+		TransaksiEvent event = eventService.getEventById(id);
+		return event;
 	}
 }
