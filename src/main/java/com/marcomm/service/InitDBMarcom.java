@@ -56,19 +56,19 @@ public class InitDBMarcom {
 		 
 		 
 		company1.setName("XSis Mitra Anggi");
-		company1.setCode("A0001");
+		company1.setCode("CP0001");
 		company1.setCreatedBy("anggi");
 		company1.setCreatedDate(new Date());  
 		company1.setIsDelete(false);
 		
 		company2.setName("XSis Mitra Anggi1");
-		company2.setCode("A0002");
+		company2.setCode("CP0002");
 		company2.setCreatedBy("anggi1");
 		company2.setCreatedDate(new Date());  
 		company2.setIsDelete(false);
 		
 		company3.setName("XSis Mitra Anggi2");
-		company3.setCode("A0003");
+		company3.setCode("CP0003");
 		company3.setCreatedBy("anggi2");
 		company3.setCreatedDate(new Date());  
 		company3.setIsDelete(false);
