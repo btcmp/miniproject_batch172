@@ -92,4 +92,50 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		Session session = sessionFactory.getCurrentSession();
 		session.update(event);
 	}
+
+	@Override
+	public void closeEvent(int id) {
+		// TODO Auto-generated method stub
+		TransaksiEvent event = new TransaksiEvent();
+		event = getEventById(id);
+		event.setStatus(3);
+		Date now = new Date();
+		event.setUpdatedDate(now);
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.update(event);
+	}
+
+	@Override
+	public void accept(TransaksiEvent event) {
+		// TODO Auto-generated method stub
+		event.setIsDelete(false);
+		
+		event.setCreatedBy("Sahid Triambudhi");
+		event.setRequestBy(1);
+		event.setStatus(2);
+		
+		Date now = new Date();
+		event.setUpdatedDate(now);
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.update(event);
+	}
+
+	@Override
+	public void reject(TransaksiEvent event) {
+		// TODO Auto-generated method stub
+		event.setIsDelete(false);
+		
+		event.setCreatedBy("Sahid Triambudhi");
+		event.setRequestBy(1);
+		event.setStatus(0);
+		
+		Date now = new Date();
+		event.setUpdatedDate(now);
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.update(event);
+	}
+
 }

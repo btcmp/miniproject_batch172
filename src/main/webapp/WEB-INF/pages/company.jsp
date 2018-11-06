@@ -354,7 +354,7 @@
 		});
 		
 		
-		//BUTTON POP UP UPDATE
+		//BUTTON POP UP CONFIRM TO UPDATE
 		$(document).on('click', '#btn-edit-comp', function(){			
 			$.ajax({
 				success: function(output){
@@ -408,6 +408,7 @@
 				type: 'GET',
 				success: function(output){
 					$('#DeleteButton').val(output.id);
+					$('#companycodeDelete').val(output.code);
 				},
 				dataType: 'json'
 			});
@@ -422,7 +423,7 @@
 			};
 			
 			//NOTIFICATION
-			document.getElementById("notification").innerHTML = "Data Deleted! Data company with code"+company.code+"has been deleted!";
+			document.getElementById("notification").innerHTML = "Data Deleted! Data company with code " +company.code+ " has been deleted!";
 			$('#notification').show('slow').delay(1500).hide('slow');
 			
 			$.ajax({
