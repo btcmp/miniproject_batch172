@@ -14,4 +14,6 @@ public interface TransaksiEventDao {
 
 	public TransaksiEvent getEventById(int id);
 
+	public void update(TransaksiEvent event);
+
 }

@@ -162,6 +162,16 @@ $(document).ready(function(){
 		autoclose: true,
 		uiLibrary: 'bootstrap4'
 	});
+  	$('#eventstartdateEdit').datepicker({
+		format: 'yyyy-mm-dd',
+		autoclose: true,
+		uiLibrary: 'bootstrap4'
+	});
+  	$('#eventenddateEdit').datepicker({
+		format: 'yyyy-mm-dd',
+		autoclose: true,
+		uiLibrary: 'bootstrap4'
+	});
   
 		
 	//BUTTON POP UP ADD
@@ -274,7 +284,7 @@ $(document).ready(function(){
 				oTable.draw();
 	}
 	
-	//BUTTON POP UP VIEW
+	//BUTTON POP UP VIEW FOR CLOSE REQUEST
 	$(document).on('click', '.btn-view-event', function(){
 		var id = $(this).attr('id');
 		console.log(id);
@@ -332,23 +342,31 @@ $(document).ready(function(){
 	//BUTTON UPDATE TO UPDATE DATA
 	$('#btn-edit-event').on('click', function(){
 		var event = {
-				id: $('#EditButton').val();
-				code: $('#transactioncodeEdit').val();
-				requestBy: $('#requestbyEdit').val();
-				eventName: $('#eventnameEdit').val();
-				requestDate: $('#requestdateEdit').val();
-				place: $('#eventplaceEdit').val();
-				note: $('#noteEdit').val();
-				startDate: $('#eventstartdateEdit').val();
-				endDate: $('#eventenddateEdit').val();
-				budget: $('#budgetEdit').val();
-				status: $('#statusEdit').val();
+				id: $('#EditButton').val(),
+				code: $('#transactioncodeEdit').val(),
+				requestBy: $('#requestbyEdit').val(),
+				eventName: $('#eventnameEdit').val(),
+				requestDate: $('#requestdateEdit').val(),
+				place: $('#eventplaceEdit').val(),
+				note: $('#noteEdit').val(),
+				startDate: $('#eventstartdateEdit').val(),
+				endDate: $('#eventenddateEdit').val(),
+				budget: $('#budgetEdit').val(),
+				status: $('#statusEdit').val()
 		};
 		console.log(event);
 		
 		$.ajax({
-			url: ''
+			url: '${pageContext.request.contextPath}/event/updateevent/' +event.id,
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(event),
+			success: function(data){
+				console.log("data berhasil disimpan");
+				loadData();
+			}
 		});
+		$('#editEventModal').modal('hide');
 	});
 	
 });

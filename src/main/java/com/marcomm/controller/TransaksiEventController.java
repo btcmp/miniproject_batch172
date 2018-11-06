@@ -56,4 +56,11 @@ public class TransaksiEventController {
 		TransaksiEvent event = eventService.getEventById(id);
 		return event;
 	}
+	
+	//update data
+	@RequestMapping(value="/updateevent/{id}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public void update(@PathVariable("id") int id, @RequestBody TransaksiEvent event) {
+		eventService.updateEvent(id, event);
+	}
 }
