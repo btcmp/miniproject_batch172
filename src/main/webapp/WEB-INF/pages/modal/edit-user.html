@@ -19,8 +19,10 @@
 
 
 
-				<form>
+				<form id="addEditForm" data-parsley-validate>
 					<input type="hidden" id="EditId"/>
+					<input type="hidden" id="nameEditCheck"/>
+					
 					<!-- <input type="hidden" id="EditCreatedDate"/> -->
 					<input type="hidden" id="EditCreatedBy"/>
 					 
@@ -33,7 +35,8 @@
 								<div class="col-sm-9">
 
 								 
-									<select class="custom-select" id="employeeEdit">
+									<select class="custom-select" id="employeeEdit"
+												data-parsley-required data-parsley-required-message="employee tidak boleh kosong">
 										<option id="employeeEditPost" selected>Choose...</option>
 									<c:forEach var="employee" items="${employees}">
 											<option value="${employee.id}">${employee.employeeName}</option>
@@ -51,7 +54,10 @@
 									User Name </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="usernameEdit"
-										placeholder="User name...">
+										placeholder="User name..."
+										data-parsley-required  data-parsley-required-message="username tidak boleh kosong"
+										data-parsley-minlength="8" data-parsley-minlength-message="minimal 8 karakter"
+										data-parsley-namecheck data-parsley-namecheck-message="Nama produk sudah ada">
 								</div>
 
 							</div>
@@ -65,11 +71,13 @@
 								<label for="roleEdit" class="col-sm-3 col-form-label"> Role</label>
 								<div class="col-sm-9">
 									 
-									<select class="custom-select" id="roleEdit">
-										<option selected>Choose...</option>
+									<select class="custom-select" id="roleEdit"
+											data-parsley-required data-parsley-required-message="role tidak boleh kosong">
+										<option value="">Choose...</option>
 										<c:forEach var="role" items="${roles}">
 											<option value="${role.id}">${role.roleName}</option>
 										</c:forEach>
+										
 									</select>
 
 								</div>
@@ -83,7 +91,9 @@
 									Password </label>
 								<div class="col-sm-8">
 									<input id="passwordEdit" type="password" class="form-control"
-										name="password" placeholder="pass">
+										name="password" placeholder="pass"
+										data-parsley-required data-parsley-required-message="password tidak boleh kosong"
+										data-parsley-pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*"   required data-parsley-pattern-message="harus mengandung huruf kecil, angka dan kapital">
 								</div>
 							</div>
 
@@ -98,7 +108,9 @@
 									Re-type Password:</label>
 								<div class="col-sm-8">
 									<input id="rpasswordEdit" type="password" class="form-control"
-										name="rpassword" placeholder="re-type pass">
+										name="rpassword" placeholder="re-type pass"
+										data-parsley-required data-parsley-required-message="password tidak boleh kosong"
+										data-parsley-equalto="#passwordEdit" data-parsley-equalto-message="harus sama dengan password">
 								</div>
 							</div>
 
