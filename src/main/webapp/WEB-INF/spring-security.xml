@@ -20,7 +20,7 @@
 			access="hasRole('Administrator')" />
 			<!-- TRANSAKSI DESIGN -->
 		<intercept-url pattern="/design*"
-			access="hasRole('Requester')" />
+			access="hasRole('Administrator')" />
 			<!-- MASTER UNIT -->
 		<intercept-url pattern="/unit*"
 			access="hasRole('Administrator')" />
