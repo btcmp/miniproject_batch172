@@ -24,10 +24,6 @@
 	 <property name="dataSource" ref="dataSource"></property>
 	 <property name="annotatedClasses">
 			<list>
-				<value>com.bankmega.traning.model.Employee</value>
-				<value>com.bankmega.traning.model.User</value>
-				<value>com.bankmega.traning.model.Role</value>
-				<value>com.bankmega.traning.model.Department</value>
 				<value>com.marcomm.model.MasterUnit</value>
 				<value>com.marcomm.model.MasterProduct</value>
 				<value>com.marcomm.model.MasterUser</value>

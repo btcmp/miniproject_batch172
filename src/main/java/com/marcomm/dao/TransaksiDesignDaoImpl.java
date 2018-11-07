@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.marcomm.model.TransaksiDesign;
+import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.FungsiService;
 
  
@@ -67,6 +68,15 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 	public String getRequestBy() {
 		String user = FungsiService.getUserLog();
 		return user;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TransaksiEvent> getEventAvailable() {
+		String hql = "select te from TransaksiEvent te left outer join TransaksiDesign td where te not in td";
+		Session session = sessionFactory.getCurrentSession();
+		List<TransaksiEvent> transaksiEvent = session.createQuery(hql).list();
+		return transaksiEvent;
 	}
 
 }

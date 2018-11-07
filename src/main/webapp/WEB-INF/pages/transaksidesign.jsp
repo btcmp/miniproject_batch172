@@ -256,7 +256,7 @@ $(document).ready(function(){
 				titleHeader :$('#titleHeader').val(),
 				note :$('#note').val(),
 				transaksiEvent :{
-					id:$('#eventId').val()
+					id:$('#eventCode').val()
 			    },
 				transaksiDesignItems:transaksiDesignItems
 		}
@@ -268,7 +268,7 @@ $(document).ready(function(){
 			data:JSON.stringify(transaksiDesign),
 			success:function(data){
 				loadData();
-				$('##addDesignTransactionModal').modal('hide');
+				$('#addDesignTransactionModal').modal('hide');
 			}
 		});	
 	});

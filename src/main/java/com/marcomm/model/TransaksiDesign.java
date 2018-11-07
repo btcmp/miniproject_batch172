@@ -28,7 +28,7 @@ public class TransaksiDesign {
 	@Column(length=50,nullable=false)
 	private String code;
 
-	@Column(name = "title_header",nullable=false)
+	@Column(name = "title_header")
 	private String titleHeader;
 
 	@Column(name = "request_by")
