@@ -46,7 +46,7 @@ public class InitDBMarcom {
 		role3.setRoleName("ROLE_REQUEST");
 		role3.setCode("RO0003");
 		initDBService.saveRole(role3);
-		
+		 
 		
 
 		//Employee
