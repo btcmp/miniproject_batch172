@@ -3,6 +3,9 @@ package com.marcomm.service;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +14,7 @@ import com.marcomm.dao.MasterSouvenirDao;
 import com.marcomm.dao.MasterUnitDao;
 import com.marcomm.model.MasterSouvenir;
 import com.marcomm.model.MasterUnit;
+import com.marcomm.model.TransaksiSouvenir;
 
 @Service
 @Transactional
@@ -65,6 +69,10 @@ public class MasterSouvenirService {
 	public List<MasterSouvenir> getByName(String name) {
 		// TODO Auto-generated method stub
 		return masterSouvenirDao.getByName(name);
+	}
+	
+	public List<MasterSouvenir> getAllSouvenirQtyOk(){
+		return masterSouvenirDao.getAllSouvenirQtyOk();
 	}
 
 	

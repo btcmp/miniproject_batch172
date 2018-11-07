@@ -16,16 +16,6 @@ public interface TransaksiSouvenirItemDao {
 	
 	public void update(TransaksiSouvenirItem transaksiSouvenirItem);
 	
-	public void updateApproval(TransaksiSouvenirItem transaksiSouvenirItem);
-	
-	public void updateReceived(TransaksiSouvenirItem transaksiSouvenirItem);
-	
 	public void updateSettlement(TransaksiSouvenirItem transaksiSouvenirItem);
-	
-	public void updateSettlementApproval(TransaksiSouvenirItem transaksiSouvenirItem);
-	
-	public void updateCloseRequest(TransaksiSouvenirItem transaksiSouvenirItem);
-	
-	
-	
+
 }

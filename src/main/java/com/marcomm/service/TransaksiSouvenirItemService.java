@@ -30,6 +30,9 @@ public class TransaksiSouvenirItemService {
 		transaksiSouvenirItemDao.save(transaksiSouvenirItem);
 		
 	}
-
+	
+	public void update(TransaksiSouvenirItem transaksiSouvenirItem) {
+		
+	}
 
 }

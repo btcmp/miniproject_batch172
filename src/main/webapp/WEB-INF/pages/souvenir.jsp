@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>SOUVENIR</title>
 <!-- css bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <!-- css data tables -->
@@ -192,9 +193,10 @@
 				<div class="form-row" style="margin-top: 10px">
 				    <div class="col">
 				    	<label for="editsvnrname">Souvenir Name</label>
-				      	<input type="text" id="editsvnrname" class="form-control" placeholder="Type name" required data-parsley-namecheck data-parsley-namecheck-message="Nama produk sudah ada" 
+				      	<input type="text" id="editsvnrname" class="form-control" placeholder="Type name" required 
+				      	data-parsley-namecheck data-parsley-namecheck-message="Nama Souvenir sudah ada" 
 				      	data-parsley-maxlength="50" data-parsley-maxlength-message="Karakter harus kurang dari 50" 
-				      	data-parsley-required-message="Harap masukkan nama produk">
+				      	data-parsley-required-message="Harap masukkan nama Souvenir">
  						</div>
 				    <div class="col">
 				    	<label for="editsvnrdescription">Description</label>
@@ -239,7 +241,7 @@
 		$('#data4').datepicker({
 			format:('yyyy-mm-dd')
 		});
-		//validasi add souvenir
+		
 		
 	loadData();
 	
