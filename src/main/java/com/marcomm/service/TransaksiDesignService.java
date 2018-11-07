@@ -61,7 +61,7 @@ public class TransaksiDesignService {
 			tdi.setRequestPic(transaksiDesignItem.getRequestPic());
 			tdi.setRequestDueDate(transaksiDesignItem.getRequestDueDate());
 			tdi.setNote(transaksiDesignItem.getNote());
-			tdi.setTransaksiDesign(td); 
+			tdi.setTransaksiDesign(td);
 			transaksiDesignItemDao.save(tdi);
 		}
 	}
