@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.marcomm.model.MasterMenu;
 import com.marcomm.model.MasterMenuAccess;
+import com.marcomm.model.MasterRole;
 import com.marcomm.service.MasterMenuAccessService;
 
 @Controller
@@ -27,12 +28,15 @@ public class MasterMenuAccessController {
 	@RequestMapping
 	public String index(Model model) {
 		List<MasterMenu> masterMenus= accessService.getMenu();
+		List<MasterRole> masterRoles= accessService.getRole();
 		model.addAttribute("masterMenus", masterMenus);
+		model.addAttribute("masterRoles", masterRoles);
 		return "menuaccess";
 	}
 	@RequestMapping(value="/save",method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void save(@RequestBody MasterMenuAccess menuAccess) {
+		/*System.out.println(menuAccess);*/
 		accessService.save(menuAccess);
 	}
 	@RequestMapping(value="/getid/{id}",method=RequestMethod.GET)
@@ -65,6 +69,10 @@ public class MasterMenuAccessController {
 	@ResponseBody
 	public List<MasterMenu> getMenuByMenuAccess(MasterMenuAccess access){
 		return accessService.getMenu();
-		
+	}
+	@RequestMapping(value="/getrole",method=RequestMethod.GET)
+	@ResponseBody
+	public List<MasterRole>getRoleByMenuAccess(MasterMenuAccess access){
+		return accessService.getRole();
 	}
 }

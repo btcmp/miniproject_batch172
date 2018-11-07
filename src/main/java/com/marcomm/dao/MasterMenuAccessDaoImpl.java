@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterMenu;
 import com.marcomm.model.MasterMenuAccess;
+import com.marcomm.model.MasterRole;
 
 @Repository
 public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
@@ -27,7 +28,6 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 		Date now=new Date();
 		menuAccess.setCreatedDate(now);
 		menuAccess.setUpdatedDate(now);
-		menuAccess.setmRoleId(getCode());
 		menuAccess.setDelete(false);
 		menuAccess.setCreatedBy("admin");
 		menuAccess.setUpdatedBy("admin");
@@ -52,7 +52,7 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 
 	public String getCode() {
 		// TODO Auto-generated method stub
-		String hql="from MasterMenuAccess ORDER BY id DESC";
+		/*String hql="from MasterMenuAccess ORDER BY id DESC";
 		Session session=sessionFactory.getCurrentSession();
 		MasterMenuAccess menuAccess=(MasterMenuAccess) session.createQuery(hql).setMaxResults(1).uniqueResult();
 		if(menuAccess==null) {
@@ -61,9 +61,9 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 			String prefix=menuAccess.getmRoleId().substring(0, 2);
 			String no=menuAccess.getmRoleId().substring(2);
 			int tambah=Integer.valueOf(no)+1;
-			String endCode=prefix+String.format("%04d", tambah);
-			return endCode;
-		}
+			String endCode=prefix+String.format("%04d", tambah);*/
+			return null;
+		
 		
 	}
 
@@ -102,5 +102,15 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 		/*query.setParameter("mMenuId",access);*/
 		List<MasterMenu> menus=query.list();
 		return menus;
+	}
+
+	 
+	public List<MasterRole> getRole() {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String hql="from MasterRole";
+		Query query=session.createQuery(hql);
+		List<MasterRole> roles=query.list();
+		return roles;
 	}
 }
