@@ -59,7 +59,7 @@ public class InitDBMarcom {
 		role3.setCode("RO0003");
 		initDBService.saveRole(role3);
 		
-		//menu
+		//menu 
 		MasterMenu masterMenu1= new MasterMenu();
 		MasterMenu masterMenu2= new MasterMenu();
 		MasterMenu masterMenu3= new MasterMenu();
