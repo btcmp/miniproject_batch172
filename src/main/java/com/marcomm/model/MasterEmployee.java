@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="M_EMPLOYEE")
 public class MasterEmployee {
-
+  
 	@Id
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -30,6 +31,10 @@ public class MasterEmployee {
 	
 	@OneToOne
 	private MasterUser user;
+
+	@ManyToOne
+	@JoinColumn(name="company_id")
+	private MasterCompany company;
 
 	public int getId() {
 		return id;
@@ -54,11 +59,15 @@ public class MasterEmployee {
 	public void setUser(MasterUser user) {
 		this.user = user;
 	}
+
+	public MasterCompany getCompany() {
+		return company;
+	}
+
+	public void setCompany(MasterCompany company) {
+		this.company = company;
+	}
 	
 	
-	
-	 
-	 
-	 
 	
 }

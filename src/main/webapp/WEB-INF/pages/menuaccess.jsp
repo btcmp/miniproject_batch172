@@ -103,27 +103,87 @@ input.parsley-error
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-notify.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     
 	
 	<script type="text/javascript">
 	
 	$(document).ready(function(){
-		$('#data3').datepicker();
-		//loadData();
+		$('#data3').datepicker({
+			format:('yyyy-mm-dd')
+		});
+		/* loadData(); */
 		
 		/* BUTTON POP UP */
 		$('#btnadd').on('click',function(){
 			$.ajax({
-				url:'${pagecontext.request.contextPath}/menu/getcode',
+				/* url:'${pagecontext.request.contextPath}/menu/getcode',
 				type:'GET',
 				success : function(data){
 					$('#menucode').val(data);
-				},
+				}, */
 				dataType:'json'
 			});
 			$('#addModal').modal();
 		});
-	});
+		/* save 8*/
+		$('.btn-save').on('click', function(e){
+			
+			
+			var roleId= $('#add-role').val(); 
+			 var menus =[]; 
+				 $('#menuId:checked').each(function (){
+				  menus.push($(this).val())
+				 }); 
+			var l= menus.length;
+			
+			for(var i=0;i<l;i++){
+				var menuc = {
+						menu :{
+							id:menus[i]
+						},
+						role :{
+							id: roleId		 
+						}
+				};
+				console.log(menus[i]);
+				console.log(roleId);
+				 $.ajax({
+					  url :'${pageContext.request.contextPath}/access/save',
+					  type : 'POST',
+					  contentType :'application/json',
+					  data : JSON.stringify(menuc),
+					   beforeSend : function (){
+						  console.log('sebelom post');
+					  },
+					  success: function (data) {
+						  console.log('data saved successfully')
+						  /* loadData(); */
+					  },
+					  error : function(){
+						  console.log('failed to save data')
+					  }
+				 });
+					}
+			$('#addModal').modal('hide');
+			
+			});
+  		/*  load data */
+  		/* function loadData(){
+  			$.ajax({
+  				url:'${pageContext.request.contextPath}/access/getall',
+  				type:'GET',
+  				beforeSend : function(){
+  					console.log('before send');
+  				},
+  				success : function(output){
+  					console.log(output);
+  				},
+  				dataType:'json'
+  			});
+  		} */
+		});
+	
 	
 	</script>
 </html>

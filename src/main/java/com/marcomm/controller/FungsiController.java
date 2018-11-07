@@ -22,4 +22,14 @@ public class FungsiController {
 		return userlog;
 	}
 	
+	
+	
+	
+	/*@RequestMapping(value="/getRolelogin", method=RequestMethod.GET)
+	@ResponseBody
+	public String getRole() {
+		String userlog = fungsiService.getRole();
+		return userlog;
+	}*/
+	
 }
