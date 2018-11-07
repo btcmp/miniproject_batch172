@@ -63,7 +63,16 @@ public class MasterUserService {
 	 
 		return userDao.getAllEmployee();
 	}
+
+	public List<MasterUser> getByName(String username) {
+		// TODO Auto-generated method stub
+		return userDao.getByName(username);
+	}
+
+	public String getRole() {
+		
+		return userDao.getRole();
+	}
 	
- 
 	 
 }

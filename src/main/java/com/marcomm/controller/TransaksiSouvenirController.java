@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.marcomm.model.TransaksiSouvenir;
+import com.marcomm.service.TransaksiEventService;
 import com.marcomm.service.TransaksiSouvenirService;
 
 @Controller
@@ -21,6 +22,9 @@ public class TransaksiSouvenirController {
 	
 	@Autowired
 	TransaksiSouvenirService transaksiSouvenirService;
+	
+	@Autowired
+	TransaksiEventService transaksiEventService; 
 	
 	@RequestMapping
 	public String index() {
@@ -60,5 +64,12 @@ public class TransaksiSouvenirController {
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteTranSouvenir(@PathVariable("id") int id) {
 		transaksiSouvenirService.deleteTransSouvenir(id);
+	}
+	
+	/*GET CODE*/
+	@RequestMapping(value="/getcode", method=RequestMethod.GET)
+	@ResponseBody
+	public String getCodeTrans() {
+		return transaksiSouvenirService.getCodeTrans();
 	}
 }

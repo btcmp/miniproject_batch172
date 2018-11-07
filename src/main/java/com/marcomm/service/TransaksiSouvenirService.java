@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.marcomm.dao.TransaksiEventDao;
 import com.marcomm.dao.TransaksiSouvenirDao;
 import com.marcomm.model.TransaksiSouvenir;
 
@@ -19,6 +20,9 @@ public class TransaksiSouvenirService {
 	
 	@Autowired
 	TransaksiSouvenirDao transaksiSouvenirDao;
+	
+	@Autowired
+	TransaksiEventDao transaksiEventDao;
 	
 	/*SAVE*/
 	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir) {
@@ -47,6 +51,11 @@ public class TransaksiSouvenirService {
 		transaksiSouvenir.setId(id);
 		transaksiSouvenirDao.deleteTransSouvenir(transaksiSouvenir);
 		
+	}
+	/*GET CODE*/
+	public String getCodeTrans() {
+		// TODO Auto-generated method stub
+		return transaksiSouvenirDao.getCodeTrans();
 	}
 
 

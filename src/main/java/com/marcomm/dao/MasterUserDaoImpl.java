@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.bouncycastle.asn1.isismtt.x509.Restriction;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterEmployee;
+import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
+import com.marcomm.service.FungsiService;
 import com.marcomm.service.InitDBMarcom;
 
 @Repository
@@ -86,6 +90,31 @@ public class MasterUserDaoImpl implements MasterUserDao {
 		Session session = sessionFactory.getCurrentSession();
 		List<MasterEmployee> listEmployee = session.createCriteria(MasterEmployee.class).list();
 		return listEmployee;
+	}
+
+	public List<MasterUser> getByName(String username) { 
+			// TODO get name
+			Session session = sessionFactory.getCurrentSession();
+			Criteria cr = session.createCriteria(MasterUser.class);
+				Criterion crAnd1 = Restrictions.and(Restrictions.ilike("username", username+" %"),Restrictions.eq("isDelete", 1));
+				Criterion crAnd2 = Restrictions.and(Restrictions.ilike("username", username),Restrictions.eq("isDelete", 1));
+				Criterion crOr = Restrictions.or(crAnd1,crAnd2);
+				List<MasterUser> usernames = cr.add(crOr).list();
+				return usernames;
+		
+	}
+
+	public String getRole() {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String userLog=	FungsiService.getUserLog();
+ 
+		
+		Query query = session.createQuery("select mRole from MasterUser where username = :name ");
+		query.setParameter("name", userLog);
+		MasterRole role= (MasterRole) query.uniqueResult();
+		
+		return role.getRoleName();
 	}
 	
 

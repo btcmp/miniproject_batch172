@@ -17,6 +17,8 @@
 <!-- css data table -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<!-- link css dashboard -->
+<link href="${pageContext.request.contextPath}/resources/assets/css/dashboard.css" rel="stylesheet" />
 
 <!-- parsley style -->
 <style>
@@ -71,11 +73,11 @@
 					</tr>
 					<tr>
 						<th></th>
-						<th><input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1" style="padding-right:10px; width:100%;"></th>
-						<th><input type="text" class="form-control" placeholder="Received By" id="data2" data-index="2" style="padding-right:10px;width:100%;"></th>
-						<th><input type="text" class="form-control"	placeholder="Received Date" id="data3" data-index="3" style="padding-right:10px;"></th>
-						<th><input type="text" class="form-control" placeholder="Created " id="data4" data-index="4" style="padding-right:10px;width:100%;"></th>
-						<th><input type="text" class="form-control" placeholder="Created By" id="data5" data-index="5" style="padding-right: 10px;"></th>
+						<th><input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1"></th>
+						<th><input type="text" class="form-control" placeholder="Received By" id="data2" data-index="2"></th>
+						<th><input type="text" class="form-control"	placeholder="Received Date" id="data3" data-index="3" ></th>
+						<th><input type="text" class="form-control" placeholder="Created " id="data4" data-index="4"></th>
+						<th><input type="text" class="form-control" placeholder="Created By" id="data5" data-index="5"></th>
 						<th><a class="btn btn-warning" id="searchBtn" href="#" style="width:100px;">Search</a></th>
 					</tr>
 				</thead>
@@ -129,11 +131,31 @@
 
 $(document).ready(function(){
 	
+	/* DATE PICKER */
+	//created date
+	$('#data4').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		uiLibrary : 'bootstrap4'
+	});
+	//received date
+	$('#data3').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		uiLibrary : 'bootstrap4'
+	});
 	/* BUTTON POP UP ADD */
 	var Id = 1; //digunakan untuk menentukan id pada saat additem modal
 	$(document).on('click', '#addBtn', function(){
 		//tulis disini fungsi get code
-		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/transaksisouvenir/getcode',
+			type : 'GET',
+			success : function(data){
+				$('#transactionCode').val(data);
+			},
+			dataType : 'json'
+		});	
 		$('#addTranSouModal').modal();
 	});
 	

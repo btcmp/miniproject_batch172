@@ -354,7 +354,7 @@
 		});
 		
 		
-		//BUTTON POP UP UPDATE
+		//BUTTON POP UP CONFIRM TO UPDATE
 		$(document).on('click', '#btn-edit-comp', function(){			
 			$.ajax({
 				success: function(output){
@@ -362,10 +362,6 @@
 				},
 				dataType: 'json'
 			});
-			
-			/* var con =confirm("delete?");
-			if(con==true){} */
-			
 			$('#editCompanyModal').modal('hide');
 			$('#edit2CompanyModal').modal();
 		});
@@ -382,12 +378,12 @@
 						address : $('#companyaddressEdit').val(),
 						phone : $('#companyphoneEdit').val()
 					};
-					
+				console.log(company);
+				
 				//NOTIFICATION
 				document.getElementById("notification").innerHTML = "Data Updated! Data company has been updated!";
 				$('#notification').show('slow').delay(1500).hide('slow');
 				
-				console.log(company);
 					$.ajax({
 						url: '${pageContext.request.contextPath}/company/updatecompany/' +company.id,
 						type: 'POST',
@@ -412,6 +408,7 @@
 				type: 'GET',
 				success: function(output){
 					$('#DeleteButton').val(output.id);
+					$('#companycodeDelete').val(output.code);
 				},
 				dataType: 'json'
 			});
@@ -426,7 +423,7 @@
 			};
 			
 			//NOTIFICATION
-			document.getElementById("notification").innerHTML = "Data Deleted! Data company with code"+company.code+"has been deleted!";
+			document.getElementById("notification").innerHTML = "Data Deleted! Data company with code " +company.code+ " has been deleted!";
 			$('#notification').show('slow').delay(1500).hide('slow');
 			
 			$.ajax({

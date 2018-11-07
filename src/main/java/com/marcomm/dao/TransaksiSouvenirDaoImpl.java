@@ -1,5 +1,7 @@
 package com.marcomm.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -20,7 +22,7 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 	
 	/*SAVE*/
 	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir) {
-		transaksiSouvenir.setCode("TRSVDDMMYYXXXXX");
+		transaksiSouvenir.setCode(getCodeTrans());
 		transaksiSouvenir.setType("additional");
 		transaksiSouvenir.setRequestBy(1);
 		transaksiSouvenir.setDelete(false);
@@ -55,5 +57,27 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 		session.delete(transaksiSouvenir);
 		
 	}
+
+	/*GET CODE*/
+	public String getCodeTrans() {
+		String hql = "from TransaksiSouvenir ORDER BY id DESC";
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyy");
+		String currentDate = format.format(new Date());
+		String kodeAwal = "TRSV";
+		Session session = sessionFactory.getCurrentSession();
+		TransaksiSouvenir transaksiSouvenir = (TransaksiSouvenir) session.createQuery(hql).setMaxResults(1).uniqueResult();
+		if(transaksiSouvenir==null) {
+			String angka = "00001";
+			String fullCode = kodeAwal+currentDate+angka;
+			return fullCode;
+		}else {
+			String angka = transaksiSouvenir.getCode().substring(12);
+			int increment = Integer.valueOf(angka)+1;
+			String fullCode = kodeAwal+currentDate+String.format("%05d", increment);
+			return fullCode;
+		}
+	}
+	
+	
 	
 }

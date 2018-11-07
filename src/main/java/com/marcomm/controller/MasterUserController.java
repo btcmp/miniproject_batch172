@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
- 
+
+import com.marcomm.model.MasterCompany;
 import com.marcomm.model.MasterEmployee;
+import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
+import com.marcomm.service.FungsiService;
+import com.marcomm.service.MasterCompanyService;
 import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.MasterUserService;
 
@@ -27,15 +31,20 @@ public class MasterUserController {
 	MasterUserService userService;
 	@Autowired
 	MasterEmployeeService employeeService;
+	@Autowired
+	MasterCompanyService companyService;
 	
 	 
 	@RequestMapping
 	public String index(Model model) {
 		List<MasterRole> roles= userService.getAllRole();
-		 List<MasterEmployee> employees= employeeService.getEmployeesNotInUser();
-		
+		 List<MasterEmployee> employeesNoUse= employeeService.getEmployeesNotInUser();
+		List<MasterEmployee> allEmployee= employeeService.getAllEmployee();
+		List<MasterCompany> allCompany= companyService.getAllService();
+		model.addAttribute("compenies", allCompany);
 		model.addAttribute("roles", roles); 
-		model.addAttribute("employees", employees); 
+		model.addAttribute("employees", employeesNoUse); 
+		model.addAttribute("allEmployee", allEmployee); 
 		return "user";
 		
 	}
@@ -61,6 +70,21 @@ public class MasterUserController {
 	public MasterUser getEmpById(@PathVariable("id") int id) {
 		MasterUser master = userService.getById(id);
 		return master;
+	}
+	
+	@RequestMapping(value="/getbyname/{username}",method=RequestMethod.GET)
+	@ResponseBody
+	public List<MasterUser> getByName(@PathVariable("username") String username){
+		return userService.getByName(username);
+	}
+	
+	
+	@RequestMapping(value="/getrole ",method=RequestMethod.GET)
+	@ResponseBody
+	public String getRole(){
+		
+		 String role=userService.getRole();
+		 return role;
 	}
 	/*, method=RequestMethod.DELETE*/
 /*	@RequestMapping(value="/delete/{id}")
