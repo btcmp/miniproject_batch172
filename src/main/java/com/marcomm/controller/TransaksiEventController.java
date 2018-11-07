@@ -63,4 +63,26 @@ public class TransaksiEventController {
 	public void update(@PathVariable("id") int id, @RequestBody TransaksiEvent event) {
 		eventService.updateEvent(id, event);
 	}
+	
+	//close event request
+	@RequestMapping(value="/closeevent/{id}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public void close(@PathVariable("id") int id) {
+		eventService.closeEvent(id);
+	}
+
+	
+	//accept event request
+	@RequestMapping(value="/acceptevent/{id}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public void accept(@PathVariable("id") int id, @RequestBody TransaksiEvent event) {
+		eventService.acceptEvent(id, event);
+	}
+	
+	//reject event request
+	@RequestMapping(value="/rejectevent/{id}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public void reject(@PathVariable("id") int id, @RequestBody TransaksiEvent event) {
+		eventService.rejectEvent(id, event);
+	}
 }

@@ -16,4 +16,10 @@ public interface TransaksiEventDao {
 
 	public void update(TransaksiEvent event);
 
+	public void closeEvent(int id);
+
+	public void accept(TransaksiEvent transaksiEvent);
+
+	public void reject(TransaksiEvent transaksiEvent);
+
 }

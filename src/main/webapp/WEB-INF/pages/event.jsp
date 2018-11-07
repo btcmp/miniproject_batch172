@@ -48,6 +48,7 @@
 		</div>
 		<div class="form-row" style="float:left; padding:10px;">
 			<a id="notification" class="text-white bg-info border rounded"></a>
+			<a id="notification2" class="text-white bg-danger border rounded"></a>
 		</div>
 		
 		<!-- FORM -->
@@ -275,16 +276,33 @@ $(document).ready(function(){
 		$.each(data, function(index, event){
 			console.log(index, event);
 			index++;
-		
+			
+			var status="Status";
+
+			if(event.status==1){
+				status="Submitted";
+			} else if(event.status==2){
+				status="In Progress";
+			} else if(event.status==3){
+				status="Done";
+			} else if(event.status==0){
+				status="Rejected";
+			}
+			
+			
 			var tableRow = "<a id="+event.id+" class='btn-view-event'><span class='oi oi-magnifying-glass'></span></a>";
 				tableRow += " ";
 				tableRow += "<a id="+event.id+" class='btn-edit-event'><span class='oi oi-pencil'></span></a>";
-				oTable.row.add([index,event.code,event.requestBy,event.requestDate,event.status,event.createdDate,event.createdBy,tableRow]);
+				tableRow += " ";
+				tableRow += "<a id="+event.id+" class='btn-acceptreject-event'><span class='oi oi-project'></span></a>";
+				tableRow += " ";
+				tableRow += "<a id="+event.id+" class='btn-close-event'><span class='oi oi-task'></span></a>";
+				oTable.row.add([index,event.code,event.requestBy,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
 		});
 				oTable.draw();
 	}
 	
-	//BUTTON POP UP VIEW FOR CLOSE REQUEST
+	//BUTTON POP UP VIEW REQUEST
 	$(document).on('click', '.btn-view-event', function(){
 		var id = $(this).attr('id');
 		console.log(id);
@@ -305,7 +323,6 @@ $(document).ready(function(){
 				$('#eventenddateView').val(output.endDate);
 				$('#budgetView').val(output.budget);
 				$('#statusView').val(output.status);
-				$('#assigntoView').val(output.assignTo);
 			},
 			dataType: 'json'
 		});
@@ -356,6 +373,10 @@ $(document).ready(function(){
 		};
 		console.log(event);
 		
+		//NOTIFICATION
+		document.getElementById("notification").innerHTML = "Data Updated! Transaction event request with code: "+event.code+" has been updated !";
+		$('#notification').show('slow').delay(1500).hide('slow');
+		
 		$.ajax({
 			url: '${pageContext.request.contextPath}/event/updateevent/' +event.id,
 			type: 'POST',
@@ -367,6 +388,165 @@ $(document).ready(function(){
 			}
 		});
 		$('#editEventModal').modal('hide');
+	});
+	
+	//BUTTON POP UP ACCEPT-REJECT REQUEST
+	$(document).on('click', '.btn-acceptreject-event', function(){
+		var id = $(this).attr('id');
+		console.log(id);
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+			type: 'GET',
+			success: function(output){
+				console.log(output);
+				$('#ARButton').val(output.id);
+				$('#transactioncodeAR').val(output.code);
+				$('#requestbyAR').val(output.requestBy);
+				$('#eventnameAR').val(output.eventName);
+				$('#requestdateAR').val(output.requestDate);
+				$('#eventplaceAR').val(output.place);
+				$('#noteAR').val(output.note);
+				$('#eventstartdateAR').val(output.startDate);
+				$('#eventenddateAR').val(output.endDate);
+				$('#budgetAR').val(output.budget);
+				$('#statusAR').val(output.status);
+				$('#assigntoAR').val(output.assignTo);
+				$('#rejectreason').val(output.rejectReason);
+			},
+			dataType: 'json'
+		});
+		$('#acceptrejectEventModal').modal();
+	});
+	
+	//BUTTON APPROVED TO ACCEPT REQUEST
+	$('#btn-accept-event').click(function(){
+		var event = {
+				id: $('#ARButton').val(),
+				code: $('#transactioncodeAR').val(),
+				assignTo: $('#assigntoAR').val()
+		};
+		console.log(event);
+		
+		//NOTIFICATION
+		document.getElementById("notification").innerHTML = "Data Approved! Transaction event request with code: "+event.code+" has been approved !";
+		$('#notification').show('slow').delay(1500).hide('slow');
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/acceptevent/' +event.id,
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(event),
+			success: function(data){
+				console.log("data berhasil diubah");
+				loadData();
+				$('#assigntoAR').val("");
+			}
+		});
+		$('#acceptrejectEventModal').modal('hide');
+	});
+	
+	//BUTTON POP UP CONFIRM TO REJECT EVENT REQUEST AND GIVE REJECT REASON
+	$(document).on('click', '#btn-reject-event', function(){
+		$.ajax({
+			success: function(output){
+				$('#ARButton').val(output.id);
+			},
+			dataType: 'json'
+		});
+		$('#acceptrejectEventModal').modal('hide');
+		$('#rejectEventModal').modal();
+	});
+	
+	//BUTTON REJECTED TO REJECT REQUEST
+	$('#btn-reject2-event').click(function(){
+		var event = {
+				id: $('#ARButton').val(),
+				code: $('#transactioncodeAR').val(),
+				rejectReason: $('#rejectreason').val()
+		};
+		console.log(event);
+		
+		//NOTIFICATION
+		document.getElementById("notification2").innerHTML = "Data Rejected! Transaction event request with code: "+event.code+" has been rejected by Administrator !";
+		$('#notification2').show('slow').delay(1500).hide('slow')
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/rejectevent/' +event.id,
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(event),
+			success: function(data){
+				console.log("data berhasil diubah");
+				loadData();
+				$('#rejectreason').val("");
+			}
+		});
+		$('#rejectEventModal').modal('hide');
+	});
+	
+	//BUTTON POP UP CLOSE REQUEST
+	$(document).on('click', '.btn-close-event', function(){
+		var id = $(this).attr('id');
+		console.log(id);
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+			type: 'GET',
+			success: function(output){
+				console.log(output);
+				$('#CloseButton').val(output.id);
+				$('#transactioncodeClose').val(output.code);
+				$('#requestbyClose').val(output.requestBy);
+				$('#eventnameClose').val(output.eventName);
+				$('#requestdateClose').val(output.requestDate);
+				$('#eventplaceClose').val(output.place);
+				$('#noteClose').val(output.note);
+				$('#eventstartdateClose').val(output.startDate);
+				$('#eventenddateClose').val(output.endDate);
+				$('#budgetClose').val(output.budget);
+				$('#statusClose').val(output.status);
+				$('#assigntoClose').val(output.assignTo);
+			},
+			dataType: 'json'
+		});
+		$('#closeEventModal').modal();
+	});
+	
+	//BUTTON POP UP CONFIRM TO CLOSE REQUEST
+	$(document).on('click', '#btn-close-event', function(){
+		$.ajax({
+			success: function(output){
+				$('#CloseButton').val(output.id);
+			},
+			dataType: 'json'
+		});
+		$('#closeEventModal').modal('hide');
+		$('#close2EventModal').modal();
+	});
+	
+	//BUTTON CONFIRM YES TO CLOSE REQUEST
+	$('.btn-close2-event').click(function(){
+		var event = {
+			id: $('#CloseButton').val(),
+			code: $('#transactioncodeClose').val()	
+		};
+		
+		//NOTIFICATION
+		document.getElementById("notification").innerHTML = "Data Closed! Transaction event request with code: "+event.code+" has been closed !";
+		$('#notification').show('slow').delay(1500).hide('slow')
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/closeevent/' +event.id,
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(event),
+			success: function(data){
+				console.log("data berhasil diubah");
+				loadData();
+			}
+		});
+		$('#close2EventModal').modal('hide');
 	});
 	
 });

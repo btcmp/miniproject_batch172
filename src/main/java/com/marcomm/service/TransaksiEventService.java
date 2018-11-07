@@ -61,4 +61,23 @@ public class TransaksiEventService {
 		transaksiEvent.setCreatedDate(event.getCreatedDate());
 		eventDao.update(transaksiEvent);
 	}
+
+	public void closeEvent(int id) {
+		// TODO Auto-generated method stub
+		eventDao.closeEvent(id);
+	}
+
+	public void acceptEvent(int id, TransaksiEvent event) {
+		// TODO Auto-generated method stub
+		TransaksiEvent transaksiEvent = eventDao.getEventById(id);
+		transaksiEvent.setAssignTo(event.getAssignTo());
+		eventDao.accept(transaksiEvent);
+	}
+
+	public void rejectEvent(int id, TransaksiEvent event) {
+		// TODO Auto-generated method stub
+		TransaksiEvent transaksiEvent = eventDao.getEventById(id);
+		transaksiEvent.setRejectReason(event.getRejectReason());
+		eventDao.reject(transaksiEvent);
+	}
 }

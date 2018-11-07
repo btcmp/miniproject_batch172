@@ -45,13 +45,18 @@ public class InitDBMarcom {
 		MasterRole role1=new MasterRole();
 		MasterRole role2=new MasterRole();
 		MasterRole role3=new MasterRole();
-	
+		role1.setId(1);
+		role1.setRoleName("ROLE_ADMIN");
+		role1.setCode("RO0001");
 		role1.setRoleName("Administrator"); 
 		role2.setRoleName("Staff");
 		role3.setRoleName("Requester");
-	
 		initDBService.saveRole(role1);
+		role2.setRoleName("ROLE_STAFF");
+		role2.setCode("RO0002");
 		initDBService.saveRole(role2);
+		role3.setRoleName("ROLE_REQUEST");
+		role3.setCode("RO0003");
 		initDBService.saveRole(role3);
 		
 		//menu

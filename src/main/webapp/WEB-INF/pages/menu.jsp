@@ -370,7 +370,7 @@ input.parsley-error
 			tRow +=' ';
 			tRow +='<a id="'+menu.id+'" href="#" class="btn-view-menu"><span class="oi oi-magnifying-glass"></span></a>';
 			tRow +=' ';
-			tRow +='<a id="'+menu.id+'" href="#" class="btn-delete-menu"><i class="fas fa-trash"></i></a>';
+			tRow +='<a id="'+menu.id+'" href="#" class="btn-delete-menu"><span class="oi oi-trash"></span></a>';
 			oTable.row.add([index,menu.code,menu.name,menu.createdBy,menu.createdDate,tRow]);
 			/* var tableRow="<tr>";
 				tableRow +="<td>";
