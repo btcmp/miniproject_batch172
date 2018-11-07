@@ -290,44 +290,17 @@ $(document).ready(function(){
 			}
 			
 			
-			var tableRow = "<a id="+event.id+" class='btn-view-event'><span class='oi oi-magnifying-glass'></span></a>";
+			var tableRow = "<a id="+event.id+" class='btn-view-event btn-acceptreject-event btn-close-event'><span class='oi oi-magnifying-glass'></span></a>";
 				tableRow += " ";
 				tableRow += "<a id="+event.id+" class='btn-edit-event'><span class='oi oi-pencil'></span></a>";
-				tableRow += " ";
+/* 				tableRow += " ";
 				tableRow += "<a id="+event.id+" class='btn-acceptreject-event'><span class='oi oi-project'></span></a>";
 				tableRow += " ";
-				tableRow += "<a id="+event.id+" class='btn-close-event'><span class='oi oi-task'></span></a>";
+				tableRow += "<a id="+event.id+" class='btn-close-event'><span class='oi oi-task'></span></a>"; */
 				oTable.row.add([index,event.code,event.requestBy,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
 		});
 				oTable.draw();
 	}
-	
-	//BUTTON POP UP VIEW REQUEST
-	$(document).on('click', '.btn-view-event', function(){
-		var id = $(this).attr('id');
-		console.log(id);
-		
-		$.ajax({
-			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
-			type: 'GET',
-			success: function(output){
-				console.log(output);
-				$('#ViewButton').val(output.id);
-				$('#transactioncodeView').val(output.code);
-				$('#requestbyView').val(output.requestBy);
-				$('#eventnameView').val(output.eventName);
-				$('#requestdateView').val(output.requestDate);
-				$('#eventplaceView').val(output.place);
-				$('#noteView').val(output.note);
-				$('#eventstartdateView').val(output.startDate);
-				$('#eventenddateView').val(output.endDate);
-				$('#budgetView').val(output.budget);
-				$('#statusView').val(output.status);
-			},
-			dataType: 'json'
-		});
-		$('#viewEventModal').modal();
-	});
 	
 	//BUTTON POP UP EDIT
 	$(document).on('click', '.btn-edit-event', function(){
@@ -388,6 +361,33 @@ $(document).ready(function(){
 			}
 		});
 		$('#editEventModal').modal('hide');
+	});
+	
+	//BUTTON POP UP VIEW REQUEST
+	$(document).on('click', '.btn-view-event', function(){
+		var id = $(this).attr('id');
+		console.log(id);
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+			type: 'GET',
+			success: function(output){
+				console.log(output);
+				$('#ViewButton').val(output.id);
+				$('#transactioncodeView').val(output.code);
+				$('#requestbyView').val(output.requestBy);
+				$('#eventnameView').val(output.eventName);
+				$('#requestdateView').val(output.requestDate);
+				$('#eventplaceView').val(output.place);
+				$('#noteView').val(output.note);
+				$('#eventstartdateView').val(output.startDate);
+				$('#eventenddateView').val(output.endDate);
+				$('#budgetView').val(output.budget);
+				$('#statusView').val(output.status);
+			},
+			dataType: 'json'
+		});
+		$('#viewEventModal').modal();
 	});
 	
 	//BUTTON POP UP ACCEPT-REJECT REQUEST
