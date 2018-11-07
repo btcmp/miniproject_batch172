@@ -48,6 +48,7 @@
 		</div>
 		<div class="form-row" style="float:left; padding:10px;">
 			<a id="notification" class="text-white bg-info border rounded"></a>
+			<a id="notification2" class="text-white bg-danger border rounded"></a>
 		</div>
 		
 		<!-- FORM -->
@@ -372,6 +373,10 @@ $(document).ready(function(){
 		};
 		console.log(event);
 		
+		//NOTIFICATION
+		document.getElementById("notification").innerHTML = "Data Updated! Transaction event request with code: "+event.code+" has been updated !";
+		$('#notification').show('slow').delay(1500).hide('slow');
+		
 		$.ajax({
 			url: '${pageContext.request.contextPath}/event/updateevent/' +event.id,
 			type: 'POST',
@@ -423,6 +428,10 @@ $(document).ready(function(){
 		};
 		console.log(event);
 		
+		//NOTIFICATION
+		document.getElementById("notification").innerHTML = "Data Approved! Transaction event request with code: "+event.code+" has been approved !";
+		$('#notification').show('slow').delay(1500).hide('slow');
+		
 		$.ajax({
 			url: '${pageContext.request.contextPath}/event/acceptevent/' +event.id,
 			type: 'POST',
@@ -457,6 +466,10 @@ $(document).ready(function(){
 				rejectReason: $('#rejectreason').val()
 		};
 		console.log(event);
+		
+		//NOTIFICATION
+		document.getElementById("notification2").innerHTML = "Data Rejected! Transaction event request with code: "+event.code+" has been rejected by Administrator !";
+		$('#notification2').show('slow').delay(1500).hide('slow')
 		
 		$.ajax({
 			url: '${pageContext.request.contextPath}/event/rejectevent/' +event.id,
@@ -518,6 +531,10 @@ $(document).ready(function(){
 			id: $('#CloseButton').val(),
 			code: $('#transactioncodeClose').val()	
 		};
+		
+		//NOTIFICATION
+		document.getElementById("notification").innerHTML = "Data Closed! Transaction event request with code: "+event.code+" has been closed !";
+		$('#notification').show('slow').delay(1500).hide('slow')
 		
 		$.ajax({
 			url: '${pageContext.request.contextPath}/event/closeevent/' +event.id,
