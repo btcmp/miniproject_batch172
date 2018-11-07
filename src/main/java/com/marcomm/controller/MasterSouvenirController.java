@@ -35,7 +35,7 @@ public class MasterSouvenirController {
 	/*@ModelAttribute
 	public MasterSouvenir getSouvenirForm() {
 		return new MasterSouvenir();
-	}*/
+	}*/ 
 	
 	
 	@RequestMapping

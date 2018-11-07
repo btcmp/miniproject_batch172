@@ -262,6 +262,6 @@ $(document).ready(function(){
 	
 }) /* batas akhir ready function */
 
-</script>
+</script> 
 
 </html>

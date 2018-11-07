@@ -32,7 +32,7 @@ public class MasterSouvenirService {
 		masterSouvenir.setDeleted(false);
 		masterSouvenirDao.save(masterSouvenir);
 	}
-	
+	 
 	public String getCode() {
 		return masterSouvenirDao.getCodeById();
 	}
