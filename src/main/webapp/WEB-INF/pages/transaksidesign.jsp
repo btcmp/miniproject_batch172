@@ -93,7 +93,7 @@
 					</tr>
 				</thead>
 				</table>
-				<table id="productTable" class="table DataTable">
+				<table id="designTable" class="table DataTable">
 				<thead class="thead-light">
 					<tr>
 						<th>No.</th>
@@ -136,6 +136,10 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">	
 $(document).ready(function(){
+	$('#designTable').DataTable({
+		'sDom':'tip',
+		'ordering':false
+	});
 	$('#duedate1').datepicker({
 		format:'yyyy-mm-dd',
 		autoclose:true,
@@ -151,8 +155,9 @@ $(document).ready(function(){
 		autoclose:true,
 		uiLibrary: 'bootstrap4'
 	});
-	var Id = 1; // used by the addFile() function to keep track of IDs
+	var Id = 1;
 	var index = 0;
+	loadData();
 	$(document).on('click','#addBtn',function(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/design/getcode',
@@ -179,8 +184,7 @@ $(document).ready(function(){
 		$('#addDesignTransactionModal').modal();
 	});	
 	$('#addItemBtn').on('click',function(){
-
-		    Id++; // increment fileId to get a unique ID for the new element
+		    Id++;
 		    index++;
 		  	var oTable = $('#itemsTable');
 		    var tBody = oTable.find('tbody');
@@ -191,12 +195,12 @@ $(document).ready(function(){
 								'<option value="${product.id}">${product.name}</option>'+
 							'</c:forEach>'+
 						'</select></td>';
-			tRow += '<td><input type="text" class="form-control" id="description'+Id+'" placeholder="description" readonly></td>';
-			tRow += '<td><input type="text" class="form-control" name="details['+index+'].titleItem" placeholder="Title"></td>';
-			tRow += '<td><input type="text" class="form-control" name="details['+index+'].requestPic" placeholder="Request PIC"></td>';
-			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" name="details['+index+'].requestDueDate" placeholder="Due Date"></td>';
-			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" name="details['+index+'].startDate" placeholder="Start Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" name="details['+index+'].endDate" placeholder="End Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control description" id="description'+Id+'" placeholder="description" readonly></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Title"></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Request PIC"></td>';
+			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" placeholder="Due Date"></td>';
+			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" placeholder="Start Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" placeholder="End Date" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" name="details['+index+'].note" placeholder="Note"></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="btn-update-design"><span class="oi oi-pencil"></span></a>';
 			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
@@ -228,20 +232,45 @@ $(document).ready(function(){
 					}
 				});
 			});
-			
 	});
-	$('#addFormDesign').submit(function(){
-		var data =  $(this).serializeArray();
-	    var indexed_array = {};
-
-	    $.map(data, function(n, i){
-	        indexed_array[n['name']] = n['value'];
-	    });
-		//var data = $(this).serialize();
-		var dataJson = indexed_array;
-		var dataJson2 = JSON.stringify(dataJson);
-		console.log(dataJson2)
-		return false;
+	$('#addBtnModal').on('click',function(e){
+		var transaksiDesignItems=[];
+		$('.tableBody tr').each(function(){
+			tRow = $(this).find('td :input');
+			var items = {
+					masterProduct:{
+						id:tRow.eq(0).val()
+					},
+					titleItem:tRow.eq(2).val(),
+					requestPic:tRow.eq(3).val(),
+					requestDueDate:tRow.eq(4).val(),
+					note:tRow.eq(10).val()
+			}
+			transaksiDesignItems.push(items);
+		});
+		console.log(transaksiDesignItems);
+		var transaksiDesign = {
+				code :$('#transactionCode').val(),
+				requestBy :$('#requestBy').val(),
+				requestDate :$('#requestDate').val(),
+				titleHeader :$('#titleHeader').val(),
+				note :$('#note').val(),
+				transaksiEvent :{
+					id:$('#eventId').val()
+			    },
+				transaksiDesignItems:transaksiDesignItems
+		}
+		$.ajax({
+			url : '${pageContext.request.contextPath}/design/save',
+			type : 'POST',
+			contentType:'application/json',
+			dataType:'json',
+			data:JSON.stringify(transaksiDesign),
+			success:function(data){
+				loadData();
+				$('##addDesignTransactionModal').modal('hide');
+			}
+		});	
 	});
 
 	$(document).on('click','.btn-delete-design',function(){
@@ -259,6 +288,29 @@ $(document).ready(function(){
 			}
 		});
 	});
+	function loadData(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/design/getall',
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				convertToTable(data);
+			}
+		});
+	}
+	function convertToTable(data){
+		oTable = $('#designTable').DataTable();
+		oTable.rows( 'tr' ).remove();
+		$.each(data,function(increment,design){
+			increment++;
+			var tRow ='<a id="'+design.id+'" href="#" class="btn-view-product"><span class="oi oi-magnifying-glass"></span></a>';	
+			tRow +=' ';
+			tRow +='<a id="'+design.id+'" href="#" class="btn-update-product"><span class="oi oi-pencil"></span></a>';
+			oTable.row.add([increment,design.code,design.requestBy,design.requestDate,design.assignTo,design.status,design.createdDate,design.createdBy,tRow]);
+		});
+		oTable.draw();
+	}
 });
 
 </script>

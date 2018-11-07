@@ -203,8 +203,9 @@ $(document).ready(function(){
     			type : 'GET'
     		});
     	 return xhr.then(function(data){
-    		 if($('#nameUpdateCheck').val()==1){
-    			 $('#nameUpdateCheck').val(0)
+    		 var nama=$('#nameEditCheck').val();
+    		 if(nama==$('#usernameEdit').val()){
+    			 $('#nameEditCheck').val(1)
     		 	 return true
     	   	 }else if(data.length==0){
     			 return true 
@@ -213,7 +214,7 @@ $(document).ready(function(){
     		 }
     	 });
     	}
-    	});
+    });
 	
 	/* membuat objek tabel */
 	oTable = $('#userTable').DataTable({
@@ -272,6 +273,7 @@ $(document).ready(function(){
 										 $('#employeeEditPost').html(data.employee.employeeName).val(data.employee.id);
 										 $('#roleEdit').val(data.mRole.id);
 										 $('#usernameEdit').val(data.username);
+										 $('#nameEditCheck').val(data.username);
 										 $('#passwordEdit').val(data.password);
 										 $('#rpasswordEdit').val(data.password);
 										console.log(data);
@@ -282,40 +284,49 @@ $(document).ready(function(){
 							
 							});
 	
+	//menutup edit modal dan melempar data ke kontroller
+	 $('#editButnModal').on('click', function(){
+		
+		var validate= 		 $('#addEditForm').parsley();
+		validate.validate();		
+	}); 
 	
-		 $('#editButnModal').on('click', function(){
-				var user = {
-						 
-						id : $('#EditId').val(),
-						/* createdDate : $('#EditCreatedDate').val(), */
-						createdBy : $('#EditCreatedBy').val(),
-						username : $('#usernameEdit').val(),
-						password : $('#passwordEdit').val(), 
-						employee :{
-							id: $('#employeeEdit').val()
-						} ,
-						mRole :{
-							id: $('#roleEdit').val()
-						} 
-						
+	$('#addEditForm').parsley().on('form:success', function(){
+		var user = {
 				 
-				}
-				$.ajax({
-					url : '${pageContext.request.contextPath}/user/update',
-					type : 'POST',
-					contentType : 'application/json',
-					data : JSON.stringify(user),
-					success : function(data){
-						console.log("data telah diupdate");
-						$('#editUserModal').modal('hide');
+				id : $('#EditId').val(),
+				/* createdDate : $('#EditCreatedDate').val(), */
+				createdBy : $('#EditCreatedBy').val(),
+				username : $('#usernameEdit').val(),
+				password : $('#passwordEdit').val(), 
+				employee :{
+					id: $('#employeeEdit').val()
+				} ,
+				mRole :{
+					id: $('#roleEdit').val()
+				} 
+				
+		 
+		}
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/update',
+			type : 'POST',
+			contentType : 'application/json',
+			data : JSON.stringify(user),
+			success : function(data){
+				console.log("data telah diupdate");
+				$('#editUserModal').modal('hide');
 
-						 window.location = "${pageContext.request.contextPath}/user";
-					},
-					error : function(){
-						console.log("data error");
-					}
-				});
-			}); 
+				 window.location = "${pageContext.request.contextPath}/user";
+			},
+			error : function(){
+				console.log("data error");
+			}
+		});
+		
+	});
+	
+		 
 	
  
 	//delete user
@@ -361,6 +372,7 @@ $(document).ready(function(){
 		 var user = {
 					username : $('#username').val(),
 					password : $('#password').val(),
+					
 					employee :{
 						id: $('#employee').val()
 					},
@@ -399,12 +411,12 @@ $(document).ready(function(){
 	 /* ini adalah fungsi get user login dr controller */
 		function getUser(){
 			$.ajax({
-				url : '${pageContext.request.contextPath}/fungsi/getuserlogin',
+				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
 				type : 'GET',
 				success : function(data){
 				 	$('#user-login').val(data);
 					 
-					 document.getElementById("user-login").innerHTML="Selamat Datang " +data+ "!";
+					 document.getElementById("user-login").innerHTML="Selamat Datang role " +data+ "!";
 				}
 			}) 
 		 }

@@ -1,52 +1,55 @@
 package com.marcomm.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "T_Design")
 public class TransaksiDesign {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	@NotNull
 	private int id;
-
-	@NotNull
+	@Column(length=50,nullable=false)
 	private String code;
 
-	@NotNull
-	@Column(name = "t_event_id")
-	private int tEventId;
-
-	@Column(name = "title_header")
-	@NotNull
+	@Column(name = "title_header",nullable=false)
 	private String titleHeader;
 
-	@NotNull
 	@Column(name = "request_by")
 	private String requestBy;
 
-	@NotNull
 	@Column(name = "request_date")
+	@Temporal(TemporalType.DATE)
 	private Date requestDate;
 
 	@Column(name = "approved_by")
 	private String approvedBy;
 
 	@Column(name = "approved_date")
+	@Temporal(TemporalType.DATE)
 	private Date approvedDate;
 
 	@Column(name = "assign_to")
 	private int assignTo;
 
 	@Column(name = "closed_date")
+	@Temporal(TemporalType.DATE)
 	private Date closeDate;
 
 	private String note;
@@ -58,19 +61,47 @@ public class TransaksiDesign {
 	@Column(name = "is_delete",columnDefinition="number(1,0) default 0",nullable=false)
 	private boolean isDelete;
 
-	@NotNull
 	@Column(name = "created_by")
 	private String createdBy;
 
-	@NotNull
 	@Column(name = "created_date")
+	@Temporal(TemporalType.DATE)
 	private Date createdDate;
 
 	@Column(name = "updated_by")
 	private String updatedBy;
 
 	@Column(name = "updated_date")
+	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
+	
+	@OneToOne
+	@JsonManagedReference
+	@JoinColumn(name="t_event_id",unique=true)
+	private TransaksiEvent transaksiEvent;
+
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="transaksiDesign")
+	private List<TransaksiDesignItem> transaksiDesignItems;
+	
+	public TransaksiEvent getTransaksiEvent() {
+		return transaksiEvent;
+	}
+
+	public void setTransaksiEvent(TransaksiEvent transaksiEvent) {
+		this.transaksiEvent = transaksiEvent;
+	}
+	
+	public List<TransaksiDesignItem> getTransaksiDesignItems() {
+		return transaksiDesignItems;
+	}
+
+	public void setTransaksiDesignItems(List<TransaksiDesignItem> transaksiDesignItems) {
+		this.transaksiDesignItems = transaksiDesignItems;
+	}
+
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
 
 	public int getId() {
 		return id;
@@ -86,14 +117,6 @@ public class TransaksiDesign {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public int gettEventId() {
-		return tEventId;
-	}
-
-	public void settEventId(int tEventId) {
-		this.tEventId = tEventId;
 	}
 
 	public String getTitleHeader() {

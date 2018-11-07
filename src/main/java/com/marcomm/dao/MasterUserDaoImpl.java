@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bouncycastle.asn1.isismtt.x509.Restriction;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -19,6 +20,7 @@ import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
+import com.marcomm.service.FungsiService;
 import com.marcomm.service.InitDBMarcom;
 
 @Repository
@@ -100,6 +102,19 @@ public class MasterUserDaoImpl implements MasterUserDao {
 				List<MasterUser> usernames = cr.add(crOr).list();
 				return usernames;
 		
+	}
+
+	public String getRole() {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		String userLog=	FungsiService.getUserLog();
+ 
+		
+		Query query = session.createQuery("select mRole from MasterUser where username = :name ");
+		query.setParameter("name", userLog);
+		MasterRole role= (MasterRole) query.uniqueResult();
+		
+		return role.getRoleName();
 	}
 	
 

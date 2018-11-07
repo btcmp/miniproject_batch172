@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.marcomm.model.MasterMenu;
 import com.marcomm.model.MasterMenuAccess;
+import com.marcomm.model.MasterRole;
 
 public interface MasterMenuAccessDao {
 
@@ -14,5 +15,6 @@ public interface MasterMenuAccessDao {
 	public void update(MasterMenuAccess menu);
 	public void delete(MasterMenuAccess menuAccess);
 	public List<MasterMenu> getMenu();
+	public List<MasterRole> getRole();
 
 }

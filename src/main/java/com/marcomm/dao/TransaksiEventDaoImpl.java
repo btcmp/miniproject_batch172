@@ -31,8 +31,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		Date now = new Date();
 		event.setRequestDate(now);
 		event.setCreatedDate(now);
-		event.setStartDate(now);
-		event.setEndDate(now);
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.save(event);
@@ -77,4 +75,67 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		TransaksiEvent event = session.get(TransaksiEvent.class, id);
 		return event;
 	}
+
+	@Override
+	public void update(TransaksiEvent event) {
+		// TODO Auto-generated method stub
+		event.setIsDelete(false);
+		
+		event.setCreatedBy("Sahid Triambudhi");
+		event.setRequestBy(1);
+		event.setStatus(1);
+		
+		Date now = new Date();
+		event.setRequestDate(now);
+		event.setCreatedDate(now);
+
+		Session session = sessionFactory.getCurrentSession();
+		session.update(event);
+	}
+
+	@Override
+	public void closeEvent(int id) {
+		// TODO Auto-generated method stub
+		TransaksiEvent event = new TransaksiEvent();
+		event = getEventById(id);
+		event.setStatus(3);
+		Date now = new Date();
+		event.setUpdatedDate(now);
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.update(event);
+	}
+
+	@Override
+	public void accept(TransaksiEvent event) {
+		// TODO Auto-generated method stub
+		event.setIsDelete(false);
+		
+		event.setCreatedBy("Sahid Triambudhi");
+		event.setRequestBy(1);
+		event.setStatus(2);
+		
+		Date now = new Date();
+		event.setUpdatedDate(now);
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.update(event);
+	}
+
+	@Override
+	public void reject(TransaksiEvent event) {
+		// TODO Auto-generated method stub
+		event.setIsDelete(false);
+		
+		event.setCreatedBy("Sahid Triambudhi");
+		event.setRequestBy(1);
+		event.setStatus(0);
+		
+		Date now = new Date();
+		event.setUpdatedDate(now);
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.update(event);
+	}
+
 }

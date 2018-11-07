@@ -4,13 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name="T_EVENT")
@@ -85,6 +90,18 @@ public class TransaksiEvent {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
+	
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="transaksiEvent")
+	@JsonBackReference
+	private TransaksiDesign transaksiDesign;
+
+	public TransaksiDesign getTransaksiDesign() {
+		return transaksiDesign;
+	}
+
+	public void setTransaksiDesign(TransaksiDesign transaksiDesign) {
+		this.transaksiDesign = transaksiDesign;
+	}
 
 	public int getId() {
 		return id;

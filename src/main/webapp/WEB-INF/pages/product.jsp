@@ -141,7 +141,7 @@ $(document).ready(function(){
     			type : 'GET'
     		});
     	 return xhr.then(function(data){
-    		 if($('#nameUpdateCheck').val()==1){
+    		 if($('#nameUpdate').val()==$('#nameUpdateCheck').val()){
     			 $('#nameUpdateCheck').val(0)
     		 	 return true
     	   	 }else if(data.length==0){
@@ -207,7 +207,7 @@ $(document).ready(function(){
 										$('#idUpdate').val(data.id);
 										$('#codeUpdate').val(data.code);
 										$('#nameUpdate').val(data.name);
-										$('#nameUpdateCheck').val(1);
+										$('#nameUpdateCheck').val(data.name);
 										$('#descUpdate').val(data.description);
 										$('#crUpdate').val(data.createdBy);
 										$('#dateUpdate').val(data.createdDate);
@@ -306,9 +306,10 @@ $(document).ready(function(){
 			 dataType: 'json'
 		 })
 		 $('#addForm').parsley().reset();
-			$('#productname').val("");
-			$('#description').val("");
-		$('#addProductModal').modal();
+		 $('#productname').val("");
+	     $('#description').val("");
+	  	 $('#nameUpdateCheck').val(0);
+		 $('#addProductModal').modal();
 	 });
 	//add product
  	 $('#addBtnModal').on('click', function(ev){	
