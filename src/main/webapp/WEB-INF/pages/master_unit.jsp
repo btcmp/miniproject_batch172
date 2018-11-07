@@ -277,7 +277,7 @@ $(document).ready(function(){
 			convertToTable(output);
 			},
 		dataType : 'json'
-			});
+			});      
 		}
 	//convert json to table
 	function convertToTable(data){

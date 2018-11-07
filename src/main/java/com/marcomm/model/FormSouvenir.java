@@ -21,5 +21,4 @@ public class FormSouvenir {
 		this.detail = detail;
 	}
 	
-
 }

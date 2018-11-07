@@ -30,10 +30,10 @@ public class TransaksiSouvenirItemService {
 		transaksiSouvenirItem.setDelete(false);
 		transaksiSouvenirItemDao.save(transaksiSouvenirItem);
 		
-	}
-
-	public List<TransaksiSouvenirItem> getAll() {
-		return transaksiSouvenirItemDao.getAll();
+	} 
+	
+	public void update(TransaksiSouvenirItem transaksiSouvenirItem) {
+		
 	}
 
 

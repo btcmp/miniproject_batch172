@@ -25,7 +25,7 @@
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="transactionCode"
 								placeholder="Transaction Code" readonly>
-						</div>
+						</div>    
 					</div>
 					<div class="form-group row">
 						<label for="receivedTransSBy" class="col-sm-3 col-form-label">Received By</label>

@@ -39,38 +39,12 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 		
 	}
 
-	public void updateApproval(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateReceived(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void updateSettlement(TransaksiSouvenirItem transaksiSouvenirItem) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void updateSettlementApproval(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public void updateCloseRequest(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	/*GET ALL*/
-	public List<TransaksiSouvenirItem> getAll() {
-		Session session = sessionFactory.getCurrentSession();
-		Criteria cr = session.createCriteria(TransaksiSouvenirItem.class);
-		List<TransaksiSouvenirItem> listSouItem = cr.add(Restrictions.eq("isDelete", false)).addOrder(Order.asc("id")).list();
-		return listSouItem;
-	}
 
 	
 }

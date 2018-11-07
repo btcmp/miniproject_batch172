@@ -20,6 +20,8 @@ public interface MasterSouvenirDao {
 
 	public List<MasterSouvenir> getByName(String name);
 	
+	public List<MasterSouvenir> getAllSouvenirQtyOk();
+	
 	
 	
 	

@@ -30,7 +30,7 @@
 						<div class="form-group row">
 							<label for="eventCode" class="col-sm-2 col-form-label">Event Code</label>
 							<div class="col-sm-3">
-								<select class="form-control" id="eventId" data-parsley-required data-parsley-required-message="event code harus diisi" data-parsley-idcheck data-parsley-idcheck-message="data event ini sudah memesan desain">
+								<select class="form-control" id="eventCode">
 										<option value="">Choose...</option>
 											<c:forEach var="event" items="${events}">
 											<option value="${event.id}">${event.code}</option>
