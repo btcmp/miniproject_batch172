@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page isELIgnored="false"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!-- MODAL ADD -->
 <div class="modal fade" id="addTranSouModal" tabindex="-1"
 	role="dialog" aria-labelledby="addTransSou"
@@ -25,8 +30,12 @@
 					<div class="form-group row">
 						<label for="receivedTransSBy" class="col-sm-3 col-form-label">Received By</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="receivedTransSBy"
-								placeholder="-Select Employee-" required data-parsley-namecheck data-parsley-namecheck-message="Name already in use">
+							<select class="form-control custom select" id="receivedTransSBy">
+								<option value=" " selected>Select Employee</option>
+								<%-- <c:forEach var="employee" items="${employees }">
+									<option value="${employee.employeeName }">${employee.employeeName }</option>
+								</c:forEach> --%>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -77,8 +86,8 @@
 			<!-- FOOTER -->
 			</div>
 			<div class="modal-footer border border-top-0 border-dark">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				<button type="button" class="btn btn-primary" id="addBtnModal">Save</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 			</div>
 		</div>
 	</div>

@@ -9,7 +9,7 @@ public interface TransaksiSouvenirDao {
 	/*SAVE*/
 	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir);
 
-	/*GET ALL*/
+	/*GET ALL STOCK*/
 	public List<TransaksiSouvenir> getAllTransaksiSouvenir();
 
 	/*GET BY ID*/
@@ -24,6 +24,6 @@ public interface TransaksiSouvenirDao {
 	/*GET CODE*/
 	public String getCodeTrans();
 
-	
-	
+	/*GET ALL REQUEST*/
+	public List<TransaksiSouvenir> getAllRequest();
 }

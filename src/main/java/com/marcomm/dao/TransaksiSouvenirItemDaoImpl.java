@@ -2,8 +2,11 @@ package com.marcomm.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -59,6 +62,14 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 	public void updateCloseRequest(TransaksiSouvenirItem transaksiSouvenirItem) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/*GET ALL*/
+	public List<TransaksiSouvenirItem> getAll() {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria cr = session.createCriteria(TransaksiSouvenirItem.class);
+		List<TransaksiSouvenirItem> listSouItem = cr.add(Restrictions.eq("isDelete", false)).addOrder(Order.asc("id")).list();
+		return listSouItem;
 	}
 
 	

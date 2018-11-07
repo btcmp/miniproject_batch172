@@ -155,7 +155,29 @@ $(document).ready(function(){
 				$('#transactionCode').val(data);
 			},
 			dataType : 'json'
-		});	
+		});
+		
+		//get Employeee
+		/* function loadAllEmployee(){
+			$.ajax({
+				url : '${pageContext.request.contextPath}/transaksisouvenir/getallemployee',
+				type : 'GET',
+				success : function(data){
+					console.log(data)
+					$.each(data, function(index, value){
+						$('#receivedTransSBy').append('<option value="'+value.id+'">"'+value.employeeName+'"</option>')
+					});
+				},
+				dataType : 'json'
+			});	
+		} */
+		//datepicker
+		$('#receivedTransSDate').datepicker({
+			format : 'yyyy-mm-dd',
+			autoclose : true,
+			uiLibrary : 'bootstrap4'
+		});
+		
 		$('#addTranSouModal').modal();
 	});
 	

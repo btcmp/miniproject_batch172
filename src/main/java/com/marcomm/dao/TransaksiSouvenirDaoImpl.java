@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,29 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 	
 	/*SAVE*/
 	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir) {
-		transaksiSouvenir.setCode(getCodeTrans());
-		transaksiSouvenir.setType("additional");
-		transaksiSouvenir.setRequestBy(1);
-		transaksiSouvenir.setDelete(false);
 		Session session = sessionFactory.getCurrentSession();
 		session.save(transaksiSouvenir);
 	}
 
-	/*GETALL*/
+	/*GETALL STOCK*/
 	public List<TransaksiSouvenir> getAllTransaksiSouvenir() {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(TransaksiSouvenir.class);
-		List<TransaksiSouvenir> listTranSou = cr.add(Restrictions.eq("isDelete", false)).addOrder(Order.asc("id")).list();
+		Criterion criterionAnd = Restrictions.and(Restrictions.eq("isDelete", false),Restrictions.eq("type", "additional"));
+		List<TransaksiSouvenir> listTranSou = cr.add(criterionAnd).list();
 		return listTranSou;
 	}
-
+	
+	/*GETALL REQUEST*/
+	public List<TransaksiSouvenir> getAllRequest() {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria cr = session.createCriteria(TransaksiSouvenir.class);
+		Criterion criterionAnd = Restrictions.and(Restrictions.eq("isDelete", false),Restrictions.eq("type", "reduction")); 
+		List<TransaksiSouvenir> listTranSou = cr.add(criterionAnd).list();
+		return listTranSou;
+		
+	}
+	
 	/*GET BY ID*/
 	public TransaksiSouvenir getTransaksiSouvenir(int id) {
 		Session session = sessionFactory.getCurrentSession();
@@ -77,7 +85,7 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 			return fullCode;
 		}
 	}
-	
+
 	
 	
 }

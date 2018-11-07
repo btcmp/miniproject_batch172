@@ -91,10 +91,10 @@
 		<form>
 			<div class="row" style="width: 100%; margin : auto">
    				<div class="col">
-      				<select class="form-control custom select" id="data1" data-index="1" placeholder="Select Unit Code"> 
-      					<option value=" ">Select Unit Code</option>
+      				<select class="form-control custom select" id="data1" data-index="1"> 
+      					<option value=" " selected>Select Unit Code</option>
       					<c:forEach var="masterunit" items="${masterunits}">
-      						<option value="${masterunit.id }">${masterunit.code }</option>
+      						<option value="${masterunit.code }">${masterunit.code }</option>
       					</c:forEach>
       				</select>
    				</div>
@@ -159,16 +159,14 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	/* LOAD DATA SAVED DATA */
+	loadData();
 	/* DATE PICKER */
 		$('#data3').datepicker({
 			format : 'yyyy-mm-dd',
 			autoclose : true,
 			uiLibrary : 'bootstrap4'
 				});
-	
-	/* LOAD DATA SAVED DATA */
-	loadData();
-
 	/* ADD VALIDATE */
 	Parsley.addValidator('namecheck',{
 			validateString : function(value){
@@ -186,6 +184,22 @@ $(document).ready(function(){
 							}
 						});
 				}
+		});
+	
+	/* SEARCH DATA */
+	//loadData();
+	//membuat objek table
+	oTable = $('#unitTable').DataTable({
+		 'sDom' : 'tip', 
+		'ordering' : false
+	});
+	$('#btn-search-unit').on('click', function(){
+		for (var i =1; i<=4, i++;){
+			oTable
+			.column($('#data'+i).data('index'))
+			.search($('#data'+i).val() )
+			.draw();
+			}
 		});
 	
 	/*BUTTON POP UP ADD*/
@@ -219,8 +233,7 @@ $(document).ready(function(){
 				name : $('#unitname').val(),
 				description : $('#description').val()  
 				};
-		document.getElementById("notif").innerHTML = "Data Saved! New Code Has Been Added With Code: "+masterunit.code+"!";
-		$('#notif').show('slow').delay(1500).hide('slow');
+		
 		//checkout value
 		//console.log(masterunit);
 		$.ajax({
@@ -236,9 +249,12 @@ $(document).ready(function(){
 				loadData();
 				$('#unitname').val('');
 				$('#description').val('');
-				
 				$('#addUnitModal').modal('hide');
-			
+				
+				//window.location='${pageContext.request.contextPath}/masterunit';
+				
+				document.getElementById("notif").innerHTML = "Data Saved! New Code Has Been Added With Code: "+masterunit.code+"!";
+				$('#notif').show('slow').delay(1500).hide('slow');
 				//modal data saved pop up
 				/* $('#dataAddedModal').modal();
 				setTimeout(function(){
@@ -464,21 +480,7 @@ $(document).ready(function(){
 			})
 		})
 	
-	/* SEARCH DATA */
-	loadData();
-	//search data
-	oTable = $('#unitTable').DataTable({
-		 'sDom' : 'tip', 
-		'ordering' : false
-	});
-	$(document).on('click', '#btn-search-unit', function(){
-		for (var i =1; i<=4, i++;){
-			oTable
-			.column($('#data'+i).data('index'))
-			.search($('#data'+i).val() )
-			.draw();
-			}
-		});
+	
 
 
 		
