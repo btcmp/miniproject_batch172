@@ -3,14 +3,17 @@ package com.marcomm.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,99 +49,74 @@ public class MasterMenu {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
-	@ManyToMany
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="menu", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<MasterMenuAccess> access;
-	
-	public List<MasterMenuAccess> getAccess() {
-		return access;
-	}
-
-	public void setAccess(List<MasterMenuAccess> access) {
-		this.access = access;
-	}
-
-	public MasterMenu() {
-		
-	}
-
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getCode() {
 		return code;
 	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getController() {
 		return controller;
 	}
-
 	public void setController(String controller) {
 		this.controller = controller;
 	}
-
 	public int getParentId() {
 		return parentId;
 	}
-
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
-
 	public boolean isDelete() {
 		return isDelete;
 	}
-
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-
 	public String getCreatedBy() {
 		return createdBy;
 	}
-
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
-
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
-
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+	public List<MasterMenuAccess> getAccess() {
+		return access;
+	}
+	public void setAccess(List<MasterMenuAccess> access) {
+		this.access = access;
+	}
 	
+		
 }

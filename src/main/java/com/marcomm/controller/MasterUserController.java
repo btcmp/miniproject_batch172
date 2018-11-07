@@ -18,6 +18,7 @@ import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterRole;
 import com.marcomm.model.MasterUser;
+import com.marcomm.service.FungsiService;
 import com.marcomm.service.MasterCompanyService;
 import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.MasterUserService;
@@ -77,6 +78,14 @@ public class MasterUserController {
 		return userService.getByName(username);
 	}
 	
+	
+	@RequestMapping(value="/getrole ",method=RequestMethod.GET)
+	@ResponseBody
+	public String getRole(){
+		
+		 String role=userService.getRole();
+		 return role;
+	}
 	/*, method=RequestMethod.DELETE*/
 /*	@RequestMapping(value="/delete/{id}")
 	@ResponseStatus(HttpStatus.OK)

@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,10 +26,10 @@ public class MasterMenuAccess {
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int id;
-	@Column(unique=true,name="m_role_id",nullable=false)
-	private String mRoleId;
-	@Column(name="m_menu_id",nullable=false)
-	private int mMenuId;
+	/*@Column(name="m_role_id",nullable=false)
+	private int mRoleId;*/
+	/*@Column(name="m_menu_id",nullable=false)
+	private int mMenuId;*/
 	@Column(name="is_delete",nullable=false)
 	private boolean isDelete;
 	@Column(name="created_by",nullable=false)
@@ -41,27 +42,17 @@ public class MasterMenuAccess {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
-	@ManyToMany
-	@JoinTable(name="join_menu",
-	joinColumns= {@JoinColumn(name="m_menu_access_id")},
-	inverseJoinColumns= {@JoinColumn(name="m_Menu_Id")})
-	private List<MasterMenu> menu;
+	@ManyToOne
+	@JoinColumn(name="M_Menu_Id")
+	private MasterMenu menu;
 	
+	@ManyToOne
+	@JoinColumn(name="M_Role_Id")
+	private MasterRole role;
 	
 	public MasterMenuAccess() {
 		
 	}
-	
-
-	public List<MasterMenu> getMenu() {
-		return menu;
-	}
-
-
-	public void setMenu(List<MasterMenu> menu) {
-		this.menu = menu;
-	}
-
 
 	public int getId() {
 		return id;
@@ -69,22 +60,6 @@ public class MasterMenuAccess {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getmRoleId() {
-		return mRoleId;
-	}
-
-	public void setmRoleId(String mRoleId) {
-		this.mRoleId = mRoleId;
-	}
-
-	public int getmMenuId() {
-		return mMenuId;
-	}
-
-	public void setmMenuId(int mMenuId) {
-		this.mMenuId = mMenuId;
 	}
 
 	public boolean isDelete() {
@@ -126,6 +101,21 @@ public class MasterMenuAccess {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
+
+	public MasterMenu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(MasterMenu menu) {
+		this.menu = menu;
+	}
+
+	public MasterRole getRole() {
+		return role;
+	}
+
+	public void setRole(MasterRole role) {
+		this.role = role;
+	}
 	
 }

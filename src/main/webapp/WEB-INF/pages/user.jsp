@@ -203,7 +203,9 @@ $(document).ready(function(){
     			type : 'GET'
     		});
     	 return xhr.then(function(data){
-    		 if($('#nameEditCheck').val()==$('#usernameEdit').val()){
+    		 var nama=$('#nameEditCheck').val();
+    		 if(nama==$('#usernameEdit').val()){
+    			 $('#nameEditCheck').val(1)
     		 	 return true
     	   	 }else if(data.length==0){
     			 return true 
@@ -409,12 +411,12 @@ $(document).ready(function(){
 	 /* ini adalah fungsi get user login dr controller */
 		function getUser(){
 			$.ajax({
-				url : '${pageContext.request.contextPath}/fungsi/getuserlogin',
+				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
 				type : 'GET',
 				success : function(data){
 				 	$('#user-login').val(data);
 					 
-					 document.getElementById("user-login").innerHTML="Selamat Datang " +data+ "!";
+					 document.getElementById("user-login").innerHTML="Selamat Datang role " +data+ "!";
 				}
 			}) 
 		 }

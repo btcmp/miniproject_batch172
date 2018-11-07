@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.marcomm.model.FormTransaksiDesign;
 import com.marcomm.model.MasterProduct;
+import com.marcomm.model.TransaksiDesign;
+import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.MasterProductService;
 import com.marcomm.service.TransaksiDesignService;
@@ -40,9 +41,11 @@ public class TransaksiDesignController {
 	
 	@RequestMapping(value="/save",method=RequestMethod.POST)
 	@ResponseBody
-	public void save(@RequestBody FormTransaksiDesign dataForm) {
-		
+	public TransaksiDesign save(@RequestBody TransaksiDesign transaksiDesign) {
+		transaksiDesignService.save(transaksiDesign);
+		return transaksiDesign;
 	}
+
 	@RequestMapping(value="/getcode",method=RequestMethod.GET)
 	@ResponseBody
 	public String getCode() {
@@ -53,4 +56,23 @@ public class TransaksiDesignController {
 	public String getRequestBy() {
 		return transaksiDesignService.getRequestBy();
 	}
+	
+	@RequestMapping(value="/getid",method=RequestMethod.GET)
+	@ResponseBody
+	public int getId() {
+		return transaksiDesignService.getId();
+	}
+	
+	@RequestMapping(value="/getall",method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiDesign> getAll(){
+		List<TransaksiDesign> designs = transaksiDesignService.getAll();
+		return designs;
+	}
+	
+	public List<TransaksiDesignItem> getAllItem(){
+		List<TransaksiDesignItem> items=transaksiDesignService.getAllItem();
+		return items;
+	}
+	
 }

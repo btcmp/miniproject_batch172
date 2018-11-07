@@ -95,13 +95,13 @@
 
 					</div>
 
-					<div class="row justify-content-end">
+					<div class="row" style="float:right">
 
-						<div class="col-8">
+						<div class="col">
 							<div class="form-group row">
-								<label for="rpassword" class="col-sm-2 col-form-label">
+								<label for="rpassword" class="col-sm-3 col-form-label">
 									Re-type Password:</label>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<input id="rpassword" type="password" class="form-control"
 										name="rpassword" placeholder="re-type pass"    
 										data-parsley-required data-parsley-required-message="password tidak boleh kosong"

@@ -1,12 +1,15 @@
 package com.marcomm.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,31 +17,52 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="M_PRODUCT")
 public class MasterProduct {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	@Column(columnDefinition="number(11)")
 	private int id;
+	
 	@Column(unique=true,nullable=false,length=50)
 	private String code;
+	
 	@Column(name="name",nullable=false,length=50)
 	private String name;
+	
 	@Column(name="description",length=255)
 	private String description;
+	
 	@Column(name="is_delete",columnDefinition="number(1,0) default 0",nullable=false)
 	private boolean isDelete;
+	
 	@Column(name="created_by",nullable=false,length=50)
 	private String createdBy;
+	
 	@Column(name="created_date",nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
+	
 	@Column(name="updated_by",length=50)
 	private String updatedBy;
+	
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
 	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="masterProduct")
+	private List<TransaksiDesignItem> transaksiDesignItems;
+	
+	public List<TransaksiDesignItem> getTransaksiDesignItems() {
+		return transaksiDesignItems;
+	}
+	
+	public void setTransaksiDesignItems(List<TransaksiDesignItem> transaksiDesignItems) {
+		this.transaksiDesignItems = transaksiDesignItems;
+	}
+	
 	public MasterProduct() {
 	}
+	
 	public MasterProduct(String code, String name, String description, boolean isDelete, String createdBy,
 			Date createdDate, String updatedBy, Date updatedDate) {
 		super();

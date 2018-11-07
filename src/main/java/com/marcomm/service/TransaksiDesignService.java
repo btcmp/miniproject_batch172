@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.dao.TransaksiDesignItemDao;
-import com.marcomm.model.FormTransaksiDesign;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
+
 
 @Service
 @Transactional
@@ -22,13 +22,6 @@ public class TransaksiDesignService {
 	@Autowired
 	TransaksiDesignItemDao transaksiDesignItemDao;
 		
-	public void saveData(FormTransaksiDesign data) {
-		TransaksiDesign transaksiDesign = data.getHeader();
-		transaksiDesignDao.save(transaksiDesign);
-		for (TransaksiDesignItem transaksiItem : data.getDetails()) {
-			transaksiDesignItemDao.save(transaksiItem);
-		}
-	}
 	public List<TransaksiDesign> getAll() {
 		return transaksiDesignDao.getAll();
 	}
@@ -42,9 +35,35 @@ public class TransaksiDesignService {
 		return transaksiDesignDao.getCodeById();
 	}
 
-
+	public int getId() {
+		return transaksiDesignDao.getId();
+	}
 	public String getRequestBy() {
 		return transaksiDesignDao.getRequestBy();
+	}
+
+	public List<TransaksiDesignItem> getAllItem() {
+		return transaksiDesignItemDao.getAll();
+	}
+
+	public void save(TransaksiDesign transaksiDesign) {
+		TransaksiDesign td = new TransaksiDesign();
+		td.setCode(transaksiDesign.getCode());
+		td.setRequestBy(transaksiDesign.getRequestBy());
+		td.setTitleHeader(transaksiDesign.getTitleHeader());
+		td.setNote(transaksiDesign.getNote());
+		td.setTransaksiEvent(transaksiDesign.getTransaksiEvent());
+		transaksiDesignDao.save(td);
+		for (TransaksiDesignItem transaksiDesignItem : transaksiDesign.getTransaksiDesignItems()) {
+			TransaksiDesignItem tdi = new TransaksiDesignItem();
+			tdi.setMasterProduct(transaksiDesignItem.getMasterProduct());
+			tdi.setTitleItem(transaksiDesignItem.getTitleItem());
+			tdi.setRequestPic(transaksiDesignItem.getRequestPic());
+			tdi.setRequestDueDate(transaksiDesignItem.getRequestDueDate());
+			tdi.setNote(transaksiDesignItem.getNote());
+			tdi.setTransaksiDesign(td); 
+			transaksiDesignItemDao.save(tdi);
+		}
 	}
 	 
 

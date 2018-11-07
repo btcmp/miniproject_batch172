@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.marcomm.dao.MasterMenuAccessDao;
 import com.marcomm.model.MasterMenu;
 import com.marcomm.model.MasterMenuAccess;
+import com.marcomm.model.MasterRole;
 
 @Service
 @Transactional
@@ -42,7 +43,7 @@ public class MasterMenuAccessService {
 		// TODO Auto-generated method stub
 		MasterMenuAccess menu=accessDao.getId(id);
 	/*	menu.setmRoleId(menuAccess.getmRoleId());*/
-		menu.setmMenuId(menuAccess.getmMenuId());
+		/*menu.setmMenuId(menuAccess.getmMenuId());*/
 		/*menu.setCreatedBy(menuAccess.getCreatedBy());
 		menu.setUpdatedBy(menuAccess.getUpdatedBy());*/
 		accessDao.update(menu);
@@ -59,6 +60,11 @@ public class MasterMenuAccessService {
 	public List<MasterMenu> getMenu() {
 		// TODO Auto-generated method stub
 		return accessDao.getMenu();
+	}
+
+	public List<MasterRole> getRole() {
+		// TODO Auto-generated method stub
+		return accessDao.getRole();
 	}
 
 }
