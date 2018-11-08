@@ -20,7 +20,7 @@
 						<div class="col-sm-4">
 							<input type="text" class="form-control" name="code" id="transactionCode"
 								placeholder="Transaction Code" disabled>
-						</div>
+						</div> 
 					</div>
 					<div class="form-group row">
 						<label for="eventId" class="col-sm-3 col-form-label">Event Code</label>

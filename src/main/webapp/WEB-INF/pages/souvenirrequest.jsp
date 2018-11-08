@@ -21,7 +21,7 @@
 <!-- parsley style -->
 <style>
 	input.parsley-error
-	{
+	{ 
 		color : #B94A48 !important;
 		background-color : #F2DEDE !important;
 		border : 1px solid #EED3D7 !important;

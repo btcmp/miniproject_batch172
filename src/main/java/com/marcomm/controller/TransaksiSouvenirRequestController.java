@@ -47,7 +47,7 @@ public class TransaksiSouvenirRequestController {
 	
 	//save All data
 	@RequestMapping(value="/saveall", method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(HttpStatus.CREATED) 
 	@ResponseBody
 	public TransaksiSouvenir saveAllData(@RequestBody TransaksiSouvenir transaksiSouvenir) {
 		souvenirRequestService.saveAllData(transaksiSouvenir);
