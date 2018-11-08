@@ -329,7 +329,7 @@ $(document).ready(function(){
 });
 /*  KOLOM ANGGI*/
   
-  /* memunculkan Modal edit */
+  /* memunculkan Modal edit */ 
   $(document).on('click','.btn-update-design-main',function(){
 	  var id = $(this).attr('id');
 	   
