@@ -53,7 +53,7 @@ public class TransaksiDesign {
 	private Date closeDate;
 
 	private String note;
-	private String status;
+	private int status;
 
 	@Column(name = "reject_reason")
 	private String rejectReason;
@@ -183,11 +183,11 @@ public class TransaksiDesign {
 		this.note = note;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

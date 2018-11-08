@@ -30,5 +30,10 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 		List<TransaksiDesignItem>  ListDesignItem = cr.add(Restrictions.eq("isDelete", false)).list();
 		return ListDesignItem;
 	}
-
+	
+	public TransaksiDesignItem getById(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(TransaksiDesignItem.class, id);
+		
+	}
 }

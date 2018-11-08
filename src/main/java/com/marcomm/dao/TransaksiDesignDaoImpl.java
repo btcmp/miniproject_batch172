@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.FungsiService;
@@ -60,26 +61,19 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 		return fullCode;
 		}
 	}
-	public int getId() {
-		String hql = "from TransaksiDesign ORDER BY id DESC";
-		Session session = sessionFactory.getCurrentSession();
-		TransaksiDesign transaksiDesign = (TransaksiDesign) session.createQuery(hql).setMaxResults(1).uniqueResult();
-		return transaksiDesign.getId();
-	}
 	public String getRequestBy() {
 		String user = FungsiService.getUserLog();
 		return user;
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<TransaksiEvent> getEventAvailable(List<Integer> eventId) {
-		String hql = "select te from TransaksiEvent te where te.id not in (:eventId)";
 		Session session = sessionFactory.getCurrentSession();
+		String hql = "select te from TransaksiEvent te where te.id not in (:eventId)";
 		Query qr = session.createQuery(hql);
 		qr.setParameterList("eventId", eventId);
 		List<TransaksiEvent> transaksiEvent = qr.list();
 		return transaksiEvent;
 	}
-
+	
 }

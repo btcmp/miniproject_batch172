@@ -12,92 +12,114 @@
 			<input type="hidden" id="designId">
 				<div
 					class="modal-body border border-bottom-0 border-top-0 border-dark">
-					<div class="bg-light border rounded" style="height:50%;">
-					<div style="width:70%;margin-top:10px;margin-left:10px;">
-						<div class="form-group row">
-							<label for="TransactionCode" class="col-sm-2 col-form-label">Transaction
-								Code</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" id="transactionCode"
-									placeholder="Kode Transaksi" readonly>
-							</div>
-							<label for="requestBy" class="col-sm-2 col-form-label">Request By</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" id="requestBy"
-									placeholder="Request By" readonly>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="eventCode" class="col-sm-2 col-form-label">Event Code</label>
-							<div class="col-sm-3">
-								<select class="form-control" id="eventCode">
-										 <option value="">Choose...</option>
-										<%--	<c:forEach var="event" items="${events}">
+					<div class="bg-light border rounded" style="height: 50%;">
+						<div class="row" style="width: 80%;">
+							<div class="col-sm-5" style="margin-top:10px;margin-left:10px;">
+								<div class="form-group row">
+									<label for="TransactionCode" class="col-sm-4 col-form-label">Transaction
+										Code</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" id="transactionCode"
+											placeholder="Kode Transaksi" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="eventCode" class="col-sm-4 col-form-label">Event
+										Code</label>
+									<div class="col-sm-7">
+										<select class="form-control" id="eventCode">
+											<option value="">Choose...</option>
+											<%--	<c:forEach var="event" items="${events}">
 											<option value="${event.id}">${event.code}</option>
 										</c:forEach> --%>
-									</select> 
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="designTitle" class="col-sm-4 col-form-label">Design
+										Title</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" id="titleHeader"
+											placeholder="Design Title">
+									</div>
+								</div>
 							</div>
-							<label for="requestDate" class="col-sm-2 col-form-label">Request Date</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" id="requestDate"
-									placeholder="Request Date" readonly>
+							<div class="col-sm-5" style="margin-top:10px;">
+								<div class="form-group row">
+									<label for="requestBy" class="col-sm-4 col-form-label">Request
+										By</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" id="requestBy"
+											placeholder="Request By" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="requestDate" class="col-sm-4 col-form-label">Request
+										Date</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" id="requestDate"
+											placeholder="Request Date" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="note" class="col-sm-4 col-form-label">Note</label>
+									<div class="col-sm-7">
+										<textarea class="form-control" id="note"
+											style="height: 150px" placeholder="Note"></textarea>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="form-group row">
-							<label for="designTitle" class="col-sm-2 col-form-label">Design Title</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" id="titleHeader"
-									placeholder="Design Title" >
-							</div>
-							<label for="note" class="col-sm-2 col-form-label">Note</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" id="note" style="height:150px"
-									placeholder="Note">
-							</div>
-						</div>
-					</div>
 					</div>
 					<br>
 					<div class="bg-light border rounded" style="height: 50%;">
 						<div class="row">
 							<a class="btn btn-primary text-white" id="addItemBtn"
-								style="width: 100px; margin:20px;">Add</a>
+								style="width: 100px; margin: 20px;">Add</a>
 						</div>
 						<table id="itemsTable">
-						<thead>
-						<tr>
-						<th>Product Name</th>
-						<th>Description</th>
-						<th>Title</th>
-						<th>Request PIC</th>
-						<th>Due Date</th>
-						<th>Start Date</th>
-						<th>End Date</th>
-						<th>Note</th>
-						<th></th>
-						</tr>
-						</thead>
-						<tbody class="tableBody">
-						<tr id="items-1">
-						<td><select class="custom-select" id="productItem1" style="width:150px" data-parsley-required disabled>
-										<option value="">Choose...</option>
+							<thead>
+								<tr>
+									<th>Product Name</th>
+									<th>Description</th>
+									<th>Title</th>
+									<th>Request PIC</th>
+									<th>Due Date</th>
+									<th>Start Date</th>
+									<th>End Date</th>
+									<th>Note</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody class="tableBody">
+								<tr id="items-1">
+									<td><select class="custom-select" id="productItem1"
+										style="width: 150px" data-parsley-required disabled>
+											<option value="">Choose...</option>
 											<c:forEach var="product" items="${products}">
-											<option value="${product.id}">${product.name}</option>
-										</c:forEach>
-									</select> 
+												<option value="${product.id}">${product.name}</option>
+											</c:forEach>
+									</select></td>
+									<td><input type="text" class="form-control description"
+										id="description1" placeholder="description" disabled></td>
+									<td><input type="text" class="form-control" id="title1"
+										placeholder="Title" disabled></td>
+									<td><input type="text" class="form-control"
+										id="requestPic1" placeholder="Request PIC" disabled></td>
+									<td><input type="text" class="form-control" id="duedate1"
+										placeholder="Due Date" disabled></td>
+									<td><input type="text" class="form-control"
+										id="startdate1" placeholder="Start Date" disabled></td>
+									<td><input type="text" class="form-control" id="enddate1"
+										placeholder="End Date" disabled></td>
+									<td><input type="text" class="form-control" id="note1"
+										placeholder="Note" disabled></td>
+									<td><a href="#" id="1" class="btn-edit-design"><span
+											class="oi oi-pencil"></span></a> <a href="#" id="1"
+										class="btn-delete-design"><span class="oi oi-trash"></span></a>
 									</td>
-						<td><input type="text" class="form-control description" id="description1" placeholder="description" disabled></td>
-						<td><input type="text" class="form-control" id="title1" placeholder="Title"disabled></td>
-						<td><input type="text" class="form-control" id="requestPic1" placeholder="Request PIC" disabled></td>
-						<td><input type="text" class="form-control" id="duedate1" placeholder="Due Date" disabled></td>
-						<td><input type="text" class="form-control" id="startdate1" placeholder="Start Date" disabled></td>
-						<td><input type="text" class="form-control" id="enddate1"  placeholder="End Date" disabled></td>
-						<td><input type="text" class="form-control" id="note1" placeholder="Note" disabled></td>
-						<td><a href="#" id="1" class="btn-edit-design"><span class="oi oi-pencil"></span></a>
-						<a href="#" id="1" class="btn-delete-design"><span class="oi oi-trash"></span></a>
-						</td>
-						</tr>
-						</tbody>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>

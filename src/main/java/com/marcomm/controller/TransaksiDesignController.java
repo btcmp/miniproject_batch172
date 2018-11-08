@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.TransaksiDesign;
+import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.MasterProductService;
 import com.marcomm.service.TransaksiDesignService;
@@ -56,16 +58,12 @@ public class TransaksiDesignController {
 		return transaksiDesignService.getRequestBy();
 	}
 	
-	@RequestMapping(value="/getid",method=RequestMethod.GET)
-	@ResponseBody
-	public int getId() {
-		return transaksiDesignService.getId();
-	}
 	@RequestMapping(value="/getevent",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiEvent> getEvent(){
 		return transaksiDesignService.getEventAvailable();
 	}
+	
 	@RequestMapping(value="/getall",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiDesign> getAll(){
@@ -73,4 +71,15 @@ public class TransaksiDesignController {
 		return designs;
 	}
 	
+	@RequestMapping(value="/getdesignbyid/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public TransaksiDesign getDesignById(@PathVariable("id") int id) {
+		return transaksiDesignService.getById(id);
+	}
+	
+	@RequestMapping(value="/getitembyid/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public TransaksiDesignItem getItemById(@PathVariable("id") int id) {
+		return transaksiDesignService.getByIdItem(id);
+	}
 }

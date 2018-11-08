@@ -1,15 +1,17 @@
 package com.marcomm.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.marcomm.dao.MasterUserDao;
 import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.dao.TransaksiDesignItemDao;
+import com.marcomm.dao.TransaksiEventDao;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
@@ -23,6 +25,10 @@ public class TransaksiDesignService {
 	TransaksiDesignDao transaksiDesignDao;
 	@Autowired
 	TransaksiDesignItemDao transaksiDesignItemDao;
+	@Autowired
+	TransaksiEventDao transaksiEventDao;
+	@Autowired
+	MasterUserDao masterUserDao;
 		
 	public List<TransaksiDesign> getAll() {
 		return transaksiDesignDao.getAll();
@@ -32,13 +38,12 @@ public class TransaksiDesignService {
 		// TODO Auto-generated method stub
 		return transaksiDesignDao.getById(id);
 	}
+	public TransaksiDesignItem getByIdItem(int id) {
+		return transaksiDesignItemDao.getById(id);
+	}
 
 	public String getCodeById() {
 		return transaksiDesignDao.getCodeById();
-	}
-
-	public int getId() {
-		return transaksiDesignDao.getId();
 	}
 	public String getRequestBy() {
 		return transaksiDesignDao.getRequestBy();
@@ -51,10 +56,14 @@ public class TransaksiDesignService {
 	public void save(TransaksiDesign transaksiDesign) {
 		TransaksiDesign td = new TransaksiDesign();
 		td.setCode(transaksiDesign.getCode());
+		td.setRequestDate(transaksiDesign.getRequestDate());
 		td.setRequestBy(transaksiDesign.getRequestBy());
 		td.setTitleHeader(transaksiDesign.getTitleHeader());
 		td.setNote(transaksiDesign.getNote());
 		td.setTransaksiEvent(transaksiDesign.getTransaksiEvent());
+		td.setCreatedDate(new Date());
+		td.setCreatedBy(masterUserDao.getRole());
+		td.setStatus(1);
 		transaksiDesignDao.save(td);
 		for (TransaksiDesignItem transaksiDesignItem : transaksiDesign.getTransaksiDesignItems()) {
 			TransaksiDesignItem tdi = new TransaksiDesignItem();
@@ -69,11 +78,16 @@ public class TransaksiDesignService {
 	}
 	public List<TransaksiEvent> getEventAvailable(){
 		List<TransaksiDesign> transaksiDesign = transaksiDesignDao.getAll();
+		if (transaksiDesign.isEmpty()) {
+		return transaksiEventDao.getAll();
+		}else {
 		List<Integer> eventId = new ArrayList<>();
 		for (TransaksiDesign td : transaksiDesign) {
 			eventId.add(td.getTransaksiEvent().getId());
 		}
 		return transaksiDesignDao.getEventAvailable(eventId);
+		}
 	}
+	
 
 }
