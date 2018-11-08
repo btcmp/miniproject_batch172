@@ -23,7 +23,9 @@
 textarea {
 	resize: none;
 }
-
+input[type="file"] {
+    display: none;
+}
 input.parsley-error {
 	color: #B94A48 !important;
 	background-color: #F2DEDE !important;
@@ -217,6 +219,26 @@ $(document).ready(function(){
 		});
 		$('#closeDesignModal').modal();
 	});
+	$('#closeBtnModal').on('click',function(){
+		var forms = new FormData($('#closeFormDesign')[0]);
+		forms.append('file',$('input[type=file]')[0].files[0]);
+		$.ajax({
+			url:'${pageContext.request.contextPath}/design/upload',
+			type:'POST',
+			contentType:false,
+			processData:false,
+			data:forms,
+			cache:false,
+			success:function(data){
+				alert('success');
+				$('#closeDesignModal').modal('hide');
+			},
+			error:function(e){
+				alert('error');
+			}
+		})
+		
+	})
 	$(document).on('click','.btn-edit-design',function(){
 		var id =$(this).attr('id');
 		$("#items-"+id).find(':input').prop('disabled', false);
@@ -355,8 +377,10 @@ $(document).ready(function(){
 			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date"></td>';
 			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date"></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
-			tRow += '<td><button type="button" class="form-control close-file-upload btn-primary">Browse</button></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="input file"></td>';
+			tRow += '<td><div id="file-click'+i+'" class="btn close-file-upload btn-primary">';
+			
+			tRow += 'Browse</div><input type="file" name="file" id="file-upload'+i+'"></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="input file" id="file-name'+i+'" style="background-color:white;" readonly></td>';
 			tRow +=	'</tr>';
 			tBody.append(tRow);	
 			$('#closeStartDate'+i).datepicker({
@@ -369,8 +393,14 @@ $(document).ready(function(){
 				autoclose:true,
 				uiLibrary: 'bootstrap4'
 			});
+			$('#file-click'+i).click(function(){
+				$('#file-upload'+i).click();
+			})
+			$("#file-upload"+i).change(function(){
+				var fileName = $('#file-upload'+i)[0].files[0].name;
+				$('#file-name'+i).val(fileName);
+			});
 	    });
-		
 	}
 });
 

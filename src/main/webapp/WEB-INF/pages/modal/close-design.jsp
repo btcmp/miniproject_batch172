@@ -129,8 +129,8 @@
 					</div>
 				</div>
 				<div class="modal-footer border border-top-0 border-dark">
+				<button type="button" class="btn btn-danger" id="closeBtnModal">Close Transaction</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="addBtnModal">Save Transaction</button>
 			</div>
 			</form>
      </div>

@@ -1,15 +1,24 @@
 package com.marcomm.controller;
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marcomm.model.MasterProduct;
@@ -30,6 +39,8 @@ public class TransaksiDesignController {
 	TransaksiEventService eventService;
 	@Autowired
 	TransaksiDesignService transaksiDesignService;
+	
+	ServletContext servletContext;
 	@RequestMapping
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView("transaksidesign");
@@ -89,4 +100,18 @@ public class TransaksiDesignController {
 		return transaksiDesignService.getItemByDesignId(id);
 	}
 	
+	@RequestMapping(value="/upload",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void upload(@RequestParam("file") CommonsMultipartFile[] files) {
+		
+		try {
+			for (CommonsMultipartFile file : files) {
+				byte[] bytes = file.getBytes();
+				Path path =Paths.get("H://Bootcamp//UploadFile//"+file.getOriginalFilename());
+				Files.write(path, bytes);
+			}
+			System.out.println("masuk ke try");
+		} catch (Exception e) {
+		}
+	}
 }
