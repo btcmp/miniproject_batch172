@@ -25,13 +25,12 @@ public class TransaksiSouvenirService {
 	TransaksiSouvenirDao transaksiSouvenirDao;
 	
 	@Autowired
-	TransaksiEventDao transaksiEventDao;
-	
-	@Autowired
 	TransaksiSouvenirItemDao transaksiSouvenirItemDao;
 	
-	
-	
+	@Autowired
+	TransaksiEventDao transaksiEventDao;
+
+
 	/*GET ALL*/
 	public List<TransaksiSouvenir> getAll() {
 		return transaksiSouvenirDao.getAllStock();

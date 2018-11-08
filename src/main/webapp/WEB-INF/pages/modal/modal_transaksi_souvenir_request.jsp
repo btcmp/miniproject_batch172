@@ -19,8 +19,8 @@
 						<label for="transactionCode" class="col-sm-3 col-form-label">Transaction Code</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" name="code" id="transactionCode"
-								placeholder="Transaction Code" readonly>
-						</div>
+								placeholder="Transaction Code" disabled>
+						</div> 
 					</div>
 					<div class="form-group row">
 						<label for="eventId" class="col-sm-3 col-form-label">Event Code</label>
@@ -37,14 +37,14 @@
 						<label for="requestBy" class="col-sm-3 col-form-label">Request By</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" name="requestBy" id="requestBy"
-							 readonly>
+							  disabled>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="requestDate" class="col-sm-3 col-form-label">Request Date</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" name="requestDate" id="requestDate"
-								readonly>
+								disabled>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -80,17 +80,17 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-			<tr id='items'>
+			<tbody class="tableBody">
+			<tr id='items-1'>
 				<td>
-				<select class="custom-select" id="souvenirItem1" style="width:150px">
+				<select class="custom-select" id="souvenirItem" style="width:150px" data-parsley-required>
 					<option value="">Select Souvenir</option>
 					<c:forEach var="souvenir" items="${souvenirs}">
 						<option value="${souvenir.id}">${souvenir.name}</option>
 					</c:forEach>
 				</select></td>
-				<td><input type="text" class="form-control" id="qty1" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" id="note1" placeholder="Note"></td>
+				<td><input type="text" class="form-control" placeholder="Qty" ></td>
+				<td><input type="text" class="form-control" placeholder="Note"></td>
 				<td><a href="#" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
 					<a href="#" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>
 			</tr>
@@ -195,11 +195,11 @@
 			</thead>
 			<tbody>
 			<tr id='items'>
-				<td><input type="text" class="form-control" placeholder="Souvenir Name"></td>
-				<td><input type="text" class="form-control" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" placeholder="Note"></td>
-				<td><a href="#" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
-					<a href="#" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>
+				<td><input type="text" class="form-control" id="note1" placeholder="Souvenir Name"></td>
+				<td><input type="text" class="form-control" id="qty1" placeholder="Qty"></td>
+				<td><input type="text" class="form-control" id="note1" placeholder="Note"></td>
+				<td><a href="#" id="1" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
+					<a href="#" id="1" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>
 			</tr>
 			</tbody>
 		</table>

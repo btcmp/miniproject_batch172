@@ -66,5 +66,11 @@ public class MasterMenuAccessService {
 		// TODO Auto-generated method stub
 		return accessDao.getRole();
 	}
+	public MasterMenuAccess getMenuAccess(int id){
+		MasterMenuAccess access=accessDao.getId(id);
+		List<MasterMenu> menus=accessDao.getMenuByMenuAccessId(access);
+		access.setMenus(menus);
+		return access; 
+	}
 
 }

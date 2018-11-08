@@ -16,5 +16,6 @@ public interface MasterMenuAccessDao {
 	public void delete(MasterMenuAccess menuAccess);
 	public List<MasterMenu> getMenu();
 	public List<MasterRole> getRole();
+	public List<MasterMenu> getMenuByMenuAccessId(MasterMenuAccess access);
 
 }

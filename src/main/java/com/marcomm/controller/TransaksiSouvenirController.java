@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.portlet.ModelAndView;
 
-import com.marcomm.model.FormSouvenir;
+
 import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterSouvenir;
 import com.marcomm.model.TransaksiSouvenir;

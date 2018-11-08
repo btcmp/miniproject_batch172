@@ -42,9 +42,12 @@ public class MasterMenuAccess {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
-	@ManyToOne
-	@JoinColumn(name="M_Menu_Id")
-	private MasterMenu menu;
+	@ManyToMany
+	@JoinTable(name="M_Menu_M_Menu_Access",
+	joinColumns= {@JoinColumn(name="menu_access")},
+	inverseJoinColumns= {@JoinColumn(name="menu_id")}
+	)
+	private List<MasterMenu> menus;
 	
 	@ManyToOne
 	@JoinColumn(name="M_Role_Id")
@@ -102,12 +105,12 @@ public class MasterMenuAccess {
 		this.updatedDate = updatedDate;
 	}
 
-	public MasterMenu getMenu() {
-		return menu;
+	public List<MasterMenu> getMenus() {
+		return menus;
 	}
 
-	public void setMenu(MasterMenu menu) {
-		this.menu = menu;
+	public void setMenus(List<MasterMenu> menus) {
+		this.menus = menus;
 	}
 
 	public MasterRole getRole() {
@@ -117,5 +120,6 @@ public class MasterMenuAccess {
 	public void setRole(MasterRole role) {
 		this.role = role;
 	}
-	
+
+		
 }

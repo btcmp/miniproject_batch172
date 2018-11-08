@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +12,8 @@
 <link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
 
 </head>
 <body>
@@ -41,6 +45,16 @@
 		    </ul>
 		  </div>
 		</nav>
+		
+
+			<div class="form-row" style="padding-left:25px; padding-top:10px">
+				<p id="user-login" id="username" class="text-primary">Selamat Datang User!</p>
+				<form action="${logoutUrl}" method="post" id="logoutForm" style="width: 100%; padding: 5px">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<input style="float: right; width: 100px;" class="btn btn-warning" type="submit" value="logout" />
+				</form>
+			</div>
+		
 		
 		<!-- BUTTON ADD DAN NOTIFICATION -->
 		<div class="form-row" style="float:right; padding:5px;">
@@ -140,6 +154,7 @@
 
 $(document).ready(function(){
 	loadData();
+	getUser();
 
 
 	//DATEPICKER
@@ -173,8 +188,8 @@ $(document).ready(function(){
 		autoclose: true,
 		uiLibrary: 'bootstrap4'
 	});
-  
-		
+  	
+  	
 	//BUTTON POP UP ADD
 	$('#btn-add').on('click', function(){
 		$.ajax({
@@ -246,6 +261,20 @@ $(document).ready(function(){
 		$('#addEventModal').modal('hide');
 	});
 	
+	//GET ROLE NAME WHEN LOGIN
+	function getUser(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
+			type : 'GET',
+			success : function(data){
+			 	$('#user-login').val(data);
+				 document.getElementById("user-login").innerHTML="Selamat Datang " +data+ "!";
+			}
+		}) 
+		
+	 }
+	
+	
 	//GET ALL DATA LOAD DATA
 	function loadData(){
 		$.ajax({
@@ -277,30 +306,50 @@ $(document).ready(function(){
 			console.log(index, event);
 			index++;
 			
-			var status="Status";
-
+			//CHOOSEN MODAL BASED ON STATUS AND ROLE
+			//NAMED STATUS
+			var user="${username}"
+			var modal = "";
+			var status="";
 			if(event.status==1){
 				status="Submitted";
+				if(user=="Administrator"){
+					modal = "btn-acceptreject-event";
+				} else{
+					modal = "btn-view-event";
+				}
 			} else if(event.status==2){
 				status="In Progress";
+				if(user=="Administrator"){
+					modal = "btn-view-event";
+				} else{
+					modal = "btn-close-event";	
+				}
 			} else if(event.status==3){
 				status="Done";
+				modal = "btn-view-event"; 
 			} else if(event.status==0){
 				status="Rejected";
+				modal = "btn-view-event";
 			}
 			
-			
-			var tableRow = "<a id="+event.id+" class='btn-view-event btn-acceptreject-event btn-close-event'><span class='oi oi-magnifying-glass'></span></a>";
+			var tableRow = "<a id="+event.id+" class='"+modal+"'><span class='oi oi-magnifying-glass'></span></a>";
 				tableRow += " ";
 				tableRow += "<a id="+event.id+" class='btn-edit-event'><span class='oi oi-pencil'></span></a>";
-/* 				tableRow += " ";
-				tableRow += "<a id="+event.id+" class='btn-acceptreject-event'><span class='oi oi-project'></span></a>";
-				tableRow += " ";
-				tableRow += "<a id="+event.id+" class='btn-close-event'><span class='oi oi-task'></span></a>"; */
 				oTable.row.add([index,event.code,event.requestBy,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
 		});
 				oTable.draw();
 	}
+	
+	//BUTTON SEARCH
+	$('#btn-search').on('click', function(){
+		for(var i = 1; i <= 7; i++){
+			oTable
+			.column($('#data'+i).data('index'))
+			.search($('#data'+i).val())
+			.draw()
+		}
+	});
 	
 	//BUTTON POP UP EDIT
 	$(document).on('click', '.btn-edit-event', function(){
@@ -363,7 +412,7 @@ $(document).ready(function(){
 		$('#editEventModal').modal('hide');
 	});
 	
-	//BUTTON POP UP VIEW REQUEST
+	//BUTTON POP UP VIEW REQUEST	
 	$(document).on('click', '.btn-view-event', function(){
 		var id = $(this).attr('id');
 		console.log(id);
@@ -372,51 +421,53 @@ $(document).ready(function(){
 			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
 			type: 'GET',
 			success: function(output){
-				console.log(output);
-				$('#ViewButton').val(output.id);
-				$('#transactioncodeView').val(output.code);
-				$('#requestbyView').val(output.requestBy);
-				$('#eventnameView').val(output.eventName);
-				$('#requestdateView').val(output.requestDate);
-				$('#eventplaceView').val(output.place);
-				$('#noteView').val(output.note);
-				$('#eventstartdateView').val(output.startDate);
-				$('#eventenddateView').val(output.endDate);
-				$('#budgetView').val(output.budget);
-				$('#statusView').val(output.status);
-			},
-			dataType: 'json'
+					console.log(output);
+					$('#ViewButton').val(output.id);
+					$('#transactioncodeView').val(output.code);
+					$('#requestbyView').val(output.requestBy);
+					$('#eventnameView').val(output.eventName);
+					$('#requestdateView').val(output.requestDate);
+					$('#eventplaceView').val(output.place);
+					$('#noteView').val(output.note);
+					$('#eventstartdateView').val(output.startDate);
+					$('#eventenddateView').val(output.endDate);
+					$('#budgetView').val(output.budget);
+					$('#statusView').val(output.status);
+					},
+					dataType: 'json'
+				});
+				$('#viewEventModal').modal();
 		});
-		$('#viewEventModal').modal();
-	});
+	
 	
 	//BUTTON POP UP ACCEPT-REJECT REQUEST
 	$(document).on('click', '.btn-acceptreject-event', function(){
 		var id = $(this).attr('id');
 		console.log(id);
+	
+			$.ajax({
+				url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+				type: 'GET',
+				success: function(output){
+					console.log(output);
+					$('#ARButton').val(output.id);
+					$('#transactioncodeAR').val(output.code);
+					$('#requestbyAR').val(output.requestBy);
+					$('#eventnameAR').val(output.eventName);
+					$('#requestdateAR').val(output.requestDate);
+					$('#eventplaceAR').val(output.place);
+					$('#noteAR').val(output.note);
+					$('#eventstartdateAR').val(output.startDate);
+					$('#eventenddateAR').val(output.endDate);
+					$('#budgetAR').val(output.budget);
+					$('#statusAR').val(output.status);
+					$('#assigntoAR').val(output.assignTo);
+					$('#rejectreason').val(output.rejectReason);
+				},
+				dataType: 'json'
+			});
+			$('#acceptrejectEventModal').modal();
 		
-		$.ajax({
-			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
-			type: 'GET',
-			success: function(output){
-				console.log(output);
-				$('#ARButton').val(output.id);
-				$('#transactioncodeAR').val(output.code);
-				$('#requestbyAR').val(output.requestBy);
-				$('#eventnameAR').val(output.eventName);
-				$('#requestdateAR').val(output.requestDate);
-				$('#eventplaceAR').val(output.place);
-				$('#noteAR').val(output.note);
-				$('#eventstartdateAR').val(output.startDate);
-				$('#eventenddateAR').val(output.endDate);
-				$('#budgetAR').val(output.budget);
-				$('#statusAR').val(output.status);
-				$('#assigntoAR').val(output.assignTo);
-				$('#rejectreason').val(output.rejectReason);
-			},
-			dataType: 'json'
-		});
-		$('#acceptrejectEventModal').modal();
 	});
 	
 	//BUTTON APPROVED TO ACCEPT REQUEST

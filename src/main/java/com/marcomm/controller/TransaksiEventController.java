@@ -2,9 +2,14 @@ package com.marcomm.controller;
 
 import java.util.List;
 
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +28,9 @@ public class TransaksiEventController {
 	TransaksiEventService eventService;
 	
 	@RequestMapping
-	public String index() {
+	public String index(Model model) {
+		List<GrantedAuthority> authorities2 = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		model.addAttribute("username", authorities2.get(0).getAuthority());
 		return "event";
 	}
 	
