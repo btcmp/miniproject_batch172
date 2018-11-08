@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="t_souvenir_item")
 public class TransaksiSouvenirItem {
-	
+	 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	@Column(length=11)

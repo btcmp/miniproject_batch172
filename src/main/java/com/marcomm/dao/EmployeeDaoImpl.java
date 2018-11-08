@@ -23,8 +23,6 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		return session.createCriteria(MasterEmployee.class).list();
 	}
 
-	
-
 	public List<MasterEmployee> getEmployeesByUserNotUsed(List<Integer> ids) {
 	Session session =sessionFactory.getCurrentSession();
 	

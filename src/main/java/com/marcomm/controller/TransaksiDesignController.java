@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.TransaksiDesign;
-import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.MasterProductService;
 import com.marcomm.service.TransaksiDesignService;
@@ -62,17 +61,16 @@ public class TransaksiDesignController {
 	public int getId() {
 		return transaksiDesignService.getId();
 	}
-	
+	@RequestMapping(value="/getevent",method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiEvent> getEvent(){
+		return transaksiDesignService.getEventAvailable();
+	}
 	@RequestMapping(value="/getall",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiDesign> getAll(){
 		List<TransaksiDesign> designs = transaksiDesignService.getAll();
 		return designs;
-	}
-	
-	public List<TransaksiDesignItem> getAllItem(){
-		List<TransaksiDesignItem> items=transaksiDesignService.getAllItem();
-		return items;
 	}
 	
 }

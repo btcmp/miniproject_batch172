@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.marcomm.model.TransaksiDesign;
+import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.FungsiService;
 
  
@@ -67,6 +69,17 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 	public String getRequestBy() {
 		String user = FungsiService.getUserLog();
 		return user;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TransaksiEvent> getEventAvailable(List<Integer> eventId) {
+		String hql = "select te from TransaksiEvent te where te.id not in (:eventId)";
+		Session session = sessionFactory.getCurrentSession();
+		Query qr = session.createQuery(hql);
+		qr.setParameterList("eventId", eventId);
+		List<TransaksiEvent> transaksiEvent = qr.list();
+		return transaksiEvent;
 	}
 
 }

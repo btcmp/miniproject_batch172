@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>***TRANSAKSI SOUVNEIR***</title>
+<title>SOUVENIR REQUEST</title>
 </head>
 <!-- css bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -17,17 +17,15 @@
 <!-- css data table -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-<!-- link css dashboard -->
-<link href="${pageContext.request.contextPath}/resources/assets/css/dashboard.css" rel="stylesheet" />
 
 <!-- parsley style -->
 <style>
 	input.parsley-error
-	{
+	{ 
 		color : #B94A48 !important;
 		background-color : #F2DEDE !important;
 		border : 1px solid #EED3D7 !important;
-	}         
+	}
 
 </style>
 <body>
@@ -56,39 +54,45 @@
 			
 			<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
 				<div class="card text-white bg-primary mb-3">
-					<div class="card-header">List Souvenir Stock</div>
+					<div class="card-header">List Souvenir Request</div>
 				</div>
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
 						<li class="breadcrumb-item"><a href="#">Master</a></li>
-						<li class="breadcrumb-item active" aria-current="page">List Souvenir Stock</li>
+						<li class="breadcrumb-item active" aria-current="page">List Souvenir Request</li>
 					</ol>
 				</nav>
 				<table id="inputTable">
 				<thead>
 					<tr>
-						<th colspan="6"><p id="notif" style="width: 70%;display:none; padding-bottom: 10px; margin-bottom: 5px;" class="text-white bg-info border rounded form-control"></p></th>
+						<th colspan="8"><p id="notif" style="width: 70%;display:none; padding-bottom: 10px; margin-bottom: 5px;" class="text-white bg-info border rounded form-control"></p></th>
 						<th><button class="btn btn-primary" id="addBtn" type="submit" style="width:100px; padding-bottom: 10px; margin-bottom: 5px;">Add</button></th>
 					</tr>
 					<tr>
 						<th></th>
-						<th><input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1"></th>
-						<th><input type="text" class="form-control" placeholder="Received By" id="data2" data-index="2"></th>
-						<th><input type="text" class="form-control"	placeholder="Received Date" id="data3" data-index="3" ></th>
-						<th><input type="text" class="form-control" placeholder="Created " id="data4" data-index="4"></th>
-						<th><input type="text" class="form-control" placeholder="Created By" id="data5" data-index="5"></th>
+						<th><input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1" style="padding-right:10px; width:100%;"></th>
+						<th><input type="text" class="form-control" placeholder="Request By" id="data2" data-index="2" style="padding-right:10px;width:100%;"></th>
+						<th><input type="text" class="form-control"	placeholder="Request Date" id="data3" data-index="3" style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control"	placeholder="Due Date" id="data4" data-index="4" style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control" placeholder="Status" id="data5" data-index="5" style="padding-right:10px;width:100%;">
+						</th>
+						<th><input type="text" class="form-control" placeholder="Created Date" id="data6" data-index="6" style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control" placeholder="Created By" id="data7" data-index="7" style="padding-right: 10px;"></th>
+						
 						<th><a class="btn btn-warning" id="searchBtn" href="#" style="width:100px;">Search</a></th>
 					</tr>
 				</thead>
 				</table>
-				<table id="transSouTable" class="table DataTable mt-1">
+				<table id="listTransTable" class="table DataTable ">
 				<thead class="thead-light">
 					<tr>
 						<th>No.</th>
 						<th>Transaction Code</th>
-						<th>Received By</th>
-						<th>Received Date</th>
+						<th>Request By</th>
+						<th>Request Date</th>
+						<th>Due Date</th>
+						<th>Status</th>
 						<th>Created Date</th>
 						<th>Created By</th>
 						<th>Action</th>
@@ -124,31 +128,63 @@
 <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
 
 <!-- INCLUDE FILE -->
-<%@include file="/WEB-INF/pages/modal/modal_transaksi_souvenir.jsp" %>
+<%@include file="/WEB-INF/pages/modal/modal_transaksi_souvenir_request.jsp" %>
 
 <!-- CODE JAVA SCRIPT START HERE -->
 <script type="text/javascript">
 
 $(document).ready(function(){
-	
 	/* DATE PICKER */
-	//created date
+	loadData();
+	//due date
 	$('#data4').datepicker({
 		format : 'yyyy-mm-dd',
 		autoclose : true,
 		uiLibrary : 'bootstrap4'
 	});
-	//received date
+	//request date
 	$('#data3').datepicker({
 		format : 'yyyy-mm-dd',
 		autoclose : true,
 		uiLibrary : 'bootstrap4'
 	});
+	//created date
+	$('#data6').datepicker({
+		format : 'yyyy-mm-dd',
+		autoclose : true,
+		uiLibrary : 'bootstrap4'
+	});
+	//load data list souvenir request
+	function loadData(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/souvenirrequest/getall',
+			type : 'GET',
+			dataType : 'json',
+			success :function(data){
+				console.log(data);
+				convertToTable(data);
+			}
+		});
+	};
+		//convert to table list request
+		function convertToTable(data){
+			oTable = $('#listTransTable').DataTable();
+			oTable.rows( 'tr' ).remove();
+			$.each(data,function(increment,transaksiSouvenir){
+				increment++;
+				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
+				tRow +='';
+				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-edit-transaksiR"><span class="oi oi-pencil"></span></a>';
+				oTable.row.add([increment,transaksiSouvenir.code,transaksiSouvenir.requestBy,transaksiSouvenir.requestDate,transaksiSouvenir.requestDueDate,transaksiSouvenir.status,transaksiSouvenir.createdDate,transaksiSouvenir.createdBy,tRow]);
+			});
+			oTable.draw();
+		};
+		
 	/* BUTTON POP UP ADD */
 	var Id = 1; //digunakan untuk menentukan id pada saat additem modal
-	var index = 0;
+	var index=0;
 	$(document).on('click', '#addBtn', function(){
-		//tulis disini fungsi get code
+		//get code
 		$.ajax({
 			url : '${pageContext.request.contextPath}/transaksisouvenir/getcode',
 			type : 'GET',
@@ -156,102 +192,100 @@ $(document).ready(function(){
 				$('#transactionCode').val(data);
 			},
 			dataType : 'json'
-		});
-		 
-		//get Employeee
-		/* function loadAllEmployee(){
-			$.ajax({
-				url : '${pageContext.request.contextPath}/transaksisouvenir/getallemployee',
-				type : 'GET',
-				success : function(data){
-					console.log(data)
-					$.each(data, function(index, value){
-						$('#receivedTransSBy').append('<option value="'+value.id+'">"'+value.employeeName+'"</option>')
-					});
-				},
-				dataType : 'json'
-			});	
-		} */
-		//datepicker
-		$('#receivedTransSDate').datepicker({
-			format : 'yyyy-mm-dd',
-			autoclose : true,
-			uiLibrary : 'bootstrap4'
-		});
+		});	
+		//get date
+		var now = new Date();
+		var tahun = now.getFullYear();
+		var bulan = now.getMonth();
+		var tanggal = now.getDate();
+		var formatTanggal = ("0"+tanggal).slice(-2);
+		$('#requestDate').val(tahun+'-'+bulan+'-'+formatTanggal);
+		//date picker due date
+		$('#requestDueDate').datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+		//get requested by
 		
-		$('#addTranSouModal').modal();
+		$('#addTranSouReqModal').modal();
 	});
 	
-	//add item button modal
-	$(document).on('click', '#btnAddModalTransSou', function(){
+	//add item modal
+	$(document).on('click', '#btnAddItems', function(){
 		Id++; //increment id add item modal
 		index++;
-		var oTable = $('#modalTableSouTrans');
+		var oTable = $('#modalTableSouReqTrans');
 		var tBody = oTable.find('tbody');
-		var tRow = '<tr id="items-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" name="details['+index+'].mSouvenirId">'+
-						'<option value=" " selected>-Select Souvenir-</option>'+
-						'<c:forEach var="souvenir" items="${souvenirs}">'+
-						'<option value="${souvenir.id}">${souvenir.name}</option>'+
-						'</c:forEach>'+
+		var tRow = '<tr id="items'+Id+'">';
+			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" name="details['+index+'].mSouvenirId" style="width:150px">'+
+					'<option value="" selected>Select Souvenir</option>'+
+					'<c:forEach var="souvenir" items="${souvenirs}">'+
+					'<option value="${souvenir.id}">${souvenir.name}</option>'+
+					'</c:forEach>'+
 					'</select></td>';
-			tRow += '<td><input type="number" class="form-control" id="quantity'+Id+'" placeholder="Qty"></td>';
+			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'"  placeholder="Qty"></td>';
 			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note"></td>';
-			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>'+' ';
-			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>';
+			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>'+' ';
+			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>';
 			tRow += '</tr>';
 			tBody.append(tRow);
 	});
-	/* SAVE OR ADD DATA */
-	$('#addBtnModal').on('click', function(e){
-		var transaksiSouvenirItems=[];
+	
+	//remove added item
+	$(document).on('click', '.deleteBtnModalTransSR', function(){
+		var id = $(this).attr('id');
+		$('#items'+id).remove();
+		});	
+
+	//buton save add
+	$(document).on('click', '#saveAddBtnModal', function(e){
+		var transaksiSouvenirItems =[];
 		$('.tableBody tr').each(function(){
-			tRow = $(this).find('td :input');
+			tRow =$(this).find('td :input');
 			var items = {
 					masterSouvenir:{
 						id:tRow.eq(0).val()
 					},
 					qty:tRow.eq(1).val(),
 					note:tRow.eq(2).val()
-					
-			}
+				}
 			transaksiSouvenirItems.push(items);
 		});
-		console.log(transaksiSouvenirItems);
+		 //console.log(transaksiSouvenirItems);
 		var transaksiSouvenir = {
-				code : $('#transactionCode').val(),
-				//receivedBy : $('#receivedTransSBy').val(),
-				receivedDate : $('#receivedTransSDate').val(),
-				note : $('#noteTransSou').val(),
+				code :$('#transactionCode').val(),
+				transaksiEvent :{
+					id:parseInt($('#eventId').val())
+				},
+				//requestBy :$('#requestBy').val(),
+				//requestDate :$('#requestDate').val(),
+				requestDueDate:$('#requestDueDate').val(),
+				note :$('#note').val(),
 				transaksiSouvenirItems:transaksiSouvenirItems
 		}
-		console.log(transaksiSouvenir);
+		
+		//console.log(transaksiSouvenir);
+		//console.log(JSON.stringify(transaksiSouvenir));
 		$.ajax({
-			url : '${pageContext.request.contextPath}/transaksisouvenir/save',
+			url : '${pageContext.request.contextPath}/souvenirrequest/saveall',
 			type : 'POST',
 			contentType :'application/json',
 			dataType : 'json',
-			data : JSON.stringify(transaksiSouvenir),
-			success : function(data){
+			data:JSON.stringify(transaksiSouvenir),
+			success:function(data){
 				console.log(data);
-				console.log("data berhasil disimpan...");
-				//jangan lupa tambahin load data
-				$('#addTranSouModal').modal('hide');
+				//$('#addTranSouReqModal').modal('hide');
 			}
-		
 		});
-		
+		loadData();
+		$('#addTranSouReqModal').modal('hide');
 	});
-	
-	//remove added item
-	$(document).on('click', '.deleteBtnModalTransS', function(){
-		var id = $(this).attr('id');
-		$('#items-'+id).remove();
-		});	
 
+	/* BUTTON EDIT */
 	
 }) /* batas akhir ready function */
 
-</script>
+</script> 
 
 </html>

@@ -32,10 +32,10 @@ public class MasterSouvenirController {
 	@Autowired
 	MasterUnitService masterUnitService;
 	
-	@ModelAttribute
+	/*@ModelAttribute
 	public MasterSouvenir getSouvenirForm() {
 		return new MasterSouvenir();
-	}
+	}*/ 
 	
 	
 	@RequestMapping

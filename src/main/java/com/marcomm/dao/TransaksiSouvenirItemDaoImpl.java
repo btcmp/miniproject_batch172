@@ -2,8 +2,11 @@ package com.marcomm.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -36,30 +39,12 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 		
 	}
 
-	public void updateApproval(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateReceived(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void updateSettlement(TransaksiSouvenirItem transaksiSouvenirItem) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void updateSettlementApproval(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public void updateCloseRequest(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 }

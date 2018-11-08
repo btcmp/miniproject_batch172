@@ -87,4 +87,14 @@ public class MasterSouvenirDaoImpl implements MasterSouvenirDao{
 		return nameSouvenir;
 	}
 
+
+	public List<MasterSouvenir> getAllSouvenirQtyOk() {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria cr = session.createCriteria(MasterSouvenir.class);
+		 Criterion crAnd=Restrictions.and(Restrictions.gt("quantity", 0), Restrictions.eq("isDeleted", false));
+		List<MasterSouvenir> ListSouvenir=cr.add(crAnd).addOrder(Order.asc("name")).list();
+		
+		return ListSouvenir;
+	}
+
 }
