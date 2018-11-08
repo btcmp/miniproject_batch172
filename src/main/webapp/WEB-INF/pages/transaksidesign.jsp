@@ -118,6 +118,7 @@ input.parsley-error {
 		</div>
 	</div>
 	<%@include file="/WEB-INF/pages/modal/add-transaksidesign.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/edit-transaksidesign.jsp" %>
 </body>
 <!--   Core JS Files   -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -294,7 +295,7 @@ $(document).ready(function(){
 			increment++;
 			var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';	
 			tRow +=' ';
-			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design"><span class="oi oi-pencil"></span></a>';
+			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design-main"><span class="oi oi-pencil"></span></a>';
 			if(design.status==1){
 				status="Submitted";
 			} else if(design.status==2){
@@ -326,6 +327,170 @@ $(document).ready(function(){
 		})	
 	}
 });
+/*  KOLOM ANGGI*/
+  
+  /* memunculkan Modal edit */
+  $(document).on('click','.btn-update-design-main',function(){
+	  var id = $(this).attr('id');
+	   
+	  	$.ajax({
+			url : '${pageContext.request.contextPath}/design/getitembydesignid/'+id,
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				var keys=Object.keys(data);
+				len=keys.length;
+				$('#designEditId').val(data[0].transaksiDesign.id);
+				$('#eventEditCodeSelected').val(data[0].transaksiDesign.transaksiEvent.id).html(data[0].transaksiDesign.transaksiEvent.code);
+				$('#transactionEditCode').val(data[0].transaksiDesign.code);
+				$('#titleEditHeader').val(data[0].transaksiDesign.titleHeader);
+				$('#statusEdit').val(data[0].transaksiDesign.status);
+				$('#requestEditBy').val(data[0].transaksiDesign.requestBy);
+				$('#requestEditDate').val(data[0].transaksiDesign.requestDate);
+				$('#noteEdit').val(data[0].transaksiDesign.note);
+			  	Id = len;  
+			  	$('.tableBody').empty();
+			  	itemLama(Id,data);
+			  	loadEventEdit();
+			  	
+			}
+		});
+	   
+	  	$('#editDesignTransactionModal').modal();
+		
+		index = 0;
+	  
+  });
+  
+  /* memunculkan select item */
+function loadEventEdit(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/design/getevent',
+			type : 'GET',
+			dataType :'json',
+			success:function(data){
+				convertToSelectEdit(data);
+			}
+		});
+	}
+  
+ function convertToSelectEdit(data){
+		$('#eventEditCode').empty();
+		$('#eventEditCode').append('<option value="" id="eventEditCodeSelected" selected>Choose...</option>');
+		$.each(data,function(i,event){
+		$('#eventEditCode').append('<option value="'+event.id+'">'+event.code+'</option>');
+		})
+	}
+	 
+  
+  
+  /* add Tabel item lama */
+  
+  
+  function itemLama(baris,data){
+	  index2=0;
+	  
+	  for(var Ix=1;Ix<=baris;Ix++){
+		  console.log(data[index2].id);
+		var oTable = $('#itemsTableEdit');
+		var tBody = oTable.find('tbody');
+		var tRow =	'<tr id="items-edit-'+Ix+'">';
+		tRow += '<td><select class="custom-select"    id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" readonly>'+
+							'<option value="'+data[index2].masterProduct.id+'" selected>'+data[index2].masterProduct.name+'</option>'+
+								'<c:forEach var="product" items="${products}">'+
+								'<option value="${product.id}">${product.name}</option>'+
+							'</c:forEach>'+
+						'</select></td>';
+		tRow += '<td><input type="text" class="form-control description" 	value="'+data[index2].masterProduct.description+'"																placeholder="description" 	readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	readonly></td>';
+		tRow += '<td><input type="text" class="form-control"				value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" readonly></td>';
+		tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
+		tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+		tRow +=	'</tr>';
+		index2++;
+		tBody.append(tRow);
+		  
+	  }
+			
+	      
+	  
+	  
+  }
+  
+  
+  /* add item tabel */
+  $('#addEditItemBtn').on('click',function(){
+		    Id++;
+		    index++;
+		    console.log(Id);
 
+		    
+		  	var oTable = $('#itemsTableEdit');
+		    var tBody = oTable.find('tbody');
+		    var tRow =	'<tr id="items-edit-'+Id+'">';
+			tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+							'<option value="" selected>Choose...</option>'+
+								'<c:forEach var="product" items="${products}">'+
+								'<option value="${product.id}">${product.name}</option>'+
+							'</c:forEach>'+
+						'</select></td>';
+			tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Id+'" placeholder="description" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="startdateEdit'+Id+'" placeholder="Start Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="enddateEdit'+Id+'" placeholder="End Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="noteEdit'+Id+'" placeholder="Note" disabled></td>';
+			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
+			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+			tRow +=	'</tr>';
+			tBody.append(tRow);
+	});
+  
+  
+  
+  /* mendelete objek item tabel */
+  $(document).on('click','.btn-delete-design-edit',function(){
+		var id =$(this).attr('id');
+		$('#items-edit-'+id).remove();
+	});
+  
+  /* memencet tombole edit di modal */
+  $(document).on('click','.btn-edit-design-edit',function(){
+		var id =$(this).attr('id');
+		$("#items-edit-"+id).find(':input').prop('disabled', false);
+		$("#startdateEdit"+id).prop('disabled', true);
+		$("#enddateEdit"+id).prop('disabled', true);
+		$('#duedateEdit'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#startdateEdit'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#enddateEdit'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#productItemEdit'+id).on('change',function(){
+			var select = this;
+			var productId = select[select.selectedIndex].value;
+			$.ajax({
+				url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+				type : 'GET',
+				success : function(data){
+					$('#descriptionEdit'+id).val(data.description);
+				}
+			});
+		});
+	});
 </script>
 </html>
