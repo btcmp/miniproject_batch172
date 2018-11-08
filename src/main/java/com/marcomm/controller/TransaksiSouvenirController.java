@@ -45,6 +45,7 @@ public class TransaksiSouvenirController {
 	MasterEmployeeService masterEmployeeService;
 	
 	@RequestMapping
+	
 	public String index (Model model) {
 		List<MasterSouvenir> souvenirs = masterSouvenirService.gelAllSouvenir();
 		model.addAttribute("souvenirs", souvenirs);
@@ -53,16 +54,16 @@ public class TransaksiSouvenirController {
 	
 	/*SAVE --> ADD DATA*/
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	public void saveTransaksiSouvenir (@RequestBody FormSouvenir dataForm) {
-		transaksiSouvenirService.saveTransaksiSouvenir(dataForm);
+	@ResponseBody
+	public TransaksiSouvenir save(@RequestBody TransaksiSouvenir transaksiSouvenir){
+		transaksiSouvenirService.save(transaksiSouvenir);
+		return transaksiSouvenir;
 	}
 	
-	/*GET ALL*/ 
-	@RequestMapping(value="/getall", method=RequestMethod.GET)
-	@ResponseBody
-	public List<TransaksiSouvenir> getAllTransaksiSouvenir(){
-		return transaksiSouvenirService.getAllTransaksiSouvenir();
+	/*GET ALL TRANSAKSI SOUVENIR*/ 
+	public List<TransaksiSouvenir> getAll(){
+		List<TransaksiSouvenir> souvenirs = transaksiSouvenirService.getAll();
+		return souvenirs; 
 	}
 	
 	/*GET BY ID*/

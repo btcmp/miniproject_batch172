@@ -146,6 +146,7 @@ $(document).ready(function(){
 	});
 	/* BUTTON POP UP ADD */
 	var Id = 1; //digunakan untuk menentukan id pada saat additem modal
+	var index = 0;
 	$(document).on('click', '#addBtn', function(){
 		//tulis disini fungsi get code
 		$.ajax({
@@ -181,24 +182,71 @@ $(document).ready(function(){
 		$('#addTranSouModal').modal();
 	});
 	
-	//add item modal
+	//add item button modal
 	$(document).on('click', '#btnAddModalTransSou', function(){
 		Id++; //increment id add item modal
+		index++;
 		var oTable = $('#modalTableSouTrans');
 		var tBody = oTable.find('tbody');
-		var tRow = '<tr id="items'+Id+'">';
-			tRow += '<td><input type="text" class="form-control" placeholder="Souvenir Name"></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Qty"></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Note"></td>';
+		var tRow = '<tr id="items-'+Id+'">';
+			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" name="details['+index+'].mSouvenirId">'+
+						'<option value=" " selected>-Select Souvenir-</option>'+
+						'<c:forEach var="souvenir" items="${souvenirs}">'+
+						'<option value="${souvenir.id}">${souvenir.name}</option>'+
+						'</c:forEach>'+
+					'</select></td>';
+			tRow += '<td><input type="number" class="form-control" id="quantity'+Id+'" placeholder="Qty"></td>';
+			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note"></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>'+' ';
 			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>';
 			tRow += '</tr>';
 			tBody.append(tRow);
 	});
+	/* SAVE OR ADD DATA */
+	$('#addBtnModal').on('click', function(e){
+		var transaksiSouvenirItems=[];
+		$('.tableBody tr').each(function(){
+			tRow = $(this).find('td :input');
+			var items = {
+					masterSouvenir:{
+						id:tRow.eq(0).val()
+					},
+					qty:tRow.eq(1).val(),
+					note:tRow.eq(2).val()
+					
+			}
+			transaksiSouvenirItems.push(items);
+		});
+		console.log(transaksiSouvenirItems);
+		var transaksiSouvenir = {
+				code : $('#transactionCode').val(),
+				//receivedBy : $('#receivedTransSBy').val(),
+				receivedDate : $('#receivedTransSDate').val(),
+				note : $('#noteTransSou').val(),
+				transaksiSouvenirItems:transaksiSouvenirItems
+		}
+		console.log(transaksiSouvenir);
+		$.ajax({
+			url : '${pageContext.request.contextPath}/transaksisouvenir/save',
+			type : 'POST',
+			contentType :'application/json',
+			dataType : 'json',
+			data : JSON.stringify(transaksiSouvenir),
+			success : function(data){
+				console.log(data);
+				console.log("data berhasil disimpan...");
+				//jangan lupa tambahin load data
+				$('#addTranSouModal').modal('hide');
+			}
+		
+		});
+		
+	});
+	
 	//remove added item
 	$(document).on('click', '.deleteBtnModalTransS', function(){
 		var id = $(this).attr('id');
-		$('#items'+id).remove();
+		$('#items-'+id).remove();
 		});	
 
 	

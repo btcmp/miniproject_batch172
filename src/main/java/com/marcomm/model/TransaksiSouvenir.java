@@ -1,20 +1,26 @@
 package com.marcomm.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.SQLDelete;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -29,18 +35,19 @@ public class TransaksiSouvenir {
 	@Column(length=11)
 	private int id;
 	
-	@Column(length=50, nullable=false)
+	@Column(length=50, nullable=false, unique=true)
 	private String code;
 	
 	@Column(nullable=false, length=11)
 	private String type;
 	
+	//relasi bila ada request dari suatu ke event
 	@Column(name="t_event_id", length=50)
 	private	int tEventId;
 	
 	//@Column(name="request_by", length=50, nullable=false)
 	@ManyToOne
-	@JoinColumn(name="request_by", nullable=false)
+	@JoinColumn(name="request_by")
 	private MasterEmployee requestBy;
 	
 	
@@ -64,6 +71,7 @@ public class TransaksiSouvenir {
 	private MasterEmployee receivedBy;
 	
 	@Column(name="received_date")
+	@Temporal(TemporalType.DATE)
 	private Date receivedDate;
 	
 	//@Column(name="settlement_by", length=50)
@@ -111,9 +119,23 @@ public class TransaksiSouvenir {
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
 	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="transaksiSouvenir")
+	private List<TransaksiSouvenirItem> transaksiSouvenirItems;
+	
+	
+	
+	
 	
 	
 	/*SETTER AND GETTER*/
+	
+	
+	public List<TransaksiSouvenirItem> getTransaksiSouvenirItems() {
+		return transaksiSouvenirItems;
+	}
+	public void setTransaksiSouvenirItems(List<TransaksiSouvenirItem> transaksiSouvenirItems) {
+		this.transaksiSouvenirItems = transaksiSouvenirItems;
+	}
 	
 	public int getId() {
 		return id;
@@ -133,12 +155,12 @@ public class TransaksiSouvenir {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int gettEventId() {
+	/*public int gettEventId() {
 		return tEventId;
 	}
 	public void settEventId(int tEventId) {
 		this.tEventId = tEventId;
-	}
+	}*/
 	/*public int getRequestBy() {
 		return requestBy;
 	}
@@ -283,6 +305,14 @@ public class TransaksiSouvenir {
 	public void setSettlementApprovedBy(MasterEmployee settlementApprovedBy) {
 		this.settlementApprovedBy = settlementApprovedBy;
 	}
+	public int gettEventId() {
+		return tEventId;
+	}
+	public void settEventId(int tEventId) {
+		this.tEventId = tEventId;
+	}
+	
+	
 
 	/*public TransaksiEvent getTransaksiEvent() {
 		return transaksiEvent;

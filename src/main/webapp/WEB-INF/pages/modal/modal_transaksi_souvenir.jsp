@@ -71,11 +71,16 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-			<tr id='items'>
-				<td><input type="text" class="form-control" placeholder="Souvenir Name"></td>
-				<td><input type="text" class="form-control" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" placeholder="Note"></td>
+			<tbody class="tableBody">
+			<tr id='items-1'>
+				<td><select class="custom-select" id="souvenirItem">
+					<option value=" ">-Select Souvenir-</option>
+						<c:forEach var="souvenir" items="${souvenirs }">
+							<option value="${souvenir.id}">${souvenir.name}</option>
+						</c:forEach>
+					</select></td>
+				<td><input type="number" class="form-control" id="quantity" placeholder="Qty"></td>
+				<td><input type="text" class="form-control" id="note" placeholder="Note"></td>
 				<td><a href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>
 					<a href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>
 			</tr>

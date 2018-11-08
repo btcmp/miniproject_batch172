@@ -20,15 +20,18 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
-	/*SAVE*/
-	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir) {
-		Session session = sessionFactory.getCurrentSession();
-		session.save(transaksiSouvenir);
-	}
 
-	/*GETALL STOCK*/
+	/*GETALL SEMUA TRANSAKSI REQUEST&STOCK*/
 	public List<TransaksiSouvenir> getAllTransaksiSouvenir() {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria cr = session.createCriteria(TransaksiSouvenir.class);
+		Criterion criterionAnd = Restrictions.and(Restrictions.eq("isDelete", false));
+		List<TransaksiSouvenir> listTranSou = cr.add(criterionAnd).list();
+		return listTranSou;
+	}
+	
+	/*GETALL STOCK*/
+	public List<TransaksiSouvenir> getAllStock() {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(TransaksiSouvenir.class);
 		Criterion criterionAnd = Restrictions.and(Restrictions.eq("isDelete", false),Restrictions.eq("type", "additional"));
@@ -86,6 +89,18 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 		}
 	}
 
+	/*SAVE*/
+	public void save(TransaksiSouvenir tSouvenir) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(tSouvenir);
+		
+	}
+
+
+
+	
+	
+	
 	
 	
 }

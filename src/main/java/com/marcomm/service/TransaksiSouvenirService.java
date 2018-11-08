@@ -30,24 +30,15 @@ public class TransaksiSouvenirService {
 	@Autowired
 	TransaksiSouvenirItemDao transaksiSouvenirItemDao;
 	
-	/*SAVE*/
-	public void saveTransaksiSouvenir(FormSouvenir model) {
-		/*transaksiSouvenir.setCode(getCodeTrans());
-		transaksiSouvenir.setType("additional");
-		transaksiSouvenir.setRequestBy(1);
-		transaksiSouvenir.setDelete(false);*/
-		TransaksiSouvenir dataHeader = model.getHeader();
-		transaksiSouvenirDao.saveTransaksiSouvenir(dataHeader);
-		
-		for(TransaksiSouvenirItem itemDetail : model.getDetail()) {
-			itemDetail.setTransaksiSouvenir(dataHeader);
-			transaksiSouvenirItemDao.save(itemDetail);
-		}
-	}
+	
+	
 	/*GET ALL*/
-	public List<TransaksiSouvenir> getAllTransaksiSouvenir() {
-		return transaksiSouvenirDao.getAllTransaksiSouvenir();
+	public List<TransaksiSouvenir> getAll() {
+		return transaksiSouvenirDao.getAllStock();
 	}
+	
+	
+	
 	/*GET BY ID*/
 	public TransaksiSouvenir getTransaksiSouvenir(int id) {
 		return transaksiSouvenirDao.getTransaksiSouvenir(id);
@@ -73,6 +64,27 @@ public class TransaksiSouvenirService {
 		// TODO Auto-generated method stub
 		return transaksiSouvenirDao.getCodeTrans();
 	}
+	
+	/*SAVE*/
+	public void save(TransaksiSouvenir transaksiSouvenir) {
+		TransaksiSouvenir ts = new TransaksiSouvenir();
+		ts.setCode(transaksiSouvenir.getCode());
+		ts.setType("Additional");
+		//ts.setReceivedBy(transaksiSouvenir.getReceivedBy());
+		ts.setReceivedDate(transaksiSouvenir.getReceivedDate());
+		ts.setNote(transaksiSouvenir.getNote());
+		transaksiSouvenirDao.save(ts);
+		//add table bawah
+		for(TransaksiSouvenirItem transaksiSouvenirItem :transaksiSouvenir.getTransaksiSouvenirItems()) {
+			TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
+			tsi.setMasterSouvenir(transaksiSouvenirItem.getMasterSouvenir());
+			tsi.setQty(transaksiSouvenirItem.getQty());
+			tsi.setNote(transaksiSouvenirItem.getNote());
+			tsi.setTransaksiSouvenir(ts);
+			transaksiSouvenirItemDao.save(tsi);
+		}
+	}
+	
 
 
 }
