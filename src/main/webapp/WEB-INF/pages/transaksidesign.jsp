@@ -117,8 +117,9 @@ input.parsley-error {
 			</div>
 		</div>
 	</div>
-	<%@include file="/WEB-INF/pages/modal/add-transaksidesign.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/add-transaksidesign.jsp" %> 
 	<%@include file="/WEB-INF/pages/modal/edit-transaksidesign.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/close-design.jsp" %>
 </body>
 <!--   Core JS Files   -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -165,7 +166,6 @@ $(document).ready(function(){
 		})
 		$('#addFormDesign').trigger('reset');
 		Id = 1;
-		index = 0;
 		loadEvent();
 		var now = new Date();
 		var tahun = now.getFullYear();
@@ -177,11 +177,10 @@ $(document).ready(function(){
 	});	
 	$('#addItemBtn').on('click',function(){
 		    Id++;
-		    index++;
 		  	var oTable = $('#itemsTable');
 		    var tBody = oTable.find('tbody');
 		    var tRow =	'<tr id="items-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="productItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+			tRow += '<td><select class="custom-select" id="productItem'+Id+'" style="width:150px" disabled>'+
 							'<option value="" selected>Choose...</option>'+
 								'<c:forEach var="product" items="${products}">'+
 								'<option value="${product.id}">${product.name}</option>'+
@@ -200,7 +199,24 @@ $(document).ready(function(){
 			tBody.append(tRow);
 	});
 	$(document).on('click','.btn-view-design',function(){
-		
+		var id = $(this).attr('id');
+		$.ajax({
+			url :'${pageContext.request.contextPath}/design/getitembydesignid/'+id,
+			type:'GET',
+			dataType:'json',
+			success:function(data){
+				$('#closeCode').val(data[0].transaksiDesign.code);
+				$('#closeEventCode').val(data[0].transaksiDesign.transaksiEvent.code);
+				$('#closeDesignTitle').val(data[0].transaksiDesign.titleHeader);
+				$('#closeStatus').val(data[0].transaksiDesign.status);
+				$('#closeAssignTo').val(data[0].transaksiDesign.assignTo);
+				$('#closeRequestBy').val(data[0].transaksiDesign.requestBy);
+				$('#closeRequestDate').val(data[0].transaksiDesign.requestDate);
+				$('closeNote').val(data[0].transaksiDesign.note);
+				closeDesign(data);
+			}
+		});
+		$('#closeDesignModal').modal();
 	});
 	$(document).on('click','.btn-edit-design',function(){
 		var id =$(this).attr('id');
@@ -325,6 +341,37 @@ $(document).ready(function(){
 		$.each(data,function(i,event){
 		$('#eventCode').append('<option value="'+event.id+'">'+event.code+'</option>');
 		})	
+	}
+	function closeDesign(data){
+		var oTable = $('#closeItemsTable');
+	    var tBody = oTable.find('tbody');
+	    tBody.empty();
+	    $.each(data,function(i,designItem){
+	    	var tRow =	'<tr>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.name+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.description+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.titleItem+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestDueDate+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date"></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date"></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
+			tRow += '<td><button type="button" class="form-control close-file-upload btn-primary">Browse</button></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="input file"></td>';
+			tRow +=	'</tr>';
+			tBody.append(tRow);	
+			$('#closeStartDate'+i).datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+			$('#closeEndDate'+i).datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+	    });
+		
 	}
 });
 /*  KOLOM ANGGI*/

@@ -88,4 +88,5 @@ public class TransaksiDesignController {
 	public List<TransaksiDesignItem> getItemByDesignId(@PathVariable("id") int id){
 		return transaksiDesignService.getItemByDesignId(id);
 	}
+	
 }
