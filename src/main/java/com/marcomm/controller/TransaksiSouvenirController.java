@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.marcomm.model.FormSouvenir;
 import com.marcomm.model.TransaksiSouvenir;
 import com.marcomm.service.TransaksiEventService;
 import com.marcomm.service.TransaksiSouvenirService;
@@ -34,8 +35,8 @@ public class TransaksiSouvenirController {
 	/*SAVE*/
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void saveTransaksiSouvenir (@RequestBody TransaksiSouvenir transaksiSouvenir) {
-		transaksiSouvenirService.saveTransaksiSouvenir(transaksiSouvenir);
+	public void saveTransaksiSouvenir (@RequestBody FormSouvenir dataForm) {
+		transaksiSouvenirService.saveTransaksiSouvenir(dataForm);
 	}
 	
 	/*GET ALL*/ 

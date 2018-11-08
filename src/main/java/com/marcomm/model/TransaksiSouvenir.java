@@ -1,20 +1,27 @@
 package com.marcomm.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.SQLDelete;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -36,29 +43,36 @@ public class TransaksiSouvenir {
 	private String type;
 	
 	//@Column(name="t_event_id", length=50)
-	@ManyToOne
-	@JoinColumn(name="t_event_id")
+	@OneToOne
+	@JoinColumn(name="t_event_id", unique=true)
 	private	TransaksiEvent transaksiEvent;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="transaksiSouvenir", cascade=CascadeType.ALL)
+	private List<TransaksiSouvenirItem> transaksiSouvenirItems;
 	
 	@Column(name="request_by", length=50, nullable=false)
 	private int requestBy;
 	
 	@Column(name="request_date")
+	@Temporal(TemporalType.DATE)
 	private Date requestDate;
 	
 	@Column(name="request_due_date")
+	@Temporal(TemporalType.DATE)
 	private Date requestDueDate;
 	
 	@Column(name="approved_by", length=50)
 	private int approvedBy;
 	
 	@Column(name="approved_date")
+	@Temporal(TemporalType.DATE)
 	private Date approvedDate;
 	
 	@Column(name="receide_by", length=50)
 	private int receivedBy;
 	
 	@Column(name="received_date")
+	@Temporal(TemporalType.DATE)
 	private Date receivedDate;
 	
 	@Column(name="settlement_by", length=50)
@@ -240,6 +254,12 @@ public class TransaksiSouvenir {
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+	public List<TransaksiSouvenirItem> getTransaksiSouvenirItems() {
+		return transaksiSouvenirItems;
+	}
+	public void setTransaksiSouvenirItems(List<TransaksiSouvenirItem> transaksiSouvenirItems) {
+		this.transaksiSouvenirItems = transaksiSouvenirItems;
+	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
@@ -250,5 +270,6 @@ public class TransaksiSouvenir {
 	public void setTransaksiEvent(TransaksiEvent transaksiEvent) {
 		this.transaksiEvent = transaksiEvent;
 	}
+	
 
 }
