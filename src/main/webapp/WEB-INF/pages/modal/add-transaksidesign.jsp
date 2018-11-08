@@ -31,10 +31,10 @@
 							<label for="eventCode" class="col-sm-2 col-form-label">Event Code</label>
 							<div class="col-sm-3">
 								<select class="form-control" id="eventCode">
-										<option value="">Choose...</option>
-											<c:forEach var="event" items="${events}">
+										 <option value="">Choose...</option>
+										<%--	<c:forEach var="event" items="${events}">
 											<option value="${event.id}">${event.code}</option>
-										</c:forEach>
+										</c:forEach> --%>
 									</select> 
 							</div>
 							<label for="requestDate" class="col-sm-2 col-form-label">Request Date</label>
@@ -78,22 +78,22 @@
 						</tr>
 						</thead>
 						<tbody class="tableBody">
-						<tr class="items-1">
-						<td><select class="custom-select" id="productItem1" style="width:150px" data-parsley-required>
+						<tr id="items-1">
+						<td><select class="custom-select" id="productItem1" style="width:150px" data-parsley-required disabled>
 										<option value="">Choose...</option>
 											<c:forEach var="product" items="${products}">
 											<option value="${product.id}">${product.name}</option>
 										</c:forEach>
 									</select> 
 									</td>
-						<td><input type="text" class="form-control description" id="description1" placeholder="description" readonly></td>
-						<td><input type="text" class="form-control" id="title1" placeholder="Title"></td>
-						<td><input type="text" class="form-control" id="requestPic1" placeholder="Request PIC"></td>
-						<td><input type="text" class="form-control" id="duedate1" placeholder="Due Date"></td>
+						<td><input type="text" class="form-control description" id="description1" placeholder="description" disabled></td>
+						<td><input type="text" class="form-control" id="title1" placeholder="Title"disabled></td>
+						<td><input type="text" class="form-control" id="requestPic1" placeholder="Request PIC" disabled></td>
+						<td><input type="text" class="form-control" id="duedate1" placeholder="Due Date" disabled></td>
 						<td><input type="text" class="form-control" id="startdate1" placeholder="Start Date" disabled></td>
 						<td><input type="text" class="form-control" id="enddate1"  placeholder="End Date" disabled></td>
-						<td><input type="text" class="form-control" id="note1" placeholder="Note"></td>
-						<td><a href="#" id="1" class="btn-update-design"><span class="oi oi-pencil"></span></a>
+						<td><input type="text" class="form-control" id="note1" placeholder="Note" disabled></td>
+						<td><a href="#" id="1" class="btn-edit-design"><span class="oi oi-pencil"></span></a>
 						<a href="#" id="1" class="btn-delete-design"><span class="oi oi-trash"></span></a>
 						</td>
 						</tr>

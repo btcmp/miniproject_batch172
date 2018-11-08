@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -72,10 +73,12 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TransaksiEvent> getEventAvailable() {
-		String hql = "select te from TransaksiEvent te left outer join TransaksiDesign td where te not in td";
+	public List<TransaksiEvent> getEventAvailable(List<Integer> eventId) {
+		String hql = "select te from TransaksiEvent te where te.id not in (:eventId)";
 		Session session = sessionFactory.getCurrentSession();
-		List<TransaksiEvent> transaksiEvent = session.createQuery(hql).list();
+		Query qr = session.createQuery(hql);
+		qr.setParameterList("eventId", eventId);
+		List<TransaksiEvent> transaksiEvent = qr.list();
 		return transaksiEvent;
 	}
 

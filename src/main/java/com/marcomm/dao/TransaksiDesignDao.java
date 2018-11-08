@@ -13,6 +13,6 @@ public interface TransaksiDesignDao {
 	public List<TransaksiDesign> getAll();
 	public String getRequestBy();
 	public int getId();
-	public List<TransaksiEvent> getEventAvailable();
+	public List<TransaksiEvent> getEventAvailable(List<Integer> eventId);
 	
 }
