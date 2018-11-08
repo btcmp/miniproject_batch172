@@ -48,8 +48,10 @@ public class TransaksiSouvenirRequestController {
 	//save All data
 	@RequestMapping(value="/saveall", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void saveAllData(@RequestBody TransaksiSouvenir transaksiSouvenir) {
+	@ResponseBody
+	public TransaksiSouvenir saveAllData(@RequestBody TransaksiSouvenir transaksiSouvenir) {
 		souvenirRequestService.saveAllData(transaksiSouvenir);
+		return transaksiSouvenir;
 	}
 
 	//save
