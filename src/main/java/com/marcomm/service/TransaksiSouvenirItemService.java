@@ -1,6 +1,7 @@
 package com.marcomm.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,10 @@ public class TransaksiSouvenirItemService {
 		transaksiSouvenirItem.setCreatedDate(date);
 		transaksiSouvenirItem.setDelete(false);
 		transaksiSouvenirItemDao.save(transaksiSouvenirItem);
+		
+	} 
+	
+	public void update(TransaksiSouvenirItem transaksiSouvenirItem) {
 		
 	}
 

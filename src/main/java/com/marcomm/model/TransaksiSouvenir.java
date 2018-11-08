@@ -24,8 +24,8 @@ import org.hibernate.annotations.SQLDelete;
 public class TransaksiSouvenir {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_trans_generator")
-	@SequenceGenerator(name="id_trans_generator", sequenceName="trans_seq")
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	
 	@Column(length=11)
 	private int id;
 	
@@ -35,13 +35,14 @@ public class TransaksiSouvenir {
 	@Column(nullable=false, length=11)
 	private String type;
 	
-	//@Column(name="t_event_id", length=50)
-	@ManyToOne
-	@JoinColumn(name="t_event_id")
-	private	TransaksiEvent transaksiEvent;
+	@Column(name="t_event_id", length=50)
+	private	int tEventId;
 	
-	@Column(name="request_by", length=50, nullable=false)
-	private int requestBy;
+	//@Column(name="request_by", length=50, nullable=false)
+	@ManyToOne
+	@JoinColumn(name="request_by", nullable=false)
+	private MasterEmployee requestBy;
+	
 	
 	@Column(name="request_date")
 	private Date requestDate;
@@ -49,27 +50,36 @@ public class TransaksiSouvenir {
 	@Column(name="request_due_date")
 	private Date requestDueDate;
 	
-	@Column(name="approved_by", length=50)
-	private int approvedBy;
+	//@Column(name="approved_by", length=50)
+	@ManyToOne
+	@JoinColumn(name="approved_by")
+	private MasterEmployee approvedBy;
 	
 	@Column(name="approved_date")
 	private Date approvedDate;
 	
-	@Column(name="receide_by", length=50)
-	private int receivedBy;
+	//@Column(name="receide_by", length=50)
+	@ManyToOne
+	@JoinColumn(name="received_by")
+	private MasterEmployee receivedBy;
 	
 	@Column(name="received_date")
 	private Date receivedDate;
 	
-	@Column(name="settlement_by", length=50)
-	private int settlementBy;
+	//@Column(name="settlement_by", length=50)
+	@ManyToOne
+	@JoinColumn(name="settlement_by")
+	private MasterEmployee settlementBy;
 	
 	@Column(name="settlement_date")
 	@Temporal(TemporalType.DATE)
 	private Date settlementDate;
 	
-	@Column(name="settlement_approved_by", length=50)
-	private int settlementApprovedBy;
+	//@Column(name="settlement_approved_by", length=50)
+	@ManyToOne
+	@JoinColumn(name="settlement_approved_by")
+	private MasterEmployee settlementApprovedBy;
+	
 	
 	@Column(name="settlement_approved_date")
 	@Temporal(TemporalType.DATE)
@@ -123,18 +133,18 @@ public class TransaksiSouvenir {
 	public void setType(String type) {
 		this.type = type;
 	}
-	/*public int gettEventId() {
+	public int gettEventId() {
 		return tEventId;
 	}
 	public void settEventId(int tEventId) {
 		this.tEventId = tEventId;
-	}*/
-	public int getRequestBy() {
+	}
+	/*public int getRequestBy() {
 		return requestBy;
 	}
 	public void setRequestBy(int requestBy) {
 		this.requestBy = requestBy;
-	}
+	}*/
 	public Date getRequestDate() {
 		return requestDate;
 	}
@@ -147,48 +157,48 @@ public class TransaksiSouvenir {
 	public void setRequestDueDate(Date requestDueDate) {
 		this.requestDueDate = requestDueDate;
 	}
-	public int getApprovedBy() {
+	/*public int getApprovedBy() {
 		return approvedBy;
 	}
 	public void setApprovedBy(int approvedBy) {
 		this.approvedBy = approvedBy;
-	}
+	}*/
 	public Date getApprovedDate() {
 		return approvedDate;
 	}
 	public void setApprovedDate(Date approvedDate) {
 		this.approvedDate = approvedDate;
 	}
-	public int getReceivedBy() {
+	/*public int getReceivedBy() {
 		return receivedBy;
 	}
 	public void setReceivedBy(int receivedBy) {
 		this.receivedBy = receivedBy;
-	}
+	}*/
 	public Date getReceivedDate() {
 		return receivedDate;
 	}
 	public void setReceivedDate(Date receivedDate) {
 		this.receivedDate = receivedDate;
 	}
-	public int getSettlementBy() {
+	/*public int getSettlementBy() {
 		return settlementBy;
 	}
 	public void setSettlementBy(int settlementBy) {
 		this.settlementBy = settlementBy;
-	}
+	}*/
 	public Date getSettlementDate() {
 		return settlementDate;
 	}
 	public void setSettlementDate(Date settlementDate) {
 		this.settlementDate = settlementDate;
 	}
-	public int getSettlementApprovedBy() {
+	/*public int getSettlementApprovedBy() {
 		return settlementApprovedBy;
 	}
 	public void setSettlementApprovedBy(int settlementApprovedBy) {
 		this.settlementApprovedBy = settlementApprovedBy;
-	}
+	}*/
 	public Date getSettlementAprovedDate() {
 		return settlementAprovedDate;
 	}
@@ -243,12 +253,44 @@ public class TransaksiSouvenir {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+	public MasterEmployee getRequestBy() {
+		return requestBy;
+	}
+	public void setRequestBy(MasterEmployee requestBy) {
+		this.requestBy = requestBy;
+	}
+	public MasterEmployee getApprovedBy() {
+		return approvedBy;
+	}
+	public void setApprovedBy(MasterEmployee approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+	public MasterEmployee getReceivedBy() {
+		return receivedBy;
+	}
+	public void setReceivedBy(MasterEmployee receivedBy) {
+		this.receivedBy = receivedBy;
+	}
+	public MasterEmployee getSettlementBy() {
+		return settlementBy;
+	}
+	public void setSettlementBy(MasterEmployee settlementBy) {
+		this.settlementBy = settlementBy;
+	}
+	public MasterEmployee getSettlementApprovedBy() {
+		return settlementApprovedBy;
+	}
+	public void setSettlementApprovedBy(MasterEmployee settlementApprovedBy) {
+		this.settlementApprovedBy = settlementApprovedBy;
+	}
 
-	public TransaksiEvent getTransaksiEvent() {
+	/*public TransaksiEvent getTransaksiEvent() {
 		return transaksiEvent;
 	}
 	public void setTransaksiEvent(TransaksiEvent transaksiEvent) {
 		this.transaksiEvent = transaksiEvent;
-	}
+	}*/
+	
+	
 
 }

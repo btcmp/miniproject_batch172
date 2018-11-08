@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.TransaksiEventDao;
 import com.marcomm.dao.TransaksiSouvenirDao;
+import com.marcomm.dao.TransaksiSouvenirItemDao;
+import com.marcomm.model.FormSouvenir;
 import com.marcomm.model.TransaksiSouvenir;
+import com.marcomm.model.TransaksiSouvenirItem;
 
 
 
@@ -24,9 +27,22 @@ public class TransaksiSouvenirService {
 	@Autowired
 	TransaksiEventDao transaksiEventDao;
 	
+	@Autowired
+	TransaksiSouvenirItemDao transaksiSouvenirItemDao;
+	
 	/*SAVE*/
-	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir) {
-		transaksiSouvenirDao.saveTransaksiSouvenir(transaksiSouvenir);
+	public void saveTransaksiSouvenir(FormSouvenir model) {
+		/*transaksiSouvenir.setCode(getCodeTrans());
+		transaksiSouvenir.setType("additional");
+		transaksiSouvenir.setRequestBy(1);
+		transaksiSouvenir.setDelete(false);*/
+		TransaksiSouvenir dataHeader = model.getHeader();
+		transaksiSouvenirDao.saveTransaksiSouvenir(dataHeader);
+		
+		for(TransaksiSouvenirItem itemDetail : model.getDetail()) {
+			itemDetail.setTransaksiSouvenir(dataHeader);
+			transaksiSouvenirItemDao.save(itemDetail);
+		}
 	}
 	/*GET ALL*/
 	public List<TransaksiSouvenir> getAllTransaksiSouvenir() {
