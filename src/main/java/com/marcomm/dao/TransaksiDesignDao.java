@@ -14,4 +14,5 @@ public interface TransaksiDesignDao {
 	public String getRequestBy();
 	public List<TransaksiEvent> getEventAvailable(List<Integer> eventId);
 	
+	
 }

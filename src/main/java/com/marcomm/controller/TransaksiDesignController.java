@@ -82,4 +82,10 @@ public class TransaksiDesignController {
 	public TransaksiDesignItem getItemById(@PathVariable("id") int id) {
 		return transaksiDesignService.getByIdItem(id);
 	}
+	
+	@RequestMapping(value="/getitembydesignid/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiDesignItem> getItemByDesignId(@PathVariable("id") int id){
+		return transaksiDesignService.getItemByDesignId(id);
+	}
 }

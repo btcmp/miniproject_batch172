@@ -88,6 +88,9 @@ public class TransaksiDesignService {
 		return transaksiDesignDao.getEventAvailable(eventId);
 		}
 	}
-	
-
+	public List<TransaksiDesignItem> getItemByDesignId(int id){
+		TransaksiDesign transaksiDesign = transaksiDesignDao.getById(id);
+		List<TransaksiDesignItem> transaksiDesignItems = transaksiDesignItemDao.getItemByDesign(transaksiDesign);
+		return transaksiDesignItems;
+	}
 }
