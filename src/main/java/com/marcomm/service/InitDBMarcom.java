@@ -49,13 +49,11 @@ public class InitDBMarcom {
 		role1.setRoleName("ROLE_ADMIN");
 		role1.setCode("RO0001");
 		role1.setRoleName("Administrator"); 
-		role2.setRoleName("Staff");
-		role3.setRoleName("Requester");
 		initDBService.saveRole(role1);
-		role2.setRoleName("ROLE_STAFF");
+		role2.setRoleName("Staff");
 		role2.setCode("RO0002");
 		initDBService.saveRole(role2);
-		role3.setRoleName("ROLE_REQUEST");
+		role3.setRoleName("Requester");
 		role3.setCode("RO0003");
 		initDBService.saveRole(role3);
 		
