@@ -6,12 +6,9 @@ import com.marcomm.model.TransaksiSouvenir;
 
 public interface TransaksiSouvenirDao {	
 
-	/*SAVE*/
-	public void saveTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir);
-
-	/*GET ALL*/
-	public List<TransaksiSouvenir> getAllTransaksiSouvenir();
-
+	
+	
+	
 	/*GET BY ID*/
 	public TransaksiSouvenir getTransaksiSouvenir(int id);
 
@@ -24,6 +21,18 @@ public interface TransaksiSouvenirDao {
 	/*GET CODE*/
 	public String getCodeTrans();
 
+	/*GET ALL REQUEST*/
+	public List<TransaksiSouvenir> getAllRequest();
+	
+	/*GET ALL STOCK*/
+	public List<TransaksiSouvenir> getAllStock();
+	
+	
+	
+	/*SAVE*/
+	public void save(TransaksiSouvenir tSouvenir);
+
+	
 	
 	
 }

@@ -61,7 +61,11 @@ public class TransaksiDesignController {
 	public int getId() {
 		return transaksiDesignService.getId();
 	}
-	
+	@RequestMapping(value="/getevent",method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiEvent> getEvent(){
+		return transaksiDesignService.getEventAvailable();
+	}
 	@RequestMapping(value="/getall",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiDesign> getAll(){

@@ -65,7 +65,7 @@ public class TransaksiSouvenirRequestController {
 	@RequestMapping(value="/getall", method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiSouvenir> getAllTransaksiSouvenirRequest(){
-		return souvenirRequestService.getAllSouvenirRequest();
+		return souvenirRequestService.getAll();
 	}
 	
 	

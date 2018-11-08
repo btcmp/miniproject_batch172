@@ -1,5 +1,6 @@
 package com.marcomm.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.dao.TransaksiDesignItemDao;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
+import com.marcomm.model.TransaksiEvent;
 
 
 @Service
@@ -65,6 +67,13 @@ public class TransaksiDesignService {
 			transaksiDesignItemDao.save(tdi);
 		}
 	}
-	 
+	public List<TransaksiEvent> getEventAvailable(){
+		List<TransaksiDesign> transaksiDesign = transaksiDesignDao.getAll();
+		List<Integer> eventId = new ArrayList<>();
+		for (TransaksiDesign td : transaksiDesign) {
+			eventId.add(td.getTransaksiEvent().getId());
+		}
+		return transaksiDesignDao.getEventAvailable(eventId);
+	}
 
 }

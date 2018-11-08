@@ -37,25 +37,19 @@ public class SouvenirRequestService {
 		Date date = new Date();
 		transaksiSouvenir.setCreatedBy(1);
 		transaksiSouvenir.setCreatedDate(date);
-		transaksiSouvenir.setRequestBy(1);
+		//transaksiSouvenir.setRequestBy(1);
 		transaksiSouvenir.setRequestDate(date);
 		transaksiSouvenir.setType("reduction");
 		transaksiSouvenir.setStatus(1);
-		transaksiSouvenirDao.saveTransaksiSouvenir(transaksiSouvenir);
+		/*transaksiSouvenirDao.saveTransaksiSouvenir(transaksiSouvenir);*/
 		
 	}
-	
-	public List<TransaksiSouvenir> getAllSouvenirRequest() {
-		
-		return  transaksiSouvenirDao.getAllTransaksiSouvenir();
-	}
-
 	public void saveAllData(TransaksiSouvenir transaksiSouvenir) {
 		TransaksiSouvenir ts= new TransaksiSouvenir();
 		Date date = new Date();
 		ts.setCreatedBy(1);
 		ts.setCreatedDate(date);
-		ts.setRequestBy(1);
+		//ts.setRequestBy(1);
 		ts.setRequestDate(date);
 		ts.setType("reduction");
 		ts.setStatus(1);
@@ -63,8 +57,7 @@ public class SouvenirRequestService {
 		ts.setRequestDueDate(transaksiSouvenir.getRequestDueDate());
 		ts.setNote(transaksiSouvenir.getNote());
 		ts.setTransaksiEvent(transaksiSouvenir.getTransaksiEvent());
-		transaksiSouvenirDao.saveTransaksiSouvenir(ts);
-		
+		transaksiSouvenirDao.save(ts);
 		for (TransaksiSouvenirItem transaksiSouvenirItem : transaksiSouvenir.getTransaksiSouvenirItems()) {
 			TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
 			tsi.setTransaksiSouvenir(ts);
@@ -75,11 +68,10 @@ public class SouvenirRequestService {
 			tsi.setDelete(false);
 			transaksiSouvenirItemDao.save(tsi);
 		}
-		
 	} 
-	
+	//get all souvenir request
+	public List<TransaksiSouvenir> getAll() {
+		return transaksiSouvenirDao.getAllRequest();
+	}
 
-	
-
-	
 }

@@ -95,6 +95,7 @@ public class TransaksiEvent {
 	@JsonBackReference
 	private TransaksiDesign transaksiDesign;
 
+
 	public TransaksiDesign getTransaksiDesign() {
 		return transaksiDesign;
 	}

@@ -140,7 +140,7 @@ $(document).ready(function(){
 		'sDom':'tip',
 		'ordering':false
 	});
-	$('#duedate1').datepicker({
+	/* $('#duedate1').datepicker({
 		format:'yyyy-mm-dd',
 		autoclose:true,
 		uiLibrary: 'bootstrap4'
@@ -154,7 +154,7 @@ $(document).ready(function(){
 		format:'yyyy-mm-dd',
 		autoclose:true,
 		uiLibrary: 'bootstrap4'
-	});
+	}); */
 	var Id = 1;
 	var index = 0;
 	loadData();
@@ -175,6 +175,8 @@ $(document).ready(function(){
 				$('#requestBy').val(data);
 			}
 		})
+		$('#addFormDesign').trigger('reset');
+		loadEvent();
 		var now = new Date();
 		var tahun = now.getFullYear();
 		var bulan = now.getMonth();
@@ -189,50 +191,61 @@ $(document).ready(function(){
 		  	var oTable = $('#itemsTable');
 		    var tBody = oTable.find('tbody');
 		    var tRow =	'<tr id="items-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="productItem'+Id+'" name="details['+index+'].mProductId" style="width:150px">'+
+			tRow += '<td><select class="custom-select" id="productItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
 							'<option value="" selected>Choose...</option>'+
 								'<c:forEach var="product" items="${products}">'+
 								'<option value="${product.id}">${product.name}</option>'+
 							'</c:forEach>'+
 						'</select></td>';
-			tRow += '<td><input type="text" class="form-control description" id="description'+Id+'" placeholder="description" readonly></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Title"></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Request PIC"></td>';
-			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" placeholder="Due Date"></td>';
+			tRow += '<td><input type="text" class="form-control description" id="description'+Id+'" placeholder="description" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Title" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Request PIC" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" placeholder="Due Date" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" placeholder="Start Date" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" placeholder="End Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" name="details['+index+'].note" placeholder="Note"></td>';
-			tRow += '<td><a id="'+Id+'" href="#" class="btn-update-design"><span class="oi oi-pencil"></span></a>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Note" disabled></td>';
+			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
 			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
 			tRow +=	'</tr>';
 			tBody.append(tRow);
-			$('#duedate'+Id).datepicker({
-				format:'yyyy-mm-dd',
-				autoclose:true,
-				uiLibrary: 'bootstrap4'
-			});
-			$('#startdate'+Id).datepicker({
-				format:'yyyy-mm-dd',
-				autoclose:true,
-				uiLibrary: 'bootstrap4'
-			});
-			$('#enddate'+Id).datepicker({
-				format:'yyyy-mm-dd',
-				autoclose:true,
-				uiLibrary: 'bootstrap4'
-			});
-			$('#productItem'+Id).on('change',function(){
-				var select = this;
-				var productId = select[select.selectedIndex].value;
-				$.ajax({
-					url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
-					type : 'GET',
-					success : function(data){
-						$('#description'+Id).val(data.description);
-					}
-				});
-			});
 	});
+	$(document).on('click','.btn-edit-design',function(){
+		var id =$(this).attr('id');
+		$("#items-"+id).find(':input').prop('disabled', false);
+		$("#startdate"+id).prop('disabled', true);
+		$("#enddate"+id).prop('disabled', true);
+		$('#duedate'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#startdate'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#enddate'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#productItem'+id).on('change',function(){
+			var select = this;
+			var productId = select[select.selectedIndex].value;
+			$.ajax({
+				url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+				type : 'GET',
+				success : function(data){
+					$('#description'+id).val(data.description);
+				}
+			});
+		});
+	});
+	$(document).on('click','.btn-delete-design',function(){
+		var id =$(this).attr('id');
+		$('#items-'+id).remove();
+	});
+	
 	$('#addBtnModal').on('click',function(e){
 		var transaksiDesignItems=[];
 		$('.tableBody tr').each(function(){
@@ -248,7 +261,6 @@ $(document).ready(function(){
 			}
 			transaksiDesignItems.push(items);
 		});
-		console.log(transaksiDesignItems);
 		var transaksiDesign = {
 				code :$('#transactionCode').val(),
 				requestBy :$('#requestBy').val(),
@@ -268,14 +280,10 @@ $(document).ready(function(){
 			data:JSON.stringify(transaksiDesign),
 			success:function(data){
 				loadData();
+				console.log(data);
 				$('#addDesignTransactionModal').modal('hide');
 			}
 		});	
-	});
-
-	$(document).on('click','.btn-delete-design',function(){
-		var id = $(this).attr('id');
-		$('#items-'+id).remove();
 	});
 	$('#productItem1').on('change',function(){
 		var select = this;
@@ -294,7 +302,6 @@ $(document).ready(function(){
 			type : 'GET',
 			dataType : 'json',
 			success : function(data){
-				console.log(data);
 				convertToTable(data);
 			}
 		});
@@ -310,6 +317,23 @@ $(document).ready(function(){
 			oTable.row.add([increment,design.code,design.requestBy,design.requestDate,design.assignTo,design.status,design.createdDate,design.createdBy,tRow]);
 		});
 		oTable.draw();
+	}
+	function loadEvent(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/design/getevent',
+			type : 'GET',
+			dataType :'json',
+			success:function(data){
+				convertToSelect(data);
+			}
+		});
+	}
+	function convertToSelect(data){
+		$('#eventCode').empty();
+		$('#eventCode').append('<option value="">Choose...</option>');
+		$.each(data,function(i,event){
+		$('#eventCode').append('<option value="'+event.id+'">'+event.code+'</option>');
+		})	
 	}
 });
 

@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page isELIgnored="false"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!-- MODAL ADD -->
 <div class="modal fade" id="addTranSouModal" tabindex="-1"
 	role="dialog" aria-labelledby="addTransSou"
@@ -20,13 +25,17 @@
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="transactionCode"
 								placeholder="Transaction Code" readonly>
-						</div>
+						</div>    
 					</div>
 					<div class="form-group row">
 						<label for="receivedTransSBy" class="col-sm-3 col-form-label">Received By</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="receivedTransSBy"
-								placeholder="-Select Employee-" required data-parsley-namecheck data-parsley-namecheck-message="Name already in use">
+							<select class="form-control custom select" id="receivedTransSBy">
+								<option value=" " selected>Select Employee</option>
+								<%-- <c:forEach var="employee" items="${employees }">
+									<option value="${employee.employeeName }">${employee.employeeName }</option>
+								</c:forEach> --%>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -62,11 +71,16 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-			<tr id='items'>
-				<td><input type="text" class="form-control" placeholder="Souvenir Name"></td>
-				<td><input type="text" class="form-control" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" placeholder="Note"></td>
+			<tbody class="tableBody">
+			<tr id='items-1'>
+				<td><select class="custom-select" id="souvenirItem">
+					<option value=" ">-Select Souvenir-</option>
+						<c:forEach var="souvenir" items="${souvenirs }">
+							<option value="${souvenir.id}">${souvenir.name}</option>
+						</c:forEach>
+					</select></td>
+				<td><input type="number" class="form-control" id="quantity" placeholder="Qty"></td>
+				<td><input type="text" class="form-control" id="note" placeholder="Note"></td>
 				<td><a href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>
 					<a href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>
 			</tr>
@@ -77,8 +91,8 @@
 			<!-- FOOTER -->
 			</div>
 			<div class="modal-footer border border-top-0 border-dark">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				<button type="button" class="btn btn-primary" id="addBtnModal">Save</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 			</div>
 		</div>
 	</div>

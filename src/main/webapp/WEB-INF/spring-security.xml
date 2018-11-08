@@ -22,7 +22,7 @@
 		<intercept-url pattern="/design*"
 			access="hasRole('Administrator')" />
 			<!-- MASTER UNIT -->
-		<intercept-url pattern="/unit*"
+		<intercept-url pattern="/masterunit*"
 			access="hasRole('Administrator')" />
 			<!-- MASTER SOUVENIR -->
 		<intercept-url pattern="/souvenir*"
