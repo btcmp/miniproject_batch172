@@ -306,7 +306,8 @@ $(document).ready(function(){
 			console.log(index, event);
 			index++;
 			
-			//CHOOSEN STATUS
+			//CHOOSEN MODAL BASED ON STATUS AND ROLE
+			//NAMED STATUS
 			var user="${username}"
 			var modal = "";
 			var status="";
