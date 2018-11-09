@@ -30,6 +30,7 @@ public class TransaksiDesignService {
 	TransaksiEventDao transaksiEventDao;
 	@Autowired
 	MasterUserDao masterUserDao;
+	
 		
 	public List<TransaksiDesign> getAll() {
 		return transaksiDesignDao.getAll();
@@ -93,5 +94,21 @@ public class TransaksiDesignService {
 		TransaksiDesign transaksiDesign = transaksiDesignDao.getById(id);
 		List<TransaksiDesignItem> transaksiDesignItems = transaksiDesignItemDao.getItemByDesign(transaksiDesign);
 		return transaksiDesignItems;
+	}
+
+	
+//	KOLOM ANGGI
+	public void update(TransaksiDesign transaksiDesign) {
+		TransaksiDesign transaksiDesign1= transaksiDesignDao.getById(transaksiDesign.getId());//untuk mengambil repositori lama
+		TransaksiEvent transaksiEvent = transaksiDesign.getTransaksiEvent();//ini adalah event baru yg akan ditambahkan
+		TransaksiEvent transEvent=transaksiEventDao.getEventById(transaksiEvent.getId());//INI ADALAH EVENT BARU dr database src by event id
+		
+		transaksiDesign1.setTransaksiEvent(transEvent);
+		transaksiDesign1.setTitleHeader(transaksiDesign.getTitleHeader());
+		transaksiDesign1.setNote(transaksiDesign.getNote());
+		
+		transaksiDesignDao.update(transaksiDesign1);
+		
+		
 	}
 }

@@ -114,4 +114,13 @@ public class TransaksiDesignController {
 		} catch (Exception e) {
 		}
 	}
+	
+	
+//	KOLOM ANGGI
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void update(@RequestBody TransaksiDesign transaksiDesign) {
+	transaksiDesignService.update(transaksiDesign);
+		 
+	}
 }

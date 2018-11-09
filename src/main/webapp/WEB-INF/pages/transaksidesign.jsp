@@ -580,7 +580,49 @@ $(document).ready(function(){
 	  
 	  
 	  /* SAVE DATA DARI MODAL EDIT */
-	  $()
+	  $(document).on('click','#addBtnModalEdit',function(){
+		  var transaksiDesignItems=[];
+			$('.tableBody tr').each(function(){
+				tRow = $(this).find('td :input');
+				var items = {
+						masterProduct:{
+							id:tRow.eq(0).val()
+						},
+						titleItem:tRow.eq(2).val(),
+						requestPic:tRow.eq(3).val(),
+						requestDueDate:tRow.eq(4).val(),
+						note:tRow.eq(10).val()
+				}
+				transaksiDesignItems.push(items);
+			});
+			var transaksiDesign = {
+					code :$('#transactionCode').val(),
+					createdBy:$('#addCreatedBy').val(),
+					requestBy :{
+						id:$('#addRequestById').val()
+					},
+					requestDate :$('#requestDate').val(),
+					titleHeader :$('#titleHeader').val(),
+					note :$('#note').val(),
+					transaksiEvent :{
+						id:$('#eventCode').val()
+				    },
+					transaksiDesignItems:transaksiDesignItems
+			}
+			$.ajax({
+				url : '${pageContext.request.contextPath}/design/save',
+				type : 'POST',
+				contentType:'application/json',
+				dataType:'json',
+				data:JSON.stringify(transaksiDesign),
+				success:function(data){
+					loadData();
+					console.log(data);
+					$('#addDesignTransactionModal').modal('hide');
+				}
+			});	
+		  
+	  });
 	  
 	  
 	  
