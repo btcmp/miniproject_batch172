@@ -422,7 +422,7 @@ $(document).ready(function(){
 					var keys=Object.keys(data);
 					len=keys.length;
 					$('#eventEditCode').empty();
-					$('#eventEditCode').append('<option id="eventEditCodeSelected"></option>');
+					$('#eventEditCode').append('<option id="eventEditCodeSelected" selected></option>');
 					$('#designEditId').val(data[0].transaksiDesign.id);
 					$('#eventEditCodeSelected').val(data[0].transaksiDesign.transaksiEvent.id);
 					document.getElementById('eventEditCodeSelected').innerHTML=data[0].transaksiDesign.transaksiEvent.code
@@ -483,15 +483,15 @@ $(document).ready(function(){
 									'<option value="${product.id}">${product.name}</option>'+
 								'</c:forEach>'+
 							'</select></td>';
-			tRow += '<td><input type="text" class="form-control description" 	value="'+data[index2].masterProduct.description+'"																placeholder="description" 	readonly></td>';
-			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		readonly></td>';
-			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	readonly></td>';
-			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		readonly></td>';
-			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	readonly></td>';
-			tRow += '<td><input type="text" class="form-control"				value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		readonly></td>';
-			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" readonly></td>';
-			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
-			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+			tRow += '<td><input type="text" class="form-control description" 	value="'+data[index2].masterProduct.description+'"																placeholder="description" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control"				value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" disabled></td>';
+			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design-main"><span class="oi oi-pencil"></span></a>';
+			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design-main"><span class="oi oi-trash"></span></a></td>';
 			tRow +=	'</tr>';
 			index2++;
 			tBody.append(tRow);
@@ -527,8 +527,8 @@ $(document).ready(function(){
 				tRow += '<td><input type="text" class="form-control" id="startdateEdit'+Id+'" placeholder="Start Date" disabled></td>';
 				tRow += '<td><input type="text" class="form-control" id="enddateEdit'+Id+'" placeholder="End Date" disabled></td>';
 				tRow += '<td><input type="text" class="form-control" id="noteEdit'+Id+'" placeholder="Note" disabled></td>';
-				tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
-				tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+				tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design-main"><span class="oi oi-pencil"></span></a>';
+				tRow += '<a id="'+Id+'" href="#" class="btn-delete-design-main"><span class="oi oi-trash"></span></a></td>';
 				tRow +=	'</tr>';
 				tBody.append(tRow);
 		});
@@ -536,13 +536,13 @@ $(document).ready(function(){
 	  
 	  
 	  /* mendelete objek item tabel */
-	  $(document).on('click','.btn-delete-design-edit',function(){
+	  $(document).on('click','.btn-delete-design-main',function(){
 			var id =$(this).attr('id');
 			$('#items-edit-'+id).remove();
 		});
 	  
 	  /* memencet tombole edit di modal */
-	  $(document).on('click','.btn-edit-design-edit',function(){
+	  $(document).on('click','.btn-edit-design-main',function(){
 			var id =$(this).attr('id');
 			$("#items-edit-"+id).find(':input').prop('disabled', false);
 			$("#startdateEdit"+id).prop('disabled', true);
