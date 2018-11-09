@@ -30,11 +30,6 @@ public class TransaksiSouvenirService {
 	@Autowired
 	TransaksiEventDao transaksiEventDao;
 
-
-	/*GET BY ID*/
-	public TransaksiSouvenir getTransaksiSouvenir(int id) {
-		return transaksiSouvenirDao.getTransaksiSouvenir(id);
-	}
 	/*UPDATE*/
 	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir) {
 		TransaksiSouvenir tRS = transaksiSouvenir;
@@ -90,6 +85,15 @@ public class TransaksiSouvenirService {
 	public List<TransaksiSouvenir> getAll() {
 		return transaksiSouvenirDao.getAll();
 	}
+	
+	/*GET BY ID*/
+	public List<TransaksiSouvenirItem> getItemBySouvenirId(int id) {
+		TransaksiSouvenir transaksiSouvenir = transaksiSouvenirDao.getById(id);
+		List<TransaksiSouvenirItem> transaksiSouvenirItems = transaksiSouvenirItemDao.getItemBySouvenir(transaksiSouvenir);
+		return transaksiSouvenirItems;
+	}
+	
+	
 	
 
 

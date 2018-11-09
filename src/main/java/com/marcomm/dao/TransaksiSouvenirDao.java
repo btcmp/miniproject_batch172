@@ -7,10 +7,6 @@ import com.marcomm.model.TransaksiSouvenir;
 public interface TransaksiSouvenirDao {	
 
 	
-	
-	
-	/*GET BY ID*/
-	public TransaksiSouvenir getTransaksiSouvenir(int id);
 
 	/*UPDATE*/
 	public void updateTransSouvenir(TransaksiSouvenir tRS);
@@ -32,6 +28,9 @@ public interface TransaksiSouvenirDao {
 	
 	/*GET ALL SOUVENIRS*/
 	public List<TransaksiSouvenir> getAll();
+	
+	/*GET BY ID FOR SOUVENIR*/
+	public TransaksiSouvenir getById(int id);
 
 	
 	

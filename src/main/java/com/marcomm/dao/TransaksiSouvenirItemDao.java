@@ -2,6 +2,7 @@ package com.marcomm.dao;
 
 import java.util.List;
 
+import com.marcomm.model.TransaksiSouvenir;
 import com.marcomm.model.TransaksiSouvenirItem;
 
 public interface TransaksiSouvenirItemDao {
@@ -13,6 +14,11 @@ public interface TransaksiSouvenirItemDao {
 	public void update(TransaksiSouvenirItem transaksiSouvenirItem);
 	
 	public void updateSettlement(TransaksiSouvenirItem transaksiSouvenirItem);
+	
+	
+	
+	/*GET ITEM PUNYA MAMAD*/
+	public List<TransaksiSouvenirItem> getItemBySouvenir(TransaksiSouvenir transaksiSouvenir);
 
 
 }
