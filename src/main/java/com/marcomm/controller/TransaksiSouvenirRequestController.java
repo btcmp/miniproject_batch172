@@ -76,11 +76,12 @@ public class TransaksiSouvenirRequestController {
 		return souvenirRequestService.getEvents();
 	}
 	
-	@RequestMapping(value="/getrequest/{id}", method=RequestMethod.GET)
+	/*@RequestMapping(value="/getrequest/{id}", method=RequestMethod.GET)
 	@ResponseBody
 	public TransaksiSouvenir getRequestById(@PathVariable("id") int id) {
 		return souvenirRequestService.getRequestById(id);
-	}
+	}*/
+	
 	@RequestMapping(value="/getitembyid/{id}", method=RequestMethod.GET)
 	@ResponseBody
 	public TransaksiSouvenirItem getItemById(@PathVariable("id") int id) {

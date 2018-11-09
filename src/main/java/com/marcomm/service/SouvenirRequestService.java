@@ -75,10 +75,11 @@ public class SouvenirRequestService {
 		return transaksiSouvenirDao.getAllRequest();
 	}
 	
-	public TransaksiSouvenir getRequestById(int id) {
+	/*public TransaksiSouvenir getRequestById(int id) {
 		// TODO Auto-generated method stub
 		return transaksiSouvenirDao.getTransaksiSouvenir(id);
-	}
+	}*/
+	
 	public TransaksiSouvenirItem getItemById(int id) {
 		// TODO Auto-generated method stub
 		return null;

@@ -279,6 +279,11 @@ $(document).ready(function(){
 	}
 	
 	/* VIEW */
+	$(document).on('click', '.btn-view-souvenir', function(){
+		var id = $(this).attr(id);
+		
+		$('#viewTranSouModal').modal('show');
+	})
 	
 		
 }); /* batas akhir ready function */

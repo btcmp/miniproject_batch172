@@ -77,10 +77,10 @@ public class TransaksiSouvenirController {
 	}
 	
 	/*GET BY ID*/
-	@RequestMapping(value="/getbyid/{id}", method=RequestMethod.GET) 
+	@RequestMapping(value="/getsouvenirbyid/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public TransaksiSouvenir getTransaksiSouvenir(@PathVariable("id") int id) {
-		return transaksiSouvenirService.getTransaksiSouvenir(id);
+	public List<TransaksiSouvenirItem> getItemBySouvenirId(@PathVariable("id") int id){
+		return transaksiSouvenirService.getItemBySouvenirId(id);
 	}
 	
 	/*UPDATE*/

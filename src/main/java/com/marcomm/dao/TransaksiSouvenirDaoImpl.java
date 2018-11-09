@@ -40,14 +40,6 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 		return listTranSou;
 		
 	}
-	
-	/*GET BY ID*/
-	public TransaksiSouvenir getTransaksiSouvenir(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		TransaksiSouvenir transaksiSouvenir = session.get(TransaksiSouvenir.class, id);
-		return transaksiSouvenir;
-	}
-
 	/*UPDATE*/
 	public void updateTransSouvenir(TransaksiSouvenir tRS) {
 		Session session = sessionFactory.getCurrentSession();
@@ -94,6 +86,12 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 		Criteria criteria = session.createCriteria(TransaksiSouvenir.class);
 		List<TransaksiSouvenir> transaksiSouvenirs = criteria.add(Restrictions.eq("isDelete", false)).list();
 		return transaksiSouvenirs;
+	}
+
+	/*GET BY ID*/
+	public TransaksiSouvenir getById(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(TransaksiSouvenir.class, id);
 	}
 
 		
