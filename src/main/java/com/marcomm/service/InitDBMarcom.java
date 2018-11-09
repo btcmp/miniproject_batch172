@@ -100,9 +100,9 @@ public class InitDBMarcom {
 		company1.setCreatedDate(new Date());  
 		company1.setIsDelete(false);
 		
-		company2.setName("XSis Mitra Anggi1");
+		company2.setName("Bank OCBC");
 		company2.setCode("CP0002");
-		company2.setCreatedBy("anggi1");
+		company2.setCreatedBy("Diaz");
 		company2.setCreatedDate(new Date());  
 		company2.setIsDelete(false);
 		
@@ -129,10 +129,10 @@ public class InitDBMarcom {
 		employee1.setCompany(company1);
 		
 		employee2.setEmployeeName("Diaz Fatahillah");
-		employee2.setCompany(company1);
+		employee2.setCompany(company2);
 		
 		employee3.setEmployeeName("Reza");
-		employee3.setCompany(company1);
+		employee3.setCompany(company2);
 		
 		employee4.setEmployeeName("Mamad");
 		employee4.setCompany(company1);
@@ -152,11 +152,17 @@ public class InitDBMarcom {
 		
 		//insert user
 		MasterUser userAdmin = new MasterUser();
+		MasterUser userAdmin2 = new MasterUser();
 		userAdmin.setUsername("Administrator"); 
 		userAdmin.setPassword(encodePassword("12345"));
 		userAdmin.setEmployee(employee1);
 		userAdmin.setmRole(role1);
+		userAdmin2.setUsername("diazfatahillah"); 
+		userAdmin2.setPassword(encodePassword("Abc123"));
+		userAdmin2.setEmployee(employee2);
+		userAdmin2.setmRole(role1);
 		userService.save(userAdmin);
+		userService.save(userAdmin2);
 		
 		 
 		

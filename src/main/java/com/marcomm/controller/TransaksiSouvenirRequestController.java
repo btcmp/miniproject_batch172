@@ -62,6 +62,12 @@ public class TransaksiSouvenirRequestController {
 	public void saveTransaksiSouvenir (@RequestBody TransaksiSouvenir transaksiSouvenir) {
 		souvenirRequestService.saveSouvenirRequest(transaksiSouvenir);
 	}
+	//get all request
+	@RequestMapping(value="/getall", method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiSouvenir> getAllRequest(){
+		return souvenirRequestService.getAll();
+	}
 	
 	//get events avaliable
 	@RequestMapping(value="/getevents", method=RequestMethod.GET)
