@@ -170,7 +170,7 @@ $(document).ready(function(){
 	//DATEPICKER
 	$('#data3').datepicker({
 		format: 'yyyy-mm-dd',
-		autoclose: true,
+		autoclose: true, 
 		uiLibrary: 'bootstrap4'
 	});
 	$('#data5').datepicker({
