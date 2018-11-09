@@ -43,10 +43,12 @@ public class TransaksiSouvenir {
 	private String type;
 	
 
+	//relasi bila ada request dari suatu ke event
 	//@Column(name="t_event_id", length=50)
 	@OneToOne
 	@JoinColumn(name="t_event_id", unique=true)
-	private	TransaksiEvent transaksiEvent;
+	private	TransaksiEvent tEventId;
+	
 	
 	@Column(name="request_by", length=50, nullable=false)
 	private int requestBy;
@@ -158,18 +160,7 @@ public class TransaksiSouvenir {
 	public void setType(String type) {
 		this.type = type;
 	}
-	/*public int gettEventId() {
-		return tEventId;
-	}
-	public void settEventId(int tEventId) {
-		this.tEventId = tEventId;
-	}*/
-	/*public int getRequestBy() {
-		return requestBy;
-	}
-	public void setRequestBy(int requestBy) {
-		this.requestBy = requestBy;
-	}*/
+	
 	public Date getRequestDate() {
 		return requestDate;
 	}
@@ -182,48 +173,28 @@ public class TransaksiSouvenir {
 	public void setRequestDueDate(Date requestDueDate) {
 		this.requestDueDate = requestDueDate;
 	}
-	/*public int getApprovedBy() {
-		return approvedBy;
-	}
-	public void setApprovedBy(int approvedBy) {
-		this.approvedBy = approvedBy;
-	}*/
+	
 	public Date getApprovedDate() {
 		return approvedDate;
 	}
 	public void setApprovedDate(Date approvedDate) {
 		this.approvedDate = approvedDate;
 	}
-	/*public int getReceivedBy() {
-		return receivedBy;
-	}
-	public void setReceivedBy(int receivedBy) {
-		this.receivedBy = receivedBy;
-	}*/
+	
 	public Date getReceivedDate() {
 		return receivedDate;
 	}
 	public void setReceivedDate(Date receivedDate) {
 		this.receivedDate = receivedDate;
 	}
-	/*public int getSettlementBy() {
-		return settlementBy;
-	}
-	public void setSettlementBy(int settlementBy) {
-		this.settlementBy = settlementBy;
-	}*/
+	
 	public Date getSettlementDate() {
 		return settlementDate;
 	}
 	public void setSettlementDate(Date settlementDate) {
 		this.settlementDate = settlementDate;
 	}
-	/*public int getSettlementApprovedBy() {
-		return settlementApprovedBy;
-	}
-	public void setSettlementApprovedBy(int settlementApprovedBy) {
-		this.settlementApprovedBy = settlementApprovedBy;
-	}*/
+
 	public Date getSettlementAprovedDate() {
 		return settlementAprovedDate;
 	}
@@ -305,13 +276,13 @@ public class TransaksiSouvenir {
 		this.settlementApprovedBy = settlementApprovedBy;
 	}
 
-	public TransaksiEvent getTransaksiEvent() {
-		return transaksiEvent;
+	public TransaksiEvent gettEventId() {
+		return tEventId;
 	}
-	public void setTransaksiEvent(TransaksiEvent transaksiEvent) {
-		this.transaksiEvent = transaksiEvent;
+	public void settEventId(TransaksiEvent tEventId) {
+		this.tEventId = tEventId;
 	}
-	
+
 	
 
 }
