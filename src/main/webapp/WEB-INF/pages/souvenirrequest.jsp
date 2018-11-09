@@ -203,14 +203,18 @@ $(document).ready(function(){
 					'<option value="${souvenir.id}">${souvenir.name}</option>'+
 					'</c:forEach>'+
 					'</select></td>';
-			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'"  placeholder="Qty"></td>';
-			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note"></td>';
+			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'"  placeholder="Qty" ></td>';
+			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note" ></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>'+' ';
 			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>';
 			tRow += '</tr>';
 			tBody.append(tRow);
 	});
-	
+	//icon edit item
+	$(document).on('click','.editBtnModalTransSR',function(){
+		var id =$(this).attr('id');
+		$("#items-"+id).find(':input').prop('disabled', false);
+	});
 	//remove added item
 	$(document).on('click', '.deleteBtnModalTransSR', function(){
 		var id = $(this).attr('id');
@@ -234,7 +238,7 @@ $(document).ready(function(){
 		 //console.log(transaksiSouvenirItems);
 		var transaksiSouvenir = {
 				code :$('#transactionCode').val(),
-				transaksiEvent :{
+				tEventId :{
 					id:parseInt($('#eventId').val())
 				},
 				//requestBy :$('#requestBy').val(),
@@ -257,9 +261,9 @@ $(document).ready(function(){
 				//$('#addTranSouReqModal').modal('hide');
 			}
 		});
-		loadData();
-		$('#addTranSouReqModal').modal('hide');
 		
+		$('#addTranSouReqModal').modal('hide');
+		loadData();
 		document.getElementById("notification").innerHTML = "Data Saved! Transaction Souvenir request has been added with code: "+transaksiSouvenir.code+"!";
 		$('#notification').show('slow').delay(1500).hide('slow');
 	});
@@ -298,12 +302,12 @@ $(document).ready(function(){
 			$.each(data,function(increment,transaksiSouvenir){
 				increment++;
 				var status="";
-				if(event.status==1){
-					transaksiSouvenir="Submitted";
-				} else if(event.status==2){
-					transaksiSouvenir="On Progress";
-				} else if(event.status==3){
-					transaksiSouvenir="Approved";
+				if(transaksiSouvenir.status==1){
+					status="Submitted";
+				} else if(transaksiSouvenir.status==2){
+					status="In Progress";
+				} else if(transaksiSouvenir.status==3){
+					status="Approved";
 				}
 					
 				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
