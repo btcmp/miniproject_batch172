@@ -9,7 +9,9 @@
 				</button>
 			</div>
 			<form id="addFormDesign">
-			<input type="hidden" id="designId">
+			<input type="hidden" id="addDesignId">
+			<input type="hidden" id="addRequestById">
+			<input type="hidden" id="addCreatedBy">
 				<div
 					class="modal-body border border-bottom-0 border-top-0 border-dark">
 					<div class="bg-light border rounded" style="height: 50%;">
@@ -46,10 +48,10 @@
 							</div>
 							<div class="col-sm-5" style="margin-top:10px;">
 								<div class="form-group row">
-									<label for="requestBy" class="col-sm-4 col-form-label">Request
+									<label for="addRequestBy" class="col-sm-4 col-form-label">Request
 										By</label>
 									<div class="col-sm-7">
-										<input type="text" class="form-control" id="requestBy"
+										<input type="text" class="form-control" id="addRequestBy"
 											placeholder="Request By" readonly>
 									</div>
 								</div>

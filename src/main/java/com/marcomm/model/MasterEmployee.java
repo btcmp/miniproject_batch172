@@ -2,7 +2,6 @@ package com.marcomm.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -35,7 +33,40 @@ public class MasterEmployee {
 	@ManyToOne
 	@JoinColumn(name="company_id")
 	private MasterCompany company;
+	//relasi ke design table buat diaz
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="assignTo")
+	private List<TransaksiDesign> assignToDesign;
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="requestBy")
+	private List<TransaksiDesign> requestByDesign;
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="approvedBy")
+	private List<TransaksiDesign> approvedByDesign;
+	
+	public List<TransaksiDesign> getAssignToDesign() {
+		return assignToDesign;
+	}
 
+	public void setAssignToDesign(List<TransaksiDesign> assignToDesign) {
+		this.assignToDesign = assignToDesign;
+	}
+
+	public List<TransaksiDesign> getRequestByDesign() {
+		return requestByDesign;
+	}
+
+	public void setRequestByDesign(List<TransaksiDesign> requestByDesign) {
+		this.requestByDesign = requestByDesign;
+	}
+
+	public List<TransaksiDesign> getApprovedByDesign() {
+		return approvedByDesign;
+	}
+
+	public void setApprovedByDesign(List<TransaksiDesign> approvedByDesign) {
+		this.approvedByDesign = approvedByDesign;
+	}
+	//end of relasi buat diaz kalau sudah gak konflik dihapus aja komen ini
 	public int getId() {
 		return id;
 	}
@@ -67,7 +98,4 @@ public class MasterEmployee {
 	public void setCompany(MasterCompany company) {
 		this.company = company;
 	}
-	
-	
-	
 }

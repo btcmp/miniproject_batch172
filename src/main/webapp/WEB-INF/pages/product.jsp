@@ -40,10 +40,10 @@
 						</a></li>
 						<li class="nav-item"><a class="nav-link text-white" href="#"> Master
 						</a></li>
-						<li class="nav-item"><a class="nav-link bg-danger text-white" href="http://localhost:8433/maven-project/product">
+						<li class="nav-item"><a class="nav-link bg-danger text-white" href="${pageContext.request.contextPath }/product">
 								Products
 						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="http://localhost:8433/maven-project/design"> Transaction	
+						<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath }/design"> Transaction	
 						</a></li>
 						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
 						</a></li>

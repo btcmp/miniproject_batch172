@@ -12,6 +12,7 @@ import com.marcomm.dao.MasterUserDao;
 import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.dao.TransaksiDesignItemDao;
 import com.marcomm.dao.TransaksiEventDao;
+import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
@@ -45,8 +46,8 @@ public class TransaksiDesignService {
 	public String getCodeById() {
 		return transaksiDesignDao.getCodeById();
 	}
-	public String getRequestBy() {
-		return transaksiDesignDao.getRequestBy();
+	public MasterUser getRequestBy() {
+		return masterUserDao.getUserByUserLog();
 	}
 
 	public List<TransaksiDesignItem> getAllItem() {
@@ -62,7 +63,7 @@ public class TransaksiDesignService {
 		td.setNote(transaksiDesign.getNote());
 		td.setTransaksiEvent(transaksiDesign.getTransaksiEvent());
 		td.setCreatedDate(new Date());
-		td.setCreatedBy(masterUserDao.getRole());
+		td.setCreatedBy(transaksiDesign.getCreatedBy());
 		td.setStatus(1);
 		transaksiDesignDao.save(td);
 		for (TransaksiDesignItem transaksiDesignItem : transaksiDesign.getTransaksiDesignItems()) {

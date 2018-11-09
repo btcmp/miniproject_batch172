@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addDesignTransactionTitle">EditLah! Produk</h5>
+				<h5 class="modal-title" id="editDesignTransactionTitle">EditLah! Produk</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -16,7 +16,7 @@
 						<div class="row" style="width: 80%;">
 							<div class="col-sm-5" style="margin-top:10px;margin-left:10px;">
 								<div class="form-group row">
-									<label for="TransactionCode" class="col-sm-4 col-form-label">Transaction
+									<label for="TransactionEditCode" class="col-sm-4 col-form-label">Transaction
 										Code</label>
 									<div class="col-sm-7">
 										<input type="text" class="form-control" id="transactionEditCode"
@@ -24,10 +24,10 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="eventCode" class="col-sm-4 col-form-label">Event
+									<label for="eventEditCode" class="col-sm-4 col-form-label">Event
 										Code</label>
 									<div class="col-sm-7">
-										<select class="form-control" id="eventEditCode"> 
+										<select class="form-control" id="eventEditCode">
 											<%--	<c:forEach var="event" items="${events}">
 											<option value="${event.id}">${event.code}</option>
 										</c:forEach> --%>
@@ -35,7 +35,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="designTitle" class="col-sm-4 col-form-label">Design
+									<label for="titleEditHeader" class="col-sm-4 col-form-label">Design
 										Title</label>
 									<div class="col-sm-7">
 										<input type="text" class="form-control" id="titleEditHeader"

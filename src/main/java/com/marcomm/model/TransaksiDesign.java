@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,22 +32,25 @@ public class TransaksiDesign {
 	@Column(name = "title_header")
 	private String titleHeader;
 
-	@Column(name = "request_by")
-	private String requestBy;
+	@ManyToOne
+	@JoinColumn(name = "request_by")
+	private MasterEmployee requestBy;
 
 	@Column(name = "request_date")
 	@Temporal(TemporalType.DATE)
 	private Date requestDate;
 
-	@Column(name = "approved_by")
-	private String approvedBy;
+	@ManyToOne
+	@JoinColumn(name = "approved_by")
+	private MasterEmployee approvedBy;
 
 	@Column(name = "approved_date")
 	@Temporal(TemporalType.DATE)
 	private Date approvedDate;
-
-	@Column(name = "assign_to")
-	private int assignTo;
+	
+	@ManyToOne
+	@JoinColumn(name = "assign_to")
+	private MasterEmployee assignTo;
 
 	@Column(name = "closed_date")
 	@Temporal(TemporalType.DATE)
@@ -83,26 +87,10 @@ public class TransaksiDesign {
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="transaksiDesign")
 	private List<TransaksiDesignItem> transaksiDesignItems;
 	
-	public TransaksiEvent getTransaksiEvent() {
-		return transaksiEvent;
+	public TransaksiDesign() {
 	}
 
-	public void setTransaksiEvent(TransaksiEvent transaksiEvent) {
-		this.transaksiEvent = transaksiEvent;
-	}
 	
-	public List<TransaksiDesignItem> getTransaksiDesignItems() {
-		return transaksiDesignItems;
-	}
-
-	public void setTransaksiDesignItems(List<TransaksiDesignItem> transaksiDesignItems) {
-		this.transaksiDesignItems = transaksiDesignItems;
-	}
-
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -127,11 +115,11 @@ public class TransaksiDesign {
 		this.titleHeader = titleHeader;
 	}
 
-	public String getRequestBy() {
+	public MasterEmployee getRequestBy() {
 		return requestBy;
 	}
 
-	public void setRequestBy(String requestBy) {
+	public void setRequestBy(MasterEmployee requestBy) {
 		this.requestBy = requestBy;
 	}
 
@@ -143,11 +131,11 @@ public class TransaksiDesign {
 		this.requestDate = requestDate;
 	}
 
-	public String getApprovedBy() {
+	public MasterEmployee getApprovedBy() {
 		return approvedBy;
 	}
 
-	public void setApprovedBy(String approvedBy) {
+	public void setApprovedBy(MasterEmployee approvedBy) {
 		this.approvedBy = approvedBy;
 	}
 
@@ -159,11 +147,11 @@ public class TransaksiDesign {
 		this.approvedDate = approvedDate;
 	}
 
-	public int getAssignTo() {
+	public MasterEmployee getAssignTo() {
 		return assignTo;
 	}
 
-	public void setAssignTo(int assignTo) {
+	public void setAssignTo(MasterEmployee assignTo) {
 		this.assignTo = assignTo;
 	}
 
@@ -174,7 +162,7 @@ public class TransaksiDesign {
 	public void setCloseDate(Date closeDate) {
 		this.closeDate = closeDate;
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
@@ -203,7 +191,7 @@ public class TransaksiDesign {
 		return isDelete;
 	}
 
-	public void setIsDelete(boolean isDelete) {
+	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
 
@@ -239,15 +227,20 @@ public class TransaksiDesign {
 		this.updatedDate = updatedDate;
 	}
 
- 
+	public TransaksiEvent getTransaksiEvent() {
+		return transaksiEvent;
+	}
 
- 
-	
-	
-	//getter and setter
-	
-	
-	
-	
+	public void setTransaksiEvent(TransaksiEvent transaksiEvent) {
+		this.transaksiEvent = transaksiEvent;
+	}
+
+	public List<TransaksiDesignItem> getTransaksiDesignItems() {
+		return transaksiDesignItems;
+	}
+
+	public void setTransaksiDesignItems(List<TransaksiDesignItem> transaksiDesignItems) {
+		this.transaksiDesignItems = transaksiDesignItems;
+	}
 	
 }

@@ -63,6 +63,7 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 	}
 	public String getRequestBy() {
 		String user = FungsiService.getUserLog();
+		
 		return user;
 	}
 
@@ -75,7 +76,6 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 		List<TransaksiEvent> transaksiEvent = qr.list();
 		return transaksiEvent;
 	}
-
 	
 	
 	

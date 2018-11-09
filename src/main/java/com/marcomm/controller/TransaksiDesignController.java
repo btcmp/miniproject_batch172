@@ -22,6 +22,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marcomm.model.MasterProduct;
+import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
@@ -65,7 +66,7 @@ public class TransaksiDesignController {
 	}
 	@RequestMapping(value="/getrequestby",method=RequestMethod.GET)
 	@ResponseBody
-	public String getRequestBy() {
+	public MasterUser getRequestBy() {
 		return transaksiDesignService.getRequestBy();
 	}
 	
@@ -109,8 +110,7 @@ public class TransaksiDesignController {
 				byte[] bytes = file.getBytes();
 				Path path =Paths.get("H://Bootcamp//UploadFile//"+file.getOriginalFilename());
 				Files.write(path, bytes);
-			}
-			System.out.println("masuk ke try");
+			}			
 		} catch (Exception e) {
 		}
 	}
