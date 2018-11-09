@@ -101,6 +101,9 @@
 				<tbody>
 				</tbody>
 			</table>
+			<div class="form-row" style="float:left; padding:10px;">
+				<a id="notification" class="text-white bg-info border rounded"></a>
+			</div>	
 			</div>
 		</div>
 	</div>
@@ -154,31 +157,7 @@ $(document).ready(function(){
 		autoclose : true,
 		uiLibrary : 'bootstrap4'
 	});
-	//load data list souvenir request
-	function loadData(){
-		$.ajax({
-			url : '${pageContext.request.contextPath}/souvenirrequest/getall',
-			type : 'GET',
-			dataType : 'json',
-			success :function(data){
-				console.log(data);
-				convertToTable(data);
-			}
-		});
-	};
-		//convert to table list request
-		function convertToTable(data){
-			oTable = $('#listTransTable').DataTable();
-			oTable.rows( 'tr' ).remove();
-			$.each(data,function(increment,transaksiSouvenir){
-				increment++;
-				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
-				tRow +='';
-				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-edit-transaksiR"><span class="oi oi-pencil"></span></a>';
-				oTable.row.add([increment,transaksiSouvenir.code,transaksiSouvenir.requestBy,transaksiSouvenir.requestDate,transaksiSouvenir.requestDueDate,transaksiSouvenir.status,transaksiSouvenir.createdDate,transaksiSouvenir.createdBy,tRow]);
-			});
-			oTable.draw();
-		};
+	
 		
 	/* BUTTON POP UP ADD */
 	var Id = 1; //digunakan untuk menentukan id pada saat additem modal
@@ -280,10 +259,61 @@ $(document).ready(function(){
 		});
 		loadData();
 		$('#addTranSouReqModal').modal('hide');
+		
+		document.getElementById("notification").innerHTML = "Data Saved! Transaction Souvenir request has been added with code: "+transaksiSouvenir.code+"!";
+		$('#notification').show('slow').delay(1500).hide('slow');
+	});
+	
+	/* BUTTON SEARCH */
+	$('#btn-search').on('click', function(){
+		for(var i = 1; i <= 7; i++){
+			oTable
+			.column($('#data'+i).data('index'))
+			.search($('#data'+i).val())
+			.draw()
+		}
 	});
 
 	/* BUTTON EDIT */
+	$(document).on('click', '.btn-edit-transaksiR', function(){
+		$('#editTranSouReqModal').modal();
+	});
 	
+	//load data list souvenir request
+	function loadData(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/souvenirrequest/getall',
+			type : 'GET',
+			dataType : 'json',
+			success :function(data){
+				console.log(data);
+				convertToTable(data);
+			}
+		});
+	};
+		//convert to table list request
+		function convertToTable(data){
+			oTable = $('#listTransTable').DataTable();
+			oTable.rows( 'tr' ).remove();
+			$.each(data,function(increment,transaksiSouvenir){
+				increment++;
+				var status="";
+				if(event.status==1){
+					transaksiSouvenir="Submitted";
+				} else if(event.status==2){
+					transaksiSouvenir="On Progress";
+				} else if(event.status==3){
+					transaksiSouvenir="Approved";
+				}
+					
+				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
+				tRow +='';
+				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-edit-transaksiR"><span class="oi oi-pencil"></span></a>';
+				oTable.row.add([increment,transaksiSouvenir.code,transaksiSouvenir.requestBy,transaksiSouvenir.requestDate,transaksiSouvenir.requestDueDate,status,transaksiSouvenir.createdDate,transaksiSouvenir.createdBy,tRow]);
+			});
+			oTable.draw();
+		};
+		
 }) /* batas akhir ready function */
 
 </script> 
