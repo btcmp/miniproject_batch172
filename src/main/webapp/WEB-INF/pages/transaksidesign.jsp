@@ -408,6 +408,9 @@ $(document).ready(function(){
 			});
 	    });
 	}
+	
+	
+	
 	/*  KOLOM ANGGI*/
 	  
 	  /* memunculkan Modal edit */ 
@@ -490,8 +493,8 @@ $(document).ready(function(){
 			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
 			tRow += '<td><input type="text" class="form-control"				value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		disabled></td>';
 			tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" disabled></td>';
-			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design-main"><span class="oi oi-pencil"></span></a>';
-			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design-main"><span class="oi oi-trash"></span></a></td>';
+			tRow += '<td><a id="'+Ix+'" href="#" class="btn-edit-design-main"><span class="oi oi-pencil"></span></a>';
+			tRow += '<a id="'+Ix+'" href="#" class="btn-delete-design-main"><span class="oi oi-trash"></span></a></td>';
 			tRow +=	'</tr>';
 			index2++;
 			tBody.append(tRow);
@@ -574,6 +577,13 @@ $(document).ready(function(){
 				});
 			});
 		});
+	  
+	  
+	  /* SAVE DATA DARI MODAL EDIT */
+	  $()
+	  
+	  
+	  
 });
 
 </script>
