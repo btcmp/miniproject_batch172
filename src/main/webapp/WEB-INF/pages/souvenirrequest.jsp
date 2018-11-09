@@ -132,6 +132,7 @@
 
 <!-- INCLUDE FILE -->
 <%@include file="/WEB-INF/pages/modal/modal_transaksi_souvenir_request.jsp" %>
+<%@include file="/WEB-INF/pages/modal/modal-approvedsr.jsp" %>
 
 <!-- CODE JAVA SCRIPT START HERE -->
 <script type="text/javascript">
@@ -313,6 +314,11 @@ $(document).ready(function(){
 			});
 			oTable.draw();
 		};
+		
+		/* Button Pop Up Approvel (REZA)*/
+		
+		
+		
 		
 }) /* batas akhir ready function */
 
