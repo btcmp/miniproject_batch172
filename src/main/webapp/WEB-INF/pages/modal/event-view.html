@@ -137,7 +137,12 @@
 					<div class="form-row" style="margin-top: 10px">
 						<label for="assignto" class="col-sm-2 col-form-label">Assign To</label>
 						    <div class="col-sm-4">
-						      	<input type="text" id="assigntoAR" class="form-control" placeholder="Select Employee">
+						    	<select class="custom-select" id="assigntoAR">
+						    		<option value="" selected>Select Employee</option>
+						    			<c:forEach var="assigntoAR" items="${allEmployee}">
+						    				<option value="${assigntoAR.id}">${assigntoAR.employeeName}</option>
+						    			</c:forEach>
+						    	</select>
 	 						</div>
 					</div>
 			      </div>
@@ -171,7 +176,84 @@
 		  </div>
 		</div>
 		
-		
+<!-- MODAL VIEW AFTER EVENT APPROVED-->
+		<div class="modal fade" id="viewapprovedEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle">View Event Request</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		       <div class="modal-body">
+			        <input type="hidden" id="VAButton"/>
+				    <div class="form-row">
+				    	<label for="transactioncode" class="col-sm-2 col-form-label">Transaction Code</label>
+				           	<div class="col-sm-4">
+		 						<input type="text" id="transactioncodeVA" class="form-control" placeholder="Auto Generated" disabled>
+		 					</div>
+		 				<label for="requestby" class="col-sm-2 col-form-label">Request By</label>
+					    	<div class="col-sm-4">
+					       		<input type="text" id="requestbyVA" class="form-control" placeholder="Request By" disabled>
+					    	</div>
+					</div>
+					<div class="form-row" style="margin-top: 10px">
+					 	<label for="eventname" class="col-sm-2 col-form-label">Event Name</label>
+						    <div class="col-sm-4">
+						      	<input type="text" id="eventnameVA" class="form-control" placeholder="Type Event Name" disabled>
+	 						</div>
+	 				  	<label for="requestdate" class="col-sm-2 col-form-label">Request Date</label>	
+						    <div class="col-sm-4">
+								<input type="text" id="requestdateVA" class="form-control" placeholder="Request Date" disabled>
+					    	</div>
+					</div>
+					<div class="form-row" style="margin-top: 10px">
+					 	<label for="eventplace" class="col-sm-2 col-form-label">Event Place</label>
+						    <div class="col-sm-4">
+						      	<input type="text" id="eventplaceVA" class="form-control" placeholder="Type Event Place" disabled>
+	 						</div>
+	 				  	<label for="note" class="col-sm-2 col-form-label">Note</label>	
+						    <div class="col-sm-4">
+								<input type="text" id="noteVA" class="form-control" placeholder="Type Note" disabled>
+					    	</div>
+					</div>
+					<div class="form-row" style="margin-top: 10px">
+						<label for="eventstartdate" class="col-sm-2 col-form-label">Event Start Date</label>
+						    <div class="col-sm-4">
+						      	<input type="text" id="eventstartdateVA" class="form-control" placeholder="Select Date" disabled>
+	 						</div>
+	 					<label for="status" class="col-sm-2 col-form-label">Status</label>	
+						    <div class="col-sm-4">
+								<input type="text" id="statusVA" class="form-control" placeholder="Status" disabled>
+					    	</div>
+					</div>
+					<div class="form-row" style="margin-top: 10px">
+						<label for="eventenddate" class="col-sm-2 col-form-label">Event End Date</label>
+						    <div class="col-sm-4">
+						      	<input type="text" id="eventenddateVA" class="form-control" placeholder="Select Date" disabled>
+	 						</div>
+					</div>
+					<div class="form-row" style="margin-top: 10px">
+						<label for="budget" class="col-sm-2 col-form-label">Budget (Rp.)</label>
+						    <div class="col-sm-4">
+						      	<input type="text" id="budgetVA" class="form-control" placeholder="Type Event Budget" disabled>
+	 						</div>
+					</div>
+					<div class="form-row" style="margin-top: 10px">
+						<label for="assignto" class="col-sm-2 col-form-label">Assign To</label>
+						    <div class="col-sm-4">
+						      	<input type="text" id="assigntoVA" class="form-control" placeholder="Select Employee" disabled>
+	 						</div>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+			      </div>
+		       </div>
+		  </div>
+		</div>
+	
 <!-- MODAL CLOSE EVENT REQUEST -->
 		<div class="modal fade" id="closeEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-lg" role="document">

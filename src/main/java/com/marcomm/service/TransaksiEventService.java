@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.TransaksiEventDao;
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.TransaksiEvent;
 
 @Service
@@ -45,20 +46,7 @@ public class TransaksiEventService {
 		transaksiEvent.setEndDate(event.getEndDate());
 		transaksiEvent.setPlace(event.getPlace());
 		transaksiEvent.setBudget(event.getBudget());
-		transaksiEvent.setRequestBy(event.getRequestBy());
-		transaksiEvent.setRequestDate(event.getRequestDate());
-		transaksiEvent.setApprovedBy(event.getApprovedBy());
-		transaksiEvent.setApprovedDate(event.getApprovedDate());
-		transaksiEvent.setAssignTo(event.getAssignTo());
-		transaksiEvent.setCloseDate(event.getCloseDate());
 		transaksiEvent.setNote(event.getNote());
-		transaksiEvent.setStatus(event.getStatus());
-		transaksiEvent.setRejectReason(event.getRejectReason());
-		transaksiEvent.setIsDelete(event.getIsDelete());
-		transaksiEvent.setCreatedBy(event.getCreatedBy());
-		transaksiEvent.setCreatedDate(event.getCreatedDate());
-		transaksiEvent.setUpdatedBy(event.getUpdatedBy());
-		transaksiEvent.setCreatedDate(event.getCreatedDate());
 		eventDao.update(transaksiEvent);
 	}
 
@@ -80,4 +68,9 @@ public class TransaksiEventService {
 		transaksiEvent.setRejectReason(event.getRejectReason());
 		eventDao.reject(transaksiEvent);
 	}
+	
+	public List<MasterEmployee> getAllEmployee(){
+		return eventDao.getAllEmployee();
+	}
+	
 }

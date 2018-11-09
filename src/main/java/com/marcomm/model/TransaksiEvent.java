@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -59,9 +61,6 @@ public class TransaksiEvent {
 	@Temporal(TemporalType.DATE)
 	private Date approvedDate;
 	
-	@Column(name="assign_to")
-	private int assignTo;
-	
 	@Column(name="close_date")
 	@Temporal(TemporalType.DATE)
 	private Date closeDate;
@@ -102,8 +101,20 @@ public class TransaksiEvent {
 		this.transaksiDesign = transaksiDesign;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="assign_to")
+	private MasterEmployee assignTo;
+	
 	public int getId() {
 		return id;
+	}
+
+	public MasterEmployee getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(MasterEmployee assignTo) {
+		this.assignTo = assignTo;
 	}
 
 	public void setId(int id) {
@@ -188,14 +199,6 @@ public class TransaksiEvent {
 
 	public void setApprovedDate(Date approvedDate) {
 		this.approvedDate = approvedDate;
-	}
-
-	public int getAssignTo() {
-		return assignTo;
-	}
-
-	public void setAssignTo(int assignTo) {
-		this.assignTo = assignTo;
 	}
 
 	public Date getCloseDate() {

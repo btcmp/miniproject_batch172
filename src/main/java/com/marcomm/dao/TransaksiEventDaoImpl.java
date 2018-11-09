@@ -12,7 +12,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.TransaksiEvent;
+import com.marcomm.service.FungsiService;
 
 @Repository
 public class TransaksiEventDaoImpl implements TransaksiEventDao {
@@ -24,7 +26,7 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
 		
-		event.setCreatedBy("Sahid Triambudhi");
+		event.setCreatedBy(FungsiService.getUserLog());
 		event.setRequestBy(1);
 		event.setStatus(1);
 		
@@ -81,7 +83,7 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
 		
-		event.setCreatedBy("Sahid Triambudhi");
+		event.setCreatedBy(FungsiService.getUserLog());
 		event.setRequestBy(1);
 		event.setStatus(1);
 		
@@ -111,7 +113,7 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
 		
-		event.setCreatedBy("Sahid Triambudhi");
+		event.setCreatedBy("Administrator");
 		event.setRequestBy(1);
 		event.setStatus(2);
 		
@@ -136,6 +138,14 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.update(event);
+	}
+
+	@Override
+	public List<MasterEmployee> getAllEmployee() {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		List<MasterEmployee> allEmployee = session.createCriteria(MasterEmployee.class).list();
+		return allEmployee;
 	}
 
 }

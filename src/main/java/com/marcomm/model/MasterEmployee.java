@@ -36,6 +36,9 @@ public class MasterEmployee {
 	@JoinColumn(name="company_id")
 	private MasterCompany company;
 
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="assignTo")
+	private List<TransaksiEvent> assigntoEvent;
+	
 	public int getId() {
 		return id;
 	}
@@ -67,7 +70,13 @@ public class MasterEmployee {
 	public void setCompany(MasterCompany company) {
 		this.company = company;
 	}
-	
-	
+
+	public List<TransaksiEvent> getAssigntoEvent() {
+		return assigntoEvent;
+	}
+
+	public void setAssigntoEvent(List<TransaksiEvent> assigntoEvent) {
+		this.assigntoEvent = assigntoEvent;
+	}
 	
 }

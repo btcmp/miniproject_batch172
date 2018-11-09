@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.bankmega.traning.service.EmployeeService;
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.TransaksiEvent;
+import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.TransaksiEventService;
 
 @Controller
@@ -27,10 +30,16 @@ public class TransaksiEventController {
 	@Autowired
 	TransaksiEventService eventService;
 	
+	@Autowired
+	MasterEmployeeService employeeService;
+	
 	@RequestMapping
 	public String index(Model model) {
 		List<GrantedAuthority> authorities2 = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		model.addAttribute("username", authorities2.get(0).getAuthority());
+		model.addAttribute("rolename", authorities2.get(0).getAuthority());
+
+		List<MasterEmployee> allEmployee = employeeService.getAllEmployee();
+		model.addAttribute("allEmployee", allEmployee);
 		return "event";
 	}
 	

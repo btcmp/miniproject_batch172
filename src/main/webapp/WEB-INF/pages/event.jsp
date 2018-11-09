@@ -15,6 +15,14 @@
 
 <c:url value="/j_spring_security_logout" var="logoutUrl" />
 
+<style>
+	input.parsley-error
+		{
+		  color: #B94A48 !important;
+		  background-color: #F2DEDE !important;
+		  border: 1px solid #EED3D7 !important;
+		}
+</style>
 </head>
 <body>
 	<div id="container">
@@ -144,6 +152,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>	
 <script src="${pageContext.request.contextPath}/resources/assets/js/perfect-scrollbar.jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
@@ -219,46 +229,46 @@ $(document).ready(function(){
 	
 	//BUTTON SAVE PADA MODAL ADD UNTUK SAVE DATA
 	$('.btn-add-event').on('click', function(){
-		var event = {
-			code : $('#transactioncode').val(),
-			requestBy : $('#requestby').val(),
-			eventName : $('#eventname').val(),
-			requestDate : $('#requestdate').val(),
-			place : $('#eventplace').val(),
-			note : $('#note').val(),
-			startDate : $('#eventstartdate').val(),
-			endDate : $('#eventenddate').val(),
-			budget : $('#budget').val()
-		};
-		
-		
-		//NOTIFICATION
-		document.getElementById("notification").innerHTML = "Data Saved! Transaction event request has been added with code: "+event.code+"!";
-		$('#notification').show('slow').delay(1500).hide('slow');
-		
-		console.log(event);
-		$.ajax({
-			url:'${pageContext.request.contextPath}/event/saveevent',
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify(event),
-			success : function(data){
-				console.log("saved data success");
-				loadData();
-				$('#requestby').val("");
-				$('#eventname').val("");
-				$('#requestdate').val("");
-				$('#eventplace').val("");
-				$('#note').val("");
-				$('#eventstartdate').val("");
-				$('#eventenddate').val("");
-				$('#budget').val("");
-			},
-			error : function(){
-				console.log("saved data failed");
-			}
-		});
-		$('#addEventModal').modal('hide');
+			var event = {
+				code : $('#transactioncode').val(),
+				requestBy : $('#requestby').val(),
+				eventName : $('#eventname').val(),
+				requestDate : $('#requestdate').val(),
+				place : $('#eventplace').val(),
+				note : $('#note').val(),
+				startDate : $('#eventstartdate').val(),
+				endDate : $('#eventenddate').val(),
+				budget : $('#budget').val()
+			};
+			
+			
+			//NOTIFICATION
+			document.getElementById("notification").innerHTML = "Data Saved! Transaction event request has been added with code: "+event.code+"!";
+			$('#notification').show('slow').delay(1500).hide('slow');
+			
+			console.log(event);
+			$.ajax({
+				url:'${pageContext.request.contextPath}/event/saveevent',
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(event),
+				success : function(data){
+					console.log("saved data success");
+					loadData();
+					$('#requestby').val("");
+					$('#eventname').val("");
+					$('#requestdate').val("");
+					$('#eventplace').val("");
+					$('#note').val("");
+					$('#eventstartdate').val("");
+					$('#eventenddate').val("");
+					$('#budget').val("");
+				},
+				error : function(){
+					console.log("saved data failed");
+				}
+			});
+			$('#addEventModal').modal('hide');
 	});
 	
 	//GET ROLE NAME WHEN LOGIN
@@ -308,34 +318,36 @@ $(document).ready(function(){
 			
 			//CHOOSEN MODAL BASED ON STATUS AND ROLE
 			//NAMED STATUS
-			var user="${username}"
-			var modal = "";
+			var role="${rolename}"
+			var modalview = "";
+			var modaledit = "";
 			var status="";
 			if(event.status==1){
 				status="Submitted";
-				if(user=="Administrator"){
-					modal = "btn-acceptreject-event";
+				modaledit="btn-edit-event";
+				if(role=="Administrator"){
+					modalview = "btn-acceptreject-event";
 				} else{
-					modal = "btn-view-event";
+					modalview = "btn-view-event";
 				}
 			} else if(event.status==2){
 				status="In Progress";
-				if(user=="Administrator"){
-					modal = "btn-view-event";
+				if(role=="Administrator"){
+					modalview = "btn-viewapproved-event";
 				} else{
-					modal = "btn-close-event";	
+					modalview = "btn-close-event";	
 				}
 			} else if(event.status==3){
 				status="Done";
-				modal = "btn-view-event"; 
+				modalview = "btn-view-event"; 
 			} else if(event.status==0){
 				status="Rejected";
-				modal = "btn-view-event";
+				modalview = "btn-view-event";
 			}
 			
-			var tableRow = "<a id="+event.id+" class='"+modal+"'><span class='oi oi-magnifying-glass'></span></a>";
+			var tableRow = "<a id="+event.id+" class='"+modalview+"'><span class='oi oi-magnifying-glass'></span></a>";
 				tableRow += " ";
-				tableRow += "<a id="+event.id+" class='btn-edit-event'><span class='oi oi-pencil'></span></a>";
+				tableRow += "<a id="+event.id+" class='"+modaledit+"'><span class='oi oi-pencil'></span></a>";
 				oTable.row.add([index,event.code,event.requestBy,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
 		});
 				oTable.draw();
@@ -475,7 +487,7 @@ $(document).ready(function(){
 		var event = {
 				id: $('#ARButton').val(),
 				code: $('#transactioncodeAR').val(),
-				assignTo: $('#assigntoAR').val()
+				assignTo: { id: $('#assigntoAR').val()}
 		};
 		console.log(event);
 		
@@ -535,6 +547,35 @@ $(document).ready(function(){
 		});
 		$('#rejectEventModal').modal('hide');
 	});
+	
+	//BUTTON POP UP VIEW AFTER APPROVED REQUEST	
+	$(document).on('click', '.btn-viewapproved-event', function(){
+		var id = $(this).attr('id');
+		console.log(id);
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+			type: 'GET',
+			success: function(output){
+					console.log(output);
+					$('#VAButton').val(output.id);
+					$('#transactioncodeVA').val(output.code);
+					$('#requestbyVA').val(output.requestBy);
+					$('#eventnameVA').val(output.eventName);
+					$('#requestdateVA').val(output.requestDate);
+					$('#eventplaceVA').val(output.place);
+					$('#noteVA').val(output.note);
+					$('#eventstartdateVA').val(output.startDate);
+					$('#eventenddateVA').val(output.endDate);
+					$('#budgetVA').val(output.budget);
+					$('#statusVA').val(output.status);
+					$('#assigntoVA').val(output.assignTo.employeeName);
+					},
+					dataType: 'json'
+				});
+				$('#viewapprovedEventModal').modal();
+		});
+	
 	
 	//BUTTON POP UP CLOSE REQUEST
 	$(document).on('click', '.btn-close-event', function(){
