@@ -31,13 +31,6 @@ public class TransaksiSouvenirService {
 	TransaksiEventDao transaksiEventDao;
 
 
-	/*GET ALL*/
-	public List<TransaksiSouvenir> getAll() {
-		return transaksiSouvenirDao.getAllStock();
-	}
-	
-	
-	
 	/*GET BY ID*/
 	public TransaksiSouvenir getTransaksiSouvenir(int id) {
 		return transaksiSouvenirDao.getTransaksiSouvenir(id);
@@ -68,10 +61,14 @@ public class TransaksiSouvenirService {
 	public void save(TransaksiSouvenir transaksiSouvenir) {
 		TransaksiSouvenir ts = new TransaksiSouvenir();
 		ts.setCode(transaksiSouvenir.getCode());
-		ts.setType("Additional");
+		ts.setType("additional");
+		ts.setDelete(false);
 		//ts.setReceivedBy(transaksiSouvenir.getReceivedBy());
 		ts.setReceivedDate(transaksiSouvenir.getReceivedDate());
 		ts.setNote(transaksiSouvenir.getNote());
+		//set created date
+		Date date = new Date();
+		ts.setCreatedDate(date);
 		transaksiSouvenirDao.save(ts);
 		//add table bawah
 		for(TransaksiSouvenirItem transaksiSouvenirItem :transaksiSouvenir.getTransaksiSouvenirItems()) {
@@ -82,6 +79,16 @@ public class TransaksiSouvenirService {
 			tsi.setTransaksiSouvenir(ts);
 			transaksiSouvenirItemDao.save(tsi);
 		}
+	}
+	
+	/*GET ALL STOCK*/
+	public List<TransaksiSouvenir> getAllStock() {
+		return transaksiSouvenirDao.getAllStock();
+	}
+	
+	/*GET ALL SOUVENIRS (STOCK+REQUEST)*/
+	public List<TransaksiSouvenir> getAll() {
+		return transaksiSouvenirDao.getAll();
 	}
 	
 

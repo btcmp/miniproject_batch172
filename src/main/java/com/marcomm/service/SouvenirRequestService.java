@@ -57,7 +57,7 @@ public class SouvenirRequestService {
 		ts.setCode(transaksiSouvenir.getCode());
 		ts.setRequestDueDate(transaksiSouvenir.getRequestDueDate());
 		ts.setNote(transaksiSouvenir.getNote());
-		ts.setTransaksiEvent(transaksiSouvenir.getTransaksiEvent());
+		ts.settEventId(transaksiSouvenir.gettEventId());
 		transaksiSouvenirDao.save(ts);
 		for (TransaksiSouvenirItem transaksiSouvenirItem : transaksiSouvenir.getTransaksiSouvenirItems()) {
 			TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();

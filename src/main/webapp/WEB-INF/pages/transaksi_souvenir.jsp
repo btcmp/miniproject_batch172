@@ -130,7 +130,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	
+	loadData();
 	/* DATE PICKER */
 	//created date
 	$('#data4').datepicker({
@@ -236,6 +236,7 @@ $(document).ready(function(){
 				console.log(data);
 				console.log("data berhasil disimpan...");
 				//jangan lupa tambahin load data
+				loadData();
 				$('#addTranSouModal').modal('hide');
 			}
 		
@@ -249,8 +250,38 @@ $(document).ready(function(){
 		$('#items-'+id).remove();
 		});	
 
+	/* GET ALL STOCK DATA */
+	function loadData(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/transaksisouvenir/getall',
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				convertToTable(data);
+			},
+			error : function(){
+				console.log("tabel gagal dibuat");
+			}
+		});
+	}
+	function convertToTable(data){
+		oTable = $('#transSouTable').DataTable();
+		oTable.rows('tr').remove();
+		$.each(data,function(increment,souvenir){
+			increment++;
+			var tRow = '<a id="'+souvenir.id+'" href="#" class="btn-view-souvenir"><span class="oi oi-magnifying-glass"></span></a>';
+				tRow += ' ';
+				tRow += '<a id="'+souvenir.id+'" href="#" class="btn-update-souvenir"><span class="oi oi-pencil"></span></a>';
+			oTable.row.add([increment, souvenir.code, souvenir.receivedBy, souvenir.receivedDate, souvenir.createdDate, souvenir.createdBy,tRow]);
+		});
+		oTable.draw();
+	}
 	
-}) /* batas akhir ready function */
+	/* VIEW */
+	
+		
+}); /* batas akhir ready function */
 
 </script>
 
