@@ -24,7 +24,12 @@
 		  <property name="order" value="1"></property>
 		  <property name="basename" value="views"></property>
 	  </bean>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
+		<!-- specify maximum file size in bytes -->
+		<property name="maxUploadSize" value="1000000" />
+	</bean>
 	<mvc:annotation-driven>
 	  <mvc:message-converters>
 	    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">

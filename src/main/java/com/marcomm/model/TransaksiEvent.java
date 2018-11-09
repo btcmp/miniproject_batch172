@@ -26,8 +26,6 @@ public class TransaksiEvent {
 	private int id;
 	
 	@NotNull
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@Column(unique=true) 
 	private String code;
 	
 	@NotNull

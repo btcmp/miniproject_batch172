@@ -20,19 +20,25 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
 <style>
-		input.parsley-error
-		{
-		  color: #B94A48 !important;
-		  background-color: #F2DEDE !important;
-		  border: 1px solid #EED3D7 !important;
-		}
-		@media (min-width: 768px) {
-  			.modal-xl {
-   				 width: 95%;
-  				 max-width:1800px;
-  			}
-		}
-	</style>
+textarea {
+	resize: none;
+}
+input[type="file"] {
+    display: none;
+}
+input.parsley-error {
+	color: #B94A48 !important;
+	background-color: #F2DEDE !important;
+	border: 1px solid #EED3D7 !important;
+}
+
+@media ( min-width : 768px) {
+	.modal-xl {
+		width: 95%;
+		max-width: 1800px;
+}
+}
+</style>
 </head>
 <body>
 	<div class="container-fluid">
@@ -113,7 +119,9 @@
 			</div>
 		</div>
 	</div>
-	<%@include file="/WEB-INF/pages/modal/add-transaksidesign.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/add-transaksidesign.jsp" %> 
+	<%@include file="/WEB-INF/pages/modal/edit-transaksidesign.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/close-design.jsp" %>
 </body>
 <!--   Core JS Files   -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -140,23 +148,6 @@ $(document).ready(function(){
 		'sDom':'tip',
 		'ordering':false
 	});
-	/* $('#duedate1').datepicker({
-		format:'yyyy-mm-dd',
-		autoclose:true,
-		uiLibrary: 'bootstrap4'
-	});
-	$('#startdate1').datepicker({
-		format:'yyyy-mm-dd',
-		autoclose:true,
-		uiLibrary: 'bootstrap4'
-	});
-	$('#enddate1').datepicker({
-		format:'yyyy-mm-dd',
-		autoclose:true,
-		uiLibrary: 'bootstrap4'
-	}); */
-	var Id = 1;
-	var index = 0;
 	loadData();
 	$(document).on('click','#addBtn',function(){
 		$.ajax({
@@ -176,10 +167,11 @@ $(document).ready(function(){
 			}
 		})
 		$('#addFormDesign').trigger('reset');
+		Id = 1;
 		loadEvent();
 		var now = new Date();
 		var tahun = now.getFullYear();
-		var bulan = now.getMonth();
+		var bulan = now.getMonth()+1;
 		var tanggal = now.getDate();
 		var formatTanggal = ("0"+tanggal).slice(-2);
 		$('#requestDate').val(tahun+'-'+bulan+'-'+formatTanggal);
@@ -187,11 +179,10 @@ $(document).ready(function(){
 	});	
 	$('#addItemBtn').on('click',function(){
 		    Id++;
-		    index++;
 		  	var oTable = $('#itemsTable');
 		    var tBody = oTable.find('tbody');
 		    var tRow =	'<tr id="items-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="productItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+			tRow += '<td><select class="custom-select" id="productItem'+Id+'" style="width:150px" disabled>'+
 							'<option value="" selected>Choose...</option>'+
 								'<c:forEach var="product" items="${products}">'+
 								'<option value="${product.id}">${product.name}</option>'+
@@ -209,6 +200,46 @@ $(document).ready(function(){
 			tRow +=	'</tr>';
 			tBody.append(tRow);
 	});
+	$(document).on('click','.btn-view-design',function(){
+		var id = $(this).attr('id');
+		$.ajax({
+			url :'${pageContext.request.contextPath}/design/getitembydesignid/'+id,
+			type:'GET',
+			dataType:'json',
+			success:function(data){
+				$('#closeCode').val(data[0].transaksiDesign.code);
+				$('#closeEventCode').val(data[0].transaksiDesign.transaksiEvent.code);
+				$('#closeDesignTitle').val(data[0].transaksiDesign.titleHeader);
+				$('#closeStatus').val(data[0].transaksiDesign.status);
+				$('#closeAssignTo').val(data[0].transaksiDesign.assignTo);
+				$('#closeRequestBy').val(data[0].transaksiDesign.requestBy);
+				$('#closeRequestDate').val(data[0].transaksiDesign.requestDate);
+				$('closeNote').val(data[0].transaksiDesign.note);
+				closeDesign(data);
+			}
+		});
+		$('#closeDesignModal').modal();
+	});
+	$('#closeBtnModal').on('click',function(){
+		var forms = new FormData($('#closeFormDesign')[0]);
+		forms.append('file',$('input[type=file]')[0].files[0]);
+		$.ajax({
+			url:'${pageContext.request.contextPath}/design/upload',
+			type:'POST',
+			contentType:false,
+			processData:false,
+			data:forms,
+			cache:false,
+			success:function(data){
+				alert('success');
+				$('#closeDesignModal').modal('hide');
+			},
+			error:function(e){
+				alert('error');
+			}
+		})
+		
+	})
 	$(document).on('click','.btn-edit-design',function(){
 		var id =$(this).attr('id');
 		$("#items-"+id).find(':input').prop('disabled', false);
@@ -285,17 +316,6 @@ $(document).ready(function(){
 			}
 		});	
 	});
-	$('#productItem1').on('change',function(){
-		var select = this;
-		var productId = select[select.selectedIndex].value;
-		$.ajax({
-			url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
-			type : 'GET',
-			success : function(data){
-				$('#description1').val(data.description);
-			}
-		});
-	});
 	function loadData(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/design/getall',
@@ -311,10 +331,19 @@ $(document).ready(function(){
 		oTable.rows( 'tr' ).remove();
 		$.each(data,function(increment,design){
 			increment++;
-			var tRow ='<a id="'+design.id+'" href="#" class="btn-view-product"><span class="oi oi-magnifying-glass"></span></a>';	
+			var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';	
 			tRow +=' ';
-			tRow +='<a id="'+design.id+'" href="#" class="btn-update-product"><span class="oi oi-pencil"></span></a>';
-			oTable.row.add([increment,design.code,design.requestBy,design.requestDate,design.assignTo,design.status,design.createdDate,design.createdBy,tRow]);
+			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design-main"><span class="oi oi-pencil"></span></a>';
+			if(design.status==1){
+				status="Submitted";
+			} else if(design.status==2){
+				status="In Progress";
+			} else if(design.status==3){
+				status="Done";
+			} else if(design.status==0){
+				status="Rejected";
+			}
+			oTable.row.add([increment,design.code,design.requestBy,design.requestDate,design.assignTo,status,design.createdDate,design.createdBy,tRow]);
 		});
 		oTable.draw();
 	}
@@ -335,7 +364,210 @@ $(document).ready(function(){
 		$('#eventCode').append('<option value="'+event.id+'">'+event.code+'</option>');
 		})	
 	}
+	function closeDesign(data){
+		var oTable = $('#closeItemsTable');
+	    var tBody = oTable.find('tbody');
+	    tBody.empty();
+	    $.each(data,function(i,designItem){
+	    	var tRow =	'<tr>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.name+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.description+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.titleItem+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestDueDate+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date"></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date"></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
+			tRow += '<td><div id="file-click'+i+'" class="btn close-file-upload btn-primary">';
+			
+			tRow += 'Browse</div><input type="file" name="file" id="file-upload'+i+'"></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="input file" id="file-name'+i+'" style="background-color:white;" readonly></td>';
+			tRow +=	'</tr>';
+			tBody.append(tRow);	
+			$('#closeStartDate'+i).datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+			$('#closeEndDate'+i).datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+			$('#file-click'+i).click(function(){
+				$('#file-upload'+i).click();
+			})
+			$("#file-upload"+i).change(function(){
+				var fileName = $('#file-upload'+i)[0].files[0].name;
+				$('#file-name'+i).val(fileName);
+			});
+	    });
+	}
 });
+/*  KOLOM ANGGI*/
+  
+  /* memunculkan Modal edit */ 
+  $(document).on('click','.btn-update-design-main',function(){
+	  var id = $(this).attr('id');
+	   
+	  	$.ajax({
+			url : '${pageContext.request.contextPath}/design/getitembydesignid/'+id,
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				var keys=Object.keys(data);
+				len=keys.length;
+				$('#designEditId').val(data[0].transaksiDesign.id);
+				$('#eventEditCodeSelected').val(data[0].transaksiDesign.transaksiEvent.id).html(data[0].transaksiDesign.transaksiEvent.code);
+				$('#transactionEditCode').val(data[0].transaksiDesign.code);
+				$('#titleEditHeader').val(data[0].transaksiDesign.titleHeader);
+				$('#statusEdit').val(data[0].transaksiDesign.status);
+				$('#requestEditBy').val(data[0].transaksiDesign.requestBy);
+				$('#requestEditDate').val(data[0].transaksiDesign.requestDate);
+				$('#noteEdit').val(data[0].transaksiDesign.note);
+			  	Id = len;  
+			  	$('.tableBody').empty();
+			  	itemLama(Id,data);
+			  	loadEventEdit();
+			  	
+			}
+		});
+	   
+	  	$('#editDesignTransactionModal').modal();
+		
+		index = 0;
+	  
+  });
+  
+  /* memunculkan select item */
+function loadEventEdit(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/design/getevent',
+			type : 'GET',
+			dataType :'json',
+			success:function(data){
+				convertToSelectEdit(data);
+			}
+		});
+	}
+  
+ function convertToSelectEdit(data){
+		$('#eventEditCode').empty();
+		$('#eventEditCode').append('<option value="" id="eventEditCodeSelected" selected>Choose...</option>');
+		$.each(data,function(i,event){
+		$('#eventEditCode').append('<option value="'+event.id+'">'+event.code+'</option>');
+		})
+	}
+	 
+  
+  
+  /* add Tabel item lama */
+  
+  
+  function itemLama(baris,data){
+	  index2=0;
+	  
+	  for(var Ix=1;Ix<=baris;Ix++){
+		  console.log(data[index2].id);
+		var oTable = $('#itemsTableEdit');
+		var tBody = oTable.find('tbody');
+		var tRow =	'<tr id="items-edit-'+Ix+'">';
+		tRow += '<td><select class="custom-select"    id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" readonly>'+
+							'<option value="'+data[index2].masterProduct.id+'" selected>'+data[index2].masterProduct.name+'</option>'+
+								'<c:forEach var="product" items="${products}">'+
+								'<option value="${product.id}">${product.name}</option>'+
+							'</c:forEach>'+
+						'</select></td>';
+		tRow += '<td><input type="text" class="form-control description" 	value="'+data[index2].masterProduct.description+'"																placeholder="description" 	readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	readonly></td>';
+		tRow += '<td><input type="text" class="form-control"				value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		readonly></td>';
+		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" readonly></td>';
+		tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
+		tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+		tRow +=	'</tr>';
+		index2++;
+		tBody.append(tRow);
+		  
+	  }
+			
+	      
+	  
+	  
+  }
+  
+  
+  /* add item tabel */
+  $('#addEditItemBtn').on('click',function(){
+		    Id++;
+		    index++;
+		    console.log(Id);
 
+		    
+		  	var oTable = $('#itemsTableEdit');
+		    var tBody = oTable.find('tbody');
+		    var tRow =	'<tr id="items-edit-'+Id+'">';
+			tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+							'<option value="" selected>Choose...</option>'+
+								'<c:forEach var="product" items="${products}">'+
+								'<option value="${product.id}">${product.name}</option>'+
+							'</c:forEach>'+
+						'</select></td>';
+			tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Id+'" placeholder="description" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="startdateEdit'+Id+'" placeholder="Start Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="enddateEdit'+Id+'" placeholder="End Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="noteEdit'+Id+'" placeholder="Note" disabled></td>';
+			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
+			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+			tRow +=	'</tr>';
+			tBody.append(tRow);
+	});
+  
+  
+  
+  /* mendelete objek item tabel */
+  $(document).on('click','.btn-delete-design-edit',function(){
+		var id =$(this).attr('id');
+		$('#items-edit-'+id).remove();
+	});
+  
+  /* memencet tombole edit di modal */
+  $(document).on('click','.btn-edit-design-edit',function(){
+		var id =$(this).attr('id');
+		$("#items-edit-"+id).find(':input').prop('disabled', false);
+		$("#startdateEdit"+id).prop('disabled', true);
+		$("#enddateEdit"+id).prop('disabled', true);
+		$('#duedateEdit'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#startdateEdit'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#enddateEdit'+id).datepicker({
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
+		});
+		$('#productItemEdit'+id).on('change',function(){
+			var select = this;
+			var productId = select[select.selectedIndex].value;
+			$.ajax({
+				url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+				type : 'GET',
+				success : function(data){
+					$('#descriptionEdit'+id).val(data.description);
+				}
+			});
+		});
+	});
 </script>
 </html>

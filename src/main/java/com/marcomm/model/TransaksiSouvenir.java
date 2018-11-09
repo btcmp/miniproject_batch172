@@ -3,6 +3,7 @@ package com.marcomm.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,6 +42,7 @@ public class TransaksiSouvenir {
 	@Column(nullable=false, length=11)
 	private String type;
 	
+
 	//relasi bila ada request dari suatu ke event
 	//@Column(name="t_event_id", length=50)
 	@OneToOne
@@ -48,16 +50,15 @@ public class TransaksiSouvenir {
 	private	TransaksiEvent tEventId;
 	
 	
-	//@Column(name="request_by", length=50, nullable=false)
-	@ManyToOne
-	@JoinColumn(name="request_by")
-	private MasterEmployee requestBy;
-	
+	@Column(name="request_by", length=50, nullable=false)
+	private int requestBy;
 	
 	@Column(name="request_date")
+	@Temporal(TemporalType.DATE)
 	private Date requestDate;
 	
 	@Column(name="request_due_date")
+	@Temporal(TemporalType.DATE)
 	private Date requestDueDate;
 	
 	//@Column(name="approved_by", length=50)
@@ -66,6 +67,7 @@ public class TransaksiSouvenir {
 	private MasterEmployee approvedBy;
 	
 	@Column(name="approved_date")
+	@Temporal(TemporalType.DATE)
 	private Date approvedDate;
 	
 	//@Column(name="receide_by", length=50)
@@ -244,15 +246,11 @@ public class TransaksiSouvenir {
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+	
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	public MasterEmployee getRequestBy() {
-		return requestBy;
-	}
-	public void setRequestBy(MasterEmployee requestBy) {
-		this.requestBy = requestBy;
-	}
+	
 	public MasterEmployee getApprovedBy() {
 		return approvedBy;
 	}
@@ -277,12 +275,14 @@ public class TransaksiSouvenir {
 	public void setSettlementApprovedBy(MasterEmployee settlementApprovedBy) {
 		this.settlementApprovedBy = settlementApprovedBy;
 	}
+
 	public TransaksiEvent gettEventId() {
 		return tEventId;
 	}
 	public void settEventId(TransaksiEvent tEventId) {
 		this.tEventId = tEventId;
 	}
+
 	
 
 }

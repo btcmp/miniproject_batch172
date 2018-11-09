@@ -37,10 +37,6 @@ public class FungsiService {
 		}
 
 	}
-	
-	
-	
-
 	/*public static String getRole() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

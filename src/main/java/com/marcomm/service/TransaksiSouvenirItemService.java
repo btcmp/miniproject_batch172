@@ -30,7 +30,7 @@ public class TransaksiSouvenirItemService {
 		transaksiSouvenirItem.setDelete(false);
 		transaksiSouvenirItemDao.save(transaksiSouvenirItem);
 		
-	} 
+	}
 	
 	public void update(TransaksiSouvenirItem transaksiSouvenirItem) {
 		

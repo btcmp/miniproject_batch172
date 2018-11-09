@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.marcomm.model.FormSouvenir;
 import com.marcomm.model.MasterSouvenir;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.model.TransaksiSouvenir;
+import com.marcomm.model.TransaksiSouvenirItem;
 import com.marcomm.service.MasterSouvenirService;
 import com.marcomm.service.SouvenirRequestService;
 import com.marcomm.service.TransaksiEventService;
@@ -47,9 +49,11 @@ public class TransaksiSouvenirRequestController {
 	
 	//save All data
 	@RequestMapping(value="/saveall", method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	public void saveAllData(@RequestBody TransaksiSouvenir transaksiSouvenir) {
+	@ResponseStatus(HttpStatus.CREATED) 
+	@ResponseBody
+	public TransaksiSouvenir saveAllData(@RequestBody TransaksiSouvenir transaksiSouvenir) {
 		souvenirRequestService.saveAllData(transaksiSouvenir);
+		return transaksiSouvenir;
 	}
 
 	//save
@@ -57,14 +61,26 @@ public class TransaksiSouvenirRequestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveTransaksiSouvenir (@RequestBody TransaksiSouvenir transaksiSouvenir) {
 		souvenirRequestService.saveSouvenirRequest(transaksiSouvenir);
-		
 	}
-	//get All 
-	/*@RequestMapping(value="/getall", method=RequestMethod.GET)
+	
+	//get events avaliable
+	@RequestMapping(value="/getevents", method=RequestMethod.GET)
 	@ResponseBody
-	public List<TransaksiSouvenir> getAllTransaksiSouvenirRequest(){
-		return souvenirRequestService.getAllSouvenirRequest();
-	}*/
+	public List<TransaksiEvent> getEvents(){
+		return souvenirRequestService.getEvents();
+	}
+	
+	@RequestMapping(value="/getrequest/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public TransaksiSouvenir getRequestById(@PathVariable("id") int id) {
+		return souvenirRequestService.getRequestById(id);
+	}
+	@RequestMapping(value="/getitembyid/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public TransaksiSouvenirItem getItemById(@PathVariable("id") int id) {
+		return souvenirRequestService.getItemById(id);
+	}
+
 	
 	
 }

@@ -345,6 +345,7 @@ $(document).ready(function(){
 			url : '${pageContext.request.contextPath}/product/getall',
 			type : 'GET',
 			success : function(data){
+				console.log(data);
 				convertToTable(data);
 				
 			},

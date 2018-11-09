@@ -1,71 +1,80 @@
-<div class="modal fade" id="addDesignTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addDesignTransactionTitle" aria-hidden="true">
+<div class="modal fade" id="closeDesignModal" tabindex="-1" role="dialog" aria-labelledby="closeDesignTitle" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addDesignTransactionTitle">Tambah Produk</h5>
+				<h5 class="modal-title" id="closeDesignTitle">Close Request</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form id="addFormDesign">
-			<input type="hidden" id="designId">
+			<form id="closeFormDesign">
 				<div
 					class="modal-body border border-bottom-0 border-top-0 border-dark">
 					<div class="bg-light border rounded" style="height: 50%;">
 						<div class="row" style="width: 80%;">
 							<div class="col-sm-5" style="margin-top:10px;margin-left:10px;">
 								<div class="form-group row">
-									<label for="TransactionCode" class="col-sm-4 col-form-label">Transaction
+									<label for="closeCode" class="col-sm-4 col-form-label">Transaction
 										Code</label>
 									<div class="col-sm-7">
-										<input type="text" class="form-control" id="transactionCode"
-											placeholder="Kode Transaksi" readonly>
+										<input type="text" class="form-control" id="closeCode"
+											placeholder="Kode Transaksi" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="eventCode" class="col-sm-4 col-form-label">Event
+									<label for="closeEventCode" class="col-sm-4 col-form-label">Event
 										Code</label>
 									<div class="col-sm-7">
-										<select class="form-control" id="eventCode">
-											<option value="">Choose...</option>
-											<%--	<c:forEach var="event" items="${events}">
-											<option value="${event.id}">${event.code}</option>
-										</c:forEach> --%>
-										</select>
+										<input type="text" class="form-control" id="closeEventCode"
+											placeholder="kode event" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="designTitle" class="col-sm-4 col-form-label">Design
+									<label for="closeDesignTitle" class="col-sm-4 col-form-label">Design
 										Title</label>
 									<div class="col-sm-7">
-										<input type="text" class="form-control" id="titleHeader"
-											placeholder="Design Title">
+										<input type="text" class="form-control" id="closeDesignTitle"
+											placeholder="Design Title" disabled>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="closeStatus" class="col-sm-4 col-form-label">Status</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" id="closeStatus"
+											placeholder="Status" disabled>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="closeAssignTo" class="col-sm-4 col-form-label">Assign To</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" id="closeAssignTo"
+											placeholder="Assign To" disabled>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-5" style="margin-top:10px;">
 								<div class="form-group row">
-									<label for="requestBy" class="col-sm-4 col-form-label">Request
+									<label for="closeRequestBy" class="col-sm-4 col-form-label">Request
 										By</label>
 									<div class="col-sm-7">
-										<input type="text" class="form-control" id="requestBy"
-											placeholder="Request By" readonly>
+										<input type="text" class="form-control" id="closeRequestBy"
+											placeholder="Request By" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="requestDate" class="col-sm-4 col-form-label">Request
+									<label for="closeRequestDate" class="col-sm-4 col-form-label">Request
 										Date</label>
 									<div class="col-sm-7">
-										<input type="text" class="form-control" id="requestDate"
-											placeholder="Request Date" readonly>
+										<input type="text" class="form-control" id="closeRequestDate"
+											placeholder="Request Date" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="note" class="col-sm-4 col-form-label">Note</label>
+									<label for="closeNote" class="col-sm-4 col-form-label">Note</label>
 									<div class="col-sm-7">
-										<textarea class="form-control" id="note"
-											style="height: 150px" placeholder="Note"></textarea>
+										<textarea class="form-control" id="closeNote"
+											style="height: 150px" placeholder="Note" disabled></textarea>
 									</div>
 								</div>
 							</div>
@@ -73,11 +82,7 @@
 					</div>
 					<br>
 					<div class="bg-light border rounded" style="height: 50%;">
-						<div class="row">
-							<a class="btn btn-primary text-white" id="addItemBtn"
-								style="width: 100px; margin: 20px;">Add</a>
-						</div>
-						<table id="itemsTable">
+						<table id="closeItemsTable" style="margin:20px;">
 							<thead>
 								<tr>
 									<th>Product Name</th>
@@ -91,8 +96,8 @@
 									<th></th>
 								</tr>
 							</thead>
-							<tbody class="tableBody">
-								<tr id="items-1">
+							<tbody class="closeTableBody">
+								<%-- <tr id="items-1">
 									<td><select class="custom-select" id="productItem1"
 										style="width: 150px" data-parsley-required disabled>
 											<option value="">Choose...</option>
@@ -118,14 +123,14 @@
 											class="oi oi-pencil"></span></a> <a href="#" id="1"
 										class="btn-delete-design"><span class="oi oi-trash"></span></a>
 									</td>
-								</tr>
+								</tr> --%>
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<div class="modal-footer border border-top-0 border-dark">
+				<button type="button" class="btn btn-danger" id="closeBtnModal">Close Transaction</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="addBtnModal">Save Transaction</button>
 			</div>
 			</form>
      </div>

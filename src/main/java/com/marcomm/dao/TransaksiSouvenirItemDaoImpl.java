@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.marcomm.model.TransaksiSouvenir;
 import com.marcomm.model.TransaksiSouvenirItem;
 
 @Repository
@@ -25,13 +26,17 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 	}
 
 	public List<TransaksiSouvenirItem> getAllSouvenirItem() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =sessionFactory.getCurrentSession();
+		Criteria cr = session.createCriteria(TransaksiSouvenirItem.class);
+		@SuppressWarnings("unchecked")
+		List<TransaksiSouvenirItem> transaksiSouvenirItems = cr.add(Restrictions.eq("isDelete", false)).list();
+		return transaksiSouvenirItems;
 	}
 
 	public TransaksiSouvenirItem getSouvenirItemById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =sessionFactory.getCurrentSession();
+		TransaksiSouvenirItem transaksiSouvenirItem =session.get(TransaksiSouvenirItem.class, id);
+		return transaksiSouvenirItem;
 	}
 
 	public void update(TransaksiSouvenirItem transaksiSouvenirItem) {

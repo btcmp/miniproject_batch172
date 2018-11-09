@@ -49,7 +49,7 @@ public class MasterMenu {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="menu", cascade=CascadeType.ALL, orphanRemoval=true)
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy="menus")
 	private List<MasterMenuAccess> access;
 	public int getId() {
 		return id;

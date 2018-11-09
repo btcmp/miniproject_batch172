@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterCompany;
-import com.marcomm.service.FungsiService;
 
 @Repository
 public class MasterCompanyDaoImpl implements MasterCompanyDao {
@@ -27,11 +26,9 @@ public class MasterCompanyDaoImpl implements MasterCompanyDao {
 		company.setIsDelete(false);
 		
 		company.setCreatedBy("Administrator");
-		company.setUpdateBy("Administrator");
 		
 		Date now = new Date();
 		company.setCreatedDate(now);
-		company.setUpdateDate(now);
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.save(company);
@@ -74,11 +71,9 @@ public class MasterCompanyDaoImpl implements MasterCompanyDao {
 		// TODO Auto-generated method stub
 		comp.setIsDelete(false);
 	
-		comp.setCreatedBy("Administrator");
 		comp.setUpdateBy("Administrator");
 		
 		Date now = new Date();
-		comp.setCreatedDate(now);
 		comp.setUpdateDate(now);
 		
 		Session session = sessionFactory.getCurrentSession();

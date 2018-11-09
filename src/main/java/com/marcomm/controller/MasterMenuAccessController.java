@@ -34,10 +34,11 @@ public class MasterMenuAccessController {
 		return "menuaccess";
 	}
 	@RequestMapping(value="/save",method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	public void save(@RequestBody MasterMenuAccess menuAccess) {
+	@ResponseBody
+	public MasterMenuAccess save(@RequestBody MasterMenuAccess menuAccess) {
 		/*System.out.println(menuAccess);*/
 		accessService.save(menuAccess);
+		return menuAccess;
 	}
 	@RequestMapping(value="/getid/{id}",method=RequestMethod.GET)
 	@ResponseBody
@@ -74,5 +75,11 @@ public class MasterMenuAccessController {
 	@ResponseBody
 	public List<MasterRole>getRoleByMenuAccess(MasterMenuAccess access){
 		return accessService.getRole();
+	}
+	@RequestMapping(value="/getmenuaccess/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public MasterMenuAccess getMenuAccess(@PathVariable int id){
+		
+		return accessService.getMenuAccess(id);
 	}
 }

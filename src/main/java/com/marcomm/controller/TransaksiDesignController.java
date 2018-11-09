@@ -1,18 +1,29 @@
 package com.marcomm.controller;
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.TransaksiDesign;
+import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.MasterProductService;
 import com.marcomm.service.TransaksiDesignService;
@@ -28,6 +39,8 @@ public class TransaksiDesignController {
 	TransaksiEventService eventService;
 	@Autowired
 	TransaksiDesignService transaksiDesignService;
+	
+	ServletContext servletContext;
 	@RequestMapping
 	public ModelAndView index() {
 		ModelAndView modelAndView = new ModelAndView("transaksidesign");
@@ -56,16 +69,12 @@ public class TransaksiDesignController {
 		return transaksiDesignService.getRequestBy();
 	}
 	
-	@RequestMapping(value="/getid",method=RequestMethod.GET)
-	@ResponseBody
-	public int getId() {
-		return transaksiDesignService.getId();
-	}
 	@RequestMapping(value="/getevent",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiEvent> getEvent(){
 		return transaksiDesignService.getEventAvailable();
 	}
+	
 	@RequestMapping(value="/getall",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiDesign> getAll(){
@@ -73,4 +82,36 @@ public class TransaksiDesignController {
 		return designs;
 	}
 	
+	@RequestMapping(value="/getdesignbyid/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public TransaksiDesign getDesignById(@PathVariable("id") int id) {
+		return transaksiDesignService.getById(id);
+	}
+	
+	@RequestMapping(value="/getitembyid/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public TransaksiDesignItem getItemById(@PathVariable("id") int id) {
+		return transaksiDesignService.getByIdItem(id);
+	}
+	
+	@RequestMapping(value="/getitembydesignid/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiDesignItem> getItemByDesignId(@PathVariable("id") int id){
+		return transaksiDesignService.getItemByDesignId(id);
+	}
+	
+	@RequestMapping(value="/upload",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void upload(@RequestParam("file") CommonsMultipartFile[] files) {
+		
+		try {
+			for (CommonsMultipartFile file : files) {
+				byte[] bytes = file.getBytes();
+				Path path =Paths.get("H://Bootcamp//UploadFile//"+file.getOriginalFilename());
+				Files.write(path, bytes);
+			}
+			System.out.println("masuk ke try");
+		} catch (Exception e) {
+		}
+	}
 }

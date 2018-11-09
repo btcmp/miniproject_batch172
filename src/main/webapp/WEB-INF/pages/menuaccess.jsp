@@ -65,10 +65,10 @@ input.parsley-error
 	<!-- BUTTON SEARCH -->
 		<tr>
     			<th></th>
-						<th><input type="text" class="form-control" placeholder="Select Role Code" id="data1" data-index="1" style="padding-right:10px;width:120%;"></th>
-						<th><input type="text" class="form-control" placeholder="Select Role Name" id="data2" data-index="2" style="padding-right:10px;width:120%;"></th>
-						<th><input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="4" style="padding-right:10px;width:120%;"></th>
-						<th><input type="text" class="form-control" placeholder="Created By" id="data4" data-index="5" style="padding-right:10px;width:120%;"></th>
+						<th><input type="text" class="form-control" placeholder="Select Role Code" id="data1" data-index="1" style="padding-right:10px;width:90%;"></th>
+						<th><input type="text" class="form-control" placeholder="Select Role Name" id="data2" data-index="2" style="padding-right:10px;width:90%;"></th>
+						<th><input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="4" style="padding-right:10px;width:90%;"></th>
+						<th><input type="text" class="form-control" placeholder="Created By" id="data4" data-index="5" style="padding-right:10px;width:90%;"></th>
     			<th><a class="btn btn-warning" id="btn-search" href="#">Search</a></th>
     			</tr>
     			</thead>
@@ -91,6 +91,9 @@ input.parsley-error
 		</div>
 	</div>
 	<%@include file="/WEB-INF/pages/modal/add-menuaccess.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/update-menuaccess.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/delete-menuaccess.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/view-menuaccess.jsp" %>
 </body>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -110,12 +113,15 @@ input.parsley-error
 	
 	$(document).ready(function(){
 		$('#data3').datepicker({
-			format:('yyyy-mm-dd')
+			format:'yyyy-mm-dd',
+			autoclose:true,
+			uiLibrary:'bootstrap4'
 		});
-		/* loadData(); */
+		 loadData(); 
 		
 		/* BUTTON POP UP */
 		$('#btnadd').on('click',function(){
+			$('.addId').prop('checked',false);
 			$.ajax({
 				/* url:'${pagecontext.request.contextPath}/menu/getcode',
 				type:'GET',
@@ -133,43 +139,46 @@ input.parsley-error
 			var roleId= $('#add-role').val(); 
 			 var menus =[]; 
 				 $('#menuId:checked').each(function (){
-				  menus.push($(this).val())
+				  var menuId={
+						  id:$(this).val()		  
+				  }
+				  menus.push(menuId);
 				 }); 
-			var l= menus.length;
 			
-			for(var i=0;i<l;i++){
-				var menuc = {
-						menu :{
-							id:menus[i]
-						},
+			
+			/* for(var i=0;i<l;i++){ */
+				var menuAccess = {
+						menus :menus,
 						role :{
 							id: roleId		 
 						}
 				};
-				console.log(menus[i]);
-				console.log(roleId);
+				/* document.getElementById("notif").innerHTML ="Data saved! new code has been added with code : "+role.code+"!";
+				$('#notif').show('slow').delay(1000).hide('slow'); */
 				 $.ajax({
 					  url :'${pageContext.request.contextPath}/access/save',
 					  type : 'POST',
 					  contentType :'application/json',
-					  data : JSON.stringify(menuc),
+					  data : JSON.stringify(menuAccess),
 					   beforeSend : function (){
 						  console.log('sebelom post');
 					  },
 					  success: function (data) {
+						  console.log(data)
 						  console.log('data saved successfully')
-						  /* loadData(); */
+						   loadData(); 
 					  },
 					  error : function(){
 						  console.log('failed to save data')
 					  }
 				 });
-					}
+					/* } */
+			
 			$('#addModal').modal('hide');
 			
 			});
   		/*  load data */
-  		/* function loadData(){
+  		function loadData(){
   			$.ajax({
   				url:'${pageContext.request.contextPath}/access/getall',
   				type:'GET',
@@ -178,12 +187,166 @@ input.parsley-error
   				},
   				success : function(output){
   					console.log(output);
+  					convertToTable(output);
   				},
   				dataType:'json'
   			});
-  		} */
+		} 
+		/* convert to table */
+		function convertToTable(data){
+			oTable=$('#menuTable').DataTable();
+			oTable.rows('tr').remove();
+			$.each(data,function(index,access){
+				index++;
+				var tRow ='<a id="'+access.id+'"href="#" class="btn-update-access">U</a>';
+				tRow +=' ';
+				tRow +='<a id="'+access.id+'"href="#" class="btn-view-access">V</a>';
+				tRow +=' ';
+				tRow +='<a id="'+access.id+'"href="#" class="btn-delete-access">D</a>';
+				oTable.row.add([index,access.role.code,access.role.roleName,access.createdDate,access.createdBy,tRow]);
+			});
+			oTable.draw();
+		};
+		/* search */
+		oTable=$('#menuTable').DataTable({
+			'sDom':'tip',
+			'ordering':false
 		});
-	
-	
+		$('#btn-search').on('click',function(){
+		$('#btn-search').on('click',function(){
+			for(var i=1;i<5;i++){
+				oTable
+				.column($('#data'+i).data('index'))
+				.search($('#data'+i).val())
+				.draw()
+			}
+		});
+		});
+		/* view */
+		$(document).on('click','.btn-view-access',function(){
+			var id=$(this).attr('id');
+			$('.viewId').prop('checked',false);
+			
+			$.ajax({
+				url:'${pageContext.request.contextPath}/access/getmenuaccess/'+id,
+				type:'GET',
+				success:function(data){
+					/* var in= data.menu.id;*/
+					 $('#view-role').val(data.role.id);
+					$('#ViewAccess').val(data.id);
+					for(var i=0;i<data.menus.length;i++){
+						$('#'+data.menus[i].id+'').prop('checked',true);   			
+					}			
+				},
+				dataType:'json'
+			});
+			$('#viewModal').modal();
+		});
+		/* pop up update */
+		$(document).on('click','.btn-update-access',function(){
+			var id=$(this).attr('id');
+			$('.updateId').prop('checked',false);
+			
+			$.ajax({
+				url:'${pageContext.request.contextPath}/access/getmenuaccess/'+id,
+				type:'GET',
+				success:function(data){
+					/* var in= data.menu.id;*/
+					 $('#update-role').val(data.role.id);
+					$('#idAccess').val(data.id);
+					for(var i=0;i<data.menus.length;i++){
+						$('#'+data.menus[i].id+'').prop('checked',true);   			
+					}			
+				},
+				dataType:'json'
+			});
+			$('#updateModal').modal();
+		});
+		/* update data */
+		$('.btn-update').click(function(){
+			var id=$('#idAccess').val();
+			var roleId= $('#update-role').val(); 
+		 var menus =[]; 
+			 $('.updateId:checked').each(function (){
+			  var menuId={
+					  id:$(this).val()		  
+			  }
+			  menus.push(menuId);
+			 });
+			 var menuAccess = {
+						menus :menus,
+						role :{
+							id: roleId		 
+						}
+				};
+			 $.ajax({
+				  url :'${pageContext.request.contextPath}/access/update/' +id,
+				  type : 'POST',
+				  contentType :'application/json',
+				  data : JSON.stringify(menuAccess),
+				   beforeSend : function (){
+					  console.log('sebelom post');
+				  },
+				  success: function (data) {
+					  console.log('data update successfully')
+					   loadData(); 
+				  },
+				  error : function(){
+					  console.log('failed to update data')
+				  }
+			 });
+				
+		
+		$('#updateModal').modal('hide');
+		});
+		/* delete */
+		$(document).on('click','.btn-delete-access',function(){
+			var id=$(this).attr('id');
+			console.log(id);
+			$.ajax({
+				url:'${pageContext.request.contextPath}/access/getid/'+id,
+				type:'GET',
+				success:function(data){
+					$('#idDelete').val(data.id);
+					$('#mRoleDelete').val(data.role.id);
+					$('#mMenuDelete').val(data.menu.id);
+					$('#isDelete').val(data.isDelete);
+					$('#crDelete').val(data.createdBy);
+					$('#dateDelete').val(data.createdDate);
+					console.log(data);
+				},
+				dataType:'json'
+			});
+			$('#deleteModal').modal();
+		});
+		/* delete data */
+		$('#btnDelete').click(function(){
+			var access={
+					id:parseInt($('#idDelete').val()),
+					role:$('#mRoleDelete').val(),
+					menu:$('#mMenuDelete').val(),
+					isDelete:true,
+					createdBy:$('#crDelete').val(),
+					createdDate:$('#dateDelete').val()
+			}
+			console.log(JSON.stringify(access));
+			$.ajax({
+				url:'${pageContext.request.contextPath}/access/delete/' +access.id,
+				type:'DELETE',
+				contentType:'application/json',
+				data:JSON.stringify(access),
+				success:function(data){
+					console.log("data di delete");
+					loadData();
+					$('#deleteModal').modal('hide');
+				},
+				error :function(){
+					console.log("data kacau");
+				}
+			});
+		});
+	});
+
 	</script>
 </html>
+

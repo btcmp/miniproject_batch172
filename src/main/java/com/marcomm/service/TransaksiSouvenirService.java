@@ -25,12 +25,12 @@ public class TransaksiSouvenirService {
 	TransaksiSouvenirDao transaksiSouvenirDao;
 	
 	@Autowired
-	TransaksiEventDao transaksiEventDao;
-	
-	@Autowired
 	TransaksiSouvenirItemDao transaksiSouvenirItemDao;
 	
-	
+	@Autowired
+	TransaksiEventDao transaksiEventDao;
+
+
 	/*GET BY ID*/
 	public TransaksiSouvenir getTransaksiSouvenir(int id) {
 		return transaksiSouvenirDao.getTransaksiSouvenir(id);
