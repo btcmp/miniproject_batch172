@@ -60,11 +60,11 @@ public class TransaksiSouvenirRequestController {
 		
 	}
 	//get All 
-	@RequestMapping(value="/getall", method=RequestMethod.GET)
+	/*@RequestMapping(value="/getall", method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiSouvenir> getAllTransaksiSouvenirRequest(){
 		return souvenirRequestService.getAllSouvenirRequest();
-	}
+	}*/
 	
 	
 }
