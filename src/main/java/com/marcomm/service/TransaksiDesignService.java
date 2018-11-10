@@ -117,7 +117,7 @@ public class TransaksiDesignService {
 		//MENGIRIM KE TABLE ITEM
 		List<TransaksiDesignItem> itemsBaru=transaksiDesign.getTransaksiDesignItems();
 		for (TransaksiDesignItem transaksiDesignItem : itemsBaru) {			
-			if( transaksiDesignItem.getId()>=900000 ) {
+			if( transaksiDesignItem.getId()==0 ) {
 				System.out.println("anda masuk save");
 				TransaksiDesignItem tdi = new TransaksiDesignItem();
 				MasterProduct masterProduct1= transaksiDesignItem.getMasterProduct();
@@ -143,7 +143,7 @@ public class TransaksiDesignService {
 			itemLama.setRequestDueDate(transaksiDesignItem.getRequestDueDate());
 			itemLama.setRequestPic(transaksiDesignItem.getRequestPic());
 			itemLama.setTitleItem(transaksiDesignItem.getTitleItem());
-			
+			itemLama.setDelete(transaksiDesignItem.isDelete());
 			MasterProduct productId= transaksiDesignItem.getMasterProduct();
 			MasterProduct productBaru= masterProductDao.getById(productId.getId());
 			itemLama.setMasterProduct(productBaru);

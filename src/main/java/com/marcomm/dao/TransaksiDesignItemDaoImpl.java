@@ -40,7 +40,8 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 	public List<TransaksiDesignItem> getItemByDesign(TransaksiDesign transaksiDesign) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(TransaksiDesignItem.class);
-		cr.add(Restrictions.eq("transaksiDesign", transaksiDesign));
+		cr.add(Restrictions.and(Restrictions.eq("transaksiDesign", transaksiDesign),Restrictions.eq("isDelete", false)));
+		/*cr.add(Restrictions.eq("isDelete", false);*/
 		List<TransaksiDesignItem> transaksiDesignItem = cr.list();
 		return transaksiDesignItem;
 	}
