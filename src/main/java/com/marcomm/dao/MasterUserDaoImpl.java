@@ -118,7 +118,7 @@ public class MasterUserDaoImpl implements MasterUserDao {
 	}
 
 	//FUNGSI YANG DITAMBAH DIAZ
-	@Override
+	 
 	public MasterUser getUserByUserLog() {
 		Session session = sessionFactory.getCurrentSession();
 		String userLog = FungsiService.getUserLog();

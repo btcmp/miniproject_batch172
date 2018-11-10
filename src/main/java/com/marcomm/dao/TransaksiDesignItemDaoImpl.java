@@ -44,4 +44,10 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 		List<TransaksiDesignItem> transaksiDesignItem = cr.list();
 		return transaksiDesignItem;
 	}
+//KOLOM ANGGI
+	@Override
+	public void update(TransaksiDesignItem itemLama) {
+		Session session=sessionFactory.getCurrentSession();
+		session.update(itemLama);		
+	}
 }
