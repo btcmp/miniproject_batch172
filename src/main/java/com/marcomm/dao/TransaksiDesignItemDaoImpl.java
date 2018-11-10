@@ -48,6 +48,6 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 	@Override
 	public void update(TransaksiDesignItem itemLama) {
 		Session session=sessionFactory.getCurrentSession();
-		session.update(itemLama);		
+		session.update(itemLama);	 	
 	}
 }

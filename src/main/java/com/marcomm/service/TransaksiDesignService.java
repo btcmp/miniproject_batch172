@@ -148,7 +148,7 @@ public class TransaksiDesignService {
 			MasterProduct productBaru= masterProductDao.getById(productId.getId());
 			itemLama.setMasterProduct(productBaru);
 			
-			transaksiDesignItemDao.update(itemLama);
+			transaksiDesignItemDao.update(itemLama); 
 				
 			}
 		}

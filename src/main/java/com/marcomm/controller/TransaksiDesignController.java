@@ -122,5 +122,5 @@ public class TransaksiDesignController {
 	public void update(@RequestBody TransaksiDesign transaksiDesign) {
 	transaksiDesignService.update(transaksiDesign);
 		 
-	}
+	} 
 }
