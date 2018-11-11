@@ -24,5 +24,6 @@ public interface MasterUserDao {
 	public List<MasterUser> getByName(String name);
 
 	public String getRole();
- 
+	
+	public MasterUser getUserByUserLog();
 }

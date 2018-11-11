@@ -24,5 +24,6 @@ public interface TransaksiEventDao {
 	public void reject(TransaksiEvent transaksiEvent);
 
 	public List<MasterEmployee> getAllEmployee();
-
+	
+	public String getUser();
 }

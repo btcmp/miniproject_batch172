@@ -201,7 +201,7 @@ $(document).ready(function(){
   	
   	
 	//BUTTON POP UP ADD
-	$('#btn-add').on('click', function(){
+	$(document).on('click','#btn-add', function(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/event/getcodeevent',
 			type : 'GET',
@@ -210,12 +210,21 @@ $(document).ready(function(){
 			},
 			dataType: 'json'
 		});
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#requestby').val(data.employee.employeeName);
+				$('#requestbyid').val(data.employee.id);
+				$('#createdby').val(data.employee.employeeName);
+			}
+		});
 		var now = new Date();
 		var year = now.getFullYear();
 		var month = now.getMonth()+1;
 		var date = now.getDate();
 		var formattedDate = ("0"+date).slice(-2);
-		$('#requestby').val("1");
 		$('#eventname').val();
 		$('#requestdate').val(year+'-'+month+'-'+formattedDate);
 		$('#eventplace').val();
@@ -231,7 +240,10 @@ $(document).ready(function(){
 	$('.btn-add-event').on('click', function(){
 			var event = {
 				code : $('#transactioncode').val(),
-				requestBy : $('#requestby').val(),
+				createdBy : $('#createdby').val(),
+				requestBy : {
+					id: $('#requestbyid').val()
+				},
 				eventName : $('#eventname').val(),
 				requestDate : $('#requestdate').val(),
 				place : $('#eventplace').val(),
@@ -255,7 +267,6 @@ $(document).ready(function(){
 				success : function(data){
 					console.log("saved data success");
 					loadData();
-					$('#requestby').val("");
 					$('#eventname').val("");
 					$('#requestdate').val("");
 					$('#eventplace').val("");
@@ -324,11 +335,11 @@ $(document).ready(function(){
 			var status="";
 			if(event.status==1){
 				status="Submitted";
-				modaledit="btn-edit-event";
 				if(role=="Administrator"){
 					modalview = "btn-acceptreject-event";
 				} else{
 					modalview = "btn-view-event";
+					modaledit="btn-edit-event";
 				}
 			} else if(event.status==2){
 				status="In Progress";
@@ -348,7 +359,7 @@ $(document).ready(function(){
 			var tableRow = "<a id="+event.id+" class='"+modalview+"'><span class='oi oi-magnifying-glass'></span></a>";
 				tableRow += " ";
 				tableRow += "<a id="+event.id+" class='"+modaledit+"'><span class='oi oi-pencil'></span></a>";
-				oTable.row.add([index,event.code,event.requestBy,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
+				oTable.row.add([index,event.code,event.requestBy.employeeName,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
 		});
 				oTable.draw();
 	}
@@ -375,7 +386,6 @@ $(document).ready(function(){
 				console.log(output);
 				$('#EditButton').val(output.id);
 				$('#transactioncodeEdit').val(output.code);
-				$('#requestbyEdit').val(output.requestBy);
 				$('#eventnameEdit').val(output.eventName);
 				$('#requestdateEdit').val(output.requestDate);
 				$('#eventplaceEdit').val(output.place);
@@ -387,6 +397,15 @@ $(document).ready(function(){
 			},
 			dataType: 'json'
 		});
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#updatedby').val(data.employee.employeeName);
+				$('#requestbyEdit').val(data.employee.employeeName);
+			}
+		});
 		$('#editEventModal').modal();
 	});
 	
@@ -395,9 +414,8 @@ $(document).ready(function(){
 		var event = {
 				id: $('#EditButton').val(),
 				code: $('#transactioncodeEdit').val(),
-				requestBy: $('#requestbyEdit').val(),
+				updatedBy: $('#updatedby').val(),
 				eventName: $('#eventnameEdit').val(),
-				requestDate: $('#requestdateEdit').val(),
 				place: $('#eventplaceEdit').val(),
 				note: $('#noteEdit').val(),
 				startDate: $('#eventstartdateEdit').val(),
@@ -447,8 +465,18 @@ $(document).ready(function(){
 					$('#statusView').val(output.status);
 					},
 					dataType: 'json'
-				});
-				$('#viewEventModal').modal();
+			});
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#requestbyView').val(data.employee.employeeName);
+
+			}
+		});
+	
+		$('#viewEventModal').modal();
 		});
 	
 	
@@ -478,6 +506,16 @@ $(document).ready(function(){
 				},
 				dataType: 'json'
 			});
+			
+			$.ajax({
+				url : '${pageContext.request.contextPath}/event/getuser',
+				type : 'GET',
+				success : function(data){
+					$('#approvedbyid').val(data.employee.id);
+					$('#requestbyAR').val(data.employee.employeeName);
+
+				}
+			});
 			$('#acceptrejectEventModal').modal();
 		
 	});
@@ -487,7 +525,12 @@ $(document).ready(function(){
 		var event = {
 				id: $('#ARButton').val(),
 				code: $('#transactioncodeAR').val(),
-				assignTo: { id: $('#assigntoAR').val()}
+				assignTo: { 
+					id: $('#assigntoAR').val()
+					},
+				approvedBy: {
+					id: $('#approvedbyid').val()
+				}
 		};
 		console.log(event);
 		
@@ -504,6 +547,7 @@ $(document).ready(function(){
 				console.log("data berhasil diubah");
 				loadData();
 				$('#assigntoAR').val("");
+				$('#approvedbyid').val("");
 			}
 		});
 		$('#acceptrejectEventModal').modal('hide');
@@ -573,7 +617,17 @@ $(document).ready(function(){
 					},
 					dataType: 'json'
 				});
-				$('#viewapprovedEventModal').modal();
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#requestbyVA').val(data.employee.employeeName);
+
+			}
+		});
+	
+		$('#viewapprovedEventModal').modal();
 		});
 	
 	

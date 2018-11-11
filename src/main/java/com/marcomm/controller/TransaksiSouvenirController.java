@@ -60,10 +60,20 @@ public class TransaksiSouvenirController {
 		return transaksiSouvenir;
 	}
 	
-	/*GET ALL TRANSAKSI SOUVENIR*/ 
-	public List<TransaksiSouvenir> getAll(){
-		List<TransaksiSouvenir> souvenirs = transaksiSouvenirService.getAll();
+	/*GET ALL STOCK TRANSAKSI SOUVENIR*/
+	@RequestMapping(value="/getall", method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiSouvenir> getAllStock(){
+		List<TransaksiSouvenir> souvenirs = transaksiSouvenirService.getAllStock();
 		return souvenirs; 
+	}
+	
+	/*GET ALL SOUVENIRS*/
+	@RequestMapping(value="/getallsouvenirs", method=RequestMethod.GET)
+	@ResponseBody
+	public List<TransaksiSouvenir> getAll(){
+		List<TransaksiSouvenir> transaksiSouvenirs = transaksiSouvenirService.getAll();
+		return transaksiSouvenirs;
 	}
 	
 	/*GET BY ID*/

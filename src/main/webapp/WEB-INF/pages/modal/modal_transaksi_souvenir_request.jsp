@@ -195,9 +195,9 @@
 			</thead>
 			<tbody>
 			<tr id='items'>
-				<td><input type="text" class="form-control" id="note1" placeholder="Souvenir Name"></td>
-				<td><input type="text" class="form-control" id="qty1" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" id="note1" placeholder="Note"></td>
+				<td><input type="text" class="form-control" id="note1" placeholder="Souvenir Name" ></td>
+				<td><input type="number" class="form-control" id="qty1" placeholder="Qty" ></td>
+				<td><input type="text" class="form-control" id="note1" placeholder="Note" ></td>
 				<td><a href="#" id="1" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
 					<a href="#" id="1" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>
 			</tr>

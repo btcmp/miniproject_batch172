@@ -116,6 +116,19 @@ public class MasterUserDaoImpl implements MasterUserDao {
 		
 		return role.getRoleName();
 	}
+
+	//FUNGSI YANG DITAMBAH DIAZ
+	@Override
+	public MasterUser getUserByUserLog() {
+		Session session = sessionFactory.getCurrentSession();
+		String userLog = FungsiService.getUserLog();
+		Query qr = session.createQuery("select mu from MasterUser mu where mu.username = :userName");
+		qr.setParameter("userName", userLog);
+		MasterUser user = (MasterUser) qr.uniqueResult();
+		return user;
+	}
+	//FUNGSI YANG DITAMBAH DIAZ
+	
 	
 
  

@@ -61,12 +61,11 @@ public class TransaksiSouvenirRequestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveTransaksiSouvenir (@RequestBody TransaksiSouvenir transaksiSouvenir) {
 		souvenirRequestService.saveSouvenirRequest(transaksiSouvenir);
-		
 	}
-	//get All 
+	//get all request
 	@RequestMapping(value="/getall", method=RequestMethod.GET)
 	@ResponseBody
-	public List<TransaksiSouvenir> getAllTransaksiSouvenirRequest(){
+	public List<TransaksiSouvenir> getAllRequest(){
 		return souvenirRequestService.getAll();
 	}
 	
@@ -87,6 +86,7 @@ public class TransaksiSouvenirRequestController {
 	public TransaksiSouvenirItem getItemById(@PathVariable("id") int id) {
 		return souvenirRequestService.getItemById(id);
 	}
+
 	
 	
 }

@@ -281,6 +281,7 @@ $(document).ready(function(){
 									},
 									dataType : 'json'
 								});
+								loadEmployeesNotUse();
 							
 							});
 	
@@ -346,7 +347,8 @@ $(document).ready(function(){
 				 url : '${pageContext.request.contextPath}/user/delete/'+id,
 				 type: 'DELETE',
 				 success: function(data){
-					 window.location = "${pageContext.request.contextPath}/user";
+					 loadData();
+					 /* window.location = "${pageContext.request.contextPath}/user"; */
 				 }, error : function(){
 					 alert('delete data failed..!!');
 					 console.log(id);
@@ -359,7 +361,8 @@ $(document).ready(function(){
 	
 	///*memanggil add modal*/
 	$("#addBtn").on('click', function(){	 
-		$('#addUserModal').modal();
+		$('#addUserModal').modal('show');
+		loadEmployeesNotUse();
 	 });
 	/*menutup add modal dan men save user ke controller  */
 	 $('#addButnModal').on('click', function(){
@@ -391,13 +394,14 @@ $(document).ready(function(){
 				data : JSON.stringify(user),
 				success : function(data){
 					console.log("data telah disimpan");
-					$('#addUserModal').modal('hide');
-					 window.location = "${pageContext.request.contextPath}/user";
-					/*  loadData();  */
+					$('#addUserModal').modal('hide'); 
+					$('#addUserForm').trigger("reset");
+					/*  window.location = "${pageContext.request.contextPath}/user"; */
+					loadData();  
 
 				},
 				error : function(){
-					$('#addUserModal').modal('hide');
+					$('#addUserModal').modal('hide'); 
 					console.log("data error");
 				}
 			});
@@ -420,7 +424,41 @@ $(document).ready(function(){
 				}
 			}) 
 		 }
-	
+	 
+	 
+		 /* get Employee Not Use */
+		
+		 function  loadEmployeesNotUse(){
+			$.ajax({
+
+				 url : '${pageContext.request.contextPath}/employee/getemployeesnotuse',
+				type : 'GET',
+				dataType : 'json',
+			 success : function(data){
+					console.log(data);
+					$('.employee').empty();
+					 $('#employee').append('<option value="" selected>Choose...</option>')	; 		 
+					 $.each(data,function(idx, vl){
+					$('.employee').append('<option value="'+ vl.id+'">'+vl.employeeName+'</option>')	 
+					 
+					 });
+			 }	 
+			});	 
+		}
+		 
+		 function createSelectEmployee(data){
+			 $.each(data,function(index,employee){	
+				 $('#employee').append("<option value="+employee.id+">"+employee.employeeName+"</option>");				 
+			 });
+		 
+			/* $("p").append("Some appended text."); */
+			/*  $('select .employee').append("<option value="+employee.id+">"+employee.employeeName+"</option>");
+	 			 */
+		 }
+	 
+	 
+	 
+	 
 	 /* ini adalah fungsi get all dr controller */
 	function loadData(){
 		$.ajax({
@@ -437,6 +475,9 @@ $(document).ready(function(){
 			dataType : 'json'
 		});
 	}
+	 
+	
+	 
 	/* ini adalah fungsi memasukin all user ke tabel */
 	function convertToTable(data){
 		oTable = $('#userTable').DataTable();

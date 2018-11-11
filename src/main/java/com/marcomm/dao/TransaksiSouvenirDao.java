@@ -27,10 +27,11 @@ public interface TransaksiSouvenirDao {
 	/*GET ALL STOCK*/
 	public List<TransaksiSouvenir> getAllStock();
 	
-	
-	
 	/*SAVE*/
 	public void save(TransaksiSouvenir tSouvenir);
+	
+	/*GET ALL SOUVENIRS*/
+	public List<TransaksiSouvenir> getAll();
 
 	
 	

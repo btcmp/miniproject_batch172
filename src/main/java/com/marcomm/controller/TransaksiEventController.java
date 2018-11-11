@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.bankmega.traning.service.EmployeeService;
 import com.marcomm.model.MasterEmployee;
+import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.TransaksiEventService;
@@ -100,5 +101,12 @@ public class TransaksiEventController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void reject(@PathVariable("id") int id, @RequestBody TransaksiEvent event) {
 		eventService.rejectEvent(id, event);
+	}
+	
+	//get user to get role id, role name, employee id, employee name, username
+	@RequestMapping(value="/getuser", method = RequestMethod.GET)
+	@ResponseBody
+	public MasterUser getUser() {
+		return eventService.getUser();
 	}
 }

@@ -45,17 +45,19 @@ public class TransaksiEvent {
 	private String place;
 	private Long budget;
 	
+	@ManyToOne
 	@NotNull
-	@Column(name="request_by")
-	private int requestBy;
+	@JoinColumn(name="request_by")
+	private MasterEmployee requestBy;
 	
 	@NotNull
 	@Column(name="request_date")
 	@Temporal(TemporalType.DATE)
 	private Date requestDate;
 	
-	@Column(name="approved_by")
-	private int approvedBy;
+	@ManyToOne
+	@JoinColumn(name="approved_by")
+	private MasterEmployee approvedBy;
 	
 	@Column(name="approved_date")
 	@Temporal(TemporalType.DATE)
@@ -91,7 +93,6 @@ public class TransaksiEvent {
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="transaksiEvent")
 	@JsonBackReference
 	private TransaksiDesign transaksiDesign;
-
 
 	public TransaksiDesign getTransaksiDesign() {
 		return transaksiDesign;
@@ -169,28 +170,12 @@ public class TransaksiEvent {
 		this.budget = budget;
 	}
 
-	public int getRequestBy() {
-		return requestBy;
-	}
-
-	public void setRequestBy(int requestBy) {
-		this.requestBy = requestBy;
-	}
-
 	public Date getRequestDate() {
 		return requestDate;
 	}
 
 	public void setRequestDate(Date requestDate) {
 		this.requestDate = requestDate;
-	}
-
-	public int getApprovedBy() {
-		return approvedBy;
-	}
-
-	public void setApprovedBy(int approvedBy) {
-		this.approvedBy = approvedBy;
 	}
 
 	public Date getApprovedDate() {
@@ -272,6 +257,21 @@ public class TransaksiEvent {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
+
+	public MasterEmployee getRequestBy() {
+		return requestBy;
+	}
+
+	public void setRequestBy(MasterEmployee requestBy) {
+		this.requestBy = requestBy;
+	}
+
+	public MasterEmployee getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(MasterEmployee approvedBy) {
+		this.approvedBy = approvedBy;
+	}
 	
 }
