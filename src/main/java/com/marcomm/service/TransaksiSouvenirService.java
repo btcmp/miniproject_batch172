@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.MasterSouvenirDao;
+import com.marcomm.dao.MasterUserDao;
 import com.marcomm.dao.TransaksiEventDao;
 import com.marcomm.dao.TransaksiSouvenirDao;
 import com.marcomm.dao.TransaksiSouvenirItemDao;
 import com.marcomm.model.FormSouvenir;
 import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterSouvenir;
+import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiSouvenir;
 import com.marcomm.model.TransaksiSouvenirItem;
 
@@ -35,6 +37,9 @@ public class TransaksiSouvenirService {
 	
 	@Autowired
 	MasterSouvenirDao masterSouvenirDao;
+	
+	@Autowired
+	MasterUserDao masterUserDao;
 
 	/*UPDATE*/
 	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir) {
@@ -95,6 +100,10 @@ public class TransaksiSouvenirService {
 		ts.setCode(transaksiSouvenir.getCode());
 		ts.setType("additional");
 		ts.setDelete(false);
+		
+		MasterUser masterUser = masterUserDao.getUserByUserLog();
+		ts.setCreatedBy(masterUser.getEmployee());
+		
 		//ts.setReceivedBy(transaksiSouvenir.getReceivedBy());
 		ts.setReceivedDate(transaksiSouvenir.getReceivedDate());
 		ts.setNote(transaksiSouvenir.getNote());

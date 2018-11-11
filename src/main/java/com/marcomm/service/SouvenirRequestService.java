@@ -36,7 +36,7 @@ public class SouvenirRequestService {
 	
 	public void saveSouvenirRequest(TransaksiSouvenir transaksiSouvenir) {
 		Date date = new Date();
-		transaksiSouvenir.setCreatedBy(1);
+		//transaksiSouvenir.setCreatedBy('admin');
 		transaksiSouvenir.setCreatedDate(date);
 		//transaksiSouvenir.setRequestBy(1);
 		transaksiSouvenir.setRequestDate(date);
@@ -48,7 +48,7 @@ public class SouvenirRequestService {
 	public void saveAllData(TransaksiSouvenir transaksiSouvenir) {
 		TransaksiSouvenir ts= new TransaksiSouvenir();
 		Date date = new Date();
-		ts.setCreatedBy(1);
+		//ts.setCreatedBy(1);
 		ts.setCreatedDate(date);
 		//ts.setRequestBy(1);
 		ts.setRequestDate(date);

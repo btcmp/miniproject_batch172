@@ -11,7 +11,6 @@ public interface TransaksiSouvenirItemDao {
 
 	public TransaksiSouvenirItem getSouvenirItemById(int id);
 	
-	public void update(TransaksiSouvenirItem transaksiSouvenirItem);
 	
 	public void updateSettlement(TransaksiSouvenirItem transaksiSouvenirItem);
 	
@@ -19,6 +18,9 @@ public interface TransaksiSouvenirItemDao {
 	
 	/*GET ITEM PUNYA MAMAD*/
 	public List<TransaksiSouvenirItem> getItemBySouvenir(TransaksiSouvenir transaksiSouvenir);
+	
+	/*UPDATE MAMAD*/
+	public void update(TransaksiSouvenirItem itemLama);
 
 
 }

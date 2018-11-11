@@ -8,9 +8,6 @@ public interface TransaksiSouvenirDao {
 
 	
 
-	/*UPDATE*/
-	public void updateTransSouvenir(TransaksiSouvenir tRS);
-
 	/*DELETE*/
 	public void deleteTransSouvenir(TransaksiSouvenir transaksiSouvenir);
 	
@@ -31,6 +28,9 @@ public interface TransaksiSouvenirDao {
 	
 	/*GET BY ID FOR SOUVENIR*/
 	public TransaksiSouvenir getById(int id);
+	
+	/*UPATE*/
+	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir2);
 
 	
 	

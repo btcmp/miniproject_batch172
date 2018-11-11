@@ -40,12 +40,7 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 		return listTranSou;
 		
 	}
-	/*UPDATE*/
-	public void updateTransSouvenir(TransaksiSouvenir tRS) {
-		Session session = sessionFactory.getCurrentSession();
-		session.update(tRS);
 		
-	}
 	/*DELETE*/
 	public void deleteTransSouvenir(TransaksiSouvenir transaksiSouvenir) {
 		Session session = sessionFactory.getCurrentSession();
@@ -92,6 +87,13 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 	public TransaksiSouvenir getById(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(TransaksiSouvenir.class, id);
+	}
+
+	/*UPDATE*/
+	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir2) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(transaksiSouvenir2);
+		
 	}
 
 		

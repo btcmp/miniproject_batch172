@@ -273,7 +273,7 @@ $(document).ready(function(){
 			var tRow = '<a id="'+souvenir.id+'" href="#" class="btn-view-souvenir"><span class="oi oi-magnifying-glass"></span></a>';
 				tRow += ' ';
 				tRow += '<a id="'+souvenir.id+'" href="#" class="btn-update-souvenir"><span class="oi oi-pencil"></span></a>';
-			oTable.row.add([increment, souvenir.code, souvenir.receivedBy, souvenir.receivedDate, souvenir.createdDate, souvenir.createdBy,tRow]);
+			oTable.row.add([increment, souvenir.code, souvenir.receivedBy, souvenir.receivedDate, souvenir.createdDate, souvenir.createdBy, tRow]);
 		});
 		oTable.draw();
 	}
