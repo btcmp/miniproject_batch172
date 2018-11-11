@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,24 +45,23 @@ public class TransaksiEvent {
 	private String place;
 	private Long budget;
 	
+	@ManyToOne
 	@NotNull
-	@Column(name="request_by")
-	private int requestBy;
+	@JoinColumn(name="request_by")
+	private MasterEmployee requestBy;
 	
 	@NotNull
 	@Column(name="request_date")
 	@Temporal(TemporalType.DATE)
 	private Date requestDate;
 	
-	@Column(name="approved_by")
-	private int approvedBy;
+	@ManyToOne
+	@JoinColumn(name="approved_by")
+	private MasterEmployee approvedBy;
 	
 	@Column(name="approved_date")
 	@Temporal(TemporalType.DATE)
 	private Date approvedDate;
-	
-	@Column(name="assign_to")
-	private int assignTo;
 	
 	@Column(name="close_date")
 	@Temporal(TemporalType.DATE)
@@ -96,9 +97,6 @@ public class TransaksiEvent {
 	@OneToOne(fetch=FetchType.LAZY, mappedBy="tEventId")
 	private TransaksiSouvenir transaksiSouvenir;
 	
-	
-
-
 	public TransaksiSouvenir getTransaksiSouvenir() {
 		return transaksiSouvenir;
 	}
@@ -115,8 +113,20 @@ public class TransaksiEvent {
 		this.transaksiDesign = transaksiDesign;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="assign_to")
+	private MasterEmployee assignTo;
+	
 	public int getId() {
 		return id;
+	}
+
+	public MasterEmployee getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(MasterEmployee assignTo) {
+		this.assignTo = assignTo;
 	}
 
 	public void setId(int id) {
@@ -171,14 +181,6 @@ public class TransaksiEvent {
 		this.budget = budget;
 	}
 
-	public int getRequestBy() {
-		return requestBy;
-	}
-
-	public void setRequestBy(int requestBy) {
-		this.requestBy = requestBy;
-	}
-
 	public Date getRequestDate() {
 		return requestDate;
 	}
@@ -187,28 +189,12 @@ public class TransaksiEvent {
 		this.requestDate = requestDate;
 	}
 
-	public int getApprovedBy() {
-		return approvedBy;
-	}
-
-	public void setApprovedBy(int approvedBy) {
-		this.approvedBy = approvedBy;
-	}
-
 	public Date getApprovedDate() {
 		return approvedDate;
 	}
 
 	public void setApprovedDate(Date approvedDate) {
 		this.approvedDate = approvedDate;
-	}
-
-	public int getAssignTo() {
-		return assignTo;
-	}
-
-	public void setAssignTo(int assignTo) {
-		this.assignTo = assignTo;
 	}
 
 	public Date getCloseDate() {
@@ -282,6 +268,21 @@ public class TransaksiEvent {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
+
+	public MasterEmployee getRequestBy() {
+		return requestBy;
+	}
+
+	public void setRequestBy(MasterEmployee requestBy) {
+		this.requestBy = requestBy;
+	}
+
+	public MasterEmployee getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(MasterEmployee approvedBy) {
+		this.approvedBy = approvedBy;
+	}
 	
 }

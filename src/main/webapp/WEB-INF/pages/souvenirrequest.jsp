@@ -186,7 +186,7 @@ $(document).ready(function(){
 				uiLibrary: 'bootstrap4'
 			});
 		//get requested by
-		
+		//$('#requestBy').val(userlogin.employee.name);
 		$('#addTranSouReqModal').modal();
 	});
 	
@@ -291,6 +291,7 @@ $(document).ready(function(){
 				Id=keys.length;
 				$('#editTransactionCode').val(data[0].transaksiSouvenir.code);
 				$('#editEventCode').val(data[0].transaksiSouvenir.tEventId.code);
+				//$('#editEventId').val(data[0].transaksiSouvenir.tEventId.id);
 				$('#editRequestBy').val(data[0].transaksiSouvenir.requestBy);
 				$('#editRequestDate').val(data[0].transaksiSouvenir.requestDate);
 				$('#editDueDate').val(data[0].transaksiSouvenir.requestDueDate);
@@ -301,6 +302,12 @@ $(document).ready(function(){
 				$('.tableBodyEdit').empty();
 				viewOldItems(Id,data);
 			}
+		});
+		//created date
+		$('#editDueDate').datepicker({
+			format : 'yyyy-mm-dd',
+			autoclose : true,
+			uiLibrary : 'bootstrap4'
 		});
 		$('#editTranSouReqModal').modal();
 		//index = 0;
@@ -319,10 +326,10 @@ $(document).ready(function(){
 					'<option value="${souvenir.id}">${souvenir.name}</option>'+
 					'</c:forEach>'+
 					'</select></td>';
-			tRow += '<td><input type="number" class="form-control" id="qty'+i+'"  value="'+data[index2].qty+'" placeholder="Qty" disabled></td>';
+			tRow += '<td><input type="number" class="form-control" id="qty'+i+'"  value="'+-data[index2].qty+'" placeholder="Qty" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" id="note'+i+'" value="'+data[index2].note+'" placeholder="Note" disabled></td>';
 			tRow += '<td><input type="hidden" class="form-control" id="itemIdEdit'+i+'" value="'+data[index2].id+'" ></td>';
-			tRow += '<td><input type="hidden" class="form-control" id="itemDeleteEdit'+i+'" value="'+data[index2].isDelete+'" ></td>';
+			tRow += '<td><input type="hidden" class="form-control" id="itemDeleteEdit'+i+'" value=false ></td>';
 			tRow += '<td><a id="'+i+'" href="#" class="editBtnModalEdit"><span class="oi oi-pencil"></span></a>'+' ';
 			tRow +=	'<a id="'+i+'" href="#" class="deleteBtnModalEdit"><span class="oi oi-trash"></span></a></td>';
 			tRow += '</tr>';
@@ -334,7 +341,7 @@ $(document).ready(function(){
 	 $('#btnAddItemEdit').on('click',function(){
 		 Id++;
 		 index++;
-		 console.log(Id);
+		 //console.log(Id);
 		 var oTable = $('#modalTableEditItems');
 			var tBody = oTable.find('tbody');
 			var tRow ='<tr id="itemsEdit-'+Id+'">';
@@ -347,7 +354,7 @@ $(document).ready(function(){
 			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'" placeholder="Qty" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note" disabled></td>';
 			tRow += '<td><input type="hidden" class="form-control" id="itemIdEdit'+Id+'" value="999999" ></td>';
-			tRow += '<td><input type="hidden" class="form-control" id="itemDeleteEdit'+Id+'" value="false" ></td>';
+			tRow += '<td><input type="hidden" class="form-control" id="itemDeleteEdit'+Id+'" value=false ></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalEdit"><span class="oi oi-pencil"></span></a>'+' ';
 			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalEdit"><span class="oi oi-trash"></span></a></td>';
 			tRow += '</tr>';
@@ -361,35 +368,35 @@ $(document).ready(function(){
 	//icon delete items
 	$(document).on('click','.deleteBtnModalEdit',function(){
 			var id =$(this).attr('id');
-			$("#itemDeleteEdit"+id).val("true");
+			$("#itemDeleteEdit"+id).val(true);
 			$('#items-edit-'+id).remove();
 		});
 	//button SAVE UPDATE
 	$(document).on('click', '#saveUpdateBtnModal', function(e){
 		var transaksiSouvenirItems =[];
-		$('.tableBody tr').each(function(){
+		$('.tableBodyEdit tr').each(function(){
 			tRow =$(this).find('td :input');
 			var items = {
 					masterSouvenir:{
 						id:parseInt(tRow.eq(0).val())
 					},
-					qty:tRow.eq(1).val(),
+					qty:parseInt(tRow.eq(1).val()),
 					note:tRow.eq(2).val(),
 					id:parseInt(tRow.eq(3).val()),
-					isDelete:tRow.eq(4).val()
+					'delete':tRow.eq(4).val()
 				}
 			transaksiSouvenirItems.push(items);
 		});
 		 //console.log(transaksiSouvenirItems);
 		var transaksiSouvenir = {
-				code :$('#transactionCode').val(),
-				tEventId :{
-					id:parseInt($('#eventId').val())
-				},
+				//code :$('#editTransactionCode').val(),
+				/* tEventId :{
+					id:parseInt($('#editEventId').val())
+				}, */
 				//requestBy :$('#requestBy').val(),
-				//requestDate :$('#requestDate').val(),
-				requestDueDate:$('#requestDueDate').val(),
-				note :$('#note').val(),
+				//requestDate :$('#editRequestDate').val(),
+				requestDueDate:$('#editDueDate').val(),
+				note :$('#editNote').val(),
 				transaksiSouvenirItems:transaksiSouvenirItems
 		}
 		
@@ -398,7 +405,7 @@ $(document).ready(function(){
 		console.log(transaksiSouvenir);
 		console.log(JSON.stringify(transaksiSouvenir));
 		$.ajax({
-			url : '${pageContext.request.contextPath}/souvenirrequest/update/' +idTras,
+			url : '${pageContext.request.contextPath}/souvenirrequest/update/'+idTras,
 			type : 'POST',
 			contentType :'application/json',
 			dataType : 'json',
@@ -445,7 +452,7 @@ $(document).ready(function(){
 				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
 				tRow +='';
 				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-edit-transaksiR"><span class="oi oi-pencil"></span></a>';
-				oTable.row.add([increment,transaksiSouvenir.code,transaksiSouvenir.requestBy,transaksiSouvenir.requestDate,transaksiSouvenir.requestDueDate,status,transaksiSouvenir.createdDate,transaksiSouvenir.createdBy,tRow]);
+				oTable.row.add([increment,transaksiSouvenir.code,transaksiSouvenir.requestBy.employeeName,transaksiSouvenir.requestDate,transaksiSouvenir.requestDueDate,status,transaksiSouvenir.createdDate,transaksiSouvenir.createdBy.employeeName,tRow]);
 			});
 			oTable.draw();
 		};

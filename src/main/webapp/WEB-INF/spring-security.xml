@@ -14,7 +14,7 @@
 		<intercept-url pattern="/company*"
 			access="hasRole('Administrator')" />
 		<intercept-url pattern="/event*"
-			access="hasRole('Administrator') or hasRole('ROLE_STAFF') or hasRole('ROLE_REQUEST')"/> 
+			access="hasRole('Administrator') or hasRole('Staff') or hasRole('Requester')"/> 
 			<!-- MASTER PRODUCT -->
 		<intercept-url pattern="/product*"
 			access="hasRole('Administrator')" />
