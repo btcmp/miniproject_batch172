@@ -339,7 +339,7 @@ $(document).ready(function(){
 					modalview = "btn-acceptreject-event";
 				} else{
 					modalview = "btn-view-event";
-					modaledit="btn-edit-event";
+					modaledit="btn-edit-event"; 
 				}
 			} else if(event.status==2){
 				status="In Progress";
