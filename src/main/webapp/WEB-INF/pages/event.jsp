@@ -13,7 +13,7 @@
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
-<c:url value="/j_spring_security_logout" var="logoutUrl" />
+<c:url value="/j_spring_security_logout" var="logoutUrl" /> 
 
 <style>
 	input.parsley-error
