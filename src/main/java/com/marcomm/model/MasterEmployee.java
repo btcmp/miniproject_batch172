@@ -76,7 +76,7 @@ public class MasterEmployee {
 	private List<TransaksiEvent> approvedbyEvent;
 	//AKHIR KOLOM TAMBAHAN EVENT
 	//KOLOM TAMBAHAN SOUVENIR ITEM TRANSAKASI
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="updatedtedBy")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="updatedBy")
 	private List<TransaksiSouvenirItem> updatedBySouvenirItem;
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdBy")
 	private List<TransaksiSouvenirItem> createdBySouvenirItem;
