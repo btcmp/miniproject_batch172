@@ -93,6 +93,17 @@ public class TransaksiEvent {
 	@OneToOne(fetch=FetchType.LAZY,mappedBy="transaksiEvent")
 	@JsonBackReference
 	private TransaksiDesign transaksiDesign;
+	
+	@OneToOne(fetch=FetchType.LAZY, mappedBy="tEventId")
+	private TransaksiSouvenir transaksiSouvenir;
+	
+	public TransaksiSouvenir getTransaksiSouvenir() {
+		return transaksiSouvenir;
+	}
+
+	public void setTransaksiSouvenir(TransaksiSouvenir transaksiSouvenir) {
+		this.transaksiSouvenir = transaksiSouvenir;
+	}
 
 	public TransaksiDesign getTransaksiDesign() {
 		return transaksiDesign;
