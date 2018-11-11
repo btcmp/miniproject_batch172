@@ -38,6 +38,7 @@ public class MasterEmployee {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdBy")
 	private List<TransaksiSouvenir> createdByTransaksiSouvneir;
 	
+	
 	public List<TransaksiSouvenir> getCreatedByTransaksiSouvneir() {
 		return createdByTransaksiSouvneir;
 	}
@@ -45,12 +46,15 @@ public class MasterEmployee {
 	public void setCreatedByTransaksiSouvneir(List<TransaksiSouvenir> createdByTransaksiSouvneir) {
 		this.createdByTransaksiSouvneir = createdByTransaksiSouvneir;
 	}
+	
 	//end relasi mamad
 	
 	
 
 	//relasi ke design table buat diaz
 
+
+	
 
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="assignTo")
 	private List<TransaksiDesign> assignToDesign;
