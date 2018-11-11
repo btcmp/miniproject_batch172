@@ -67,6 +67,7 @@ public class TransaksiSouvenirService {
 				itemLama.setId(transaksiSouvenirItem.getId());
 				MasterSouvenir souvenirId = transaksiSouvenirItem.getMasterSouvenir();
 				MasterSouvenir souvenirBaru = masterSouvenirDao.getSouvenirById(souvenirId.getId());
+				itemLama.setMasterSouvenir(souvenirBaru);
 				itemLama.setQty(transaksiSouvenirItem.getQty());
 				itemLama.setNote(transaksiSouvenirItem.getNote());
 				
