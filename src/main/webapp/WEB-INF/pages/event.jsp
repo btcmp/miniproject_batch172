@@ -328,7 +328,7 @@ $(document).ready(function(){
 			index++;
 			
 			//CHOOSEN MODAL BASED ON STATUS AND ROLE
-			//NAMED STATUS
+			//NAMED STATUS 
 			var role="${rolename}"
 			var modalview = "";
 			var modaledit = "";
