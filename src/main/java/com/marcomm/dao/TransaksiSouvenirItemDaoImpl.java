@@ -49,6 +49,16 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 		
 	}
 
+	/*PUNYA MAMAD*/
+	//Get Item By Souvenir
+	public List<TransaksiSouvenirItem> getItemBySouvenir(TransaksiSouvenir transaksiSouvenir) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(TransaksiSouvenirItem.class);
+		criteria.add(Restrictions.eq("transaksiSouvenir", transaksiSouvenir));
+		List<TransaksiSouvenirItem> transaksiSouvenirItems = criteria.list();
+		return transaksiSouvenirItems;
+	}
+
 
 
 	

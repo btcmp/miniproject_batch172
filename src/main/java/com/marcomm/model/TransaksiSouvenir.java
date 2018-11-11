@@ -50,8 +50,10 @@ public class TransaksiSouvenir {
 	private	TransaksiEvent tEventId;
 	
 	
-	@Column(name="request_by", length=50, nullable=false)
-	private int requestBy;
+	//@Column(name="request_by", length=50, nullable=false)
+	@ManyToOne
+	@JoinColumn(name="request_by")
+	private MasterEmployee requestBy;
 	
 	@Column(name="request_date")
 	@Temporal(TemporalType.DATE)
@@ -110,15 +112,20 @@ public class TransaksiSouvenir {
 	@Column(name="is_delete")
 	private boolean isDelete;
 	
-	@Column(name="created_by")
-	private long createdBy;
+	//@Column(name="created_by")
+	@ManyToOne
+	@JoinColumn(name="created_by")
+	private MasterEmployee createdBy;
+	
 	
 	@Column(name="created_date")
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
 	
-	@Column(name="updated_by")
-	private long updatedBy;
+	//@Column(name="updated_by")
+	@ManyToOne
+	@JoinColumn(name="updated_by")
+	private MasterEmployee updatedBy;
 	
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
@@ -225,24 +232,14 @@ public class TransaksiSouvenir {
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-	public long getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(long createdBy) {
-		this.createdBy = createdBy;
-	}
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public long getUpdatedBy() {
-		return updatedBy;
-	}
-	public void setUpdatedBy(long updatedBy) {
-		this.updatedBy = updatedBy;
-	}
+	
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
@@ -283,6 +280,17 @@ public class TransaksiSouvenir {
 		this.tEventId = tEventId;
 	}
 
-	
+	public MasterEmployee getRequestBy() {
+		return requestBy;
+	}
+	public void setRequestBy(MasterEmployee requestBy) {
+		this.requestBy = requestBy;
+	}
+	public void setCreatedBy(MasterEmployee createdBy) {
+		this.createdBy = createdBy;
+	}
+	public void setUpdatedBy(MasterEmployee updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
 }

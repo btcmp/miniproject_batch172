@@ -14,5 +14,8 @@ public interface TransaksiDesignDao {
 	public String getRequestBy();
 	public List<TransaksiEvent> getEventAvailable(List<Integer> eventId);
 	
+	//KOLOM ANGGI
+	public void update(TransaksiDesign transaksiDesign1);
+	
 	
 }

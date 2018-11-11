@@ -278,7 +278,49 @@ $(document).ready(function(){
 		oTable.draw();
 	}
 	
-	/* VIEW */
+	/* VIEW  SOUVENIR STOCK*/
+	
+	$(document).on('click', '.btn-view-souvenir', function(){
+		var id = $(this).attr('id');
+		//var id2 = parseInt(id);
+		console.log(id);
+			$.ajax({
+				url : '${pageContext.request.contextPath}/transaksisouvenir/getsouvenirbyid/'+id,
+				type : 'GET',
+				dataType : 'json',
+				success : function(data){
+					var keys=Object.keys(data);
+					len=keys.length;
+					
+						//Data atas
+						$('#viewTransCode').val(data[0].transaksiSouvenir.code);
+						$('#viewReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy);
+						$('#viewReceivedTransSDate').val(data[0].transaksiSouvenir.receivedDate);
+						$('#viewNoteTransSou').val(data[0].transaksiSouvenir.note);
+						
+						$('.viewTableBody').empty();
+						itemBawah(len,data);
+					}
+					
+			});
+	$('#viewTranSouModal').modal('show');
+	});
+	
+	//fungsi edit items bawah 
+	function itemBawah(banyak, data){
+		idx = 0;
+		for(var i=1; i<=banyak; i++){
+			var oTable = $('#modalViewTableSouTrans');
+			var tBody = oTable.find('tbody');
+			var tRow = '<tr id="items-view-'+i+'"></tr>';
+				tRow += '<td><input  class="form-control" id="viewSouItem'+i+'"  readonly value="'+data[idx].masterSouvenir.name+'"></td>';
+				tRow += '<td><input  class="form-control" id="viewQtyItem'+i+'" readonly value="'+data[idx].qty+'"></td>';
+				tRow += '<td><input  class="form-control" id="viewNoteItem'+i+'"  readonly value="'+data[idx].note+'"></td>';
+				tRow += '</tr>';
+		idx++;
+		tBody.append(tRow);
+		}
+	};
 	
 		
 }); /* batas akhir ready function */
