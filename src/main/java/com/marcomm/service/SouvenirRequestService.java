@@ -84,9 +84,56 @@ public class SouvenirRequestService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//get items by transaksi
+	public List<TransaksiSouvenirItem> getItemsById(int id) {
+		TransaksiSouvenir ts= transaksiSouvenirDao.getById(id);
+		List<TransaksiSouvenirItem> souvenirItems= transaksiSouvenirItemDao.getItemBySouvenir(ts);
+		return souvenirItems;
+	}
 	public List<TransaksiEvent> getEvents() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public void updateSouvenirRequest(TransaksiSouvenir transaksiSouvenir, int id) {
+		
+		//TransaksiSouvenir ts= new TransaksiSouvenir();
+		TransaksiSouvenir ts = transaksiSouvenirDao.getById(id);
+		Date date = new Date();
+		//ts.setCreatedBy(1);
+		//ts.setCreatedDate(date);
+		//ts.setRequestBy(1);
+		ts.setRequestDate(date);
+		//ts.setType("reduction");
+		//ts.setStatus(1);
+		//ts.setCode(transaksiSouvenir.getCode());
+		ts.setRequestDueDate(transaksiSouvenir.getRequestDueDate());
+		ts.setNote(transaksiSouvenir.getNote());
+		//ts.settEventId(transaksiSouvenir.gettEventId());
+		transaksiSouvenirDao.save(ts);
+		for (TransaksiSouvenirItem transaksiSouvenirItem : transaksiSouvenir.getTransaksiSouvenirItems()) {
+			
+			if(transaksiSouvenirItem.getId()==9999) {
+				TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
+				tsi.setTransaksiSouvenir(ts);
+				tsi.setMasterSouvenir(transaksiSouvenirItem.getMasterSouvenir());
+				tsi.setQty(-(transaksiSouvenirItem.getQty()));
+				tsi.setNote(transaksiSouvenirItem.getNote());
+				tsi.setCreatedDate(date);
+				tsi.setDelete(false);
+				transaksiSouvenirItemDao.save(tsi);
+			}
+			else {
+				TransaksiSouvenirItem tsi = transaksiSouvenirItemDao.getSouvenirItemById(transaksiSouvenirItem.getId());
+				tsi.setMasterSouvenir(transaksiSouvenirItem.getMasterSouvenir());
+				tsi.setQty(-(transaksiSouvenirItem.getQty()));
+				tsi.setNote(transaksiSouvenirItem.getNote());
+				tsi.setDelete(transaksiSouvenirItem.isDelete());
+				transaksiSouvenirItemDao.save(tsi);
+			}
+			
+		}
+		
 	}
 
 }
