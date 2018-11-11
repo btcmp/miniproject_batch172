@@ -33,6 +33,22 @@ public class MasterEmployee {
 	@ManyToOne
 	@JoinColumn(name="company_id")
 	private MasterCompany company;
+	
+	//relasi ke souvenir mamad
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdBy")
+	private List<TransaksiSouvenir> createdByTransaksiSouvneir;
+	
+	public List<TransaksiSouvenir> getCreatedByTransaksiSouvneir() {
+		return createdByTransaksiSouvneir;
+	}
+
+	public void setCreatedByTransaksiSouvneir(List<TransaksiSouvenir> createdByTransaksiSouvneir) {
+		this.createdByTransaksiSouvneir = createdByTransaksiSouvneir;
+	}
+	//end relasi mamad
+	
+	
+
 	//relasi ke design table buat diaz
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="assignTo")
 	private List<TransaksiDesign> assignToDesign;
