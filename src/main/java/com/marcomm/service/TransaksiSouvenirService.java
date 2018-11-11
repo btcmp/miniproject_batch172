@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.marcomm.dao.MasterSouvenirDao;
 import com.marcomm.dao.TransaksiEventDao;
 import com.marcomm.dao.TransaksiSouvenirDao;
 import com.marcomm.dao.TransaksiSouvenirItemDao;
 import com.marcomm.model.FormSouvenir;
+import com.marcomm.model.MasterEmployee;
+import com.marcomm.model.MasterSouvenir;
 import com.marcomm.model.TransaksiSouvenir;
 import com.marcomm.model.TransaksiSouvenirItem;
 
@@ -29,14 +32,47 @@ public class TransaksiSouvenirService {
 	
 	@Autowired
 	TransaksiEventDao transaksiEventDao;
+	
+	@Autowired
+	MasterSouvenirDao masterSouvenirDao;
 
 	/*UPDATE*/
 	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir) {
-		TransaksiSouvenir tRS = transaksiSouvenir;
-		tRS.setUpdatedBy(1);
-		Date date = new Date();
-		tRS.setUpdatedDate(date);
-		transaksiSouvenirDao.updateTransSouvenir(tRS);
+		//DATA TABLE ATAS
+		TransaksiSouvenir transaksiSouvenir2 = transaksiSouvenirDao.getById(transaksiSouvenir.getId());//mengambil repository lama
+		
+		transaksiSouvenir2.setCode(transaksiSouvenir.getCode());
+		//transaksiSouvenir2.setReceivedBy(1); --> belum fix
+		transaksiSouvenir2.setReceivedDate(transaksiSouvenir.getReceivedDate());
+		transaksiSouvenir2.setNote(transaksiSouvenir.getNote());
+		
+		transaksiSouvenirDao.updateTransSouvenir(transaksiSouvenir2);
+		
+		//DATA TABLE ITEM
+		List<TransaksiSouvenirItem> itemBaru = transaksiSouvenir.getTransaksiSouvenirItems();
+		for(TransaksiSouvenirItem transaksiSouvenirItem : itemBaru) {
+			//bagian save
+			if(transaksiSouvenirItem.getId()==0) {
+				TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
+				MasterSouvenir masterSouvenir1 = transaksiSouvenirItem.getMasterSouvenir();
+				tsi.setMasterSouvenir(masterSouvenirDao.getSouvenirById(masterSouvenir1.getId()));
+				tsi.setQty(transaksiSouvenirItem.getQty());
+				tsi.setNote(transaksiSouvenirItem.getNote());
+				tsi.setDelete(false);
+				transaksiSouvenirItemDao.save(tsi);
+			}else {
+				//bagian update
+				TransaksiSouvenirItem itemLama = transaksiSouvenirItemDao.getSouvenirItemById(transaksiSouvenirItem.getId());
+				
+				itemLama.setId(transaksiSouvenirItem.getId());
+				MasterSouvenir souvenirId = transaksiSouvenirItem.getMasterSouvenir();
+				MasterSouvenir souvenirBaru = masterSouvenirDao.getSouvenirById(souvenirId.getId());
+				itemLama.setQty(transaksiSouvenirItem.getQty());
+				itemLama.setNote(transaksiSouvenirItem.getNote());
+				
+				transaksiSouvenirItemDao.update(itemLama);
+			}
+		}
 		
 	}
 	/*DELETE*/

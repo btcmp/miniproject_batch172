@@ -50,8 +50,10 @@ public class TransaksiSouvenir {
 	private	TransaksiEvent tEventId;
 	
 	
-	@Column(name="request_by", length=50, nullable=false)
-	private int requestBy;
+	//@Column(name="request_by", length=50, nullable=false)
+	@ManyToOne
+	@JoinColumn(name="request_by")
+	private MasterEmployee requestBy;
 	
 	@Column(name="request_date")
 	@Temporal(TemporalType.DATE)
