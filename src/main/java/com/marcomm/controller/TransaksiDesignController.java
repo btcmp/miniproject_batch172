@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
+import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.MasterProductService;
 import com.marcomm.service.TransaksiDesignService;
 import com.marcomm.service.TransaksiEventService;
@@ -40,6 +42,8 @@ public class TransaksiDesignController {
 	TransaksiEventService eventService;
 	@Autowired
 	TransaksiDesignService transaksiDesignService;
+	@Autowired
+	MasterEmployeeService employeeService;
 	
 	ServletContext servletContext;
 	@RequestMapping
@@ -47,8 +51,10 @@ public class TransaksiDesignController {
 		ModelAndView modelAndView = new ModelAndView("transaksidesign");
 		List<MasterProduct> products = masterProductService.getAll();
 		List<TransaksiEvent> events = eventService.getAllService();
+		List<MasterEmployee> employees = employeeService.getAllEmployeeStaff();
 		modelAndView.addObject("events", events);
 		modelAndView.addObject("products", products);
+		modelAndView.addObject("employeesStaff", employees);
 		return modelAndView;
 	}
 	
@@ -121,6 +127,12 @@ public class TransaksiDesignController {
 	@ResponseStatus(HttpStatus.OK)
 	public void update(@RequestBody TransaksiDesign transaksiDesign) {
 	transaksiDesignService.update(transaksiDesign);
-		 
 	} 
+	@RequestMapping(value="/approved",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void approve(@RequestBody TransaksiDesign transaksiDesign) {
+		transaksiDesignService.approved(transaksiDesign);
+	}
+	
+	
 }

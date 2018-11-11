@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bankmega.traning.service.EmployeeService;
 import com.marcomm.dao.MasterProductDao;
 import com.marcomm.dao.MasterUserDao;
 import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.dao.TransaksiDesignItemDao;
 import com.marcomm.dao.TransaksiEventDao;
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiDesign;
@@ -34,6 +36,8 @@ public class TransaksiDesignService {
 	MasterUserDao masterUserDao;
 	@Autowired
 	MasterProductDao masterProductDao;
+	@Autowired
+	MasterEmployeeService employeeService;
 	
 		
 	public List<TransaksiDesign> getAll() {
@@ -152,6 +156,24 @@ public class TransaksiDesignService {
 				
 			}
 		}
+		
+	}
+
+	public void approved(TransaksiDesign transaksiDesign) {
+		TransaksiDesign transaksiDesign1= transaksiDesignDao.getById(transaksiDesign.getId());//untuk mengambil repositori lama
+		
+		if(transaksiDesign.getStatus()==2) {
+			MasterEmployee employeeAssignTo= transaksiDesign.getAssignTo();
+			transaksiDesign1.setAssignTo(employeeAssignTo);
+			transaksiDesign1.setStatus(transaksiDesign.getStatus());
+			
+		}else {
+			transaksiDesign1.setStatus(transaksiDesign.getStatus());
+			transaksiDesign1.setRejectReason(transaksiDesign.getRejectReason());;
+		}
+		
+		System.out.println(transaksiDesign.getRejectReason());
+		transaksiDesignDao.update(transaksiDesign1);
 		
 	}
 }

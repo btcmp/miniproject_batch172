@@ -17,18 +17,19 @@
 						<div class="row" style="width: 80%;">
 							<div class="col-sm-5" style="margin-top:10px;margin-left:10px;">
 								<div class="form-group row">
+								<input type="hidden" id="approvedId"> 
 									<label for="TransactionEditCode2" class="col-sm-4 col-form-label">Transaction
 										Code</label>
 									<div class="col-sm-7">
 										<input type="text" class="form-control" id="transactionEditCode2"
-											placeholder="Kode Transaksi" readonly>
+											placeholder="Kode Transaksi" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="eventEditCode2" class="col-sm-4 col-form-label">Event
 										Code</label>
 									<div class="col-sm-7">
-										<select class="form-control" id="eventEditCode2">
+										<select class="form-control" id="eventEditCode2" disabled>
 										 
 										</select>
 									</div>
@@ -38,7 +39,7 @@
 										Title</label>
 									<div class="col-sm-7">
 										<input type="text" class="form-control" id="titleEditHeader2"
-											placeholder="Design Title">
+											placeholder="Design Title" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -47,6 +48,15 @@
 									<div class="col-sm-7">
 										<input type="text" class="form-control" id="statusEdit2"
 											placeholder="Submitted(manual cuy)" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="asignTo" class="col-sm-4 col-form-label">Status
+										</label>
+									<div class="col-sm-7">
+										<select class="form-control" id="assignTo">
+										 
+										</select>
 									</div>
 								</div>
 							</div>
@@ -71,7 +81,7 @@
 									<label for="noteEdit2" class="col-sm-4 col-form-label">Note</label>
 									<div class="col-sm-7">
 										<textarea class="form-control" id="noteEdit2"
-											style="height: 150px" placeholder="Note"></textarea>
+											style="height: 150px" placeholder="Note" disabled></textarea>
 									</div>
 								</div>
 							</div>
@@ -79,10 +89,7 @@
 					</div>
 					<br>
 					<div class="bg-light border rounded" style="height: 50%;">
-						<div class="row">
-							<a class="btn btn-primary text-white" id="addEditItemBtn"
-								style="width: 100px; margin: 20px;">Add</a>
-						</div>
+						 
 						<table id="itemsTableEdit2">
 							<thead>
 								<tr>
@@ -103,8 +110,9 @@
 					</div>
 				</div>
 				<div class="modal-footer border border-top-0 border-dark">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="saveBtnModalEdit">Save Transaction</button>
+				<button type="button" class="btn btn-primary" id="approvedBtnModalEdit">Approved</button>
+				<button type="button" class="btn btn-primary" id="rejectedBtnModalEdit">Rejected</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
 			</div>
 			</form>
      </div>
