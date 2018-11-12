@@ -17,5 +17,7 @@ public interface MasterMenuAccessDao {
 	public List<MasterMenu> getMenu();
 	public List<MasterRole> getRole();
 	public List<MasterMenu> getMenuByMenuAccessId(MasterMenuAccess access);
+	public List<MasterRole> getRoleByMenuAcces(MasterMenuAccess access);
+	
 
 }
