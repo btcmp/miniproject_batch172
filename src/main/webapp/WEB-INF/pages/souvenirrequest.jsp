@@ -316,7 +316,9 @@ $(document).ready(function(){
 		};
 		
 		/* Button Pop Up Approvel (REZA)*/
-		
+		$(document).on('click', '.btn-view-transaksiR', function(){
+			$('#approveTranSouReqModal').modal();
+		});
 		
 		
 		

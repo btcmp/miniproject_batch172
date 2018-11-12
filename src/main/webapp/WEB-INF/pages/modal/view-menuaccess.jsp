@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false"%>
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -11,9 +15,8 @@
 		        <input type="hidden" id="ViewAccess"/>
 		        <div class="form-group">
 				    <div class="col">
-				    	<label for="view-role">Menu Code</label>
+				    	<label for="view-role">Role Code</label>
  						<select style="width: 100%;" name="mRoleId" id="view-role"> 
-			    	<!-- <input type="email" class="form-control" id="view-role"> -->
 		      		  	<option value="" selected>Select Role Name</option>
 		      		  	<c:forEach var="role" items="${masterRoles}">
 		      		  	<option value="${role.id}">${role.code}</option>
@@ -26,7 +29,6 @@
   		<c:forEach var="menu" items="${masterMenus}">
     		<div class="input-group-text">
       		<input type="checkbox" aria-label="Checkbox for following text input" value="${menu.id }" class="viewId" id="${menu.id}">
-      		<%-- <label class="custom-control-label">${menu.name}</label> --%>
       		<form:option>
 				<c:out value="${menu.name}"></c:out>
 			</form:option>

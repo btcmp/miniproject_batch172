@@ -28,7 +28,6 @@
   		<c:forEach var="menu" items="${masterMenus}">
     		<div class="input-group-text">
       		<input type="checkbox" aria-label="Checkbox for following text input" value="${menu.id }" class="updateId" id="${menu.id}">
-      		<%-- <label class="custom-control-label">${menu.name}</label> --%>
       		<form:option>
 				<c:out value="${menu.name}"></c:out>
 			</form:option>

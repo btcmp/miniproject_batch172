@@ -61,7 +61,7 @@
 						<li class="breadcrumb-item active" aria-current="page">Product</li>
 					</ol>
 				</nav>
-				<table id="inputTable">
+				<table id="inputTable" style="width:100%">
 				<thead>
 					<tr>
 						<th colspan="6"><p id="notif" style="width: 70%;display:none" class="text-white bg-info border rounded form-control"></p></th>
