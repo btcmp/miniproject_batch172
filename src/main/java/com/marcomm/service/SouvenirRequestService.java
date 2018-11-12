@@ -133,7 +133,7 @@ public class SouvenirRequestService {
 			ms.setQuantity(quantityMS);
 			masterSouvenirDao.update(ms);*/
 			
-			if(transaksiSouvenirItem.getId()==9999) {
+			if(transaksiSouvenirItem.getId()==0) {
 				System.out.println("save item tambahan");
 				TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
 				TransaksiSouvenir tsu= transaksiSouvenirDao.getById(id);

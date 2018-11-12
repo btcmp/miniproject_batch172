@@ -172,6 +172,7 @@
 				dataType: 'json'
 			});
 			$('#add-souvenir-modal').modal();
+			
 		});
 	});
 	
@@ -230,9 +231,11 @@
 					$('#souvenirnameview').val(outview.name);
 					$('#souvenirunitview').val(outview.masterUnit.name);
 					$('#souvenirdescriptionview').val(outview.description);
+					document.getElementById("viewTitle").innerHTML = "View Souvenir - "+outview.name+" ("+outview.code+") ";
 				},
 				dataType: 'json'
 			});
+			 
 			 $('#view-souvenir-modal').modal();
 		});
 	
@@ -254,6 +257,7 @@
 					$('#editsvnrquantity').val(outedit.quantity);
 					$('#editsvnrcreaatedby').val(outedit.createdBy);
 					$('#editsvnrcreateddate').val(outedit.createdDate);
+					document.getElementById("editTitle").innerHTML = "Edit Souvenir - "+outedit.name+" ("+outedit.code+") ";
 				},
 				dataType: 'json'
 			});
