@@ -52,10 +52,10 @@ input.parsley-error {
 						</a></li>
 						<li class="nav-item"><a class="nav-link text-white" href="#"> Master
 						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="http://localhost:8433/maven-project/product">
+						<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath }/product">
 								Products
 						</a></li>
-						<li class="nav-item"><a class="nav-link bg-danger text-white" href="http://localhost:8433/maven-project/design"> Transaction	
+						<li class="nav-item"><a class="nav-link bg-danger text-white" href="${pageContext.request.contextPath}/design"> Transaction	
 						</a></li>
 						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
 						</a></li>
@@ -121,7 +121,10 @@ input.parsley-error {
 	</div>
 	<%@include file="/WEB-INF/pages/modal/add-transaksidesign.jsp" %> 
 	<%@include file="/WEB-INF/pages/modal/edit-transaksidesign.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/approve-transaksidesign.jsp" %>
 	<%@include file="/WEB-INF/pages/modal/close-design.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/rejected-transaksidesignjsp.jsp" %>
+	
 </body>
 <!--   Core JS Files   -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -163,9 +166,11 @@ $(document).ready(function(){
 			type : 'GET',
 			dataType : 'json',
 			success : function(data){
-				$('#requestBy').val(data);
+				$('#addRequestBy').val(data.mRole.roleName);
+				$('#addRequestById').val(data.employee.id);
+				$('#addCreatedBy').val(data.employee.employeeName);
 			}
-		})
+		});
 		$('#addFormDesign').trigger('reset');
 		Id = 1;
 		loadEvent();
@@ -212,7 +217,7 @@ $(document).ready(function(){
 				$('#closeDesignTitle').val(data[0].transaksiDesign.titleHeader);
 				$('#closeStatus').val(data[0].transaksiDesign.status);
 				$('#closeAssignTo').val(data[0].transaksiDesign.assignTo);
-				$('#closeRequestBy').val(data[0].transaksiDesign.requestBy);
+				$('#closeRequestBy').val(data[0].transaksiDesign.requestBy.employeeName);
 				$('#closeRequestDate').val(data[0].transaksiDesign.requestDate);
 				$('closeNote').val(data[0].transaksiDesign.note);
 				closeDesign(data);
@@ -294,7 +299,10 @@ $(document).ready(function(){
 		});
 		var transaksiDesign = {
 				code :$('#transactionCode').val(),
-				requestBy :$('#requestBy').val(),
+				createdBy:$('#addCreatedBy').val(),
+				requestBy :{
+					id:$('#addRequestById').val()
+				},
 				requestDate :$('#requestDate').val(),
 				titleHeader :$('#titleHeader').val(),
 				note :$('#note').val(),
@@ -331,7 +339,7 @@ $(document).ready(function(){
 		oTable.rows( 'tr' ).remove();
 		$.each(data,function(increment,design){
 			increment++;
-			var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';	
+			var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-main"><span class="oi oi-magnifying-glass"></span></a>';	
 			tRow +=' ';
 			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design-main"><span class="oi oi-pencil"></span></a>';
 			if(design.status==1){
@@ -343,7 +351,7 @@ $(document).ready(function(){
 			} else if(design.status==0){
 				status="Rejected";
 			}
-			oTable.row.add([increment,design.code,design.requestBy,design.requestDate,design.assignTo,status,design.createdDate,design.createdBy,tRow]);
+			oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,design.assignTo,status,design.createdDate,design.createdBy,tRow]);
 		});
 		oTable.draw();
 	}
@@ -403,171 +411,370 @@ $(document).ready(function(){
 			});
 	    });
 	}
-});
-/*  KOLOM ANGGI*/
-  
-  /* memunculkan Modal edit */ 
-  $(document).on('click','.btn-update-design-main',function(){
-	  var id = $(this).attr('id');
-	   
-	  	$.ajax({
-			url : '${pageContext.request.contextPath}/design/getitembydesignid/'+id,
-			type : 'GET',
-			dataType : 'json',
-			success : function(data){
-				var keys=Object.keys(data);
-				len=keys.length;
-				$('#designEditId').val(data[0].transaksiDesign.id);
-				$('#eventEditCodeSelected').val(data[0].transaksiDesign.transaksiEvent.id).html(data[0].transaksiDesign.transaksiEvent.code);
-				$('#transactionEditCode').val(data[0].transaksiDesign.code);
-				$('#titleEditHeader').val(data[0].transaksiDesign.titleHeader);
-				$('#statusEdit').val(data[0].transaksiDesign.status);
-				$('#requestEditBy').val(data[0].transaksiDesign.requestBy);
-				$('#requestEditDate').val(data[0].transaksiDesign.requestDate);
-				$('#noteEdit').val(data[0].transaksiDesign.note);
-			  	Id = len;  
-			  	$('.tableBody').empty();
-			  	itemLama(Id,data);
-			  	loadEventEdit();
-			  	
-			}
-		});
-	   
-	  	$('#editDesignTransactionModal').modal();
-		
-		index = 0;
-	  
-  });
-  
-  /* memunculkan select item */
-function loadEventEdit(){
-		$.ajax({
-			url : '${pageContext.request.contextPath}/design/getevent',
-			type : 'GET',
-			dataType :'json',
-			success:function(data){
-				convertToSelectEdit(data);
-			}
-		});
-	}
-  
- function convertToSelectEdit(data){
-		$('#eventEditCode').empty();
-		$('#eventEditCode').append('<option value="" id="eventEditCodeSelected" selected>Choose...</option>');
-		$.each(data,function(i,event){
-		$('#eventEditCode').append('<option value="'+event.id+'">'+event.code+'</option>');
-		})
-	}
-	 
-  
-  
-  /* add Tabel item lama */
-  
-  
-  function itemLama(baris,data){
-	  index2=0;
-	  
-	  for(var Ix=1;Ix<=baris;Ix++){
-		  console.log(data[index2].id);
-		var oTable = $('#itemsTableEdit');
-		var tBody = oTable.find('tbody');
-		var tRow =	'<tr id="items-edit-'+Ix+'">';
-		tRow += '<td><select class="custom-select"    id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" readonly>'+
-							'<option value="'+data[index2].masterProduct.id+'" selected>'+data[index2].masterProduct.name+'</option>'+
-								'<c:forEach var="product" items="${products}">'+
-								'<option value="${product.id}">${product.name}</option>'+
-							'</c:forEach>'+
-						'</select></td>';
-		tRow += '<td><input type="text" class="form-control description" 	value="'+data[index2].masterProduct.description+'"																placeholder="description" 	readonly></td>';
-		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		readonly></td>';
-		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	readonly></td>';
-		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		readonly></td>';
-		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	readonly></td>';
-		tRow += '<td><input type="text" class="form-control"				value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		readonly></td>';
-		tRow += '<td><input type="text" class="form-control" 				value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" readonly></td>';
-		tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
-		tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
-		tRow +=	'</tr>';
-		index2++;
-		tBody.append(tRow);
-		  
-	  }
-			
-	      
-	  
-	  
-  }
-  
-  
-  /* add item tabel */
-  $('#addEditItemBtn').on('click',function(){
-		    Id++;
-		    index++;
-		    console.log(Id);
-
-		    
-		  	var oTable = $('#itemsTableEdit');
-		    var tBody = oTable.find('tbody');
-		    var tRow =	'<tr id="items-edit-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
-							'<option value="" selected>Choose...</option>'+
-								'<c:forEach var="product" items="${products}">'+
-								'<option value="${product.id}">${product.name}</option>'+
-							'</c:forEach>'+
-						'</select></td>';
-			tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Id+'" placeholder="description" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="startdateEdit'+Id+'" placeholder="Start Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="enddateEdit'+Id+'" placeholder="End Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="noteEdit'+Id+'" placeholder="Note" disabled></td>';
-			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
-			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
-			tRow +=	'</tr>';
-			tBody.append(tRow);
-	});
-  
-  
-  
-  /* mendelete objek item tabel */
-  $(document).on('click','.btn-delete-design-edit',function(){
-		var id =$(this).attr('id');
-		$('#items-edit-'+id).remove();
-	});
-  
-  /* memencet tombole edit di modal */
-  $(document).on('click','.btn-edit-design-edit',function(){
-		var id =$(this).attr('id');
-		$("#items-edit-"+id).find(':input').prop('disabled', false);
-		$("#startdateEdit"+id).prop('disabled', true);
-		$("#enddateEdit"+id).prop('disabled', true);
-		$('#duedateEdit'+id).datepicker({
-			format:'yyyy-mm-dd',
-			autoclose:true,
-			uiLibrary: 'bootstrap4'
-		});
-		$('#startdateEdit'+id).datepicker({
-			format:'yyyy-mm-dd',
-			autoclose:true,
-			uiLibrary: 'bootstrap4'
-		});
-		$('#enddateEdit'+id).datepicker({
-			format:'yyyy-mm-dd',
-			autoclose:true,
-			uiLibrary: 'bootstrap4'
-		});
-		$('#productItemEdit'+id).on('change',function(){
-			var select = this;
-			var productId = select[select.selectedIndex].value;
-			$.ajax({
-				url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+	
+	
+	
+	/*  KOLOM ANGGI*/
+	  /* UNTUK EDIT */
+	  /* memunculkan Modal edit */ 
+	  $(document).on('click','.btn-update-design-main',function(){
+		  var id = $(this).attr('id');
+		   
+		  	$.ajax({
+				url : '${pageContext.request.contextPath}/design/getitembydesignid/'+id,
 				type : 'GET',
+				dataType : 'json',
 				success : function(data){
-					$('#descriptionEdit'+id).val(data.description);
+					var keys=Object.keys(data);
+					len=keys.length;
+					$('#eventEditCode').empty();
+					$('#eventEditCode').append('<option id="eventEditCodeSelected" selected></option>');
+					$('#designEditId').val(data[0].transaksiDesign.id);
+					$('#eventEditCodeSelected').val(data[0].transaksiDesign.transaksiEvent.id);
+					document.getElementById('eventEditCodeSelected').innerHTML=data[0].transaksiDesign.transaksiEvent.code
+					$('#transactionEditCode').val(data[0].transaksiDesign.code);
+					$('#titleEditHeader').val(data[0].transaksiDesign.titleHeader);
+					$('#statusEdit').val(statusSubmit(data[0].transaksiDesign.status));
+					$('#requestEditBy').val(data[0].transaksiDesign.requestBy.employeeName);
+					$('#requestEditDate').val(data[0].transaksiDesign.requestDate);
+					$('#noteEdit').val(data[0].transaksiDesign.note);
+				  	Id = len;  
+				  	$('.tableBody').empty();
+				  	itemLama(Id,data);
+				  	loadEventEdit();
+				  	
 				}
 			});
+		   
+		  	$('#editDesignTransactionModal').modal();
+			
+			index = 0;
+		  
+	  });
+	  
+	  /* memunculkan select item */
+	function loadEventEdit(){
+			$.ajax({
+				url : '${pageContext.request.contextPath}/design/getevent',
+				type : 'GET',
+				dataType :'json',
+				success:function(data){
+					convertToSelectEdit(data);
+				}
+			});
+		}
+	  
+	 function convertToSelectEdit(data){
+			$.each(data,function(i,event){
+			$('#eventEditCode').append('<option value="'+event.id+'">'+event.code+'</option>');
+			})
+		}
+		 
+	  
+	  
+	  /* memasukkan   item lama ke tabel*/
+	  function itemLama(baris,data){
+		  index2=0;
+		  
+		  for(var Ix=1;Ix<=baris;Ix++){ 
+			var oTable = $('#itemsTableEdit');
+			var tBody = oTable.find('tbody');
+			var tRow =	'<tr id="items-edit-'+Ix+'">';
+			tRow += '<td><select class="custom-select"    id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+								'<option value="'+data[index2].masterProduct.id+'" selected>'+data[index2].masterProduct.name+'</option>'+
+									'<c:forEach var="product" items="${products}">'+
+									'<option value="${product.id}">${product.name}</option>'+
+								'</c:forEach>'+
+							'</select></td>';
+			tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Ix+'" value="'+data[index2].masterProduct.description+'"	  placeholder="description" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" disabled></td>';
+			tRow += '<td><input type="hidden" class="form-control" value="'+data[index2].id+'" id="itemIdEdit'+Ix+'" ></td>';
+			tRow += '<td><input type="hidden" class="form-control" id="isDelete'+Ix+'" value=false ></td>';
+			tRow += '<td><a id="'+Ix+'" href="#" class="btn-edit-design-main"><span class="oi oi-pencil"></span></a>';
+			tRow += '<a id="'+Ix+'" href="#" class="btn-delete-design-main"><span class="oi oi-trash"></span></a></td>';
+			tRow +=	'</tr>';
+			index2++;
+			tBody.append(tRow);
+			datePickEdit(Ix);
+		  }
+	  }
+	  
+	  
+	  /* add item BARU tabel */
+	  $('#addEditItemBtn').on('click',function(){
+			    Id++;
+			    index++;
+			     
+			  	var oTable = $('#itemsTableEdit');
+			    var tBody = oTable.find('tbody');
+			    var tRow =	'<tr id="items-edit-'+Id+'">';
+				tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+								'<option value="" selected>Choose...</option>'+
+									'<c:forEach var="product" items="${products}">'+
+									'<option value="${product.id}">${product.name}</option>'+
+								'</c:forEach>'+
+							'</select></td>';
+				tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Id+'" placeholder="description" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="startdateEdit'+Id+'" placeholder="Start Date" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="enddateEdit'+Id+'" placeholder="End Date" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="noteEdit'+Id+'" placeholder="Note" disabled></td>';
+				tRow += '<td><input type="hidden" class="form-control" id="itemIdEdit'+Id+'" value="0" ></td>';
+				tRow += '<td><input type="hidden" class="form-control" id="isDelete'+Id+'" value=false ></td>';
+				tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design-main"><span class="oi oi-pencil"></span></a>';
+				tRow += '<a id="'+Id+'" href="#" class="btn-delete-design-main"><span class="oi oi-trash"></span></a></td>';
+				tRow +=	'</tr>';
+				tBody.append(tRow);
+				datePickEdit(Id);
 		});
+	  
+	  
+	  
+	  /* mendelete objek item tabel */
+	  $(document).on('click','.btn-delete-design-main',function(){
+			var id =$(this).attr('id');
+			console.log(id);
+			console.log($('#itemIdEdit'+id).val());
+			if($('#itemIdEdit'+id).val()==0){
+			$('#items-edit-'+id).remove();
+			}else{
+				$('#items-edit-'+id).hide();
+				$('#isDelete'+id).val(true);
+			}
+			
+		});
+	  /* ini adalah function datePickerModalEdit */
+	  function datePickEdit(id){
+		  $('#duedateEdit'+id).datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+			$('#startdateEdit'+id).datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+			$('#enddateEdit'+id).datepicker({
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				uiLibrary: 'bootstrap4'
+			});
+			$('#productEditItem'+id).on('change',function(){
+				var select = this;
+				var productId = select[select.selectedIndex].value;
+				$.ajax({
+					url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+					type : 'GET',
+					success : function(data){
+						$('#descriptionEdit'+id).val(data.description);
+					}
+				});
+			});
+		  
+	  }
+	  /* memencet tombole edit di modal */
+	  $(document).on('click','.btn-edit-design-main',function(){
+			var id =$(this).attr('id');
+			$("#items-edit-"+id).find(':input').prop('disabled', false);
+			$("#startdateEdit"+id).prop('disabled', true);
+			$("#enddateEdit"+id).prop('disabled', true);
+		});
+	  
+	  
+	  /* SAVE DATA DARI MODAL EDIT */
+	  $(document).on('click','#saveBtnModalEdit',function(){
+		   var transaksiDesignItems=[];
+			$('.tableBody tr').each(function(){
+				tRow = $(this).find('td :input');
+				var items = {
+						masterProduct:{
+							id:tRow.eq(0).val()
+						},
+						titleItem:tRow.eq(2).val(),
+						requestPic:tRow.eq(3).val(),
+						requestDueDate:tRow.eq(4).val(),
+						startDate:tRow.eq(6).val(),
+						endDate:tRow.eq(8).val(),
+						note:tRow.eq(10).val(),
+						id:tRow.eq(11).val(),
+						'delete':tRow.eq(12).val()
+				}
+				transaksiDesignItems.push(items);
+			}); 
+			 
+			var transaksiDesign = {
+					id :$('#designEditId').val(),
+					titleHeader :$('#titleEditHeader').val(),
+					note :$('#noteEdit').val(),
+					transaksiEvent :{
+						id:$('#eventEditCode').val()
+				    }  ,
+					transaksiDesignItems:transaksiDesignItems
+				
+			};
+			
+			console.log(transaksiDesign);
+			$.ajax({
+				url : '${pageContext.request.contextPath}/design/update',
+				type : 'POST',
+				contentType:'application/json',
+				dataType:'json',
+				data:JSON.stringify(transaksiDesign),
+				success:function(data){
+					console.log(data);
+				} 
+			});	
+			$('#editDesignTransactionModal').modal('hide');	
+			loadData();
+	  });
+	  
+	   
+	  /* APPROVE */
+	  
+	  $(document).on('click','.btn-view-design-main',function(){
+		  var id = $(this).attr('id');
+		   
+		  	$.ajax({
+				url : '${pageContext.request.contextPath}/design/getitembydesignid/'+id,
+				type : 'GET',
+				dataType : 'json',
+				success : function(data){
+					var keys=Object.keys(data);
+					len=keys.length;
+					$('#eventEditCode2').empty();
+					$('#eventEditCode2').append('<option id="eventEditCodeSelected2" selected></option>');
+					$('#eventEditCodeSelected2').val(data[0].transaksiDesign.transaksiEvent.id);
+					$('#approvedId').val(data[0].transaksiDesign.id);
+					document.getElementById('eventEditCodeSelected2').innerHTML=data[0].transaksiDesign.transaksiEvent.code
+					$('#transactionEditCode2').val(data[0].transaksiDesign.code);
+					$('#titleEditHeader2').val(data[0].transaksiDesign.titleHeader);
+					$('#statusEdit2').val(statusSubmit(data[0].transaksiDesign.status));
+					$('#requestEditBy2').val(data[0].transaksiDesign.requestBy.employeeName);
+					$('#requestEditDate2').val(data[0].transaksiDesign.requestDate);
+					$('#noteEdit2').val(data[0].transaksiDesign.note);
+				  	Id = len;   
+				  	$('.tableBody').empty();
+				  	itemLamaApprove(Id,data);
+				  	employeeStaff();
+				  	 
+				  	
+				}
+			});
+		    
+		  	$('#approveDesignTransactionModal').modal();
+			
+			index = 0;
+		  
+	  });
+	  
+	   /* APPROVE menambakan employee */
+	   function employeeStaff(){
+		   $('#assignTo').empty();
+		   $('#assignTo').append( '<option value="" selected>Choose...</option>'+
+					'<c:forEach var="employee" items="${employeesStaff}">'+
+					'<option value="${employee.id}">${employee.employeeName}</option>'+
+				'</c:forEach>' );
+	   }
+		 
+	  
+	  
+	  /* APPROVE add Tabel item lama */
+	  
+	  
+	  function itemLamaApprove(baris,data){
+		  index2=0;
+		  
+		  for(var Ix=1;Ix<=baris;Ix++){
+			  console.log(data[index2].id);
+			var oTable = $('#itemsTableEdit2');
+			var tBody = oTable.find('tbody');
+			var tRow =	'<tr id="items-edit2-'+Ix+'">';
+			tRow += '<td><select class="custom-select"    name="details['+index+'].mProductId" style="width:150px" disabled>'+
+								'<option value="'+data[index2].masterProduct.id+'" selected>'+data[index2].masterProduct.name+'</option>'+
+							'</select></td>';
+			tRow += '<td><input type="text" class="form-control description" value="'+data[index2].masterProduct.description+'"		placeholder="description" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit2'+Ix+'" 			placeholder="Title" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic+'" id="requestPicEdit2'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit2'+Ix+'" 	placeholder="Due Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].startDate+'" id="startdateEdit2'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].endDate+'"id="enddateEdit2'+Ix+'" 			placeholder="End Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].note+'" id="noteEdit2'+Ix+'" 				placeholder="Note" disabled></td>';
+			tRow +=	'</tr>';
+			index2++;
+			tBody.append(tRow);
+		   }   
+	  } 
+	  /* STATUS */
+	  function statusSubmit(i){
+		  if(i==1){
+			  return "Submitted";
+		  }else if(i==2){return "in proggress"}
+		  else if(i==3){return "done"}
+		  else{return "rejected"}
+	  }
+	  
+	  /* SAAT  TOMBOL APPROVE DI PENCET */
+	  $(document).on('click','#approvedBtnModalEdit',function(){
+		  var transaksiDesign={	
+				id 			:$('#approvedId').val(),
+		  		assignTo	:{
+		  			id: $('#assignTo').val()
+		  		},
+		  		status : 2
+		  }
+		  $.ajax({
+			  	
+				url 		: '${pageContext.request.contextPath}/design/approved',
+				type 		: 'POST',
+				contentType	:'application/json',
+				dataType	:'json',
+				data		:JSON.stringify(transaksiDesign),
+			  	success		:function(data){
+			  		console.log(data);
+			  	}
+		  });
+		  
+		  $('#approveDesignTransactionModal').modal('hide');
+		  loadData();
+	  });
+	  
+	  /* REJECTED */
+	  $(document).on('click','#rejectedBtnModalEdit',function(){
+		  $('#rejectDesignModal').modal();
+	  });
+	$(document).on('click','#btn-reject-design',function(){
+		 var transaksiDesign={	
+					id 			:$('#approvedId').val(),
+			  		status 		: 0,
+			  		rejectReason: $('#rejectDesign').val()
+			  };
+		 console.log(transaksiDesign);
+			  $.ajax({
+					url 		: '${pageContext.request.contextPath}/design/approved',
+					type 		: 'POST',
+					contentType	:'application/json',
+					dataType	:'json',
+					data		:JSON.stringify(transaksiDesign),
+				  	success		:function(data){
+				  		console.log(data);
+				  	}
+			  });
+		  		 $('#rejectDesignModal').modal('hide');
+			  	$('#approveDesignTransactionModal').modal('hide'); 
+			  	loadData();
+		
 	});
+	  
+	  
+});
+
 </script>
 </html>

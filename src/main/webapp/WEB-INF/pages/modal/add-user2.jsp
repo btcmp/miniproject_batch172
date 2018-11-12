@@ -33,11 +33,10 @@
 									Employee </label>
 								<div class=" form-group col-sm-9">
 
-									<select class="custom-select" id="employee" data-parsley-required data-parsley-required-message="employee tidak boleh kosong">
-										<option value="" selected>Choose...</option>
-											<c:forEach var="employee" items="${employees}">
+									<select class="custom-select employee" id="employee" data-parsley-required data-parsley-required-message="employee tidak boleh kosong">
+											<%-- <c:forEach var="employee" items="${employees}">
 											<option value="${employee.id}">${employee.employeeName}</option>
-										</c:forEach>
+										</c:forEach> --%>
 									</select> 
 
 								</div>

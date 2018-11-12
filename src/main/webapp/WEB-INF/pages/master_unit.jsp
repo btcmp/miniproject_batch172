@@ -264,7 +264,7 @@ $(document).ready(function(){
 			error : function(){
 				console.log('data failed to save');
 				}
-			/* dataType : 'json' */ 
+			/* dataType : 'json' */
 			});
 		})
 	/* LOAD UNIT */

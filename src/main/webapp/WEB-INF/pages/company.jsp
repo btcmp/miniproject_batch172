@@ -356,6 +356,8 @@
 		
 		//BUTTON POP UP CONFIRM TO UPDATE
 		$(document).on('click', '#btn-edit-comp', function(){			
+			var validate = $('#editForm').parsley();
+			if(validate.validate()){
 			$.ajax({
 				success: function(output){
 					$('#EditButton').val(output.id);
@@ -363,13 +365,12 @@
 				dataType: 'json'
 			});
 			$('#editCompanyModal').modal('hide');
-			$('#edit2CompanyModal').modal();
+			$('#edit2CompanyModal').modal()
+			}
 		});
 		
 		//BUTTON UPDATE PADA MODAL ADD UNTUK UPDATE DATA
 		$('.btn-edit2-comp').click(function(){
-			var validate = $('#editForm').parsley();
-			if(validate.validate()){
 				var company = {
 						id : $('#EditButton').val(),
 						code : $('#companycodeEdit').val(),
@@ -395,7 +396,6 @@
 						}
 					});
 					$('#edit2CompanyModal').modal('hide');
-			}
 		});
 		
 		//BUTTON POP UP DELETE

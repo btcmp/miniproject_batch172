@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.MasterSouvenirDao;
 import com.marcomm.dao.MasterUnitDao;
+import com.marcomm.dao.MasterUserDao;
 import com.marcomm.model.MasterSouvenir;
 import com.marcomm.model.MasterUnit;
+import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiSouvenir;
 
 @Service
@@ -24,9 +26,12 @@ public class MasterSouvenirService {
 	MasterSouvenirDao masterSouvenirDao;
 	@Autowired
 	MasterUnitDao masterUnitDao;
+	@Autowired
+	MasterUserDao masterUserDao;
 	
 	public void save(MasterSouvenir masterSouvenir) {
-		masterSouvenir.setCreatedBy("Admin");
+		MasterUser userlogin= masterUserDao.getUserByUserLog();
+		masterSouvenir.setCreatedBy(userlogin.getEmployee().getEmployeeName());
 		Date date = new Date();
 		masterSouvenir.setCreatedDate(date);
 		masterSouvenir.setDeleted(false);
@@ -54,7 +59,9 @@ public class MasterSouvenirService {
 		return masterSouvenir;
 	}
 	public void update(MasterSouvenir masterSouvenir) {
-		masterSouvenir.setUpdatedBy("Admin");
+		MasterUser userlogin= masterUserDao.getUserByUserLog();
+		
+		masterSouvenir.setUpdatedBy(userlogin.getmRole().getRoleName());
 		Date date = new Date();
 		masterSouvenir.setUpdatedDate(date);
 		masterSouvenir.setDeleted(false);

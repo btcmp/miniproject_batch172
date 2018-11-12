@@ -46,12 +46,15 @@ public class TransaksiSouvenir {
 	//relasi bila ada request dari suatu ke event
 	//@Column(name="t_event_id", length=50)
 	@OneToOne
+	//@JsonManagedReference
 	@JoinColumn(name="t_event_id", unique=true)
 	private	TransaksiEvent tEventId;
 	
 	
-	@Column(name="request_by", length=50, nullable=false)
-	private int requestBy;
+	//@Column(name="request_by", length=50, nullable=false)
+	@ManyToOne
+	@JoinColumn(name="request_by")
+	private MasterEmployee requestBy;
 	
 	@Column(name="request_date")
 	@Temporal(TemporalType.DATE)
@@ -98,6 +101,9 @@ public class TransaksiSouvenir {
 	@Temporal(TemporalType.DATE)
 	private Date settlementAprovedDate;
 	
+	
+	
+	/*SETTER AND GETTER*/
 	@Column(length=1)
 	private int status;
 	
@@ -110,15 +116,20 @@ public class TransaksiSouvenir {
 	@Column(name="is_delete")
 	private boolean isDelete;
 	
-	@Column(name="created_by")
-	private long createdBy;
+	//@Column(name="created_by")
+	@ManyToOne
+	@JoinColumn(name="created_by")
+	private MasterEmployee createdBy;
+	
 	
 	@Column(name="created_date")
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
 	
-	@Column(name="updated_by")
-	private long updatedBy;
+	//@Column(name="updated_by")
+	@ManyToOne
+	@JoinColumn(name="updated_by")
+	private MasterEmployee updatedBy;
 	
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
@@ -126,163 +137,198 @@ public class TransaksiSouvenir {
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="transaksiSouvenir")
 	private List<TransaksiSouvenirItem> transaksiSouvenirItems;
-	
-	
-	
-	
-	
-	
-	/*SETTER AND GETTER*/
-	
-	
-	public List<TransaksiSouvenirItem> getTransaksiSouvenirItems() {
-		return transaksiSouvenirItems;
-	}
-	public void setTransaksiSouvenirItems(List<TransaksiSouvenirItem> transaksiSouvenirItems) {
-		this.transaksiSouvenirItems = transaksiSouvenirItems;
-	}
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public void setType(String type) {
 		this.type = type;
-	}
-	
-	public Date getRequestDate() {
-		return requestDate;
-	}
-	public void setRequestDate(Date requestDate) {
-		this.requestDate = requestDate;
-	}
-	public Date getRequestDueDate() {
-		return requestDueDate;
-	}
-	public void setRequestDueDate(Date requestDueDate) {
-		this.requestDueDate = requestDueDate;
-	}
-	
-	public Date getApprovedDate() {
-		return approvedDate;
-	}
-	public void setApprovedDate(Date approvedDate) {
-		this.approvedDate = approvedDate;
-	}
-	
-	public Date getReceivedDate() {
-		return receivedDate;
-	}
-	public void setReceivedDate(Date receivedDate) {
-		this.receivedDate = receivedDate;
-	}
-	
-	public Date getSettlementDate() {
-		return settlementDate;
-	}
-	public void setSettlementDate(Date settlementDate) {
-		this.settlementDate = settlementDate;
-	}
-
-	public Date getSettlementAprovedDate() {
-		return settlementAprovedDate;
-	}
-	public void setSettlementAprovedDate(Date settlementAprovedDate) {
-		this.settlementAprovedDate = settlementAprovedDate;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
-	public String getNote() {
-		return note;
-	}
-	public void setNote(String note) {
-		this.note = note;
-	}
-	public String getRejectReason() {
-		return rejectReason;
-	}
-	public void setRejectReason(String rejectReason) {
-		this.rejectReason = rejectReason;
-	}
-	public boolean isDelete() {
-		return isDelete;
-	}
-	public void setDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-	public long getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(long createdBy) {
-		this.createdBy = createdBy;
-	}
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	public long getUpdatedBy() {
-		return updatedBy;
-	}
-	public void setUpdatedBy(long updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-	
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-	
-	public MasterEmployee getApprovedBy() {
-		return approvedBy;
-	}
-	public void setApprovedBy(MasterEmployee approvedBy) {
-		this.approvedBy = approvedBy;
-	}
-	public MasterEmployee getReceivedBy() {
-		return receivedBy;
-	}
-	public void setReceivedBy(MasterEmployee receivedBy) {
-		this.receivedBy = receivedBy;
-	}
-	public MasterEmployee getSettlementBy() {
-		return settlementBy;
-	}
-	public void setSettlementBy(MasterEmployee settlementBy) {
-		this.settlementBy = settlementBy;
-	}
-	public MasterEmployee getSettlementApprovedBy() {
-		return settlementApprovedBy;
-	}
-	public void setSettlementApprovedBy(MasterEmployee settlementApprovedBy) {
-		this.settlementApprovedBy = settlementApprovedBy;
 	}
 
 	public TransaksiEvent gettEventId() {
 		return tEventId;
 	}
+
 	public void settEventId(TransaksiEvent tEventId) {
 		this.tEventId = tEventId;
 	}
 
-	
+	public MasterEmployee getRequestBy() {
+		return requestBy;
+	}
+
+	public void setRequestBy(MasterEmployee requestBy) {
+		this.requestBy = requestBy;
+	}
+
+	public Date getRequestDate() {
+		return requestDate;
+	}
+
+	public void setRequestDate(Date requestDate) {
+		this.requestDate = requestDate;
+	}
+
+	public Date getRequestDueDate() {
+		return requestDueDate;
+	}
+
+	public void setRequestDueDate(Date requestDueDate) {
+		this.requestDueDate = requestDueDate;
+	}
+
+	public MasterEmployee getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(MasterEmployee approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	public Date getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(Date approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
+	public MasterEmployee getReceivedBy() {
+		return receivedBy;
+	}
+
+	public void setReceivedBy(MasterEmployee receivedBy) {
+		this.receivedBy = receivedBy;
+	}
+
+	public Date getReceivedDate() {
+		return receivedDate;
+	}
+
+	public void setReceivedDate(Date receivedDate) {
+		this.receivedDate = receivedDate;
+	}
+
+	public MasterEmployee getSettlementBy() {
+		return settlementBy;
+	}
+
+	public void setSettlementBy(MasterEmployee settlementBy) {
+		this.settlementBy = settlementBy;
+	}
+
+	public Date getSettlementDate() {
+		return settlementDate;
+	}
+
+	public void setSettlementDate(Date settlementDate) {
+		this.settlementDate = settlementDate;
+	}
+
+	public MasterEmployee getSettlementApprovedBy() {
+		return settlementApprovedBy;
+	}
+
+	public void setSettlementApprovedBy(MasterEmployee settlementApprovedBy) {
+		this.settlementApprovedBy = settlementApprovedBy;
+	}
+
+	public Date getSettlementAprovedDate() {
+		return settlementAprovedDate;
+	}
+
+	public void setSettlementAprovedDate(Date settlementAprovedDate) {
+		this.settlementAprovedDate = settlementAprovedDate;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public String getRejectReason() {
+		return rejectReason;
+	}
+
+	public void setRejectReason(String rejectReason) {
+		this.rejectReason = rejectReason;
+	}
+
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public MasterEmployee getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(MasterEmployee createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public MasterEmployee getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(MasterEmployee updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public List<TransaksiSouvenirItem> getTransaksiSouvenirItems() {
+		return transaksiSouvenirItems;
+	}
+
+	public void setTransaksiSouvenirItems(List<TransaksiSouvenirItem> transaksiSouvenirItems) {
+		this.transaksiSouvenirItems = transaksiSouvenirItems;
+	}
+
 
 }

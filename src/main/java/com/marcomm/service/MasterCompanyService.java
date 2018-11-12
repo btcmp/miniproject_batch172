@@ -40,8 +40,6 @@ public class MasterCompanyService {
 		comp.setPhone(company.getPhone());
 		comp.setEmail(company.getEmail());
 		comp.setIsDelete(company.getIsDelete());
-		comp.setCreatedBy(company.getCreatedBy());
-		comp.setCreatedDate(company.getCreatedDate());
 		comp.setUpdateBy(company.getUpdateBy());
 		comp.setUpdateDate(company.getUpdateDate());
 		companyDao.update(comp);

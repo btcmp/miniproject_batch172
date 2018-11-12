@@ -39,13 +39,26 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 		return transaksiSouvenirItem;
 	}
 
-	public void update(TransaksiSouvenirItem transaksiSouvenirItem) {
+
+	public void updateSettlement(TransaksiSouvenirItem transaksiSouvenirItem) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void updateSettlement(TransaksiSouvenirItem transaksiSouvenirItem) {
-		// TODO Auto-generated method stub
+	/*PUNYA MAMAD*/
+	//Get Item By Souvenir
+	public List<TransaksiSouvenirItem> getItemBySouvenir(TransaksiSouvenir transaksiSouvenir) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(TransaksiSouvenirItem.class);
+		criteria.add(Restrictions.eq("transaksiSouvenir", transaksiSouvenir));
+		List<TransaksiSouvenirItem> transaksiSouvenirItems = criteria.list();
+		return transaksiSouvenirItems;
+	}
+
+	/*UPDATE PUNYA MAMAD*/
+	public void update(TransaksiSouvenirItem itemLama) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(itemLama);
 		
 	}
 

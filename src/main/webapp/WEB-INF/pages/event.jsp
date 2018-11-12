@@ -13,8 +13,16 @@
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
-<c:url value="/j_spring_security_logout" var="logoutUrl" />
+<c:url value="/j_spring_security_logout" var="logoutUrl" /> 
 
+<style>
+	input.parsley-error
+		{
+		  color: #B94A48 !important;
+		  background-color: #F2DEDE !important;
+		  border: 1px solid #EED3D7 !important;
+		}
+</style>
 </head>
 <body>
 	<div id="container">
@@ -144,6 +152,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>	
 <script src="${pageContext.request.contextPath}/resources/assets/js/perfect-scrollbar.jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
@@ -160,7 +170,7 @@ $(document).ready(function(){
 	//DATEPICKER
 	$('#data3').datepicker({
 		format: 'yyyy-mm-dd',
-		autoclose: true,
+		autoclose: true, 
 		uiLibrary: 'bootstrap4'
 	});
 	$('#data5').datepicker({
@@ -191,7 +201,7 @@ $(document).ready(function(){
   	
   	
 	//BUTTON POP UP ADD
-	$('#btn-add').on('click', function(){
+	$(document).on('click','#btn-add', function(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/event/getcodeevent',
 			type : 'GET',
@@ -200,12 +210,21 @@ $(document).ready(function(){
 			},
 			dataType: 'json'
 		});
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#requestby').val(data.employee.employeeName);
+				$('#requestbyid').val(data.employee.id);
+				$('#createdby').val(data.employee.employeeName);
+			}
+		});
 		var now = new Date();
 		var year = now.getFullYear();
 		var month = now.getMonth()+1;
 		var date = now.getDate();
 		var formattedDate = ("0"+date).slice(-2);
-		$('#requestby').val("1");
 		$('#eventname').val();
 		$('#requestdate').val(year+'-'+month+'-'+formattedDate);
 		$('#eventplace').val();
@@ -219,46 +238,48 @@ $(document).ready(function(){
 	
 	//BUTTON SAVE PADA MODAL ADD UNTUK SAVE DATA
 	$('.btn-add-event').on('click', function(){
-		var event = {
-			code : $('#transactioncode').val(),
-			requestBy : $('#requestby').val(),
-			eventName : $('#eventname').val(),
-			requestDate : $('#requestdate').val(),
-			place : $('#eventplace').val(),
-			note : $('#note').val(),
-			startDate : $('#eventstartdate').val(),
-			endDate : $('#eventenddate').val(),
-			budget : $('#budget').val()
-		};
-		
-		
-		//NOTIFICATION
-		document.getElementById("notification").innerHTML = "Data Saved! Transaction event request has been added with code: "+event.code+"!";
-		$('#notification').show('slow').delay(1500).hide('slow');
-		
-		console.log(event);
-		$.ajax({
-			url:'${pageContext.request.contextPath}/event/saveevent',
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify(event),
-			success : function(data){
-				console.log("saved data success");
-				loadData();
-				$('#requestby').val("");
-				$('#eventname').val("");
-				$('#requestdate').val("");
-				$('#eventplace').val("");
-				$('#note').val("");
-				$('#eventstartdate').val("");
-				$('#eventenddate').val("");
-				$('#budget').val("");
-			},
-			error : function(){
-				console.log("saved data failed");
-			}
-		});
-		$('#addEventModal').modal('hide');
+			var event = {
+				code : $('#transactioncode').val(),
+				createdBy : $('#createdby').val(),
+				requestBy : {
+					id: $('#requestbyid').val()
+				},
+				eventName : $('#eventname').val(),
+				requestDate : $('#requestdate').val(),
+				place : $('#eventplace').val(),
+				note : $('#note').val(),
+				startDate : $('#eventstartdate').val(),
+				endDate : $('#eventenddate').val(),
+				budget : $('#budget').val()
+			};
+			
+			
+			//NOTIFICATION
+			document.getElementById("notification").innerHTML = "Data Saved! Transaction event request has been added with code: "+event.code+"!";
+			$('#notification').show('slow').delay(1500).hide('slow');
+			
+			console.log(event);
+			$.ajax({
+				url:'${pageContext.request.contextPath}/event/saveevent',
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(event),
+				success : function(data){
+					console.log("saved data success");
+					loadData();
+					$('#eventname').val("");
+					$('#requestdate').val("");
+					$('#eventplace').val("");
+					$('#note').val("");
+					$('#eventstartdate').val("");
+					$('#eventenddate').val("");
+					$('#budget').val("");
+				},
+				error : function(){
+					console.log("saved data failed");
+				}
+			});
+			$('#addEventModal').modal('hide');
 	});
 	
 	//GET ROLE NAME WHEN LOGIN
@@ -307,36 +328,38 @@ $(document).ready(function(){
 			index++;
 			
 			//CHOOSEN MODAL BASED ON STATUS AND ROLE
-			//NAMED STATUS
-			var user="${username}"
-			var modal = "";
+			//NAMED STATUS 
+			var role="${rolename}"
+			var modalview = "";
+			var modaledit = "";
 			var status="";
 			if(event.status==1){
 				status="Submitted";
-				if(user=="Administrator"){
-					modal = "btn-acceptreject-event";
+				if(role=="Administrator"){
+					modalview = "btn-acceptreject-event";
 				} else{
-					modal = "btn-view-event";
+					modalview = "btn-view-event";
+					modaledit="btn-edit-event"; 
 				}
 			} else if(event.status==2){
 				status="In Progress";
-				if(user=="Administrator"){
-					modal = "btn-view-event";
+				if(role=="Administrator"){
+					modalview = "btn-viewapproved-event";
 				} else{
-					modal = "btn-close-event";	
+					modalview = "btn-close-event";	
 				}
 			} else if(event.status==3){
 				status="Done";
-				modal = "btn-view-event"; 
+				modalview = "btn-view-event"; 
 			} else if(event.status==0){
 				status="Rejected";
-				modal = "btn-view-event";
+				modalview = "btn-view-event";
 			}
 			
-			var tableRow = "<a id="+event.id+" class='"+modal+"'><span class='oi oi-magnifying-glass'></span></a>";
+			var tableRow = "<a id="+event.id+" class='"+modalview+"'><span class='oi oi-magnifying-glass'></span></a>";
 				tableRow += " ";
-				tableRow += "<a id="+event.id+" class='btn-edit-event'><span class='oi oi-pencil'></span></a>";
-				oTable.row.add([index,event.code,event.requestBy,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
+				tableRow += "<a id="+event.id+" class='"+modaledit+"'><span class='oi oi-pencil'></span></a>";
+				oTable.row.add([index,event.code,event.requestBy.employeeName,event.requestDate,status,event.createdDate,event.createdBy,tableRow]);
 		});
 				oTable.draw();
 	}
@@ -363,7 +386,6 @@ $(document).ready(function(){
 				console.log(output);
 				$('#EditButton').val(output.id);
 				$('#transactioncodeEdit').val(output.code);
-				$('#requestbyEdit').val(output.requestBy);
 				$('#eventnameEdit').val(output.eventName);
 				$('#requestdateEdit').val(output.requestDate);
 				$('#eventplaceEdit').val(output.place);
@@ -375,6 +397,15 @@ $(document).ready(function(){
 			},
 			dataType: 'json'
 		});
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#updatedby').val(data.employee.employeeName);
+				$('#requestbyEdit').val(data.employee.employeeName);
+			}
+		});
 		$('#editEventModal').modal();
 	});
 	
@@ -383,9 +414,8 @@ $(document).ready(function(){
 		var event = {
 				id: $('#EditButton').val(),
 				code: $('#transactioncodeEdit').val(),
-				requestBy: $('#requestbyEdit').val(),
+				updatedBy: $('#updatedby').val(),
 				eventName: $('#eventnameEdit').val(),
-				requestDate: $('#requestdateEdit').val(),
 				place: $('#eventplaceEdit').val(),
 				note: $('#noteEdit').val(),
 				startDate: $('#eventstartdateEdit').val(),
@@ -435,8 +465,18 @@ $(document).ready(function(){
 					$('#statusView').val(output.status);
 					},
 					dataType: 'json'
-				});
-				$('#viewEventModal').modal();
+			});
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#requestbyView').val(data.employee.employeeName);
+
+			}
+		});
+	
+		$('#viewEventModal').modal();
 		});
 	
 	
@@ -466,6 +506,16 @@ $(document).ready(function(){
 				},
 				dataType: 'json'
 			});
+			
+			$.ajax({
+				url : '${pageContext.request.contextPath}/event/getuser',
+				type : 'GET',
+				success : function(data){
+					$('#approvedbyid').val(data.employee.id);
+					$('#requestbyAR').val(data.employee.employeeName);
+
+				}
+			});
 			$('#acceptrejectEventModal').modal();
 		
 	});
@@ -475,7 +525,12 @@ $(document).ready(function(){
 		var event = {
 				id: $('#ARButton').val(),
 				code: $('#transactioncodeAR').val(),
-				assignTo: $('#assigntoAR').val()
+				assignTo: { 
+					id: $('#assigntoAR').val()
+					},
+				approvedBy: {
+					id: $('#approvedbyid').val()
+				}
 		};
 		console.log(event);
 		
@@ -492,6 +547,7 @@ $(document).ready(function(){
 				console.log("data berhasil diubah");
 				loadData();
 				$('#assigntoAR').val("");
+				$('#approvedbyid').val("");
 			}
 		});
 		$('#acceptrejectEventModal').modal('hide');
@@ -535,6 +591,45 @@ $(document).ready(function(){
 		});
 		$('#rejectEventModal').modal('hide');
 	});
+	
+	//BUTTON POP UP VIEW AFTER APPROVED REQUEST	
+	$(document).on('click', '.btn-viewapproved-event', function(){
+		var id = $(this).attr('id');
+		console.log(id);
+		
+		$.ajax({
+			url: '${pageContext.request.contextPath}/event/searchevent/' +id,
+			type: 'GET',
+			success: function(output){
+					console.log(output);
+					$('#VAButton').val(output.id);
+					$('#transactioncodeVA').val(output.code);
+					$('#requestbyVA').val(output.requestBy);
+					$('#eventnameVA').val(output.eventName);
+					$('#requestdateVA').val(output.requestDate);
+					$('#eventplaceVA').val(output.place);
+					$('#noteVA').val(output.note);
+					$('#eventstartdateVA').val(output.startDate);
+					$('#eventenddateVA').val(output.endDate);
+					$('#budgetVA').val(output.budget);
+					$('#statusVA').val(output.status);
+					$('#assigntoVA').val(output.assignTo.employeeName);
+					},
+					dataType: 'json'
+				});
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/event/getuser',
+			type : 'GET',
+			success : function(data){
+				$('#requestbyVA').val(data.employee.employeeName);
+
+			}
+		});
+	
+		$('#viewapprovedEventModal').modal();
+		});
+	
 	
 	//BUTTON POP UP CLOSE REQUEST
 	$(document).on('click', '.btn-close-event', function(){

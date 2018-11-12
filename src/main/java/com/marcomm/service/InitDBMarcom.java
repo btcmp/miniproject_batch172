@@ -45,8 +45,7 @@ public class InitDBMarcom {
 		MasterRole role1=new MasterRole();
 		MasterRole role2=new MasterRole();
 		MasterRole role3=new MasterRole();
-		role1.setId(1);
-		role1.setRoleName("ROLE_ADMIN");
+		role1.setId(1); 
 		role1.setCode("RO0001");
 		role1.setRoleName("Administrator"); 
 		initDBService.saveRole(role1);
@@ -127,7 +126,15 @@ public class InitDBMarcom {
 		
 		//menu_acces
 		MasterMenuAccess menuAccess1=new MasterMenuAccess();
-	 
+		
+		List<MasterMenu> menus=new ArrayList<>();
+		menus.add(masterMenu3);
+		menus.add(masterMenu2);
+		menus.add(masterMenu1);
+		menuAccess1.setRole(role1);
+		menuAccess1.setMenus(menus);
+		menuAccessService.save(menuAccess1);
+		
 		
 		
 		//COMPANY
@@ -143,9 +150,9 @@ public class InitDBMarcom {
 		company1.setCreatedDate(new Date());  
 		company1.setIsDelete(false);
 		
-		company2.setName("XSis Mitra Anggi1");
+		company2.setName("Bank OCBC");
 		company2.setCode("CP0002");
-		company2.setCreatedBy("anggi1");
+		company2.setCreatedBy("Diaz");
 		company2.setCreatedDate(new Date());  
 		company2.setIsDelete(false);
 		
@@ -172,10 +179,10 @@ public class InitDBMarcom {
 		employee1.setCompany(company1);
 		
 		employee2.setEmployeeName("Diaz Fatahillah");
-		employee2.setCompany(company1);
+		employee2.setCompany(company2);
 		
 		employee3.setEmployeeName("Reza");
-		employee3.setCompany(company1);
+		employee3.setCompany(company2);
 		
 		employee4.setEmployeeName("Mamad");
 		employee4.setCompany(company1);
@@ -195,12 +202,23 @@ public class InitDBMarcom {
 		
 		//insert user
 		MasterUser userAdmin = new MasterUser();
+		MasterUser userAdmin2 = new MasterUser();
+		MasterUser userAdmin3 = new MasterUser();
 		userAdmin.setUsername("Administrator"); 
 		userAdmin.setPassword(encodePassword("12345"));
 		userAdmin.setEmployee(employee1);
 		userAdmin.setmRole(role1);
+		userAdmin2.setUsername("diazfatahillah"); 
+		userAdmin2.setPassword(encodePassword("Abc123"));
+		userAdmin2.setEmployee(employee2);
+		userAdmin2.setmRole(role1);
+		userAdmin3.setUsername("MamadHAHA"); 
+		userAdmin3.setPassword(encodePassword("12345"));
+		userAdmin3.setEmployee(employee3);
+		userAdmin3.setmRole(role2);
 		userService.save(userAdmin);
-		
+		userService.save(userAdmin2);
+		userService.save(userAdmin3);
 		 
 		
 	
