@@ -34,18 +34,14 @@ public class TransaksiSouvenirItem {
 	private String note;
 	@Column(name="is_delete", nullable=false)
 	private boolean isDelete;
-	@ManyToOne
-	@JoinColumn(name="created_by")
-	private MasterEmployee createdBy;
+	@Column(name="created_by")
+	private String createdBy;
 	@Column(name="created_date")
 	private Date createdDate;
-	@ManyToOne
-	@JoinColumn(name="updated_by")
-	private MasterEmployee updatedBy;
+	@Column(name="updated_by")
+	private String updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -88,19 +84,11 @@ public class TransaksiSouvenirItem {
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-
-	
-	public MasterEmployee getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(MasterEmployee createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
-	}
-	public MasterEmployee getUpdatedBy() {
-		return updatedBy;
-	}
-	public void setUpdatedBy(MasterEmployee updatedBy) {
-		this.updatedBy = updatedBy;
 	}
 	public Date getCreatedDate() {
 		return createdDate;
@@ -108,14 +96,18 @@ public class TransaksiSouvenirItem {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
 	
 
 }

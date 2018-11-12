@@ -292,7 +292,7 @@ $(document).ready(function(){
 				$('#editTransactionCode').val(data[0].transaksiSouvenir.code);
 				$('#editEventCode').val(data[0].transaksiSouvenir.tEventId.code);
 				//$('#editEventId').val(data[0].transaksiSouvenir.tEventId.id);
-				$('#editRequestBy').val(data[0].transaksiSouvenir.requestBy);
+				$('#editRequestBy').val(data[0].transaksiSouvenir.requestBy.employeeName);
 				$('#editRequestDate').val(data[0].transaksiSouvenir.requestDate);
 				$('#editDueDate').val(data[0].transaksiSouvenir.requestDueDate);
 				$('#editNote').val(data[0].transaksiSouvenir.note);

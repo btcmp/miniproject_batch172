@@ -46,6 +46,7 @@ public class TransaksiSouvenir {
 	//relasi bila ada request dari suatu ke event
 	//@Column(name="t_event_id", length=50)
 	@OneToOne
+	//@JsonManagedReference
 	@JoinColumn(name="t_event_id", unique=true)
 	private	TransaksiEvent tEventId;
 	
@@ -100,6 +101,9 @@ public class TransaksiSouvenir {
 	@Temporal(TemporalType.DATE)
 	private Date settlementAprovedDate;
 	
+	
+	
+	/*SETTER AND GETTER*/
 	@Column(length=1)
 	private int status;
 	
@@ -134,8 +138,6 @@ public class TransaksiSouvenir {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="transaksiSouvenir")
 	private List<TransaksiSouvenirItem> transaksiSouvenirItems;
 
-	
-	/*SETTER AND GETTER*/
 	public int getId() {
 		return id;
 	}
@@ -327,7 +329,6 @@ public class TransaksiSouvenir {
 	public void setTransaksiSouvenirItems(List<TransaksiSouvenirItem> transaksiSouvenirItems) {
 		this.transaksiSouvenirItems = transaksiSouvenirItems;
 	}
-	
-	
+
 
 }

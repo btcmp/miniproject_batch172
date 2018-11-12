@@ -36,7 +36,7 @@
 					<div class="form-group row">
 						<label for="requestBy" class="col-sm-3 col-form-label">Request By</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="requestBy" id="requestBy"
+							<input type="text" class="form-control" name="requestBy" id="requestBy" value="${userlogin.employee.employeeName}"
 							  disabled>
 						</div>
 					</div>

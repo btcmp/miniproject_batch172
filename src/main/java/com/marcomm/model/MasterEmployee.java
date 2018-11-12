@@ -38,7 +38,7 @@ public class MasterEmployee {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdBy")
 	private List<TransaksiSouvenir> createdByTransaksiSouvneir;
 	
-	
+
 	public List<TransaksiSouvenir> getCreatedByTransaksiSouvneir() {
 		return createdByTransaksiSouvneir;
 	}
@@ -46,6 +46,7 @@ public class MasterEmployee {
 	public void setCreatedByTransaksiSouvneir(List<TransaksiSouvenir> createdByTransaksiSouvneir) {
 		this.createdByTransaksiSouvneir = createdByTransaksiSouvneir;
 	}
+	
 	
 	//end relasi mamad
 	
@@ -55,6 +56,7 @@ public class MasterEmployee {
 
 
 	
+
 
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="assignTo")
 	private List<TransaksiDesign> assignToDesign;
@@ -79,28 +81,7 @@ public class MasterEmployee {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="approvedBy")
 	private List<TransaksiEvent> approvedbyEvent;
 	//AKHIR KOLOM TAMBAHAN EVENT
-	//KOLOM TAMBAHAN SOUVENIR ITEM TRANSAKASI
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="updatedBy")
-	private List<TransaksiSouvenirItem> updatedBySouvenirItem;
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdBy")
-	private List<TransaksiSouvenirItem> createdBySouvenirItem;
-
-	public List<TransaksiSouvenirItem> getUpdatedBySouvenirItem() {
-		return updatedBySouvenirItem;
-	}
-
-	public void setUpdatedBySouvenirItem(List<TransaksiSouvenirItem> updatedBySouvenirItem) {
-		this.updatedBySouvenirItem = updatedBySouvenirItem;
-	}
-
-	public List<TransaksiSouvenirItem> getCreatedBySouvenirItem() {
-		return createdBySouvenirItem;
-	}
-
-	public void setCreatedBySouvenirItem(List<TransaksiSouvenirItem> createdBySouvenirItem) {
-		this.createdBySouvenirItem = createdBySouvenirItem;
-	}
-	//AKHIR KOLOM SOUVENIR ITEM
+	
 	
 
 	public void setAssignToDesign(List<TransaksiDesign> assignToDesign) {

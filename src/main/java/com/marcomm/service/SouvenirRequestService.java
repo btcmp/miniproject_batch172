@@ -14,6 +14,7 @@ import com.marcomm.dao.TransaksiEventDao;
 import com.marcomm.dao.TransaksiSouvenirDao;
 import com.marcomm.dao.TransaksiSouvenirItemDao;
 import com.marcomm.model.FormSouvenir;
+import com.marcomm.model.MasterSouvenir;
 import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
@@ -70,11 +71,13 @@ public class SouvenirRequestService {
 		transaksiSouvenirDao.save(ts);
 		for (TransaksiSouvenirItem transaksiSouvenirItem : transaksiSouvenir.getTransaksiSouvenirItems()) {
 			TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
+			MasterSouvenir ms = masterSouvenirDao.getSouvenirById(transaksiSouvenirItem.getMasterSouvenir().getId());
+			
 			tsi.setTransaksiSouvenir(ts);
-			tsi.setMasterSouvenir(transaksiSouvenirItem.getMasterSouvenir());
+			tsi.setMasterSouvenir(ms);
 			tsi.setQty(-(transaksiSouvenirItem.getQty()));
 			tsi.setNote(transaksiSouvenirItem.getNote());
-			tsi.setCreatedBy(user.getEmployee());
+			tsi.setCreatedBy(user.getEmployee().getEmployeeName());
 			tsi.setCreatedDate(date);
 			tsi.setDelete(false);
 			transaksiSouvenirItemDao.save(tsi);
@@ -122,31 +125,40 @@ public class SouvenirRequestService {
 		//ts.settEventId(transaksiSouvenir.gettEventId());
 		ts.setUpdatedBy(user.getEmployee());
 		ts.setUpdatedDate(date);
-		transaksiSouvenirDao.save(ts);
+		transaksiSouvenirDao.updateTransSouvenir(ts);
 		for (TransaksiSouvenirItem transaksiSouvenirItem : transaksiSouvenir.getTransaksiSouvenirItems()) {
+			MasterSouvenir ms = masterSouvenirDao.getSouvenirById(transaksiSouvenirItem.getMasterSouvenir().getId());
+			/*Long q = transaksiSouvenirItem.getQty();
+			int quantityMS=ms.getQuantity()-Math.toIntExact(q);
+			ms.setQuantity(quantityMS);
+			masterSouvenirDao.update(ms);*/
 			
 			if(transaksiSouvenirItem.getId()==9999) {
+				System.out.println("save item tambahan");
 				TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
-				tsi.setTransaksiSouvenir(ts);
-				tsi.setMasterSouvenir(transaksiSouvenirItem.getMasterSouvenir());
+				TransaksiSouvenir tsu= transaksiSouvenirDao.getById(id);
+				tsi.setTransaksiSouvenir(tsu);
+				tsi.setMasterSouvenir(ms);
 				tsi.setQty(-(transaksiSouvenirItem.getQty()));
 				tsi.setNote(transaksiSouvenirItem.getNote());
-				tsi.setCreatedBy(user.getEmployee());
+				tsi.setCreatedBy(user.getEmployee().getEmployeeName());
 				tsi.setCreatedDate(date);
 				tsi.setDelete(false);
 				transaksiSouvenirItemDao.save(tsi);
 			}
 			else {
 				TransaksiSouvenirItem tsi = transaksiSouvenirItemDao.getSouvenirItemById(transaksiSouvenirItem.getId());
-				tsi.setMasterSouvenir(transaksiSouvenirItem.getMasterSouvenir());
+				System.out.println("update item lama");		
 				tsi.setQty(-(transaksiSouvenirItem.getQty()));
+				tsi.setQtySettlement(0L);
 				tsi.setNote(transaksiSouvenirItem.getNote());
 				tsi.setDelete(transaksiSouvenirItem.isDelete());
-				tsi.setUpdatedBy(user.getEmployee());
+				tsi.setUpdatedBy(user.getEmployee().getEmployeeName());
 				tsi.setUpdatedDate(date);
+				tsi.setMasterSouvenir(ms);
 				//
 				
-				transaksiSouvenirItemDao.save(tsi);
+				transaksiSouvenirItemDao.update(tsi);
 			}
 			
 		}
