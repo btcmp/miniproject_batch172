@@ -42,43 +42,44 @@ public class TransaksiSouvenirService {
 	MasterUserDao masterUserDao;
 
 	/*UPDATE*/
-	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir) {
+	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir, int id) {
 		//DATA TABLE ATAS
 		TransaksiSouvenir transaksiSouvenir2 = transaksiSouvenirDao.getById(transaksiSouvenir.getId());//mengambil repository lama
-		
-		transaksiSouvenir2.setCode(transaksiSouvenir.getCode());
+		//transaksiSouvenir2.setCode(transaksiSouvenir.getCode());
 		//transaksiSouvenir2.setReceivedBy(1); --> belum fix
-		transaksiSouvenir2.setReceivedDate(transaksiSouvenir.getReceivedDate());
+		//transaksiSouvenir2.setReceivedDate(transaksiSouvenir.getReceivedDate());
 		transaksiSouvenir2.setNote(transaksiSouvenir.getNote());
 		
 		transaksiSouvenirDao.updateTransSouvenir(transaksiSouvenir2);
 		
 		//DATA TABLE ITEM
-		List<TransaksiSouvenirItem> itemBaru = transaksiSouvenir.getTransaksiSouvenirItems();
-		for(TransaksiSouvenirItem transaksiSouvenirItem : itemBaru) {
-			//bagian save
+		for(TransaksiSouvenirItem transaksiSouvenirItem : transaksiSouvenir.getTransaksiSouvenirItems()) {
+			MasterSouvenir ms = masterSouvenirDao.getSouvenirById(transaksiSouvenirItem.getMasterSouvenir().getId());
+			
+			
+			Long q = transaksiSouvenirItem.getQty();
+			int quantityMS = ms.getQuantity()+Math.toIntExact(q);
+			ms.setQuantity(quantityMS);
+			masterSouvenirDao.update(ms);
+			
 			if(transaksiSouvenirItem.getId()==0) {
 				TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
-				MasterSouvenir masterSouvenir1 = transaksiSouvenirItem.getMasterSouvenir();
-				tsi.setMasterSouvenir(masterSouvenirDao.getSouvenirById(masterSouvenir1.getId()));
+				TransaksiSouvenir tsu = transaksiSouvenirDao.getById(id);
+				tsi.setTransaksiSouvenir(tsu);
+				tsi.setMasterSouvenir(ms);
 				tsi.setQty(transaksiSouvenirItem.getQty());
 				tsi.setNote(transaksiSouvenirItem.getNote());
-				tsi.setDelete(false);
 				transaksiSouvenirItemDao.save(tsi);
 			}else {
-				//bagian update
-				TransaksiSouvenirItem itemLama = transaksiSouvenirItemDao.getSouvenirItemById(transaksiSouvenirItem.getId());
+				TransaksiSouvenirItem tsi = transaksiSouvenirItemDao.getSouvenirItemById(transaksiSouvenirItem.getId());
+				tsi.setQty(transaksiSouvenirItem.getQty());
+				tsi.setNote(transaksiSouvenirItem.getNote());
+				tsi.setMasterSouvenir(ms);
 				
-				itemLama.setId(transaksiSouvenirItem.getId());
-				MasterSouvenir souvenirId = transaksiSouvenirItem.getMasterSouvenir();
-				MasterSouvenir souvenirBaru = masterSouvenirDao.getSouvenirById(souvenirId.getId());
-				itemLama.setMasterSouvenir(souvenirBaru);
-				itemLama.setQty(transaksiSouvenirItem.getQty());
-				itemLama.setNote(transaksiSouvenirItem.getNote());
-				
-				transaksiSouvenirItemDao.update(itemLama);
+				transaksiSouvenirItemDao.update(tsi);
 			}
 		}
+		
 		
 	}
 	/*DELETE*/
@@ -114,11 +115,24 @@ public class TransaksiSouvenirService {
 		//add table bawah
 		for(TransaksiSouvenirItem transaksiSouvenirItem :transaksiSouvenir.getTransaksiSouvenirItems()) {
 			TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
-			tsi.setMasterSouvenir(transaksiSouvenirItem.getMasterSouvenir());
+			MasterSouvenir ms = masterSouvenirDao.getSouvenirById(transaksiSouvenirItem.getMasterSouvenir().getId());
+			
+			
+			
+			tsi.setMasterSouvenir(ms);
 			tsi.setQty(transaksiSouvenirItem.getQty());
 			tsi.setNote(transaksiSouvenirItem.getNote());
 			tsi.setTransaksiSouvenir(ts);
 			transaksiSouvenirItemDao.save(tsi);
+			
+			
+			//save ke master souvenir
+			Long jml = transaksiSouvenirItem.getQty();
+			int quantity = ms.getQuantity()+ Math.toIntExact(jml);
+			ms.setQuantity(quantity);
+			ms.setUpdatedBy(masterUser.getmRole().getRoleName());
+			ms.setUpdatedDate(date);
+			masterSouvenirDao.update(ms);
 		}
 	}
 	

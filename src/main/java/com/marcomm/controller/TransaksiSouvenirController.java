@@ -84,10 +84,10 @@ public class TransaksiSouvenirController {
 	}
 	
 	/*UPDATE*/
-	@RequestMapping(value="/update", method=RequestMethod.POST)
+	@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void updateTransSouvenir(@RequestBody TransaksiSouvenir transaksiSouvenir) {
-		transaksiSouvenirService.updateTransSouvenir(transaksiSouvenir);
+	public void updateTransSouvenir(@RequestBody TransaksiSouvenir transaksiSouvenir, @PathVariable("id") int id) {
+		transaksiSouvenirService.updateTransSouvenir(transaksiSouvenir, id);
 	}
 	
 	/*DELETE*/

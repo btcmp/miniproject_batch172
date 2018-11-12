@@ -56,9 +56,9 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 	}
 
 	/*UPDATE PUNYA MAMAD*/
-	public void update(TransaksiSouvenirItem itemLama) {
+	public void update(TransaksiSouvenirItem tsi) {
 		Session session = sessionFactory.getCurrentSession();
-		session.update(itemLama);
+		session.update(tsi);
 		
 	}
 
