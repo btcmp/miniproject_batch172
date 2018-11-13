@@ -31,7 +31,7 @@ public class MasterSouvenirService {
 	
 	public void save(MasterSouvenir masterSouvenir) {
 		MasterUser userlogin= masterUserDao.getUserByUserLog();
-		masterSouvenir.setCreatedBy(userlogin.getEmployee().getEmployeeName());
+		masterSouvenir.setCreatedBy(userlogin.getmRole().getRoleName());
 		Date date = new Date();
 		masterSouvenir.setCreatedDate(date);
 		masterSouvenir.setDeleted(false);

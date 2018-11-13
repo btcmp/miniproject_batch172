@@ -319,6 +319,9 @@ $(document).ready(function(){
 			autoclose : true,
 			uiLibrary : 'bootstrap4'
 		});
+		/* if ($('#editStatus'.val()==1&&(userlogin.employee.employeeName)==$('#editRequestBy').val())){
+		} */
+		
 		$('#editTranSouReqModal').modal();
 		//index = 0;
 	});
@@ -475,18 +478,33 @@ $(document).ready(function(){
 			$.each(data,function(increment,transaksiSouvenir){
 				increment++;
 				var status="";
+				var modalEdit="";
+				var modalview="";
+				var role="${userlogin.mRole.roleName}";
+				var user= "${userlogin.employee.employeeName}";
 				if(transaksiSouvenir.status==1){
 					status="Submitted";
+					if(role=="Administrator"){
+						modalview="btn-view-transaksiR";
+						if(transaksiSouvenir.requestBy.employeeName==user){
+							modalEdit="btn-edit-transaksiR";
+						}
+					} else if(transaksiSouvenir.requestBy.employeeName==user){
+						modalEdit="btn-edit-transaksiR";
+					}
 				} else if(transaksiSouvenir.status==2){
 					status="In Progress";
+					if(transaksiSouvenir.requestBy.employeeName==user){
+						modalview="btn-view-rec";
+					}
 				}else if(transaksiSouvenir.status==3){
 					status="Received by Requester";
 				}else if(transaksiSouvenir.status==0){
 					status="Rejected";
 				}
-				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
+				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="'+modalview+'"><span class="oi oi-magnifying-glass"></span></a>';
 				tRow +='';
-				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-edit-transaksiR"><span class="oi oi-pencil"></span></a>';
+				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="'+modalEdit+'"><span class="oi oi-pencil"></span></a>';
 				oTable.row.add([increment,transaksiSouvenir.code,transaksiSouvenir.requestBy.employeeName,transaksiSouvenir.requestDate,transaksiSouvenir.requestDueDate,status,transaksiSouvenir.createdDate,transaksiSouvenir.createdBy.employeeName,tRow]);
 			});
 			oTable.draw();
@@ -601,7 +619,7 @@ $(document).ready(function(){
 		});  
 		
 		/* Received by requester */
-		 $(document).on('click', '.btn-view-transaksiR', function(){
+		 $(document).on('click', '.btn-view-rec', function(){
 			var id =$(this).attr('id');
 			$.ajax({
 				url : '${pageContext.request.contextPath}/souvenirrequest/getitemsbyid/'+id,
