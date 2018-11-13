@@ -32,9 +32,9 @@
 						<div class="col-sm-4">
 							<select class="form-control custom select" id="receivedTransSBy">
 								<option value=" " selected>Select Employee</option>
-								<%-- <c:forEach var="employee" items="${employees }">
-									<option value="${employee.employeeName }">${employee.employeeName }</option>
-								</c:forEach> --%>
+								<c:forEach var="employee" items="${employees }">
+									<option value="${employee.id }">${employee.employeeName }</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 								placeholder="Type Note">
 						</div>
 					</div>
-				</form>
+				
 				
 			<!-- BUTTOT ADD -->
 			<div class="row" style="float:left; padding-bottom:10px; padding-top:10px">
@@ -72,20 +72,21 @@
 				</tr>
 			</thead>
 			<tbody class="tableBody">
-			<tr id='items-1'>
+			<tr id="items-1">
 				<td><select class="custom-select" id="souvenirItem">
-					<option value=" ">-Select Souvenir-</option>
+					<option disabled value=" " selected>-Select Souvenir-</option>
 						<c:forEach var="souvenir" items="${souvenirs }">
 							<option value="${souvenir.id}">${souvenir.name}</option>
 						</c:forEach>
 					</select></td>
-				<td><input type="number" class="form-control" id="quantity" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" id="note" placeholder="Note"></td>
-				<td><a href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>
-					<a href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>
+				<td><input disabled type="number" class="form-control" id="quantity" placeholder="Qty"></td>
+				<td><input disabled type="text" class="form-control" id="note" placeholder="Note"></td>
+				<td><a href="#" id="1" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>
+					<a href="#" id="1" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>
 			</tr>
 			</tbody>
 		</table>
+		</form>
 <!-- END TABLE -->
 				
 			<!-- FOOTER -->
@@ -94,8 +95,11 @@
 				<button type="button" class="btn btn-primary" id="addBtnModal">Save</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 			</div>
+			
 		</div>
+		
 	</div>
+	
 </div>
 
 
@@ -109,7 +113,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content"> 
 			<div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addProductModalTitle">Add Souvenir Stock</h5>
+				<h5 class="modal-title" id="addProductModalTitle">View Souvenir Stock</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -184,7 +188,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content"> 
 			<div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addProductModalTitle">Add Souvenir Stock</h5>
+				<h5 class="modal-title" id="addProductModalTitle">Update Souvenir Stock</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -195,20 +199,20 @@
 			<!-- FORM UP-->
 				<form id="addUnitForm" >
 					<div class="form-group row">
-						<label for="transactionCode" class="col-sm-3 col-form-label">Transaction Code</label>
+						<label for="editTransactionCode" class="col-sm-3 col-form-label">Transaction Code</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="editTransactionCode"
 								placeholder="Transaction Code" readonly>
 						</div>    
 					</div>
 					<div class="form-group row">
-						<label for="receivedTransSBy" class="col-sm-3 col-form-label">Received By</label>
+						<label for="editReceivedTransSBy" class="col-sm-3 col-form-label">Received By</label>
 						<div class="col-sm-4">
 							<select class="form-control custom select" id="editReceivedTransSBy">
-								<option value=" " selected>Select Employee</option>
-								<%-- <c:forEach var="employee" items="${employees }">
-									<option value="${employee.employeeName }">${employee.employeeName }</option>
-								</c:forEach> --%>
+							<option value="" selected>Select Employee</option>
+								<c:forEach var="employee" items="${employees }">
+									<option value="${employee.id }">${employee.employeeName }</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
@@ -220,7 +224,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="noteTransSou" class="col-sm-3 col-form-label">Note</label>
+						<label for="editNoteTransSou" class="col-sm-3 col-form-label">Note</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="editNoteTransSou" style="height: 80px;"
 								placeholder="Type Note">

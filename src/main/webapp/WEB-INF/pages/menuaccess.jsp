@@ -36,34 +36,25 @@
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
 						<li class="nav-item"><a class="nav-link text-white" href="#">
-								 Dashboard	
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white master" href="#"> Master</a>
-						<ul class="nave flex-column mastermenus">
-						<c:forEach var="master" items="${mastermenus}">
-						<li><a class="nav-link text-white" href="#"> Master Company</a></li>
-						</c:forEach>
-						
-<!-- 						<li><a class="nav-link text-white" href="#"> Master Employee</a></li> -->
-<!-- 						<li><a class="nav-link text-white" href="#"> Master Role</a></li> -->
-<!-- 						<li><a class="nav-link text-white" href="#"> Master Menu</a></li> -->
-<!-- 						<li><a class="nav-link text-white" href="#"> Master Access</a></li> -->
-<!-- 						<li><a class="nav-link text-white" href="#"> Master User</a></li> -->
-<!-- 						<li><a class="nav-link text-white" href="#"> Master Unit</a></li> -->
-<!-- 						<li><a class="nav-link text-white" href="#"> Master Souvenir</a></li> -->
-<!-- 						<li><a class="nav-link text-white" href="#"> Master Product</a></li> -->
-						</ul>
+								Dashboard </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu"
+							href="#"> Master</a>
+							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
+							</ul>
 						</li>
-						<li class="nav-item"><a class="nav-link text-white" href="http://localhost:8433/maven-project/design"> Transaction	
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
-						</a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
+							href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white"
+							href="${logoutUrl}"> Logout </a></li>
 					</ul>
 					</div>
 			</nav><!-- END DASHBOARD -->
 			<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
 				<div class="card text-white bg-primary mb-3">
-					<div class="card-header">Product</div>
+					<div class="card-header">Access</div>
 				</div>
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
@@ -146,7 +137,8 @@ $(document).ready(function(){
 		autoclose:true,
 		uiLibrary:'bootstrap4'
 	});
-	 loadData(); 
+	 loadData();
+	 createMenu();
 	
 	/* BUTTON POP UP */
 	$('#btnadd').on('click',function(){
@@ -385,10 +377,78 @@ $(document).ready(function(){
 			}
 		});
 	});
-
-	$('.master').click(function(){
-		$('.mastermenus').toggle();
+	/* dropdown menu */
+	function createMenu(){
+		var relee=null;
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
+			type : 'GET',
+			success : function(data1){
+			 
+			 relee=data1;
+			 console.log('Ini adalah role nya');
+			 console.log(relee);
+			 menusRole(relee);			  
+				  
+			}
+		});
+	 }
+	
+	/* DROPDOWN MENU */
+	function menusRole(role22){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/access/getall',
+			type : 'GET',
+			success : function(data4) {
+				var role1=null;
+					role1=role22;
+				console.log(role1);
+				console.log('harus sama');
+				console.log(data4[1].role.roleName);
+				$.each(data4,function(index,access){
+					 if(access.role.roleName == role1){
+						  var idMenu=0;
+						  idMenu=access.id;
+						   getMenubyRole(idMenu);
+					 }
+				});
+				 
+			},
+			dataType : 'json'
+		});	
+		}
+	
+	function getMenubyRole(idMenu){
+		 $.ajax({
+				url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
+				type : 'GET',
+				success : function(data2) {
+					$('#selectMenu').empty();
+					$('#selectMenu2').empty();
+					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
+					var tinggi=0;
+					var tinggi2=0;
+					 $.each(data2.menus,function(index,menu){
+						 
+						
+						  if(menu.parentId==1){
+							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+						 
+						  }else if(menu.parentId==2){
+							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+						  }			 
+					 }); 
+				},
+				dataType : 'json'
+			});
+	}		
+	$('#masterMenu').click(function(){
+		$('#selectMenu').toggle();
 	});
+	$('#masterMenu2').click(function(){
+		$('#selectMenu2').toggle();
+	});
+	
 });
 
 	

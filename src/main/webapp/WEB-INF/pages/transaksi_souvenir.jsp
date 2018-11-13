@@ -153,7 +153,9 @@ $(document).ready(function(){
 			url : '${pageContext.request.contextPath}/transaksisouvenir/getcode',
 			type : 'GET',
 			success : function(data){
+				$('#addUnitForm').trigger('reset');
 				$('#transactionCode').val(data);
+				
 			},
 			dataType : 'json'
 		});
@@ -189,14 +191,14 @@ $(document).ready(function(){
 		var oTable = $('#modalTableSouTrans');
 		var tBody = oTable.find('tbody');
 		var tRow = '<tr id="items-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" name="details['+index+'].mSouvenirId">'+
+			tRow += '<td><select disabled class="custom-select" id="souvenirItem'+Id+'" name="details['+index+'].mSouvenirId">'+
 						'<option value=" " selected>-Select Souvenir-</option>'+
 						'<c:forEach var="souvenir" items="${souvenirs}">'+
 						'<option value="${souvenir.id}">${souvenir.name}</option>'+
 						'</c:forEach>'+
 					'</select></td>';
-			tRow += '<td><input type="number" class="form-control" id="quantity'+Id+'" placeholder="Qty"></td>';
-			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note"></td>';
+			tRow += '<td><input disabled type="number" class="form-control" id="quantity'+Id+'" placeholder="Qty"></td>';
+			tRow += '<td><input disabled type="text" class="form-control" id="note'+Id+'" placeholder="Note"></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>'+' ';
 			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>';
 			tRow += '</tr>';
@@ -220,7 +222,9 @@ $(document).ready(function(){
 		console.log(transaksiSouvenirItems);
 		var transaksiSouvenir = {
 				code : $('#transactionCode').val(),
-				//receivedBy : $('#receivedTransSBy').val(),
+				receivedBy : {
+					id:$('#receivedTransSBy').val()	
+				},
 				receivedDate : $('#receivedTransSDate').val(),
 				note : $('#noteTransSou').val(),
 				transaksiSouvenirItems:transaksiSouvenirItems
@@ -247,7 +251,13 @@ $(document).ready(function(){
 		
 	});
 	
-	//remove added item
+	//icon edit added item
+	$(document).on('click','.editBtnModalTransS',function(){
+		var id = $(this).attr('id');
+		$('#items-'+id).find(':input').prop('disabled', false);
+	});
+	
+	//icon remove added item
 	$(document).on('click', '.deleteBtnModalTransS', function(){
 		var id = $(this).attr('id');
 		$('#items-'+id).remove();
@@ -276,7 +286,7 @@ $(document).ready(function(){
 			var tRow = '<a id="'+souvenir.id+'" href="#" class="btn-view-souvenir"><span class="oi oi-magnifying-glass"></span></a>';
 				tRow += ' ';
 				tRow += '<a id="'+souvenir.id+'" href="#" class="btn-update-souvenir"><span class="oi oi-pencil"></span></a>';
-			oTable.row.add([increment, souvenir.code, souvenir.receivedBy, souvenir.receivedDate, souvenir.createdDate, souvenir.createdBy.employeeName, tRow]);
+			oTable.row.add([increment, souvenir.code, souvenir.receivedBy.employeeName, souvenir.receivedDate, souvenir.createdDate, souvenir.createdBy.employeeName, tRow]);
 		});
 		oTable.draw();
 	}
@@ -297,7 +307,7 @@ $(document).ready(function(){
 					
 						//Data atas
 						$('#viewTransCode').val(data[0].transaksiSouvenir.code);
-						$('#viewReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy);
+						$('#viewReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy.employeeName);
 						$('#viewReceivedTransSDate').val(data[0].transaksiSouvenir.receivedDate);
 						$('#viewNoteTransSou').val(data[0].transaksiSouvenir.note);
 						$('.viewTableBody').empty();
@@ -344,13 +354,13 @@ $(document).ready(function(){
 					//Data atas
 					$('#idEditTransSou').val(data[0].transaksiSouvenir.id);
 					$('#editTransactionCode').val(data[0].transaksiSouvenir.code);
-					$('#editReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy);
+					$('#editReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy.id);
 					$('#editReceivedTransSDate').val(data[0].transaksiSouvenir.receivedDate);
 					$('#editNoteTransSou').val(data[0].transaksiSouvenir.note);
 					
 					$('.editTableBody').empty();
 					
-					itemBawah(len,data);
+					itemBawah(len1,data);
 				}
 			
 		}); /* batas akhir ajax */	
@@ -441,7 +451,9 @@ $(document).ready(function(){
 		var transaksiSouvenir = {
 				id: parseInt($('#idEditTransSou').val()),
 				code : $('#editTransactionCode').val(),
-				//receivedBy : $('#editReceivedTransSBy').val(),
+				receivedBy : {
+					id:parseInt($('#editReceivedTransSBy').val())	
+				},
 				receivedDate : $('#editReceivedTransSDate').val(),
 				note : $('#editNoteTransSou').val(),
 				transaksiSouvenirItems:transaksiSouvenirItems
@@ -459,9 +471,9 @@ $(document).ready(function(){
 			data:JSON.stringify(transaksiSouvenir),
 			success:function(data){
 				//console.log(data);
-				console.log("data berhasil disimpan....");
-				
+				console.log("data berhasil disimpan....");	
 			}
+			
 			/* error:function(){
 				console.log("data gagal disimpan...");
 			} */
@@ -473,7 +485,9 @@ $(document).ready(function(){
 		document.getElementById("notif").innerHTML = "Data updated! Transaction stock with code: "+transaksiSouvenir.code+" has been updated!";
 		$('#notif').show('slow').delay(1500).hide('slow');
 		
+		//window.location='${pageContext.request.contextPath}/transaksisouvenir';
 	});
+	
 	
 	
 }); /* batas akhir ready function */

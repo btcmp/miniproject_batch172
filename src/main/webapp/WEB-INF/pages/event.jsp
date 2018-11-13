@@ -328,25 +328,30 @@ $(document).ready(function(){
 			index++;
 			
 			//CHOOSEN MODAL BASED ON STATUS AND ROLE
-			//NAMED STATUS 
-			var role="${rolename.mRole.roleName}"
+			//NAMED STATUS TO TABLE
+			var role="${rolename.mRole.roleName}";
+			var user="${rolename.employee.employeeName}";
+			var id="${rolename.employee.id}"
 			var modalview = "";
 			var modaledit = "";
 			var status="";
 			if(event.status==1){
 				status="Submitted";
-				modaledit="btn-edit-event";
 				if(role=="Administrator"){
 					modalview = "btn-acceptreject-event";
+					if(event.requestBy.employeeName==user){
+						modaledit="btn-edit-event";
+					}
 				} else{
+					modaledit="btn-edit-event";
 					modalview = "btn-view-event"; 
 				}
 			} else if(event.status==2){
 				status="In Progress";
-				if(role=="Administrator"){
-					modalview = "btn-viewapproved-event";
+				if(event.assignTo.id==id){
+					modalview = "btn-close-event";
 				} else{
-					modalview = "btn-close-event";	
+					modalview = "btn-viewapproved-event";
 				}
 			} else if(event.status==3){
 				status="Done";
@@ -363,6 +368,19 @@ $(document).ready(function(){
 		});
 				oTable.draw();
 	}
+	
+	//NAMED STATUS TO MODAL
+	function statusEvent(status){
+		if(status==1){
+			return "Submitted";
+		}else if(status==2){
+			return "In Progress"
+		}else if(status==3){
+			return "Done"
+		}else{
+			return "Rejected"
+		}
+	  }
 	
 	//BUTTON SEARCH
 	$('#btn-search').on('click', function(){
@@ -393,7 +411,7 @@ $(document).ready(function(){
 				$('#eventstartdateEdit').val(output.startDate);
 				$('#eventenddateEdit').val(output.endDate);
 				$('#budgetEdit').val(output.budget);
-				$('#statusEdit').val(output.status);
+				$('#statusEdit').val(statusEvent(output.status));
 			},
 			dataType: 'json'
 		});
@@ -462,7 +480,7 @@ $(document).ready(function(){
 					$('#eventstartdateView').val(output.startDate);
 					$('#eventenddateView').val(output.endDate);
 					$('#budgetView').val(output.budget);
-					$('#statusView').val(output.status);
+					$('#statusView').val(statusEvent(output.status));
 					},
 					dataType: 'json'
 			});
@@ -500,7 +518,7 @@ $(document).ready(function(){
 					$('#eventstartdateAR').val(output.startDate);
 					$('#eventenddateAR').val(output.endDate);
 					$('#budgetAR').val(output.budget);
-					$('#statusAR').val(output.status);
+					$('#statusAR').val(statusEvent(output.status));
 					$('#assigntoAR').val(output.assignTo);
 					$('#rejectreason').val(output.rejectReason);
 				},
@@ -612,7 +630,7 @@ $(document).ready(function(){
 					$('#eventstartdateVA').val(output.startDate);
 					$('#eventenddateVA').val(output.endDate);
 					$('#budgetVA').val(output.budget);
-					$('#statusVA').val(output.status);
+					$('#statusVA').val(statusEvent(output.status));
 					$('#assigntoVA').val(output.assignTo.employeeName);
 					},
 					dataType: 'json'
@@ -651,7 +669,7 @@ $(document).ready(function(){
 				$('#eventstartdateClose').val(output.startDate);
 				$('#eventenddateClose').val(output.endDate);
 				$('#budgetClose').val(output.budget);
-				$('#statusClose').val(output.status);
+				$('#statusClose').val(statusEvent(output.status));
 				$('#assigntoClose').val(output.assignTo);
 			},
 			dataType: 'json'
