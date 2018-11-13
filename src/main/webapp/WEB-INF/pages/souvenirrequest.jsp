@@ -632,7 +632,7 @@ $(document).ready(function(){
 			$('#rejectSaveSouvenirModal').modal('hide');
 			$('#receivedTranSouReqModal').modal('hide');
 			document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been received by requester!";
-			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000);
+			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000 );
 			
 		}); 
 }); /* batas akhir ready function */
