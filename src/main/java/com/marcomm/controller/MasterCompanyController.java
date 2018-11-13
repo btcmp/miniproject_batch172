@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.marcomm.model.MasterCompany;
+import com.marcomm.model.MasterUser;
 import com.marcomm.service.MasterCompanyService;
 
 @Controller
@@ -77,5 +78,12 @@ public class MasterCompanyController {
 	@ResponseStatus(HttpStatus.OK)
 	public void delete(@PathVariable("id") int id) {
 		companyService.delete(id);
+	}
+	
+	//getuser to get role id, role name, employee id, employee name, username
+	@RequestMapping(value="/getuser", method = RequestMethod.GET)
+	@ResponseBody
+	public MasterUser getUser() {
+		return companyService.getUser();
 	}
 }

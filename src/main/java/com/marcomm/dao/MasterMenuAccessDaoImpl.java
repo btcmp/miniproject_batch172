@@ -127,9 +127,9 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 	public List<MasterRole> getRoleByMenuAcces(MasterMenuAccess access) {
 		// TODO Auto-generated method stub
 		Session session=sessionFactory.getCurrentSession();
-		String hql="select role from MasterRole role join role.access access where access= :theAccess";
+		String hql="select menus from MasterMenu menus join menus.access access where parentId= :parentId";
 		Query query = session.createQuery(hql);
-		query.setParameter("theAccess", access);
+		query.setParameter("parentId", access);
 		List<MasterRole> role=query.list();
 		return null;
 	}

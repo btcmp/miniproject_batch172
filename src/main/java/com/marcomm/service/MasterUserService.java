@@ -28,6 +28,7 @@ public class MasterUserService {
 	
 	
 	public void save(MasterUser masterUser) {
+		
 		userDao.save(masterUser);
 		// TODO Auto-generated method stub
 		
@@ -72,6 +73,5 @@ public class MasterUserService {
 		
 		return userDao.getRole();
 	}
-	
-	 
+
 }

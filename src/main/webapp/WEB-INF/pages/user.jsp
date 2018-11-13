@@ -48,9 +48,11 @@
 							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
 							</ul>
 						</li>
-						<li class="nav-item"><a class="nav-link text-white"
-							href="http://localhost:8433/maven-project/design">
-								Transaction </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
+							href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
 						<li class="nav-item"><a class="nav-link text-white"
 							href="${logoutUrl}"> Logout </a></li>
 					</ul>
@@ -59,22 +61,19 @@
 			<!-- END DASHBOARD -->
 			<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
 				<div class="card text-white bg-primary mb-3">
-					<div class="card-header">Product</div>
+					<div class="card-header">User</div>
 				</div>
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item"><a href="#">Master</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Access</li>
-					</ol>
+			 
+			<a href="#"><p style="float: left; width: 40%;" id="user-login" id="username" class="text-primary">Selamat
+			Datang User!</p></a>
+					
 				</nav>
-				 <!-- Menu drop down -->
-		
-		<!-- logout -->
+		 
+		 <div class="form-row" style="float:left; padding:10px;">
+			<a id="notification" class="text-white bg-info border rounded"></a>
+		</div>
 		<br>
 		 
-		<p style="float: left; width: 40%;" id="user-login" id="username" class="text-primary">Selamat
-			Datang User!</p>
 				
 				
 				
@@ -259,6 +258,7 @@ $(document).ready(function(){
 	
 		$(document).on('click','.btn-edit-user',function(){
 								var id = $(this).attr('id');
+								 $('#addEditForm').parsley().reset();
 								$.ajax({
 									url : '${pageContext.request.contextPath}/user/getbyid/'+id,
 									type : 'GET',
@@ -312,9 +312,11 @@ $(document).ready(function(){
 			data : JSON.stringify(user),
 			success : function(data){
 				console.log("data telah diupdate");
-				console.log(user);
+				console.log(data);
 				$('#editUserModal').modal('hide');
-			loadData();
+				loadData();
+				document.getElementById("notification").innerHTML = "Data Saved! New User has been edite with username: "+user.username+"!";
+				$('#notification').show('slow').delay(3500).hide('slow');
 			},
 			error : function(){
 				console.log("data error");
@@ -358,6 +360,7 @@ $(document).ready(function(){
 	///*memanggil add modal*/
 	$("#addBtn").on('click', function(){	 
 		$('#addUserModal').modal('show');
+		 $('#addUserForm').parsley().reset();
 		loadEmployeesNotUse();
 	 });
 	/*menutup add modal dan men save user ke controller  */
@@ -393,6 +396,8 @@ $(document).ready(function(){
 					$('#addUserModal').modal('hide'); 
 					$('#addUserForm').trigger("reset");
 					/*  window.location = "${pageContext.request.contextPath}/user"; */
+					document.getElementById("notification").innerHTML = "Data Saved! New User has been added with code: "+user.username+"!";
+					$('#notification').show('slow').delay(5500).hide('slow');
 					loadData();  
 
 				},
@@ -552,18 +557,25 @@ $(document).ready(function(){
 				type : 'GET',
 				success : function(data2) {
 					$('#selectMenu').empty();
+					$('#selectMenu2').empty();
 					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
 					var tinggi=0;
+					var tinggi2=0;
 					 $.each(data2.menus,function(index,menu){
 						 
 						
-						  
+						  if(menu.parentId==1){
+							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+						/* 	$('#selectMenu').height(tinggi);
+							tinggi=tinggi+80; */
+						  }else if(menu.parentId==2){
+							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');
+							/*  $('#selectMenu2').height(tinggi2);
+							tinggi2=tinggi2+100000; */
+							  
+						  }
 						 /* $('#selectMenu').append('<form action="${pageContext.request.contextPath}/'+menu.controller+'"><input type="submit" value="'+menu.name+'"/></form>'); */
-						 $('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');
 						 
-						 
-						 $('#selectMenu').height(tinggi);
-						tinggi=tinggi+80;
 							/* <a id="'+user.id+'" href="#" class="btn-delete-user"><span class="oi oi-trash"></span></a> */
 					 
 							
@@ -582,6 +594,9 @@ $(document).ready(function(){
 	
 	$('#masterMenu').click(function(){
 		$('#selectMenu').toggle();
+	});
+	$('#masterMenu2').click(function(){
+		$('#selectMenu2').toggle();
 	});
 	
 		

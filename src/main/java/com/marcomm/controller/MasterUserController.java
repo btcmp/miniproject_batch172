@@ -53,6 +53,8 @@ public class MasterUserController {
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void save(@RequestBody MasterUser masterUser) {
+		masterUser.setCreatedBy(userService.getRole());
+		masterUser.setUpdatedBy (userService.getRole());
 		userService.save(masterUser);
 	}
 	
