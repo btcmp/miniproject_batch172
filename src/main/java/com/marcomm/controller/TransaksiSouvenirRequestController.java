@@ -83,12 +83,12 @@ public class TransaksiSouvenirRequestController {
 		return user;
 	}
 
-	/*//get events avaliable
+	//get events avaliable
 	@RequestMapping(value="/getevents", method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiEvent> getEvents(){
 		return souvenirRequestService.getEvents();
-	}*/
+	}
 	
 	/*@RequestMapping(value="/getrequest/{id}", method=RequestMethod.GET)
 	@ResponseBody

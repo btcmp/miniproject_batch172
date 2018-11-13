@@ -1,5 +1,6 @@
 package com.marcomm.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -105,8 +106,16 @@ public class SouvenirRequestService {
 		return souvenirItems;
 	}
 	public List<TransaksiEvent> getEvents() {
-		// TODO Auto-generated method stub
-		return null;
+		List<TransaksiSouvenir> tsr = transaksiSouvenirDao.getAllRequest();
+		if(tsr.isEmpty()) {
+			return transaksiEventDao.getAll();
+		} else {
+			List<Integer> eventId = new ArrayList<>();
+			for (TransaksiSouvenir ts : tsr) {
+				eventId.add(ts.gettEventId().getId());
+			}
+			return transaksiSouvenirDao.getEvents(eventId);
+		}
 	}
 	public void updateSouvenirRequest(TransaksiSouvenir transaksiSouvenir, int id) {
 		MasterUser user = masterUserDao.getUserByUserLog();

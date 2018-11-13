@@ -139,10 +139,12 @@
 	$(document).ready(function(){
 		//datepicker
 		$('#data4').datepicker({
-			format:('yyyy-mm-dd')
+			format:('yyyy-mm-dd'),
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
 		});
 		
-		
+	//load list souvenir
 	loadData();
 	
 	//search
@@ -155,10 +157,34 @@
 			oTable
             .column( $('#data'+ i).data('index') )
             .search( $('#data'+ i).val() )
-            .draw();			
+            .draw();
+			$('#data'+i).val("");
 		}
 		
     } );	
+	
+	//validasi
+	Parsley.addValidator('namecheck',{
+    	validateString: function(value){
+	    	var namesplitcek = value.split(" ");
+	    	splitcek = namesplitcek[0];
+	    	 xhr= $.ajax({
+	    			url : '${pageContext.request.contextPath}/souvenir/getbyname/'+splitcek,
+	    			dataType : 'json',
+	    			type : 'GET'
+	    		});
+	    	 return xhr.then(function(data){
+	    		 if($('#editsvnrname').val()==$('#editsvnrnameCheck').val()){
+	    			 $('#editsvnrnameCheck').val(0)
+	    		 	 return true
+	    	   	 }else if(data.length==0){
+	    			 return true 
+	    		 }else{
+	    			 return $.Deferred().reject()
+	    		 }
+	    	 });
+    	}
+    	});
 	
 	//-- BUTTON POP UP ADD -->
 		$('#btn-add-souvenir').on('click', function(){
@@ -171,52 +197,56 @@
 				},
 				dataType: 'json'
 			});
+			$('#addForm').parsley().reset();
+  			$('#souvenircode').val("");
+  			$('#souvenirname').val("");
+  			$('#add-unit').val("");
+  			$('#souvenirdescription').val("");
 			$('#add-souvenir-modal').modal();
 			
 		});
-	});
 	
 	//SAVE and validasi
 	$('#btn-add-sv').on('click',function(ev){
 		//Fetch form to apply custom Bootstrap validation
- 		ev.preventDefault();
+ 		//ev.preventDefault();
  	    var validate = $('#addForm').parsley();
- 	    if (validate.validate()){
- 	    	var souvenir= {
- 	   			code:$('#souvenircode').val(),
- 	   			name:$('#souvenirname').val(),
- 	   			masterUnit : {
-					id :$('#add-unit').val()
-				},
- 	   			//mUnitId:$('#unit').val(),
- 	   			description:$('#souvenirdescription').val()
- 	   		}
- 	   		console.log(souvenir);
- 	   		$.ajax({
- 	   			url:'${pageContext.request.contextPath}/souvenir/save',
- 	   			type: 'POST',
- 	   			contentType: 'application/json',
- 	   			data : JSON.stringify(souvenir),
- 	   			beforeSend: function () {
- 	   				console.log('before sending data');
- 	   			},
- 	   			success: function (data) {
- 	   				console.log('data saved successfully')
- 	   				loadData();
- 	   				$('#souvenircode').val('');
- 	   				$('#souvenirname').val('');
- 	   				$('#add-unit').val('');
- 	   				$('#souvenirdescription').val('');
- 	   				$('#add-souvenir-modal').modal('hide');
- 	   			},
- 	   			error : function () {
- 	   				console.log('failed to save data')
- 	   			}
- 	   		});
- 	    }
-		
-		
+ 	    validate.validate();
 	});
+ 	   $('#addForm').parsley().on('form:success', function() {
+ 		  var souvenir= {
+ 	 	   			code:$('#souvenircode').val(),
+ 	 	   			name:$('#souvenirname').val(),
+ 	 	   			masterUnit : {
+ 						id :$('#add-unit').val()
+ 					},
+ 	 	   			//mUnitId:$('#unit').val(),
+ 	 	   			description:$('#souvenirdescription').val()
+ 	 	   		}
+ 	 	   		console.log(souvenir);
+ 	 	   		$.ajax({
+ 	 	   			url:'${pageContext.request.contextPath}/souvenir/save',
+ 	 	   			type: 'POST',
+ 	 	   			contentType: 'application/json',
+ 	 	   			data : JSON.stringify(souvenir),
+ 	 	   			beforeSend: function () {
+ 	 	   				console.log('before sending data');
+ 	 	   			},
+ 	 	   			success: function (data) {
+ 	 	   				console.log('data saved successfully')
+ 	 	   				loadData();
+ 	 	   				/* $('#addForm').parsley().reset();
+ 	 	   				$('#souvenircode').val("");
+ 	 	   				$('#souvenirname').val("");
+ 	 	   				$('#add-unit').val("");
+ 	 	   				$('#souvenirdescription').val(""); */
+ 	 	   				$('#add-souvenir-modal').modal('hide');
+ 	 	   			},
+ 	 	   			error : function () {
+ 	 	   				console.log('failed to save data')
+ 	 	   			}
+ 	 	   		});
+ 	   });
 	
 	//VIEW POP UP BUTTON
 	$(document).on('click', '.btn-view-souvenir', function(){
@@ -252,6 +282,7 @@
 					$('#editsvnrid').val(outedit.id);
 					$('#editsvnrcode').val(outedit.code);
 					$('#editsvnrname').val(outedit.name);
+					$('#editsvnrnameCheck').val(outedit.name);
 					$('#edit-souvenir').val(outedit.masterUnit.id);
 					$('#editsvnrdescription').val(outedit.description);
 					$('#editsvnrquantity').val(outedit.quantity);
@@ -266,8 +297,10 @@
 	//ngesave EDIT
 	 $('#btn-edit-sv').on('click',function(){
 		var validate = $('#editForm').parsley();
-	 	if (validate.validate()){
-	 		var svnr= {
+		validate.validate();
+	 });
+	 $('#editForm').parsley().on('form:success',function(){
+		 var svnr= {
 	 				id:parseInt($('#editsvnrid').val()),
 	 				code:$('#editsvnrcode').val(),
 	 				name:$('#editsvnrname').val(),
@@ -299,11 +332,8 @@
 					console.log('error')
 				}
 			});
-			
-	 	}
-		
-		
-	});
+	 });
+	 	
  	//DElETE button
  	$(document).on('click', '.btn-delete-souvenir', function(){
 			var id =$(this).attr('id');
@@ -397,40 +427,10 @@
 			tRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-delete-souvenir"><span class="oi oi-trash"></span></a>';
 			oTable.row.add([index, mastersouvenir.code, mastersouvenir.name, mastersouvenir.masterUnit.name,
 				 mastersouvenir.createdDate, mastersouvenir.createdBy, tRow]);
-				 //mastersouvenir.unit,
-			//console.log(index, mastersouvenir);
-			/* var tableRow ="<tr>";
-				tableRow += "<td>";
-					tableRow += index;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.code;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.name;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.unit;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.createdDate;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.createdBy;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-view-souvenir">view</a>';
-					tableRow += " ";
-					tableRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-edit-souvenir">edit</a>';
-					tableRow += " ";
-					tableRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-delete-souvenir">delete</a>';
-				tableRow += "</td>";
-			tableRow += "</tr>";
-		tBody.append(tableRow); */
 		});
 		oTable.draw();
 	};
-
+});
 	</script>
 	
 </html>

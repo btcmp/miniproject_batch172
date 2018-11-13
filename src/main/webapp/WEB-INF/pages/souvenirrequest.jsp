@@ -459,6 +459,10 @@ $(document).ready(function(){
 					status="In Progress";
 				} else if(transaksiSouvenir.status==3){
 					status="Approved";
+				} else if(transaksiSouvenir.status==4){
+					status="Received by Requester";
+				}else if(transaksiSouvenir.status==0){
+					status="Rejected";
 				}
 					
 				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
