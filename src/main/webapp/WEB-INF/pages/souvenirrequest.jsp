@@ -276,12 +276,15 @@ $(document).ready(function(){
 				console.log(data);
 				loadData();
 				//$('#addTranSouReqModal').modal('hide');
+				$('#addTranSouReqModal').modal('hide');
+				document.getElementById("notification").innerHTML = "Data Saved! Transaction Souvenir request has been added with code: "+transaksiSouvenir.code+"!";
+				$('#notification').show('slow').delay(1500).hide('slow');
 			}
 		});
 		
-		$('#addTranSouReqModal').modal('hide');
+		/* $('#addTranSouReqModal').modal('hide');
 		document.getElementById("notification").innerHTML = "Data Saved! Transaction Souvenir request has been added with code: "+transaksiSouvenir.code+"!";
-		$('#notification').show('slow').delay(1500).hide('slow');
+		$('#notification').show('slow').delay(1500).hide('slow'); */
 	});
 	
 	/* BUTTON SEARCH */
@@ -313,7 +316,7 @@ $(document).ready(function(){
 				$('#editRequestDate').val(data[0].transaksiSouvenir.requestDate);
 				$('#editDueDate').val(data[0].transaksiSouvenir.requestDueDate);
 				$('#editNote').val(data[0].transaksiSouvenir.note);
-				$('#editStatus').val(data[0].transaksiSouvenir.status);
+				$('#editStatus').val(statusTransaksi(data[0].transaksiSouvenir.status));
 				
 				$('#editTransaksiId').val(data[0].transaksiSouvenir.id);
 				$('.tableBodyEdit').empty();
@@ -365,14 +368,14 @@ $(document).ready(function(){
 		 var oTable = $('#modalTableEditItems');
 			var tBody = oTable.find('tbody');
 			var tRow ='<tr id="itemsEdit-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" style="width:150px" disabled>'+
+			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" style="width:150px" disabled required>'+
 					'<option value="" selected>Select Souvenir</option>'+
 					'<c:forEach var="souvenir" items="${souvenirs}">'+
 					'<option value="${souvenir.id}">${souvenir.name}</option>'+
 					'</c:forEach>'+
 					'</select></td>';
-			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'" placeholder="Qty" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note" disabled></td>';
+			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'" placeholder="Qty" disabled required></td>';
+			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note" disabled required></td>';
 			tRow += '<td><input type="hidden" class="form-control" id="itemIdEdit'+Id+'" value="0" ></td>';
 			tRow += '<td><input type="hidden" class="form-control" id="itemDeleteEdit'+Id+'" value=false ></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalEdit"><span class="oi oi-pencil"></span></a>'+' ';
@@ -445,6 +448,18 @@ $(document).ready(function(){
 		document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been updated!";
 		$('#notification').fadeIn(1000).delay(4000).fadeOut(3000);
 	});
+	/* FUNGSI STATUS */
+	 function statusTransaksi(i){
+		if(i==1){
+			return "Submitted";
+		 }else if(i==2){
+			 return "in proggress"
+		 }else if(i==3){
+			 return "Received by requester"
+		 }else if(i==0){
+			  return "rejected"}
+	};
+	
 	/* LOAD EVENTS */
 	function loadEvents(){
 		$.ajax({
