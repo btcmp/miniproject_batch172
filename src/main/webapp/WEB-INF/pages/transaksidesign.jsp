@@ -285,8 +285,9 @@ $(document).ready(function(){
 				$('#closeAssignTo').val(data[0].transaksiDesign.assignTo);
 				$('#closeRequestBy').val(data[0].transaksiDesign.requestBy.employeeName);
 				$('#closeRequestDate').val(data[0].transaksiDesign.requestDate);
-				$('closeNote').val(data[0].transaksiDesign.note);
+				$('#closeNote').val(data[0].transaksiDesign.note);
 				closeDesign(data);
+				
 			}
 		});
 		$('#closeDesignModal').modal();
@@ -466,9 +467,14 @@ $(document).ready(function(){
 			increment++;
 
 			if(role==="Administrator"){
-				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-main"><span class="oi oi-magnifying-glass"></span></a>';	
-			}else if(role==="Requester"){
+				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-main"><span class="oi oi-magnifying-glass"></span></a>';
+			}else if(role==="Staff"){
 				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';
+			}else{
+				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';
+				$('#closeBtnModal').hide();
+				$("#closeFormDesign").find(':input').prop('disabled',true);
+				
 			}
 			tRow +=' ';
 			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design-main"><span class="oi oi-pencil"></span></a>';
@@ -834,10 +840,10 @@ $(document).ready(function(){
 							'</select></td>';
 			tRow += '<td><input type="text" class="form-control description" value="'+data[index2].masterProduct.description+'"		placeholder="description" 	disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit2'+Ix+'" 			placeholder="Title" 		disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic+'" id="requestPicEdit2'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic.employeeName+'" id="requestPicEdit2'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit2'+Ix+'" 	placeholder="Due Date" 		disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].startDate+'" id="startdateEdit2'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].endDate+'"id="enddateEdit2'+Ix+'" 			placeholder="End Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="" id="startdateEdit2'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="" id="enddateEdit2'+Ix+'" 			placeholder="End Date" 		disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].note+'" id="noteEdit2'+Ix+'" 				placeholder="Note" disabled></td>';
 			tRow +=	'</tr>';
 			index2++;
