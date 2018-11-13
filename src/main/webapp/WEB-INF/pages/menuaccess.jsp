@@ -110,12 +110,11 @@
 		</table>
 			</div>
 		</div>
-	<%@include file="/WEB-INF/pages/modal/add-product.html"%>
-	<%@include file="/WEB-INF/pages/modal/delete-product.html"%>
-    <%@include file="/WEB-INF/pages/modal/view-product.html"%>
-    <%@include file="/WEB-INF/pages/modal/update-product.html"%>
 	</div>
-	
+	<%@include file="/WEB-INF/pages/modal/add-menuaccess.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/update-menuaccess.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/delete-menuaccess.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/view-menuaccess.jsp" %>
 </body>
 <!--   Core JS Files   -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -137,6 +136,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	$('#data3').datepicker({
 		format:'yyyy-mm-dd',
@@ -377,11 +377,12 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$('.master').click(function(){
+		$('.mastermenus').toggle();
+	});
 });
 
-$('.master').click(function(){
-	$('.mastermenus').toggle();
-})
 	
 </script>
 </html>

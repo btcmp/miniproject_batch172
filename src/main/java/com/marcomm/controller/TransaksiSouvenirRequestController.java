@@ -114,7 +114,13 @@ public class TransaksiSouvenirRequestController {
 			souvenirRequestService.updateSouvenirRequest(transaksiSouvenir, id);
 		}
 
-	
+	//KOLOM REZA
+		@RequestMapping(value="/approved/{id}",method=RequestMethod.POST)
+		@ResponseStatus(HttpStatus.OK)
+		public void approved(@PathVariable ("id")int id, @RequestBody TransaksiSouvenir souvenir) {
+			souvenirRequestService.approved(id,souvenir);
+			
+		}
 	
 }
 
