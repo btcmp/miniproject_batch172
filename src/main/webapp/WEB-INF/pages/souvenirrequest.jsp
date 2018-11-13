@@ -664,7 +664,7 @@ $(document).ready(function(){
 					Id=keys.length;
 					$('#transactionRecCode').val(data[0].transaksiSouvenir.code);
 					$('#eventRecCode').val(data[0].transaksiSouvenir.tEventId.code);
-					//$('#editEventId').val(data[0].transaksiSouvenir.tEventId.id);
+					/* $('#editEventId').val(data[0].transaksiSouvenir.tEventId.id); */
 					$('#recTransBy').val(data[0].transaksiSouvenir.requestBy.employeeName);
 					$('#recTransDate').val(data[0].transaksiSouvenir.requestDate);
 					$('#DueRecTransDate').val(data[0].transaksiSouvenir.requestDueDate);
