@@ -1,11 +1,11 @@
-<!-- MODAL ADD -->
+<!-- MODAL ADD --> 
 <div class="modal fade" id="addTranSouReqModal" tabindex="-1"
 	role="dialog" aria-labelledby="addTransSouReq"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content"> 
 			<div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addProductModalTitle">Add Souvenir Request</h5>
+				<h5 class="modal-title" id="addRequestTitle">Add Souvenir Request</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -115,7 +115,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content"> 
 			<div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addProductModalTitle">Edit Souvenir Request</h5>
+				<h5 class="modal-title" id="editRequestTitle">Edit Souvenir Request</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>

@@ -43,7 +43,7 @@ public class MasterEmployeeService {
 		// TODO Auto-generated method stub
 		List<MasterUser> users= userDao.getAll();
 		System.out.println(users);
-		List<MasterEmployee> employees=new ArrayList<>();
+		List<MasterEmployee> employees=new ArrayList<MasterEmployee>();
 		System.out.println("daftar employee staff");
 		for (MasterUser masterUser : users) {
 			MasterRole role= masterUser.getmRole();

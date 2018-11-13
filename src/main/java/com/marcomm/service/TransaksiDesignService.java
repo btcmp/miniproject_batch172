@@ -92,7 +92,7 @@ public class TransaksiDesignService {
 		if (transaksiDesign.isEmpty()) {
 		return transaksiEventDao.getAll();
 		}else {
-		List<Integer> eventId = new ArrayList<>();
+		List<Integer> eventId = new ArrayList<Integer>();
 		for (TransaksiDesign td : transaksiDesign) {
 			eventId.add(td.getTransaksiEvent().getId());
 		}

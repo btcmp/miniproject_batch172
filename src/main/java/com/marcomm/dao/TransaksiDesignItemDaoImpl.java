@@ -17,13 +17,11 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
-	@Override
 	public void save(TransaksiDesignItem transaksiDesignItem) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(transaksiDesignItem);
 	}
 	
-	@Override
 	public List<TransaksiDesignItem> getAll() {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(TransaksiDesignItem.class);
@@ -36,7 +34,6 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(TransaksiDesignItem.class, id);
 	}
-	@Override
 	public List<TransaksiDesignItem> getItemByDesign(TransaksiDesign transaksiDesign) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(TransaksiDesignItem.class);
@@ -46,7 +43,6 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 		return transaksiDesignItem;
 	}
 //KOLOM ANGGI
-	@Override
 	public void update(TransaksiDesignItem itemLama) {
 		Session session=sessionFactory.getCurrentSession();
 		session.update(itemLama);	 	

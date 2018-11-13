@@ -316,9 +316,9 @@ $(document).ready(function(){
 			data : JSON.stringify(user),
 			success : function(data){
 				console.log("data telah diupdate");
+				console.log(user);
 				$('#editUserModal').modal('hide');
-
-				 window.location = "${pageContext.request.contextPath}/user";
+			loadData();
 			},
 			error : function(){
 				console.log("data error");

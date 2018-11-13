@@ -2,6 +2,7 @@ package com.marcomm.dao;
 
 import java.util.List;
 
+import com.marcomm.model.TransaksiEvent;
 import com.marcomm.model.TransaksiSouvenir;
 
 public interface TransaksiSouvenirDao {	
@@ -34,5 +35,8 @@ public interface TransaksiSouvenirDao {
 
 	
 	
-	
+	/*astya tambah*/
+	//get EVENTS avaliable for request
+	public List<TransaksiEvent> getEvents(List<Integer> eventId);
+	/*astya end*/
 }

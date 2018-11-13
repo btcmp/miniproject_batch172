@@ -1,6 +1,6 @@
-<!-- MODAL  ADD-->
+<!-- MODAL  ADD--> 
 		<div class="modal fade" id="add-souvenir-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
 		        <h5 class="modal-title" id="exampleModalLongTitle">Add Souvenir</h5>
@@ -14,11 +14,11 @@
 		        <div class="form-row">
 				    <div class="col">
 				    	<label for="souvenircode">Souvenir Code</label>
- 						<input type="text" id="souvenircode" class="form-control" readonly="readonly">
+ 						<input type="text" id="souvenircode" class="form-control" disabled>
  				</div>
  				<div class="col">
 			    <label for="add-unit">Unit</label><br/>
-			    	<select path="unit.id" style="width: 100%;" name="unit" id="add-unit">
+			    	<select path="unit.id" style="width: 100%;" name="unit" id="add-unit" required data-parsley-required-message="Harap memilih unit">
 		      		  	<option value="" selected>Choose...</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
@@ -30,9 +30,9 @@
 				    <div class="col">
 				    	<label for="souvenirname">Souvenir Name</label>
 				      	<input type="text" id="souvenirname" class="form-control" placeholder="Type name" 
-				      	required data-parsley-namecheck data-parsley-namecheck-message="Nama produk sudah ada" 
+				      	required data-parsley-namecheck data-parsley-namecheck-message="Nama Souvenir sudah ada" 
 				      	data-parsley-maxlength="50" data-parsley-maxlength-message="Karakter harus kurang dari 50" 
-				      	data-parsley-required-message="Harap masukkan nama produk">
+				      	data-parsley-required-message="Harap masukkan nama Souvenir">
  						</div>
 				    <div class="col">
 				    	<label for="souvenirdescription">Description</label>
@@ -51,10 +51,10 @@
 
 <!-- MODAL  -->
 		<div class="modal fade" id="edit-souvenir-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLongTitle">Edit Souvenir</h5>
+		        <h5 class="modal-title" id="editTitle">Edit Souvenir</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -66,15 +66,16 @@
 		        <input type="hidden" id="editsvnrquantity"/>
 		        <input type="hidden" id="editsvnrcreaatedby"/>
 		        <input type="hidden" id="editsvnrcreateddate"/>
+		        <input type="hidden" id="editsvnrnameCheck"/>
 		        <div class="form-row">
 				    <div class="col">
 				    	<label for="editsvnrcode">Souvenir Code</label>
- 						<input type="text" id="editsvnrcode" class="form-control" readonly="readonly">
+ 						<input type="text" id="editsvnrcode" class="form-control" disabled>
  						</div>
 				    <div class="col">
 				    	<label for="edit-souvenir">Unit</label><br/>
 			    		<select path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir">
-		      		  	<option value="" selected>Choose...</option>
+		      		  	<option value="" selected>Pilih Unit</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
 		      		  	</c:forEach>
@@ -106,7 +107,7 @@
 		
 <!-- MODAL  EDIT SOUVENIR-->
 		<div class="modal fade" id="edit-souvenir-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLongTitle">Edit Souvenir</h5>
@@ -124,11 +125,11 @@
 		        <div class="form-row">
 				    <div class="col">
 				    	<label for="editsvnrcode">Souvenir Code</label>
- 						<input type="text" id="editsvnrcode" class="form-control" readonly="readonly">
+ 						<input type="text" id="editsvnrcode" class="form-control" disabled>
  						</div>
 				    <div class="col">
 				    	<label for="edit-souvenir">Unit</label><br/>
-			    		<select path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir">
+			    		<select path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir" required data-parsley-required-message="Harap memilih unit">
 		      		  	<option value="" selected>Choose...</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
