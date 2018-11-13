@@ -592,7 +592,7 @@ $(document).ready(function(){
 
 		}); 
 
-		});
+		//});
 
 		
 		/* Button reject */
@@ -705,6 +705,7 @@ $(document).ready(function(){
 			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000 );
 			
 		}); 
+		
 }); /* batas akhir ready function */
 
 </script> 
