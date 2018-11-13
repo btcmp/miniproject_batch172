@@ -394,8 +394,7 @@ $(document).ready(function(){
 					name : $('#editUnitName').val(),
 					description : $('#editDescription').val() 
 						};
-			document.getElementById("notif").innerHTML = "Data Updated! Data Unit Has Been Updated! ";
-			$('#notif').show('slow').delay(1000).hide('slow');
+			
 				//check out value
 				console.log(masterunit);
 
@@ -412,6 +411,8 @@ $(document).ready(function(){
 						
 						loadData();
 						$('#editUnitModal').modal('hide');
+						document.getElementById("notif").innerHTML = "Data Updated! Data Unit Has Been Updated! ";
+						$('#notif').show('slow').delay(1000).hide('slow');
 						}
 					});
 				

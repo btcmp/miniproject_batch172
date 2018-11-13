@@ -103,7 +103,7 @@ public class TransaksiSouvenir {
 	
 	
 	
-	/*SETTER AND GETTER*/
+	
 	@Column(length=1)
 	private int status;
 	
@@ -329,6 +329,9 @@ public class TransaksiSouvenir {
 	public void setTransaksiSouvenirItems(List<TransaksiSouvenirItem> transaksiSouvenirItems) {
 		this.transaksiSouvenirItems = transaksiSouvenirItems;
 	}
+
+	
+	
 
 
 }

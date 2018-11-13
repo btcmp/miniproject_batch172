@@ -23,13 +23,13 @@
 						</div> 
 					</div>
 					<div class="form-group row">
-						<label for="eventId" class="col-sm-3 col-form-label">Event Code</label>
+						<label for="eventId" class="col-sm-3 col-form-label ">Event Code</label>
 						<div class="col-sm-4">
-				    		<select path="event.id" style="width: 100%;" name="event" id="eventId">
-			      		  	<option value="" selected>select event code</option>
-			      		  	<c:forEach var="event" items="${events}">
+				    		<select class="form-control" path="event.id" style="width: 100%;" name="event" id="eventId" required>
+			      		  	<option value="" selected>Select event code</option>
+			      		  	<%-- <c:forEach var="event" items="${events}">
 			      		  	<option value="${event.id}">${event.code}</option>
-			      		  	</c:forEach>
+			      		  	</c:forEach> --%>
 			      			</select>
 						</div>
 					</div>
@@ -51,7 +51,7 @@
 						<label for=requestDueDate" class="col-sm-3 col-form-label">Due Date</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" name="requestDueDate" id="requestDueDate"
-								placeholder="Select Date">
+								placeholder="Select Date" required>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -89,7 +89,7 @@
 						<option value="${souvenir.id}">${souvenir.name}</option>
 					</c:forEach>
 				</select></td>
-				<td><input type="text" class="form-control" placeholder="Qty" ></td>
+				<td><input type="text" class="form-control" placeholder="Qty"></td>
 				<td><input type="text" class="form-control" placeholder="Note"></td>
 				<td><a href="#" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
 					<a href="#" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>

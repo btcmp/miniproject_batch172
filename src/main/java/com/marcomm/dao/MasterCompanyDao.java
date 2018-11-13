@@ -20,7 +20,7 @@ public interface MasterCompanyDao {
 
 	public List<MasterCompany> getCompanyByName(String firstName);
 
-
+	public String getUser();
 	
 
 }

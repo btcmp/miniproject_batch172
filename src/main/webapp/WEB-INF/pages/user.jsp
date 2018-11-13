@@ -26,6 +26,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link href="${pageContext.request.contextPath}/resources/assets/css/dashboard.css" rel="stylesheet" />
 <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -34,50 +35,50 @@
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-
-	<div id="container" style="width: 100%; margin: auto">
-		<!-- HEADER -->
-		<div class="card text-white bg-primary mb-3" style="width: 100%">
-  			<div class="card-header">List User</div>
+<div class="container-fluid">
+		<div class="row">
+		<!-- DASHBOARD -->
+			<nav class="col-md-2 d-none d-md-block bg-primary sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link text-white" href="#">
+								Dashboard </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu"
+							href="#"> Master</a>
+							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
+							href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white"
+							href="${logoutUrl}"> Logout </a></li>
+					</ul>
+				</div>
+			</nav>
+			<!-- END DASHBOARD -->
+			<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
+				<div class="card text-white bg-primary mb-3">
+					<div class="card-header">User</div>
+				</div>
+			 
+			<a href="#"><p style="float: left; width: 40%;" id="user-login" id="username" class="text-primary">Selamat
+			Datang User!</p></a>
+					
+				</nav>
+		 
+		 <div class="form-row" style="float:left; padding:10px;">
+			<a id="notification" class="text-white bg-info border rounded"></a>
 		</div>
-		
-		<!-- NAV -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light"
-			style="width: 100%">
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link disabled" href="#">/</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Master</a></li>
-					<li class="nav-item"><a class="nav-link disabled" href="#">/</a>
-					</li>
-					<li class="nav-item active"><a class="nav-link" href="#">List
-							User <span class="sr-only">(current)</span>
-					</a></li>
-				</ul>
-			</div>
-		</nav>
-		 
-		<!-- logout -->
 		<br>
 		 
-		<p style="float: left; width: 40%;" id="user-login" id="username" class="text-primary">Selamat
-			Datang User!</p>
-
-
-		<form action="${logoutUrl}" method="post" id="logoutForm"
-			style="float: right; width: 50%;">
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" /> <input style="float: right; width: 78px;"
-				class="btn btn-warning" type="submit" value="logout" />
-		</form>
-		<br>
-		<br>
-		<br>
-		
-
-		<table style="width:100%"  >
+				
+				
+				
+				
+				 <table style="width:100%"  >
 			<thead>
 				
 				
@@ -138,17 +139,7 @@
 		</table>
 
 		<br>
-
-
-
-
-
-
-
-
-
-
-
+  
 		<!-- end of add and search button -->
 		<hr />
 		<table id="userTable" class="table DataTable">
@@ -167,11 +158,15 @@
 			<tbody>
 			</tbody>
 		</table>
-	</div>
-
+		 
+			</div>
+		</div>
+ 
 	<%@include file="/WEB-INF/pages/modal/add-user2.jsp"%>
 	<%@include file="/WEB-INF/pages/modal/edit-user.html"%>
 	<%@include file="/WEB-INF/pages/modal/view-user.html"%>
+	</div>
+	 
 </body>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
@@ -263,6 +258,7 @@ $(document).ready(function(){
 	
 		$(document).on('click','.btn-edit-user',function(){
 								var id = $(this).attr('id');
+								 $('#addEditForm').parsley().reset();
 								$.ajax({
 									url : '${pageContext.request.contextPath}/user/getbyid/'+id,
 									type : 'GET',
@@ -316,9 +312,11 @@ $(document).ready(function(){
 			data : JSON.stringify(user),
 			success : function(data){
 				console.log("data telah diupdate");
-				console.log(user);
+				console.log(data);
 				$('#editUserModal').modal('hide');
-			loadData();
+				loadData();
+				document.getElementById("notification").innerHTML = "Data Saved! New User has been edite with username: "+user.username+"!";
+				$('#notification').show('slow').delay(3500).hide('slow');
 			},
 			error : function(){
 				console.log("data error");
@@ -362,6 +360,7 @@ $(document).ready(function(){
 	///*memanggil add modal*/
 	$("#addBtn").on('click', function(){	 
 		$('#addUserModal').modal('show');
+		 $('#addUserForm').parsley().reset();
 		loadEmployeesNotUse();
 	 });
 	/*menutup add modal dan men save user ke controller  */
@@ -397,6 +396,8 @@ $(document).ready(function(){
 					$('#addUserModal').modal('hide'); 
 					$('#addUserForm').trigger("reset");
 					/*  window.location = "${pageContext.request.contextPath}/user"; */
+					document.getElementById("notification").innerHTML = "Data Saved! New User has been added with code: "+user.username+"!";
+					$('#notification').show('slow').delay(5500).hide('slow');
 					loadData();  
 
 				},
@@ -421,8 +422,26 @@ $(document).ready(function(){
 				 	$('#user-login').val(data);
 					 
 					 document.getElementById("user-login").innerHTML="Selamat Datang role " +data+ "!";
+					  
 				}
 			}) 
+		 }
+		function getRole(){
+			var relee="Administrator";
+			$.ajax({
+				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
+				type : 'GET',
+				success : function(data1){
+				 console.log('Ini adalah role nya');
+				 console.log(data1);
+				 relee=data1;
+				 
+					 
+					  
+					  
+				}
+			}) ;
+			return relee;
 		 }
 	 
 	 
@@ -530,6 +549,73 @@ $(document).ready(function(){
 		});
 		oTable.draw();
 	}
+		
+		/* DROPDOWN MENU */
+		
+	$.ajax({
+		url : '${pageContext.request.contextPath}/access/getall',
+		type : 'GET',
+		success : function(data4) {
+			var role1;
+				role1=getRole();
+			console.log(role1);
+			console.log('harus sama');
+			console.log(data4[0].role.roleName);
+			 if(data4[0].role.roleName == role1){
+				  var idMenu=0;
+				  idMenu=data4[0].id;
+				   getMenubyRole(idMenu);
+				   
+				  
+			 }
+		},
+		dataType : 'json'
+	});
+		
+	function getMenubyRole(idMenu){
+		
+		 $.ajax({
+				url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
+				type : 'GET',
+				success : function(data2) {
+					$('#selectMenu').empty();
+					$('#selectMenu2').empty();
+					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
+					var tinggi=0;
+					var tinggi2=0;
+					 $.each(data2.menus,function(index,menu){
+						 
+						
+						  if(menu.parentId==1){
+							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+						 
+						  }else if(menu.parentId==2){
+							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');
+							 
+							  
+						  }
+						 
+							 
+					 });
+					 
+					 
+						  
+						  
+					 
+				},
+				dataType : 'json'
+			});
+		
+	}	
+	
+	$('#masterMenu').click(function(){
+		$('#selectMenu').toggle();
+	});
+	$('#masterMenu2').click(function(){
+		$('#selectMenu2').toggle();
+	});
+	
+		
 })
 	
 </script>

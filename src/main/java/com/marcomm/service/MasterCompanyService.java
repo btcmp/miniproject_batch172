@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.MasterCompanyDao;
+import com.marcomm.dao.MasterUserDao;
 import com.marcomm.model.MasterCompany;
+import com.marcomm.model.MasterUser;
 
 @Service
 @Transactional
@@ -15,9 +17,14 @@ public class MasterCompanyService {
 
 	@Autowired
 	MasterCompanyDao companyDao;
+	
+	@Autowired
+	MasterUserDao userDao;
 
 	public void saveCompany(MasterCompany company) {
 		// TODO Auto-generated method stub
+		MasterCompany masterCompany = new MasterCompany();
+		masterCompany.setCreatedBy(company.getCreatedBy());
 		companyDao.save(company);
 	}
 
@@ -59,6 +66,11 @@ public class MasterCompanyService {
 	public List<MasterCompany> getCompanyByName(String name) {
 		// TODO Auto-generated method stub
 		return companyDao.getCompanyByName(name);
+	}
+
+	public MasterUser getUser() {
+		// TODO Auto-generated method stub
+		return userDao.getUserByUserLog();
 	}
 
 
