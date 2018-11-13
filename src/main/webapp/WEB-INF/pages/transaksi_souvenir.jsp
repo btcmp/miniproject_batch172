@@ -203,7 +203,7 @@ $(document).ready(function(){
 			tBody.append(tRow);
 	});
 	/* SAVE OR ADD DATA */
-	$('#addBtnModal').on('click', function(e){
+	$(document).on('click', '#addBtnModal', function(e){
 		var transaksiSouvenirItems=[];
 		$('.tableBody tr').each(function(){
 			tRow = $(this).find('td :input');
@@ -238,6 +238,9 @@ $(document).ready(function(){
 				//jangan lupa tambahin load data
 				loadData();
 				$('#addTranSouModal').modal('hide');
+				
+				document.getElementById("notif").innerHTML = "Data Saved! Transaction stock souvenir has been added with code: "+transaksiSouvenir.code+"!";
+				$('#notif').show('slow').delay(1500).hide('slow');
 			}
 		
 		});
@@ -297,32 +300,181 @@ $(document).ready(function(){
 						$('#viewReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy);
 						$('#viewReceivedTransSDate').val(data[0].transaksiSouvenir.receivedDate);
 						$('#viewNoteTransSou').val(data[0].transaksiSouvenir.note);
-						
 						$('.viewTableBody').empty();
-						itemBawah(len,data);
+						Idv=len;
+						itemBawahView(Idv,data);
 					}
 					
 			});
 	$('#viewTranSouModal').modal('show');
 	});
 	
-	//fungsi edit items bawah 
-	function itemBawah(banyak, data){
-		idx = 0;
+	//fungsi edit items bawah buat view
+	function itemBawahView(banyak, data){
+		var idx2 = 0;
 		for(var i=1; i<=banyak; i++){
 			var oTable = $('#modalViewTableSouTrans');
 			var tBody = oTable.find('tbody');
 			var tRow = '<tr id="items-view-'+i+'"></tr>';
-				tRow += '<td><input  class="form-control" id="viewSouItem'+i+'"  readonly value="'+data[idx].masterSouvenir.name+'"></td>';
-				tRow += '<td><input  class="form-control" id="viewQtyItem'+i+'" readonly value="'+data[idx].qty+'"></td>';
-				tRow += '<td><input  class="form-control" id="viewNoteItem'+i+'"  readonly value="'+data[idx].note+'"></td>';
+				tRow += '<td><input  class="form-control" id="viewSouItem'+i+'"  readonly value="'+data[idx2].masterSouvenir.name+'"></td>';
+				tRow += '<td><input  class="form-control" id="viewQtyItem'+i+'" readonly value="'+data[idx2].qty+'"></td>';
+				tRow += '<td><input  class="form-control" id="viewNoteItem'+i+'"  readonly value="'+data[idx2].note+'"></td>';
 				tRow += '</tr>';
-		idx++;
+		idx2++;
 		tBody.append(tRow);
 		}
 	};
 	
-	/* UPDATE */
+	/* UPDATE EDIT */
+	$(document).on('click', '.btn-update-souvenir', function(){		
+		
+		//panggil get by id
+		var id = $(this).attr('id');
+		$.ajax({
+			url : '${pageContext.request.contextPath}/transaksisouvenir/getsouvenirbyid/'+id,
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				var keys=Object.keys(data);
+				len=keys.length;
+				len1 = len;
+				console.log('ini len...');
+				console.log(len);
+				
+					//Data atas
+					$('#idEditTransSou').val(data[0].transaksiSouvenir.id);
+					$('#editTransactionCode').val(data[0].transaksiSouvenir.code);
+					$('#editReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy);
+					$('#editReceivedTransSDate').val(data[0].transaksiSouvenir.receivedDate);
+					$('#editNoteTransSou').val(data[0].transaksiSouvenir.note);
+					
+					$('.editTableBody').empty();
+					
+					itemBawah(len,data);
+				}
+			
+		}); /* batas akhir ajax */	
+		
+		$('#editTranSouModal').modal();
+		//index = 0;
+	});
+	
+	//fungsi edit items bawah 
+	function itemBawah(banyak, data3){
+		console.log('ini data3');
+		console.log(data3);
+		var idx = 0;
+		for(var i=1; i<=banyak; i++){
+			var oTable = $('#modalEditTableSouTrans');
+			var tBody = oTable.find('tbody');
+			var tRow = '<tr id="itemsEdit-'+i+'">';
+				tRow += '<td><select  class="custom-select" id="souvenirItemEdit'+i+'">'+
+						'<option value="'+data3[idx].masterSouvenir.id+'" selected>'+data3[idx].masterSouvenir.name+'</option>'+
+						'<c:forEach var="souvenir" items="${souvenirs}">'+
+						'<option value="${souvenir.id}">${souvenir.name}</option>'+
+						'</c:forEach>'+
+					'</select></td>';
+				tRow += '<td><input class="form-control" id="editQuantity'+i+'"  value="'+data3[idx].qty+'"></td>';
+				tRow += '<td><input class="form-control" id="editNote'+i+'"   value="'+data3[idx].note+'"></td>';
+				tRow += '<td><input type="hidden" class="form-control" value="'+data3[idx].id+'" id="editIdItems'+i+'" ></td>';
+				tRow +=	'<td><a id="'+i+'" href="#" class="editBtnModalTransSEdit"><span class="oi oi-pencil"></span></a>'+' ';
+				tRow += '<a id="'+i+'" href="#" class="deleteBtnModalTransSEdit"><span class="oi oi-trash"></span></a></td>';
+				tRow += '</tr>';
+		idx++;
+		tBody.append(tRow);
+		console.log('muter muter');
+		}
+	}
+	
+	//add items buton (nambah item)
+	$('#btnAddEditModalTransSou').on('click', function(){
+		//---> disesuaikan sama fungsi itemBawah(Id, data) nggak boleh sama kayak yang diatas pas panggil get by id
+		var IdEdit = len1;
+		console.log('ini len1 ....');
+		console.log(len1);
+		
+		var indexEdit = 0;
+		
+		//Id++;
+		//index++;
+		var oTable = $('#modalEditTableSouTrans');
+		var tBody = oTable.find('tbody');
+		var tRow = '<tr id="itemsEdit-'+IdEdit+'">';
+			tRow += '<td><select  class="custom-select" id="souvenirItemEdit'+IdEdit+'" name="details['+indexEdit+'].mSouvenirId">'+
+						'<option value=" " selected>-Select Souvenir-</option>'+
+						'<c:forEach var="souvenir" items="${souvenirs}">'+
+						'<option value="${souvenir.id}">${souvenir.name}</option>'+
+						'</c:forEach>'+
+					'</select></td>';
+			tRow += '<td><input type="number" class="form-control" id="editQuantity'+IdEdit+'" placeholder="Qty"></td>';
+			tRow += '<td><input type="text" class="form-control" id="editNote'+IdEdit+'" placeholder="Note" ></td>';
+			tRow += '<td><input type="hidden" class="form-control" value="0" id="editIdItems'+IdEdit+'" ></td>';
+			tRow += '<td><a id="'+IdEdit+'" href="#" class="editBtnModalTransSEdit"><span class="oi oi-pencil"></span></a>'+' ';
+			tRow +=	'<a id="'+IdEdit+'" href="#" class="deleteBtnModalTransSEdit"><span class="oi oi-trash"></span></a></td>';
+			tRow += '</tr>';
+			tBody.append(tRow);
+	});
+	//delete items
+	$(document).on('click', '.deleteBtnModalTransSEdit', function(){
+		var id =$(this).attr('id');
+		$('#itemsEdit-'+id).remove();
+	});
+	
+	//masuk update save
+	$(document).on('click', '#updateBtnModalTrans', function(){
+		var transaksiSouvenirItems = [];
+		$('.editTableBody tr').each(function(){
+			tRow = $(this).find('td :input');
+			var items = {
+					masterSouvenir:{
+						id:parseInt(tRow.eq(0).val())
+					},
+					qty:parseInt(tRow.eq(1).val()),
+					note:tRow.eq(2).val(),
+					id:parseInt(tRow.eq(3).val())
+					//'delete':tRow.eq(4).val()
+				}
+			transaksiSouvenirItems.push(items);
+			console.log('ini items...');
+			console.log(transaksiSouvenirItems);
+		});
+		var transaksiSouvenir = {
+				id: parseInt($('#idEditTransSou').val()),
+				code : $('#editTransactionCode').val(),
+				//receivedBy : $('#editReceivedTransSBy').val(),
+				receivedDate : $('#editReceivedTransSDate').val(),
+				note : $('#editNoteTransSou').val(),
+				transaksiSouvenirItems:transaksiSouvenirItems
+		};
+		
+		/* console.log(transaksiSouvenir);
+		console.log(JSON.stringify(transaksiSouvenir)); */
+		
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/transaksisouvenir/update',
+			type : 'POST',
+			contentType:'application/json',
+			dataType:'json',
+			data:JSON.stringify(transaksiSouvenir),
+			success:function(data){
+				//console.log(data);
+				console.log("data berhasil disimpan....");
+				
+			}
+			/* error:function(){
+				console.log("data gagal disimpan...");
+			} */
+		
+		});
+		$('#editTranSouModal').modal('hide');
+		loadData();
+		
+		document.getElementById("notif").innerHTML = "Data updated! Transaction stock with code: "+transaksiSouvenir.code+" has been updated!";
+		$('#notif').show('slow').delay(1500).hide('slow');
+		
+	});
+	
 	
 }); /* batas akhir ready function */
 

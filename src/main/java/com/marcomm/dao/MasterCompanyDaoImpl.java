@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterCompany;
+import com.marcomm.service.FungsiService;
 
 @Repository
 public class MasterCompanyDaoImpl implements MasterCompanyDao {
@@ -23,8 +24,6 @@ public class MasterCompanyDaoImpl implements MasterCompanyDao {
 	public void save(MasterCompany company) {
 		// TODO Auto-generated method stub
 		company.setIsDelete(false);
-		
-		company.setCreatedBy("Administrator");
 		
 		Date now = new Date();
 		company.setCreatedDate(now);
@@ -69,8 +68,6 @@ public class MasterCompanyDaoImpl implements MasterCompanyDao {
 	public void update(MasterCompany comp) {
 		// TODO Auto-generated method stub
 		comp.setIsDelete(false);
-	
-		comp.setUpdateBy("Administrator");
 		
 		Date now = new Date();
 		comp.setUpdateDate(now);
@@ -102,6 +99,13 @@ public class MasterCompanyDaoImpl implements MasterCompanyDao {
 		List<MasterCompany> nameCompany = criteria.add(criterionOr).list();
 		return nameCompany;
 		
+	}
+
+	@Override
+	public String getUser() {
+		// TODO Auto-generated method stub
+		String user = FungsiService.getUserLog();
+		return user;
 	}
 
 }

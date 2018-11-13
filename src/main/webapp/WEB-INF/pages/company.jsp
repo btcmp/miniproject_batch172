@@ -171,7 +171,7 @@
 		});
 		
 		//BUTTON POP UP ADD
-		$('#btn-add').on('click', function(){
+		$(document).on('click', '#btn-add', function(){
 			$.ajax({
 				url:'${pageContext.request.contextPath}/company/getcodecompany',
 				type: 'GET',
@@ -180,6 +180,15 @@
 				},
 				dataType: 'json'
 			});
+			
+			$.ajax({
+				url : '${pageContext.request.contextPath}/company/getuser',
+				type : 'GET',
+				success : function(data){
+					$('#createdby').val(data.mRole.roleName);
+				}
+			});
+			
 			$('#addForm').parsley().reset();
 			$('#companyname').val();
 			$('#companyemail').val();
@@ -201,7 +210,8 @@
 					name : $('#companyname').val(),
 					email : $('#companyemail').val(),
 					address : $('#companyaddress').val(),
-					phone : $('#companyphone').val()
+					phone : $('#companyphone').val(),
+					createdBy : $('#createdby').val()
 			};
 			
 			//NOTIFICATION
@@ -350,6 +360,14 @@
 				},
 				dataType: 'json'
 			});
+			$.ajax({
+				url : '${pageContext.request.contextPath}/company/getuser',
+				type : 'GET',
+				success : function(data){
+					$('#updateby').val(data.mRole.roleName);
+				}
+			});
+			
 			$('#editCompanyModal').modal();
 		});
 		
@@ -377,7 +395,8 @@
 						name : $('#companynameEdit').val(),
 						email : $('#companyemailEdit').val(),
 						address : $('#companyaddressEdit').val(),
-						phone : $('#companyphoneEdit').val()
+						phone : $('#companyphoneEdit').val(),
+						updateBy: $('#updateby').val()
 					};
 				console.log(company);
 				

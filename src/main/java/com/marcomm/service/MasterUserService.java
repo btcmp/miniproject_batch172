@@ -72,6 +72,5 @@ public class MasterUserService {
 		
 		return userDao.getRole();
 	}
-	
-	 
+
 }

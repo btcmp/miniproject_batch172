@@ -31,7 +31,7 @@ public interface TransaksiSouvenirDao {
 	public TransaksiSouvenir getById(int id);
 	
 	/*UPATE*/
-	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir2);
+	public void updateTransSouvenir(TransaksiSouvenir ts);
 
 	
 	

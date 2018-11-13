@@ -28,7 +28,7 @@ import com.marcomm.service.TransaksiSouvenirItemService;
  
 
 @Controller
-@RequestMapping(value="/souvenirrequest")
+@RequestMapping(value="/requestsouvenir")
 public class TransaksiSouvenirRequestController {
 	
 	@Autowired

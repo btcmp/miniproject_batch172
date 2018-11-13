@@ -20,12 +20,17 @@ public class TransaksiSouvenirItem {
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	@Column(length=11)
 	private int id;
+	
+	
 	@ManyToOne
 	@JoinColumn(name="t_souvenir_id")
 	private TransaksiSouvenir transaksiSouvenir;
+	
+	
 	@ManyToOne
 	@JoinColumn(name="m_souvenir_id")
 	private MasterSouvenir masterSouvenir;
+	
 	@Column(length=50)
 	private Long qty;//Jumlah yang ditambahkan/dikurangkan; Hanya angka, bisa negatif;
 	@Column(name="qty_settlement", length=50)
@@ -108,6 +113,8 @@ public class TransaksiSouvenirItem {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+	
+	
 	
 
 }

@@ -329,17 +329,17 @@ $(document).ready(function(){
 			
 			//CHOOSEN MODAL BASED ON STATUS AND ROLE
 			//NAMED STATUS 
-			var role="${rolename}"
+			var role="${rolename.mRole.roleName}"
 			var modalview = "";
 			var modaledit = "";
 			var status="";
 			if(event.status==1){
 				status="Submitted";
+				modaledit="btn-edit-event";
 				if(role=="Administrator"){
 					modalview = "btn-acceptreject-event";
 				} else{
-					modalview = "btn-view-event";
-					modaledit="btn-edit-event"; 
+					modalview = "btn-view-event"; 
 				}
 			} else if(event.status==2){
 				status="In Progress";
@@ -350,7 +350,7 @@ $(document).ready(function(){
 				}
 			} else if(event.status==3){
 				status="Done";
-				modalview = "btn-view-event"; 
+				modalview = "btn-viewapproved-event"; 
 			} else if(event.status==0){
 				status="Rejected";
 				modalview = "btn-view-event";

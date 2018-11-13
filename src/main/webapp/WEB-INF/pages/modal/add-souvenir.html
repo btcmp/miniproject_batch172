@@ -18,7 +18,7 @@
  				</div>
  				<div class="col">
 			    <label for="add-unit">Unit</label><br/>
-			    	<select path="unit.id" style="width: 100%;" name="unit" id="add-unit" required data-parsley-required-message="Harap memilih unit">
+			    	<select class="form-control" path="unit.id" style="width: 100%;" name="unit" id="add-unit" required data-parsley-required-message="Harap memilih unit">
 		      		  	<option value="" selected>Choose...</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
@@ -74,7 +74,7 @@
  						</div>
 				    <div class="col">
 				    	<label for="edit-souvenir">Unit</label><br/>
-			    		<select path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir">
+			    		<select class="form-control" path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir">
 		      		  	<option value="" selected>Pilih Unit</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
@@ -82,7 +82,7 @@
 		      		</select>
 				    </div>
 				</div>
-				<div class="form-row" style="margin-top: 10px">
+				<div class="form-row" style="margin-top: 15px">
 				    <div class="col">
 				    	<label for="editsvnrname">Souvenir Name</label>
 				      	<input type="text" id="editsvnrname" class="form-control" placeholder="Type name" required 
@@ -129,7 +129,7 @@
  						</div>
 				    <div class="col">
 				    	<label for="edit-souvenir">Unit</label><br/>
-			    		<select path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir" required data-parsley-required-message="Harap memilih unit">
+			    		<select class="form-control" path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir" required data-parsley-required-message="Harap memilih unit">
 		      		  	<option value="" selected>Choose...</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
@@ -137,7 +137,7 @@
 		      		</select>
 				    </div>
 				</div>
-				<div class="form-row" style="margin-top: 10px">
+				<div class="form-row" style="margin-top: 15px">
 				    <div class="col">
 				    	<label for="editsvnrname">Souvenir Name</label>
 				      	<input type="text" id="editsvnrname" class="form-control" placeholder="Type name" required data-parsley-namecheck data-parsley-namecheck-message="Nama produk sudah ada" 

@@ -195,6 +195,7 @@ $(document).ready(function(){
 		
 		//get requested by
 		//$('#requestBy').val(userlogin.employee.name);
+		loadEvents();
 		$('#addTranSouReqModal').modal();
 	});
 	
@@ -259,7 +260,7 @@ $(document).ready(function(){
 		//console.log(transaksiSouvenir);
 		//console.log(JSON.stringify(transaksiSouvenir));
 		$.ajax({
-			url : '${pageContext.request.contextPath}/souvenirrequest/saveall',
+			url : '${pageContext.request.contextPath}/requestsouvenir/saveall',
 			type : 'POST',
 			contentType :'application/json',
 			dataType : 'json',
@@ -277,12 +278,13 @@ $(document).ready(function(){
 	});
 	
 	/* BUTTON SEARCH */
-	$('#btn-search').on('click', function(){
+	$('#searchBtn').on('click', function(){
 		for(var i = 1; i <= 7; i++){
 			oTable
 			.column($('#data'+i).data('index'))
 			.search($('#data'+i).val())
 			.draw()
+			$('#data'+i).val("");
 		}
 	});
 
@@ -290,7 +292,7 @@ $(document).ready(function(){
 	$(document).on('click', '.btn-edit-transaksiR', function(){
 		var id =$(this).attr('id');
 		$.ajax({
-			url : '${pageContext.request.contextPath}/souvenirrequest/getitemsbyid/'+id,
+			url : '${pageContext.request.contextPath}/requestsouvenir/getitemsbyid/'+id,
 			type : 'GET',
 			dataType : 'json',
 			success : function(data){
@@ -417,7 +419,7 @@ $(document).ready(function(){
 		console.log(transaksiSouvenir);
 		console.log(JSON.stringify(transaksiSouvenir));
 		$.ajax({
-			url : '${pageContext.request.contextPath}/souvenirrequest/update/'+idTras,
+			url : '${pageContext.request.contextPath}/requestsouvenir/update/'+idTras,
 			type : 'POST',
 			contentType :'application/json',
 			dataType : 'json',
@@ -433,11 +435,31 @@ $(document).ready(function(){
 		document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been updated!";
 		$('#notification').fadeIn(1000).delay(4000).fadeOut(3000);
 	});
-	
+	/* LOAD EVENTS */
+	function loadEvents(){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/requestsouvenir/getevents',
+			type : 'GET',
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				convertToSelectEvent(data);
+				
+			}
+		});
+	}
+	//convert select items
+	function convertToSelectEvent(data){
+		$('#eventId').empty();
+		$('#eventId').append('<option value="">Select Event Code</option>');
+		$.each(data, function(i, event){
+		$('#eventId').append('<option value="'+event.id+'">'+event.code+'</option>');
+		})
+	}
 	/* //load data list souvenir request */
 	function loadData(){
 		$.ajax({
-			url : '${pageContext.request.contextPath}/souvenirrequest/getall',
+			url : '${pageContext.request.contextPath}/requestsouvenir/getall',
 			type : 'GET',
 			dataType : 'json',
 			success :function(data){
@@ -457,14 +479,11 @@ $(document).ready(function(){
 					status="Submitted";
 				} else if(transaksiSouvenir.status==2){
 					status="In Progress";
-				} else if(transaksiSouvenir.status==3){
-					status="Approved";
-				} else if(transaksiSouvenir.status==4){
+				}else if(transaksiSouvenir.status==3){
 					status="Received by Requester";
 				}else if(transaksiSouvenir.status==0){
 					status="Rejected";
 				}
-					
 				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
 				tRow +='';
 				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-edit-transaksiR"><span class="oi oi-pencil"></span></a>';
@@ -500,10 +519,13 @@ $(document).ready(function(){
 		};
 		
 		/* Button Pop Up Approvel (REZA)*/
-		  $(document).on('click', '.btn-view-transaksiR', function(){
+
+		  
+
+		 $(document).on('click', '.btn-view-transaksiR', function(){
 		var id =$(this).attr('id');
 		$.ajax({
-			url : '${pageContext.request.contextPath}/souvenirrequest/getitemsbyid/'+id,
+			url : '${pageContext.request.contextPath}/requestsouvenir/getitemsbyid/'+id,
 			type : 'GET',
 			dataType : 'json',
 			success : function(data){
@@ -528,14 +550,14 @@ $(document).ready(function(){
 		}); 
 		
 		/* Button approve */
-		/* $(document).on('click','#approveBtnModal',function(){ */
+		$(document).on('click','#approveBtnModal',function(){
 			/* var id =$(this).attr('id'); */
-			/* var idTras = parseInt($('#approveTransaksiId').val());
+			var idTras = parseInt($('#approveTransaksiId').val());
 			var tsr={
 					status : 2
 			}
 			$.ajax({
-				url :'${pageContext.request.contextPath}/souvenirrequest/approved/'+idTras,
+				url :'${pageContext.request.contextPath}/requestsouvenir/approved/'+idTras,
 				type :'POST',
 				contentType:'application/json',
 				dataType :'json',
@@ -549,10 +571,14 @@ $(document).ready(function(){
 			document.getElementById("notification").innerHTML = "Data Approved! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been aprroved!";
 			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000);
 			
+
 		}); 
+
+		});
+
 		
 		/* Button reject */
-		 $(document).on('click','#rejectBtnModal',function(){
+		$(document).on('click','#rejectBtnModal',function(){
 			$('#rejectSouvenirModal').modal();
 		});
 		$(document).on('click','#btn-reject-souvenir',function(){
@@ -564,7 +590,7 @@ $(document).ready(function(){
 			};
 			console.log(transaksiSouvenir);
 			$.ajax({
-				url : '${pageContext.request.contextPath}/souvenirrequest/approved/'+idTras,
+				url : '${pageContext.request.contextPath}/requestsouvenir/approved/'+idTras,
 				type : 'POST',
 				contentType :'application/json',
 				dataType :'json',
@@ -577,8 +603,7 @@ $(document).ready(function(){
 			$('#rejectSouvenirModal').modal('hide');
 			$('#approveTranSouReqModal').modal('hide');
 			document.getElementById("notification").innerHTML = "Data Rejected! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been rejected!";
-			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000);
-			
+			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000);			
 		});   
 		
 		/* view item received */
@@ -606,12 +631,13 @@ $(document).ready(function(){
 				tBody.append(tRow);
 			}
 		};
+
 		
 		/* Received by requester */
-		  $(document).on('click', '.btn-view-transaksiR', function(){
+		 $(document).on('click', '.btn-view-transaksiR', function(){
 			var id =$(this).attr('id');
 			$.ajax({
-				url : '${pageContext.request.contextPath}/souvenirrequest/getitemsbyid/'+id,
+				url : '${pageContext.request.contextPath}/requestsouvenir/getitemsbyid/'+id,
 				type : 'GET',
 				dataType : 'json',
 				success : function(data){
@@ -633,9 +659,9 @@ $(document).ready(function(){
 				}
 			});
 			$('#receivedTranSouReqModal').modal();
-			});  
-	 /* save received */ 
-		  $(document).on('click','#receiveBtnModal',function(){
+			}); 
+	<!-- save received -->
+		 $(document).on('click','#receiveBtnModal',function(){
 			$('#rejectSaveSouvenirModal').modal();
 		});
 		$(document).on('click','#btn-received-save-souvenir',function(){
@@ -645,7 +671,7 @@ $(document).ready(function(){
 			};
 			console.log(transaksiSouvenir);
 			$.ajax({
-				url : '${pageContext.request.contextPath}/souvenirrequest/approved/'+idTras,
+				url : '${pageContext.request.contextPath}/requestsouvenir/approved/'+idTras,
 				type : 'POST',
 				contentType :'application/json',
 				dataType :'json',
@@ -660,9 +686,8 @@ $(document).ready(function(){
 			document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been received by requester!";
 			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000 );
 			
-		});
-
-}) /* batas akhir ready function */
+		}); 
+}); /* batas akhir ready function */
 
 </script> 
 
