@@ -597,7 +597,7 @@ input.parsley-error
 					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
 					var tinggi=0;
 					var tinggi2=0;
-					 $.each(data2.menus,function(index,menu){
+					 $.each(data2.menus,function(index,menu ){
 						 
 						
 						  if(menu.parentId==1){
