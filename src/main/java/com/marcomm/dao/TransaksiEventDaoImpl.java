@@ -68,7 +68,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		
 	}
 
-	@Override
 	public TransaksiEvent getEventById(int id) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
@@ -76,7 +75,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		return event;
 	}
 
-	@Override
 	public void update(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
@@ -93,7 +91,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		session.update(event);
 	}
 
-	@Override
 	public void closeEvent(int id) {
 		// TODO Auto-generated method stub
 		TransaksiEvent event = new TransaksiEvent();
@@ -106,7 +103,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		session.update(event);
 	}
 
-	@Override
 	public void accept(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
@@ -122,7 +118,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		session.update(event);
 	}
 
-	@Override
 	public void reject(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);

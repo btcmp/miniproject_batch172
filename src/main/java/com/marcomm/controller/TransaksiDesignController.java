@@ -21,12 +21,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterUser;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
+import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.MasterProductService;
+import com.marcomm.service.MasterUserService;
 import com.marcomm.service.TransaksiDesignService;
 import com.marcomm.service.TransaksiEventService;
 
@@ -40,6 +43,8 @@ public class TransaksiDesignController {
 	TransaksiEventService eventService;
 	@Autowired
 	TransaksiDesignService transaksiDesignService;
+	@Autowired
+	MasterUserService masterUserService;
 	
 	ServletContext servletContext;
 	@RequestMapping
@@ -47,8 +52,10 @@ public class TransaksiDesignController {
 		ModelAndView modelAndView = new ModelAndView("transaksidesign");
 		List<MasterProduct> products = masterProductService.getAll();
 		List<TransaksiEvent> events = eventService.getAllService();
+		List<MasterUser> pic = masterUserService.getAll();
 		modelAndView.addObject("events", events);
 		modelAndView.addObject("products", products);
+		modelAndView.addObject("requestPics",pic );
 		return modelAndView;
 	}
 	
@@ -95,6 +102,12 @@ public class TransaksiDesignController {
 		return transaksiDesignService.getByIdItem(id);
 	}
 	
+	@RequestMapping(value="/closeupdate",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void closeDesignUpdate(@RequestBody TransaksiDesign transaksiDesign) {
+		transaksiDesignService.closeDesignUpdate(transaksiDesign);
+	}
+	
 	@RequestMapping(value="/getitembydesignid/{id}",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiDesignItem> getItemByDesignId(@PathVariable("id") int id){
@@ -107,6 +120,9 @@ public class TransaksiDesignController {
 		
 		try {
 			for (CommonsMultipartFile file : files) {
+				/*String originalName = file.getOrigina();
+				int size = (int) file.getSize();
+				String */
 				byte[] bytes = file.getBytes();
 				Path path =Paths.get("H://Bootcamp//UploadFile//"+file.getOriginalFilename());
 				Files.write(path, bytes);

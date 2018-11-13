@@ -10,4 +10,5 @@ public interface TransaksiDesignItemDao {
 	public List<TransaksiDesignItem> getAll();
 	public TransaksiDesignItem getById(int id);
 	public List<TransaksiDesignItem> getItemByDesign(TransaksiDesign transaksiDesign);
+	public void closeDesignUpdate(TransaksiDesignItem TransaksiDesignItem);
 }

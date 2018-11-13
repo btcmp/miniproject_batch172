@@ -75,8 +75,5 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 		qr.setParameterList("eventId", eventId);
 		List<TransaksiEvent> transaksiEvent = qr.list();
 		return transaksiEvent;
-	}
-	
-	
-	
+	}	
 }

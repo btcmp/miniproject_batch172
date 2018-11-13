@@ -71,6 +71,8 @@ public class TransaksiDesignService {
 			tdi.setMasterProduct(transaksiDesignItem.getMasterProduct());
 			tdi.setTitleItem(transaksiDesignItem.getTitleItem());
 			tdi.setRequestPic(transaksiDesignItem.getRequestPic());
+			tdi.setCreatedBy(transaksiDesign.getCreatedBy());
+			tdi.setCreatedDate(new Date());
 			tdi.setRequestDueDate(transaksiDesignItem.getRequestDueDate());
 			tdi.setNote(transaksiDesignItem.getNote());
 			tdi.setTransaksiDesign(td);
@@ -82,7 +84,7 @@ public class TransaksiDesignService {
 		if (transaksiDesign.isEmpty()) {
 		return transaksiEventDao.getAll();
 		}else {
-		List<Integer> eventId = new ArrayList<>();
+		List<Integer> eventId = new ArrayList<Integer>();
 		for (TransaksiDesign td : transaksiDesign) {
 			eventId.add(td.getTransaksiEvent().getId());
 		}
@@ -93,5 +95,25 @@ public class TransaksiDesignService {
 		TransaksiDesign transaksiDesign = transaksiDesignDao.getById(id);
 		List<TransaksiDesignItem> transaksiDesignItems = transaksiDesignItemDao.getItemByDesign(transaksiDesign);
 		return transaksiDesignItems;
+	}
+	
+	public void closeDesignUpdate(TransaksiDesign transaksiDesign) {
+		TransaksiDesign tDesign = transaksiDesignDao.getById(transaksiDesign.getId());
+		List<TransaksiDesignItem> itemsBaru = transaksiDesign.getTransaksiDesignItems();
+		List<TransaksiDesignItem> transaksiDesignItems = transaksiDesignItemDao.getItemByDesign(tDesign);
+		int i=0;
+		for (TransaksiDesignItem transaksiDesignItem : itemsBaru) {
+			/*TransaksiDesignItemFile itemFile = transaksiDesignItem.getTransaksiDesignItemFile();
+			String[] extension = itemFile.getFileName().split(".");
+			itemFile.setExtention(extension[1]);
+			MasterUser user = masterUserDao.getUserByUserLog();
+			itemFile.setCreatedBy(user.getEmployee().getEmployeeName());
+			itemFile.setCreatedDate(new Date());*/
+			transaksiDesignItems.get(i).setStartDate(transaksiDesignItem.getStartDate());
+			transaksiDesignItems.get(i).setEndDate(transaksiDesignItem.getEndDate());
+			/*transaksiDesignItems.get(i).setTransaksiDesignItemFile(itemFile);*/
+			transaksiDesignItemDao.closeDesignUpdate(transaksiDesignItems.get(i));
+			i++;
+		}
 	}
 }

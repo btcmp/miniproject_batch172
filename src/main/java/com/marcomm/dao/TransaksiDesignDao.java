@@ -15,4 +15,5 @@ public interface TransaksiDesignDao {
 	public List<TransaksiEvent> getEventAvailable(List<Integer> eventId);
 	
 	
+	
 }
