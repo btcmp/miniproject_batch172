@@ -42,15 +42,15 @@ public class TransaksiSouvenirService {
 	MasterUserDao masterUserDao;
 
 	/*UPDATE*/
-	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir, int id) {
+	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir) {
 		//DATA TABLE ATAS
-		TransaksiSouvenir transaksiSouvenir2 = transaksiSouvenirDao.getById(transaksiSouvenir.getId());//mengambil repository lama
+		TransaksiSouvenir ts = transaksiSouvenirDao.getById(transaksiSouvenir.getId());
 		//transaksiSouvenir2.setCode(transaksiSouvenir.getCode());
 		//transaksiSouvenir2.setReceivedBy(1); --> belum fix
-		//transaksiSouvenir2.setReceivedDate(transaksiSouvenir.getReceivedDate());
-		transaksiSouvenir2.setNote(transaksiSouvenir.getNote());
+		ts.setReceivedDate(transaksiSouvenir.getReceivedDate());
+		ts.setNote(transaksiSouvenir.getNote());
 		
-		transaksiSouvenirDao.updateTransSouvenir(transaksiSouvenir2);
+		transaksiSouvenirDao.updateTransSouvenir(ts);
 		
 		//DATA TABLE ITEM
 		for(TransaksiSouvenirItem transaksiSouvenirItem : transaksiSouvenir.getTransaksiSouvenirItems()) {
@@ -61,14 +61,16 @@ public class TransaksiSouvenirService {
 			int quantityMS = ms.getQuantity()+Math.toIntExact(q);
 			ms.setQuantity(quantityMS);
 			masterSouvenirDao.update(ms);
+			System.out.println("masuk update atas");
 			
 			if(transaksiSouvenirItem.getId()==0) {
 				TransaksiSouvenirItem tsi = new TransaksiSouvenirItem();
-				TransaksiSouvenir tsu = transaksiSouvenirDao.getById(id);
+				TransaksiSouvenir tsu = transaksiSouvenirDao.getById(transaksiSouvenir.getId());
 				tsi.setTransaksiSouvenir(tsu);
 				tsi.setMasterSouvenir(ms);
 				tsi.setQty(transaksiSouvenirItem.getQty());
 				tsi.setNote(transaksiSouvenirItem.getNote());
+				//tsi.setDelete(false);
 				transaksiSouvenirItemDao.save(tsi);
 			}else {
 				TransaksiSouvenirItem tsi = transaksiSouvenirItemDao.getSouvenirItemById(transaksiSouvenirItem.getId());
@@ -151,6 +153,13 @@ public class TransaksiSouvenirService {
 		TransaksiSouvenir transaksiSouvenir = transaksiSouvenirDao.getById(id);
 		List<TransaksiSouvenirItem> transaksiSouvenirItems = transaksiSouvenirItemDao.getItemBySouvenir(transaksiSouvenir);
 		return transaksiSouvenirItems;
+	}
+	
+	
+	/*GET BY ID TOK*/
+	public TransaksiSouvenir getById(int id) {
+		// TODO Auto-generated method stub
+		return transaksiSouvenirDao.getById(id);
 	}
 	
 	

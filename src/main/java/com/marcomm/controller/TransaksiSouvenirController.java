@@ -83,11 +83,18 @@ public class TransaksiSouvenirController {
 		return transaksiSouvenirService.getItemBySouvenirId(id);
 	}
 	
+	/*GET BY ID CUMAN ID TOK*/
+	@RequestMapping(value="/getbyid/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public TransaksiSouvenir getById(@PathVariable("id") int id){
+		return transaksiSouvenirService.getById(id);
+	}
+	
 	/*UPDATE*/
-	@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	public void updateTransSouvenir(@RequestBody TransaksiSouvenir transaksiSouvenir, @PathVariable("id") int id) {
-		transaksiSouvenirService.updateTransSouvenir(transaksiSouvenir, id);
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void updateTransSouvenir(@RequestBody TransaksiSouvenir transaksiSouvenir) {
+		transaksiSouvenirService.updateTransSouvenir(transaksiSouvenir);
 	}
 	
 	/*DELETE*/

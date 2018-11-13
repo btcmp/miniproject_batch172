@@ -156,12 +156,12 @@
 				</tr>
 			</thead>
 			<tbody class="viewTableBody">
-			<tr id='items-1'>
+			<!-- <tr id='items-view'>
 				<td><input type="text" class="form-control" id="viewSouItem"  readonly></td>
 				<td><input type="number" class="form-control" id="viewQtyItem" readonly></td>
 				<td><input type="text" class="form-control" id="viewNoteItem"  readonly></td>
 
-			</tr>
+			</tr> -->
 			</tbody>
 		</table>
 <!-- END TABLE -->
@@ -177,7 +177,8 @@
 
 <!-- ########### -->
 <!-- MODAL EDIT -->
-<div class="modal fade" id="addTranSouModal" tabindex="-1"
+
+<div class="modal fade" id="editTranSouModal" tabindex="-1"
 	role="dialog" aria-labelledby="addTransSou"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
@@ -196,7 +197,7 @@
 					<div class="form-group row">
 						<label for="transactionCode" class="col-sm-3 col-form-label">Transaction Code</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="transactionCode"
+							<input type="text" class="form-control" id="editTransactionCode"
 								placeholder="Transaction Code" readonly>
 						</div>    
 					</div>
@@ -214,28 +215,29 @@
 					<div class="form-group row">
 						<label for="receivedTransSDate" class="col-sm-3 col-form-label">Received Date</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="receivedTransSDate"
+							<input type="text" class="form-control" id="editReceivedTransSDate"
 								placeholder="Select Date">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="noteTransSou" class="col-sm-3 col-form-label">Note</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="noteTransSou" style="height: 80px;"
+							<input type="text" class="form-control" id="editNoteTransSou" style="height: 80px;"
 								placeholder="Type Note">
 						</div>
 					</div>
+					<input type="hidden" class="form-control" id="idEditTransSou" style="height: 80px;">
 				</form>
 				
 			<!-- BUTTOT ADD -->
 			<div class="row" style="float:left; padding-bottom:10px; padding-top:10px">
 				<div class="col">
-					<a class="btn btn-primary" id="btnAddModalTransSou" href="#">Add Item</a>
+					<a class="btn btn-primary" id="btnAddEditModalTransSou" href="#">Add Item</a>
 				</div>
 			</div>
 			
 		<!-- TABLE -->
-		<table class="table table-striped table-hover DataTable" id="modalTableSouTrans" style="width : 100%">
+		<table class="table table-striped table-hover DataTable" id="modalEditTableSouTrans" style="width : 100%">
 			<thead>
 				<tr>
 					<th>Souvenir Name</th>
@@ -245,18 +247,7 @@
 				</tr>
 			</thead>
 			<tbody class="editTableBody">
-			<tr id='items-1'>
-				<td><select class="custom-select" id="editSouvenirItem">
-					<option value=" ">-Select Souvenir-</option>
-						<c:forEach var="souvenir" items="${souvenirs }">
-							<option value="${souvenir.id}">${souvenir.name}</option>
-						</c:forEach>
-					</select></td>
-				<td><input type="number" class="form-control" id="editQuantity" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" id="editNote" placeholder="Note"></td>
-				<td><a href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>
-					<a href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>
-			</tr>
+				
 			</tbody>
 		</table>
 <!-- END TABLE -->
@@ -264,7 +255,7 @@
 			<!-- FOOTER -->
 			</div>
 			<div class="modal-footer border border-top-0 border-dark">
-				<button type="button" class="btn btn-primary" id="editBtnModal">update</button>
+				<button type="button" class="btn btn-primary" id="updateBtnModalTrans">update</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 			</div>
 		</div>
