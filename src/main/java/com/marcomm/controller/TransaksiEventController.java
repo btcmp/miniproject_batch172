@@ -34,12 +34,12 @@ public class TransaksiEventController {
 	@Autowired
 	MasterEmployeeService employeeService;
 	
+	
 	@RequestMapping
 	public String index(Model model) {
-		List<GrantedAuthority> authorities2 = (List<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		model.addAttribute("rolename", authorities2.get(0).getAuthority());
-
+		MasterUser user = eventService.getUser();
 		List<MasterEmployee> allEmployee = employeeService.getAllEmployee();
+		model.addAttribute("rolename", user);
 		model.addAttribute("allEmployee", allEmployee);
 		return "event";
 	}

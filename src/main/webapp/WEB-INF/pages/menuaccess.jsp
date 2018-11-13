@@ -108,6 +108,9 @@
 			<tbody>
 			</tbody>
 		</table>
+		<div class="form-row" style="float:left; padding:10px;">
+				<a id="notif" class="text-white bg-info border rounded"></a>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -179,8 +182,8 @@ $(document).ready(function(){
 						id: roleId		 
 					}
 			};
-			/*  document.getElementById("notif").innerHTML ="Data saved! new code has been added with code : "+menuAccess.role.code+"!"; 
-			$('#notif').show('slow').delay(1000).hide('slow'); */ 
+			  document.getElementById("notif").innerHTML ="Data saved! new code has been added with code!"; 
+			$('#notif').show('slow').delay(1000).hide('slow');  
 			 $.ajax({
 				  url :'${pageContext.request.contextPath}/access/save',
 				  type : 'POST',
@@ -251,7 +254,7 @@ $(document).ready(function(){
 	/* view */
 	$(document).on('click','.btn-view-access',function(){
 		var id=$(this).attr('id');
-		$('.viewId').prop('checked',false);
+		$('.updateId').prop('checked',false);
 		
 		$.ajax({
 			url:'${pageContext.request.contextPath}/access/getmenuaccess/'+id,
@@ -261,13 +264,13 @@ $(document).ready(function(){
 				 $('#view-role').val(data.role.id);
 				$('#ViewAccess').val(data.id);
 				for(var i=0;i<data.menus.length;i++){
-					$('#'+data.menus[i].id+'').prop('checked',true);   	
-					console.log(data);
+					$('#'+data.menus[i].id+'').prop('checked',true);   			
 				}			
 			},
 			dataType:'json'
 		});
 		$('#viewModal').modal();
+		
 	});
 	/* pop up update */
 	$(document).on('click','.btn-update-access',function(){
@@ -288,9 +291,10 @@ $(document).ready(function(){
 			dataType:'json'
 		});
 		$('#updateModal').modal();
+		
 	});
 	/* update data */
-	$('.btn-update').click(function(){
+	 $('.btn-update').click(function(){
 		var id=$('#idAccess').val();
 		var roleId= $('#update-role').val(); 
 	 var menus =[]; 
@@ -306,10 +310,10 @@ $(document).ready(function(){
 						id: roleId		 
 					}
 			};
-		/*  var access={
+		  var access={
 				 isDelete:true
 		 }
-		 console.log(JSON.stringify(access)); */
+		 console.log(JSON.stringify(access)); 
 		 console.log(menuAccess);
 		 $.ajax({
 			  url :'${pageContext.request.contextPath}/access/update/' +id,
@@ -330,7 +334,9 @@ $(document).ready(function(){
 			
 	
 	$('#updateModal').modal('hide');
-	});
+	document.getElementById("notif").innerHTML ="Data updated! menu access for role staff has been updated!"; 
+	$('#notif').show('slow').delay(1000).hide('slow');
+	}); 
 	/* delete */
 	$(document).on('click','.btn-delete-access',function(){
 		var id=$(this).attr('id');
@@ -371,6 +377,8 @@ $(document).ready(function(){
 				console.log("data di delete");
 				loadData();
 				$('#deleteModal').modal('hide');
+				document.getElementById("notif").innerHTML = "Data Deleted! Data menu access with referential code: "+access.role.code+" has been deleted!";
+				$('#notif').show('slow').delay(1500).hide('slow');
 			},
 			error :function(){
 				console.log("data kacau");

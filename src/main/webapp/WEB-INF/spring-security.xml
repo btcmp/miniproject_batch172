@@ -29,7 +29,13 @@
 			access="hasRole('Administrator') or hasRole('Staff') or hasRole('Requester')" />
 			<!-- TRANSAKSI SOUVENIR -->
 		<intercept-url pattern="/transaksisouvenir*"
+ 
 			access="hasRole('Administrator') or hasRole('Staff') or hasRole('Requester')" />
+ 
+		<intercept-url pattern="/requestsouvenir*"
+			access="hasRole('Administrator') or hasRole('Staff') or hasRole('Requester')"/>
+		
+ 
 		 
 		<form-login login-page="/login"
 			default-target-url="/user"
