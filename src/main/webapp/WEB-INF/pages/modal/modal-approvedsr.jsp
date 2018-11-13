@@ -182,7 +182,7 @@
 				</form>
 			
 		<!-- TABLE -->
-		<table class="table table-striped table-hover DataTable" id="modalTableSouReqTrans" style="width : 100%">
+		<table class="table table-striped table-hover DataTable" id="modalTableRecTrans" style="width : 100%">
 			<thead>
 				<tr>
 					<th>Souvenir Name</th>
