@@ -422,8 +422,26 @@ $(document).ready(function(){
 				 	$('#user-login').val(data);
 					 
 					 document.getElementById("user-login").innerHTML="Selamat Datang role " +data+ "!";
+					  
 				}
 			}) 
+		 }
+		function getRole(){
+			var relee="Administrator";
+			$.ajax({
+				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
+				type : 'GET',
+				success : function(data1){
+				 console.log('Ini adalah role nya');
+				 console.log(data1);
+				 relee=data1;
+				 
+					 
+					  
+					  
+				}
+			}) ;
+			return relee;
 		 }
 	 
 	 
@@ -538,8 +556,12 @@ $(document).ready(function(){
 		url : '${pageContext.request.contextPath}/access/getall',
 		type : 'GET',
 		success : function(data4) {
-			
-			 if(data4[0].role.roleName == 'Administrator'){
+			var role1;
+				role1=getRole();
+			console.log(role1);
+			console.log('harus sama');
+			console.log(data4[0].role.roleName);
+			 if(data4[0].role.roleName == role1){
 				  var idMenu=0;
 				  idMenu=data4[0].id;
 				   getMenubyRole(idMenu);
@@ -566,19 +588,13 @@ $(document).ready(function(){
 						
 						  if(menu.parentId==1){
 							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
-						/* 	$('#selectMenu').height(tinggi);
-							tinggi=tinggi+80; */
+						 
 						  }else if(menu.parentId==2){
 							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');
-							/*  $('#selectMenu2').height(tinggi2);
-							tinggi2=tinggi2+100000; */
+							 
 							  
 						  }
-						 /* $('#selectMenu').append('<form action="${pageContext.request.contextPath}/'+menu.controller+'"><input type="submit" value="'+menu.name+'"/></form>'); */
 						 
-							/* <a id="'+user.id+'" href="#" class="btn-delete-user"><span class="oi oi-trash"></span></a> */
-					 
-							
 							 
 					 });
 					 
