@@ -322,7 +322,8 @@ $(document).ready(function(){
 		}
 	};
 	
-		
+	/* UPDATE */
+	
 }); /* batas akhir ready function */
 
 </script>

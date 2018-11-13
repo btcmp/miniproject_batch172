@@ -20,7 +20,7 @@ public interface TransaksiSouvenirItemDao {
 	public List<TransaksiSouvenirItem> getItemBySouvenir(TransaksiSouvenir transaksiSouvenir);
 	
 	/*UPDATE MAMAD*/
-	public void update(TransaksiSouvenirItem itemLama);
+	public void update(TransaksiSouvenirItem tsi);
 
 
 }

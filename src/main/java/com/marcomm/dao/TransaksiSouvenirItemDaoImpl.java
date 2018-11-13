@@ -50,15 +50,15 @@ public class TransaksiSouvenirItemDaoImpl implements TransaksiSouvenirItemDao{
 	public List<TransaksiSouvenirItem> getItemBySouvenir(TransaksiSouvenir transaksiSouvenir) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(TransaksiSouvenirItem.class);
-		criteria.add(Restrictions.eq("transaksiSouvenir", transaksiSouvenir));
+		criteria.add(Restrictions.and(Restrictions.eq("transaksiSouvenir", transaksiSouvenir), Restrictions.eq("isDelete", false)));
 		List<TransaksiSouvenirItem> transaksiSouvenirItems = criteria.list();
 		return transaksiSouvenirItems;
 	}
 
 	/*UPDATE PUNYA MAMAD*/
-	public void update(TransaksiSouvenirItem itemLama) {
+	public void update(TransaksiSouvenirItem tsi) {
 		Session session = sessionFactory.getCurrentSession();
-		session.update(itemLama);
+		session.update(tsi);
 		
 	}
 

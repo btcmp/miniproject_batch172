@@ -3,7 +3,7 @@
     <%@ page isELIgnored="false"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
 <meta charset="ISO-8859-1">
 <title>SOUVENIR REQUEST</title>
@@ -139,8 +139,13 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	/* DATE PICKER */
+	
+	$('#listTransTable').DataTable({
+		'sDom':'tip',
+		'ordering':false
+	});
 	loadData();
+	/* DATE PICKER */
 	//due date
 	$('#data4').datepicker({
 		format : 'yyyy-mm-dd',
@@ -187,6 +192,7 @@ $(document).ready(function(){
 				autoclose:true,
 				uiLibrary: 'bootstrap4'
 			});
+		
 		//get requested by
 		//$('#requestBy').val(userlogin.employee.name);
 		$('#addTranSouReqModal').modal();
@@ -355,7 +361,7 @@ $(document).ready(function(){
 					'</select></td>';
 			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'" placeholder="Qty" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note" disabled></td>';
-			tRow += '<td><input type="hidden" class="form-control" id="itemIdEdit'+Id+'" value="999999" ></td>';
+			tRow += '<td><input type="hidden" class="form-control" id="itemIdEdit'+Id+'" value="0" ></td>';
 			tRow += '<td><input type="hidden" class="form-control" id="itemDeleteEdit'+Id+'" value=false ></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalEdit"><span class="oi oi-pencil"></span></a>'+' ';
 			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalEdit"><span class="oi oi-trash"></span></a></td>';
@@ -370,8 +376,12 @@ $(document).ready(function(){
 	//icon delete items
 	$(document).on('click','.deleteBtnModalEdit',function(){
 			var id =$(this).attr('id');
-			$("#itemDeleteEdit"+id).val(true);
-			$('#items-edit-'+id).remove();
+			if ($('#itemsEdit-'+id).val()==0){
+				$('#itemsEdit-'+id).remove();
+			}else{
+				$("#itemDeleteEdit"+id).val(true);
+				$('#itemsEdit-'+id).hide();
+			}
 		});
 	//button SAVE UPDATE
 	$(document).on('click', '#saveUpdateBtnModal', function(e){
@@ -391,7 +401,7 @@ $(document).ready(function(){
 		});
 		 //console.log(transaksiSouvenirItems);
 		var transaksiSouvenir = {
-				//code :$('#editTransactionCode').val(),
+				code :$('#editTransactionCode').val(),
 				/* tEventId :{
 					id:parseInt($('#editEventId').val())
 				}, */
@@ -415,13 +425,13 @@ $(document).ready(function(){
 			success:function(data){
 				console.log(data);
 				loadData();
-				//$('#addTranSouReqModal').modal('hide');
+				//$('#editTranSouReqModal').modal('hide');
 			}
 		});
 		
-		$('#addTranSouReqModal').modal('hide');
-		document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been added!";
-		$('#notification').fadeIn(3000).delay(1500).fadeOut(3000);
+		$('#editTranSouReqModal').modal('hide');
+		document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been updated!";
+		$('#notification').fadeIn(1000).delay(4000).fadeOut(3000);
 	});
 	
 	/* //load data list souvenir request */
@@ -449,6 +459,10 @@ $(document).ready(function(){
 					status="In Progress";
 				} else if(transaksiSouvenir.status==3){
 					status="Approved";
+				} else if(transaksiSouvenir.status==4){
+					status="Received by Requester";
+				}else if(transaksiSouvenir.status==0){
+					status="Rejected";
 				}
 					
 				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
