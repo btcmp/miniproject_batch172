@@ -277,12 +277,13 @@ $(document).ready(function(){
 	});
 	
 	/* BUTTON SEARCH */
-	$('#btn-search').on('click', function(){
+	$('#searchBtn').on('click', function(){
 		for(var i = 1; i <= 7; i++){
 			oTable
 			.column($('#data'+i).data('index'))
 			.search($('#data'+i).val())
 			.draw()
+			$('#data'+i).val("");
 		}
 	});
 
@@ -433,7 +434,10 @@ $(document).ready(function(){
 		document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been updated!";
 		$('#notification').fadeIn(1000).delay(4000).fadeOut(3000);
 	});
-	
+	/* LOAD Events */
+	function loadEvents(){
+		
+	}
 	/* //load data list souvenir request */
 	function loadData(){
 		$.ajax({
@@ -457,14 +461,11 @@ $(document).ready(function(){
 					status="Submitted";
 				} else if(transaksiSouvenir.status==2){
 					status="In Progress";
-				} else if(transaksiSouvenir.status==3){
-					status="Approved";
-				} else if(transaksiSouvenir.status==4){
+				}else if(transaksiSouvenir.status==3){
 					status="Received by Requester";
 				}else if(transaksiSouvenir.status==0){
 					status="Rejected";
 				}
-					
 				var tRow='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-view-transaksiR"><span class="oi oi-magnifying-glass"></span></a>';
 				tRow +='';
 				tRow +='<a id="'+transaksiSouvenir.id+'" href="#" class="btn-edit-transaksiR"><span class="oi oi-pencil"></span></a>';
