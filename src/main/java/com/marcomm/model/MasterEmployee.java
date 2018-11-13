@@ -67,6 +67,17 @@ public class MasterEmployee {
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="approvedBy")
 	private List<TransaksiDesign> approvedByDesign;
 	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="requestPic")
+	private List<TransaksiDesignItem> requestPicDesignItem;
+	
+	public List<TransaksiDesignItem> getRequestPicDesignItem() {
+		return requestPicDesignItem;
+	}
+
+	public void setRequestPicDesignItem(List<TransaksiDesignItem> requestPicDesignItem) {
+		this.requestPicDesignItem = requestPicDesignItem;
+	}
+	
 	public List<TransaksiDesign> getAssignToDesign() {
 		return assignToDesign;
 	}

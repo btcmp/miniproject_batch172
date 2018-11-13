@@ -73,5 +73,7 @@ public class MasterUserService {
 		
 		return userDao.getRole();
 	}
-
+	public MasterUser getUserLog() {
+		return userDao.getUserByUserLog();
+	}
 }

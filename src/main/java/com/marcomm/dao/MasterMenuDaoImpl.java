@@ -28,7 +28,7 @@ public class MasterMenuDaoImpl implements MasterMenuDao{
 		masterMenu.setCode(getCode());
 		masterMenu.setDelete(false);
 		masterMenu.setCreatedBy("Administrator");
-		masterMenu.setUpdatedBy("admin");
+		masterMenu.setUpdatedBy("Administrator");
 		Session session=sessionFactory.getCurrentSession();
 		session.save(masterMenu);
 	}
@@ -66,8 +66,8 @@ public class MasterMenuDaoImpl implements MasterMenuDao{
 		menu.setCreatedDate(now);
 		menu.setUpdatedDate(now);
 		menu.setDelete(false);
-		menu.setCreatedBy("admin");
-		menu.setUpdatedBy("admin");
+		menu.setCreatedBy("Administrator");
+		menu.setUpdatedBy("Administrator");
 		Session session=sessionFactory.getCurrentSession();
 		session.update(menu);
 	}

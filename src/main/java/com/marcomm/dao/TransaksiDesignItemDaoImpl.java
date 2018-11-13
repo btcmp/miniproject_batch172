@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.marcomm.model.DesignItemFile;
 import com.marcomm.model.TransaksiDesign;
 import com.marcomm.model.TransaksiDesignItem;
 
@@ -17,6 +18,7 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
+
 	public void save(TransaksiDesignItem transaksiDesignItem) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(transaksiDesignItem);
@@ -42,9 +44,17 @@ public class TransaksiDesignItemDaoImpl implements TransaksiDesignItemDao {
 		List<TransaksiDesignItem> transaksiDesignItem = cr.list();
 		return transaksiDesignItem;
 	}
+	public void closeDesignUpdate(TransaksiDesignItem transaksiDesignItem) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(transaksiDesignItem);
+	}
 //KOLOM ANGGI
 	public void update(TransaksiDesignItem itemLama) {
 		Session session=sessionFactory.getCurrentSession();
 		session.update(itemLama);	 	
+	}
+	public void saveUpload(DesignItemFile designItemFile) {
+		Session session=sessionFactory.getCurrentSession();
+		session.saveOrUpdate(designItemFile);	 	
 	}
 }

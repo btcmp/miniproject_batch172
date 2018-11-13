@@ -75,13 +75,12 @@ public class TransaksiDesignDaoImpl implements TransaksiDesignDao {
 		qr.setParameterList("eventId", eventId);
 		List<TransaksiEvent> transaksiEvent = qr.list();
 		return transaksiEvent;
-	}
+
+	}	
+
 
 	public void update(TransaksiDesign transaksiDesign1) {
 	Session session=sessionFactory.getCurrentSession();
 	session.update(transaksiDesign1);
 	}
-	
-	
-	
 }

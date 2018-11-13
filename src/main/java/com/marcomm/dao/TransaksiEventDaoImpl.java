@@ -107,7 +107,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		session.update(event);
 	}
 
-
 	public void reject(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);

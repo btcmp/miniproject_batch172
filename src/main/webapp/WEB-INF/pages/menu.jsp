@@ -4,6 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
+<meta charset="ISO-8859-1">
+<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/assets/img/favicon.png" />
 <title>Menu</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
@@ -20,7 +26,28 @@ input.parsley-error
 </style>
 </head>
 <body>
-	 <div id = "container" style="width : 1000px; margin: auto"> 
+	 <div id = "container" style="width : 1000px; margin: auto">
+	 <!-- DASHBOARD -->
+			<nav class="col-md-2 d-none d-md-block bg-primary sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link text-white" href="#">
+								Dashboard </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu"
+							href="#"> Master</a>
+							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
+							href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white"
+							href="${logoutUrl}"> Logout </a></li>
+					</ul>
+					</div>
+			</nav><!-- END DASHBOARD --> 
 	
 		<!-- HEADER -->		
 		<div class="card text-white bg-primary mb-3" style="width: 100%;">
@@ -65,10 +92,10 @@ input.parsley-error
 		<!-- BUTTON SEARCH -->		
 				<tr>
     			<th></th>
-						<th><input type="text" class="form-control" placeholder="Menu Code" id="data1" data-index="1" style="padding-right:10px;width:100%;"></th>
-						<th><input type="text" class="form-control" placeholder="Menu Name" id="data2" data-index="2" style="padding-right:10px;width:100%;"></th>
-						<th><input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="4" style="padding-right:10px;width:100%;"></th>
-						<th><input type="text" class="form-control" placeholder="Created By" id="data4" data-index="5" style="padding-right:10px;width:100%;"></th>
+						<th><input type="text" class="form-control" placeholder="Menu Code" id="data1" data-index="1" style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control" placeholder="Menu Name" id="data2" data-index="2" style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="4" style="padding-right:10px;"></th>
+						<th><input type="text" class="form-control" placeholder="Created By" id="data4" data-index="5" style="padding-right:10px;"></th>
     			<th><a class="btn btn-warning" id="btn-search" href="#">Search</a></th>
     			</tr>
     			</thead>
@@ -280,6 +307,7 @@ input.parsley-error
 		uiLibrary:'bootstrap4'
 		});
 		loadData();
+		createMenu();
 		 /* BUTTON POP UP */  
 		$('#btn-add').on('click', function(){
 			$.ajax({
@@ -512,6 +540,76 @@ input.parsley-error
 				console.log("data kacau");
 			}
 		});
+	});
+	/* dropdown menu */
+	function createMenu(){
+		var relee=null;
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
+			type : 'GET',
+			success : function(data1){
+			 
+			 relee=data1;
+			 console.log('Ini adalah role nya');
+			 console.log(relee);
+			 menusRole(relee);			  
+				  
+			}
+		});
+	 }
+	
+	/* DROPDOWN MENU */
+	function menusRole(role22){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/access/getall',
+			type : 'GET',
+			success : function(data4) {
+				var role1=null;
+					role1=role22;
+				console.log(role1);
+				console.log('harus sama');
+				console.log(data4[0].role.roleName);
+				 if(data4[0].role.roleName == role1){
+					  var idMenu=0;
+					  idMenu=data4[0].id;
+					   getMenubyRole(idMenu);
+					   
+					  
+				 }
+			},
+			dataType : 'json'
+		});	
+		}
+	
+	function getMenubyRole(idMenu){
+		 $.ajax({
+				url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
+				type : 'GET',
+				success : function(data2) {
+					$('#selectMenu').empty();
+					$('#selectMenu2').empty();
+					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
+					var tinggi=0;
+					var tinggi2=0;
+					 $.each(data2.menus,function(index,menu){
+						 
+						
+						  if(menu.parentId==1){
+							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+						 
+						  }else if(menu.parentId==2){
+							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+						  }			 
+					 }); 
+				},
+				dataType : 'json'
+			});
+	}		
+	$('#masterMenu').click(function(){
+		$('#selectMenu').toggle();
+	});
+	$('#masterMenu2').click(function(){
+		$('#selectMenu2').toggle();
 	});
 	});
 	</script>
