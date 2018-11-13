@@ -39,6 +39,7 @@
 				<value>com.marcomm.model.MasterRole</value>
 				<value>com.marcomm.model.MasterSouvenir</value>
 				<value>com.marcomm.model.TransaksiSouvenirItem</value>
+				<value>com.marcomm.model.DesignItemFile</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
