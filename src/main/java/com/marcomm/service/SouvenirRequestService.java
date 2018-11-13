@@ -173,5 +173,17 @@ public class SouvenirRequestService {
 		}
 		
 	}
+	public void approved(int id, TransaksiSouvenir souvenir) {
+		// TODO Auto-generated method stub
+		TransaksiSouvenir souvenir1=transaksiSouvenirDao.getById(id);
+		
+		if(souvenir.getStatus()==2) {
+			souvenir1.setStatus(souvenir.getStatus());
+		}else {
+			souvenir1.setStatus(souvenir.getStatus());
+			souvenir1.setRejectReason(souvenir.getRejectReason());
+		}
+		transaksiSouvenirDao.updateTransSouvenir(souvenir1);
+	}
 
 }

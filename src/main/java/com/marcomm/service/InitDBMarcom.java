@@ -127,7 +127,7 @@ public class InitDBMarcom {
 		//menu_acces
 		MasterMenuAccess menuAccess1=new MasterMenuAccess();
 		
-		List<MasterMenu> menus=new ArrayList<>();
+		List<MasterMenu> menus=new ArrayList<MasterMenu>();
 		menus.add(masterMenu3);
 		menus.add(masterMenu2);
 		menus.add(masterMenu1);
