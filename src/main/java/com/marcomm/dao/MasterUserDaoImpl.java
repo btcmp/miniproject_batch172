@@ -31,11 +31,13 @@ public class MasterUserDaoImpl implements MasterUserDao {
 
 	public void save(MasterUser masterUser) {
 		// TODO Auto-generated method stub
+		 
+		
 		Date date = new Date();
 		masterUser.setUpdatedDate(date);
 		masterUser.setCreatedDate(date);
-		masterUser.setCreatedBy("admin");
-		masterUser.setUpdatedBy("admin");
+		masterUser.setCreatedBy("Administrator");
+		masterUser.setUpdatedBy("Administrator");
 		masterUser.setIsDelete(1);
 		masterUser.setPassword(InitDBMarcom.encodePassword(masterUser.getPassword()));
 		Session session = sessionFactory.getCurrentSession();
