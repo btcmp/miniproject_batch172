@@ -178,6 +178,7 @@
 $(document).ready(function(){
 	loadData();
 	getUser();
+	createMenu();//fungsi untuk create menu
 	/* date picker */
 	/* $('#createdDate').datepicker(); */
 	 $('.date-picker').datepicker({
@@ -426,22 +427,23 @@ $(document).ready(function(){
 				}
 			}) 
 		 }
-		function getRole(){
-			var relee="Administrator";
+		function createMenu(){
+			var relee=null;
 			$.ajax({
 				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
 				type : 'GET',
 				success : function(data1){
-				 console.log('Ini adalah role nya');
-				 console.log(data1);
-				 relee=data1;
 				 
+				 relee=data1;
+				 console.log('Ini adalah role nya');
+				 console.log(relee);
+				 menusRole(relee);
 					 
 					  
 					  
 				}
-			}) ;
-			return relee;
+			});
+			
 		 }
 	 
 	 
@@ -551,26 +553,28 @@ $(document).ready(function(){
 	}
 		
 		/* DROPDOWN MENU */
-		
-	$.ajax({
-		url : '${pageContext.request.contextPath}/access/getall',
-		type : 'GET',
-		success : function(data4) {
-			var role1;
-				role1=getRole();
-			console.log(role1);
-			console.log('harus sama');
-			console.log(data4[0].role.roleName);
-			 if(data4[0].role.roleName == role1){
-				  var idMenu=0;
-				  idMenu=data4[0].id;
-				   getMenubyRole(idMenu);
-				   
-				  
-			 }
-		},
-		dataType : 'json'
-	});
+	function menusRole(role22){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/access/getall',
+			type : 'GET',
+			success : function(data4) {
+				var role1=null;
+					role1=role22;
+				console.log(role1);
+				console.log('harus sama');
+				console.log(data4[0].role.roleName);
+				 if(data4[0].role.roleName == role1){
+					  var idMenu=0;
+					  idMenu=data4[0].id;
+					   getMenubyRole(idMenu);
+					   
+					  
+				 }
+			},
+			dataType : 'json'
+		});	
+		}
+	
 		
 	function getMenubyRole(idMenu){
 		

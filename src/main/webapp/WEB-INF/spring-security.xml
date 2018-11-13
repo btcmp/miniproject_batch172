@@ -36,6 +36,8 @@
  
 		<intercept-url pattern="/requestsouvenir*"
 			access="hasRole('Administrator') or hasRole('Staff') or hasRole('Requester')"/>
+			<intercept-url pattern="/menu*"
+			access="hasRole('Administrator') or hasRole('Staff') or hasRole('Requester')"/>
 		
  
 		 
