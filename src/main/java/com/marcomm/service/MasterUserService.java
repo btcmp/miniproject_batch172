@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.EmployeeDao;
+import com.marcomm.dao.MasterCompanyDao;
 import com.marcomm.dao.MasterUserDao;
 import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterRole;
@@ -24,8 +25,6 @@ public class MasterUserService {
 
 	@Autowired
 	EmployeeDao employeeDao;
-	
-	 
 	
 	
 	public void save(MasterUser masterUser) {
@@ -72,6 +71,9 @@ public class MasterUserService {
 	public String getRole() {
 		
 		return userDao.getRole();
+	}
+	public MasterUser getUserLog() {
+		return userDao.getUserByUserLog();
 	}
 	
 	 

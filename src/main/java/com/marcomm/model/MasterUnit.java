@@ -59,11 +59,17 @@ public class MasterUnit {
 	private Date updatedDate;
 	
 	/*RELASI*/
-	/*@OneToMany(fetch=FetchType.LAZY, mappedBy="M_UNIT", orphanRemoval=true, cascade=CascadeType.ALL)
-	private List<MasterSouvenir> masterSouvenirs;*/
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="masterUnit")
+	private List<MasterSouvenir> masterUnit;
 	
 	/* SETTER DAN GETTER */
 	
+	public List<MasterSouvenir> getMasterUnit() {
+		return masterUnit;
+	}
+	public void setMasterUnit(List<MasterSouvenir> masterUnit) {
+		this.masterUnit = masterUnit;
+	}
 	public int getId() {
 		return id;
 	}

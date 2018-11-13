@@ -2,6 +2,7 @@ package com.marcomm.dao;
 
 import java.util.List;
 
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.TransaksiEvent;
 
 public interface TransaksiEventDao {
@@ -22,4 +23,7 @@ public interface TransaksiEventDao {
 
 	public void reject(TransaksiEvent transaksiEvent);
 
+	public List<MasterEmployee> getAllEmployee();
+	
+	public String getUser();
 }

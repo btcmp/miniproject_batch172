@@ -1,11 +1,11 @@
-<!-- MODAL ADD -->
+<!-- MODAL ADD --> 
 <div class="modal fade" id="addTranSouReqModal" tabindex="-1"
 	role="dialog" aria-labelledby="addTransSouReq"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content"> 
 			<div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addProductModalTitle">Add Souvenir Request</h5>
+				<h5 class="modal-title" id="addRequestTitle">Add Souvenir Request</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -36,7 +36,7 @@
 					<div class="form-group row">
 						<label for="requestBy" class="col-sm-3 col-form-label">Request By</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="requestBy" id="requestBy"
+							<input type="text" class="form-control" name="requestBy" id="requestBy" value="${userlogin.employee.employeeName}"
 							  disabled>
 						</div>
 					</div>
@@ -110,12 +110,12 @@
 
 <!-- MODAL EDIT-->
 <div class="modal fade" id="editTranSouReqModal" tabindex="-1"
-	role="dialog" aria-labelledby="editTransSouReq"
+	role="dialog" aria-labelledby="editTranSouReqModal"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content"> 
 			<div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
-				<h5 class="modal-title" id="addProductModalTitle">Edit Souvenir Request</h5>
+				<h5 class="modal-title" id="editRequestTitle">Edit Souvenir Request</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -125,66 +125,67 @@
 			
 			<!-- FORM UP-->
 				<form id="editFormSouReq" >
+				<input type="hidden" id="editTransaksiId">
 					<div class="form-group row">
-						<label for="transactionCode" class="col-sm-3 col-form-label">Transaction Code</label>
+						<label for="editTransactionCode" class="col-sm-3 col-form-label">Transaction Code</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="header.code" id="transactionCode"
-								placeholder="Transaction Code" readonly>
+							<input type="text" class="form-control" name="header.code" id="editTransactionCode"
+								placeholder="Transaction Code" disabled>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="eventCode" class="col-sm-3 col-form-label">Event Code</label>
+						<label for="editEventCode" class="col-sm-3 col-form-label">Event Code</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="code" id="eventCode"
-								readonly >
+							<input type="text" class="form-control" name="code" id="editEventCode"
+								disabled >
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="requestTransSBy" class="col-sm-3 col-form-label">Request By</label>
+						<label for="editRequestBy" class="col-sm-3 col-form-label">Request By</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="requestBy" id="requestTransSBy"
-							 readonly>
+							<input type="text" class="form-control" name="requestBy" id="editRequestBy"
+							 disabled>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="requestTransSDate" class="col-sm-3 col-form-label">Request Date</label>
+						<label for="editRequestDate" class="col-sm-3 col-form-label">Request Date</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="requestDate" id="requestTransSDate"
-								readonly>
+							<input type="text" class="form-control" name="requestDate" id="editRequestDate"
+								disabled>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label foDueTransSDate" class="col-sm-3 col-form-label">Due Date</label>
+						<label for="editDueDate" class="col-sm-3 col-form-label">Due Date</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="requestDueDate" id="DueTransSDate"
+							<input type="text" class="form-control" name="requestDueDate" id="editDueDate"
 								placeholder="Select Date">
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="noteTransSouReq" class="col-sm-3 col-form-label">Note</label>
+						<label for="editNote" class="col-sm-3 col-form-label">Note</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="\note" id="noteTransSouReq" 
+							<input type="text" class="form-control" name="\note" id="editNote" 
 								placeholder="Type Note">
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="statusTransSouReq" class="col-sm-3 col-form-label">Status</label>
+						<label for="editStatus" class="col-sm-3 col-form-label">Status</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="\note" id="statusTransSouReq" 
-								readonly>
+							<input type="text" class="form-control" name="\note" id="editStatus" 
+								disabled>
 						</div>
 					</div>
 				</form>
 				
-			<!-- BUTTOT ADD -->
+			<!-- ITEMS -->
 			<div class="row" style="float:left; padding-bottom:10px; padding-top:10px">
 				<div class="col">
-					<a class="btn btn-primary" id="btnAddModalTransSouReq" href="#">Add Item</a>
+					<a class="btn btn-primary" id="btnAddItemEdit" href="#">Add Item</a>
 				</div>
 			</div>
 			
 		<!-- TABLE -->
-		<table class="table table-striped table-hover DataTable" id="modalTableSouReqTrans" style="width : 100%">
+		<table class="table table-striped table-hover DataTable" id="modalTableEditItems" style="width : 100%">
 			<thead>
 				<tr>
 					<th>Souvenir Name</th>
@@ -193,14 +194,7 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-			<tr id='items'>
-				<td><input type="text" class="form-control" id="note1" placeholder="Souvenir Name" ></td>
-				<td><input type="number" class="form-control" id="qty1" placeholder="Qty" ></td>
-				<td><input type="text" class="form-control" id="note1" placeholder="Note" ></td>
-				<td><a href="#" id="1" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
-					<a href="#" id="1" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>
-			</tr>
+			<tbody class=tableBodyEdit>
 			</tbody>
 		</table>
 <!-- END TABLE --> 
@@ -208,8 +202,8 @@
 			<!-- FOOTER -->
 			</div>
 			<div class="modal-footer border border-top-0 border-dark">
+				<button type="button" class="btn btn-primary" id="saveUpdateBtnModal">Save Update</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-primary" id="editBtnModal">Save</button>
 			</div>
 		</div>
 	</div>

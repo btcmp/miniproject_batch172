@@ -77,17 +77,17 @@ public class TransaksiSouvenirController {
 	}
 	
 	/*GET BY ID*/
-	@RequestMapping(value="/getbyid/{id}", method=RequestMethod.GET) 
+	@RequestMapping(value="/getsouvenirbyid/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public TransaksiSouvenir getTransaksiSouvenir(@PathVariable("id") int id) {
-		return transaksiSouvenirService.getTransaksiSouvenir(id);
+	public List<TransaksiSouvenirItem> getItemBySouvenirId(@PathVariable("id") int id){
+		return transaksiSouvenirService.getItemBySouvenirId(id);
 	}
 	
 	/*UPDATE*/
-	@RequestMapping(value="/update", method=RequestMethod.POST)
+	@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void updateTransSouvenir(@RequestBody TransaksiSouvenir transaksiSouvenir) {
-		transaksiSouvenirService.updateTransSouvenir(transaksiSouvenir);
+	public void updateTransSouvenir(@RequestBody TransaksiSouvenir transaksiSouvenir, @PathVariable("id") int id) {
+		transaksiSouvenirService.updateTransSouvenir(transaksiSouvenir, id);
 	}
 	
 	/*DELETE*/

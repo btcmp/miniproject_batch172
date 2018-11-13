@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -13,6 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.marcomm.model.TransaksiEvent;
 import com.marcomm.model.TransaksiSouvenir;
 
 @Repository
@@ -40,20 +43,7 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 		return listTranSou;
 		
 	}
-	
-	/*GET BY ID*/
-	public TransaksiSouvenir getTransaksiSouvenir(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		TransaksiSouvenir transaksiSouvenir = session.get(TransaksiSouvenir.class, id);
-		return transaksiSouvenir;
-	}
-
-	/*UPDATE*/
-	public void updateTransSouvenir(TransaksiSouvenir tRS) {
-		Session session = sessionFactory.getCurrentSession();
-		session.update(tRS);
 		
-	}
 	/*DELETE*/
 	public void deleteTransSouvenir(TransaksiSouvenir transaksiSouvenir) {
 		Session session = sessionFactory.getCurrentSession();
@@ -96,6 +86,31 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 		return transaksiSouvenirs;
 	}
 
+	/*GET BY ID*/
+	public TransaksiSouvenir getById(int id) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(TransaksiSouvenir.class, id);
+	}
+
+	/*UPDATE*/
+	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir2) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(transaksiSouvenir2);
 		
+	}
+
+	/*astya tambah*/
+	//get EVENTS avaliable for request
+	@SuppressWarnings("unchecked")
+	public List<TransaksiEvent> getEvents(List<Integer> eventId){
+		Session session= sessionFactory.getCurrentSession();
+		String hql = "select te from TransaksiEvent te where te.id not in (:eventId)";
+		Query qr = session.createQuery(hql);
+		qr.setParameterList("eventId", eventId);
+		List<TransaksiEvent> transaksiEvents= qr.list();
+		return transaksiEvents;
+		
+	}
+	/*astya end*/
 	
 }

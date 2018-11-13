@@ -68,19 +68,9 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 	}
 
 	public void update(MasterMenuAccess menu) {
-		// TODO Auto-generated method stub
-		Date now=new Date();
-		menu.setCreatedDate(now);
-		menu.setUpdatedDate(now);
-		menu.setDelete(false);
-		menu.setCreatedBy("admin");
-		menu.setUpdatedBy("admin");
-		/*menu.setmRoleId(getCode());*/
+		// update	
 		Session session=sessionFactory.getCurrentSession();
-		String hql="delete from MasterRole where code= :code";
-		Query query=session.createQuery(hql);
-		query.setParameter("code", menu);
-		session.update(menu);		
+		session.update(menu);
 	}
 
 	public void delete(MasterMenuAccess menuAccess) {
@@ -126,4 +116,22 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 		List<MasterMenu> menus=query.list();
 		return menus;
 	}
+
+	public List<MasterMenuAccess> getAccessDelete(MasterRole role) {
+	 Session session=sessionFactory.getCurrentSession();
+	 Criteria cr=session.createCriteria(MasterMenuAccess.class);
+	 cr.add(Restrictions.eq("role", role));
+		return null;
+	}
+
+	public List<MasterRole> getRoleByMenuAcces(MasterMenuAccess access) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		String hql="select role from MasterRole role join role.access access where access= :theAccess";
+		Query query = session.createQuery(hql);
+		query.setParameter("theAccess", access);
+		List<MasterRole> role=query.list();
+		return null;
+	}
+
 }

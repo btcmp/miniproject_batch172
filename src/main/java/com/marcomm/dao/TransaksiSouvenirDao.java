@@ -2,18 +2,12 @@ package com.marcomm.dao;
 
 import java.util.List;
 
+import com.marcomm.model.TransaksiEvent;
 import com.marcomm.model.TransaksiSouvenir;
 
 public interface TransaksiSouvenirDao {	
 
 	
-	
-	
-	/*GET BY ID*/
-	public TransaksiSouvenir getTransaksiSouvenir(int id);
-
-	/*UPDATE*/
-	public void updateTransSouvenir(TransaksiSouvenir tRS);
 
 	/*DELETE*/
 	public void deleteTransSouvenir(TransaksiSouvenir transaksiSouvenir);
@@ -32,8 +26,17 @@ public interface TransaksiSouvenirDao {
 	
 	/*GET ALL SOUVENIRS*/
 	public List<TransaksiSouvenir> getAll();
+	
+	/*GET BY ID FOR SOUVENIR*/
+	public TransaksiSouvenir getById(int id);
+	
+	/*UPATE*/
+	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir2);
 
 	
 	
-	
+	/*astya tambah*/
+	//get EVENTS avaliable for request
+	public List<TransaksiEvent> getEvents(List<Integer> eventId);
+	/*astya end*/
 }

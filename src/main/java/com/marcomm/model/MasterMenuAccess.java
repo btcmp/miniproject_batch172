@@ -1,9 +1,11 @@
 package com.marcomm.model;
 
+import java.nio.MappedByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,7 +44,7 @@ public class MasterMenuAccess {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
 	private Date updatedDate;
-	@ManyToMany
+	@ManyToMany( cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name="M_Menu_M_Menu_Access",
 	joinColumns= {@JoinColumn(name="menu_access")},
 	inverseJoinColumns= {@JoinColumn(name="menu_id")}
@@ -56,6 +58,21 @@ public class MasterMenuAccess {
 	public MasterMenuAccess() {
 		
 	}
+	/*public void addMenu(MasterMenu menu) {
+		menus.add(menu);
+		menu.getAccess().add(this);
+	}
+	public void removeMenu(MasterMenu menu) {
+		menus.remove(menu);
+		menu.getAccess().remove(this);
+		
+	}
+	public void removeAll() {
+		for(MasterMenu menu : menus) {
+			removeMenu(menu);
+		}
+		
+	}*/
 
 	public int getId() {
 		return id;

@@ -45,6 +45,8 @@ public class TransaksiDesignController {
 	TransaksiDesignService transaksiDesignService;
 	@Autowired
 	MasterUserService masterUserService;
+	@Autowired
+	MasterEmployeeService employeeService;
 	
 	ServletContext servletContext;
 	@RequestMapping
@@ -53,9 +55,13 @@ public class TransaksiDesignController {
 		List<MasterProduct> products = masterProductService.getAll();
 		List<TransaksiEvent> events = eventService.getAllService();
 		List<MasterUser> pic = masterUserService.getAll();
+		List<MasterEmployee> employees = employeeService.getAllEmployeeStaff();
+		MasterUser userLog = masterUserService.getUserLog();
 		modelAndView.addObject("events", events);
 		modelAndView.addObject("products", products);
 		modelAndView.addObject("requestPics",pic );
+		modelAndView.addObject("employeesStaff", employees);
+		modelAndView.addObject("userLog",userLog);
 		return modelAndView;
 	}
 	
@@ -130,4 +136,19 @@ public class TransaksiDesignController {
 		} catch (Exception e) {
 		}
 	}
+	
+	
+//	KOLOM ANGGI
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void update(@RequestBody TransaksiDesign transaksiDesign) {
+	transaksiDesignService.update(transaksiDesign);
+	} 
+	@RequestMapping(value="/approved",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void approve(@RequestBody TransaksiDesign transaksiDesign) {
+		transaksiDesignService.approved(transaksiDesign);
+	}
+	
+	
 }

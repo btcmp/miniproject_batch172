@@ -82,4 +82,11 @@ public class MasterMenuAccessController {
 		
 		return accessService.getMenuAccess(id);
 	}
+	@RequestMapping(value="/getmenurole/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public MasterMenuAccess getMenuRole(@PathVariable int id) {
+		return accessService.getMenuRole(id);
+		
+	}
+	
 }

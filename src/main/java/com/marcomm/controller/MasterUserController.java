@@ -41,6 +41,7 @@ public class MasterUserController {
 		 List<MasterEmployee> employeesNoUse= employeeService.getEmployeesNotInUser();
 		List<MasterEmployee> allEmployee= employeeService.getAllEmployee();
 		List<MasterCompany> allCompany= companyService.getAllService();
+		
 		model.addAttribute("compenies", allCompany);
 		model.addAttribute("roles", roles); 
 		model.addAttribute("employees", employeesNoUse); 
@@ -54,7 +55,6 @@ public class MasterUserController {
 	public void save(@RequestBody MasterUser masterUser) {
 		userService.save(masterUser);
 	}
-	
 	
 	
 	@RequestMapping(value="/getall",method=RequestMethod.GET)

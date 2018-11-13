@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html> 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SOUVENIR</title>
@@ -11,12 +11,14 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <!-- css data tables -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+
 <!-- css date picker -->
 <link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" /> 
 <!-- css icon -->
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
 <!-- dropdown -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
@@ -107,117 +109,13 @@
 			</tbody>
 		</table>
 	</div>
-<!-- MODAL  ADD-->
-		<div class="modal fade" id="add-souvenir-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLongTitle">Add Souvenir</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <form id="addForm" novalidate>
-		      <div class="modal-body">
-		        <input type="hidden" id="AddButton"/>
-		        <div class="form-row">
-				    <div class="col">
-				    	<label for="souvenircode">Souvenir Code</label>
- 						<input type="text" id="souvenircode" class="form-control" readonly="readonly">
- 				</div>
- 				<div class="col">
-			    <label for="add-unit">Unit</label><br/>
-			    	<select path="unit.id" style="width: 100%;" name="unit" id="add-unit">
-		      		  	<option value="" selected>Choose...</option>
-		      		  	<c:forEach var="unit" items="${units}">
-		      		  	<option value="${unit.id}">${unit.name}</option>
-		      		  	</c:forEach>
-		      		</select>
-			  </div>
-			  </div>
-				<div class="form-row" style="margin-top: 10px">
-				    <div class="col">
-				    	<label for="souvenirname">Souvenir Name</label>
-				      	<input type="text" id="souvenirname" class="form-control" placeholder="Type name" 
-				      	required data-parsley-namecheck data-parsley-namecheck-message="Nama produk sudah ada" 
-				      	data-parsley-maxlength="50" data-parsley-maxlength-message="Karakter harus kurang dari 50" 
-				      	data-parsley-required-message="Harap masukkan nama produk">
- 						</div>
-				    <div class="col">
-				    	<label for="souvenirdescription">Description</label>
-				      <input type="text" id="souvenirdescription" class="form-control" placeholder="Type description">
-				    </div>
-				</div>
-		      </div>
-		      <div class="modal-footer">
-		     	<button type="button" class="btn btn-primary" id="btn-add-sv">Save</button>
-		        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-		      </div>
-		      </form>
-		    </div>
-		  </div>
-		</div> <!-- End MODAL ADD-- -->
-
-<!-- MODAL  -->
-		<div class="modal fade" id="edit-souvenir-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLongTitle">Edit Souvenir</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <form id="editForm" novalidate>
-		      <div class="modal-body">
-		        <input type="hidden" id="AddButton"/>
-		        <input type="hidden" id="editsvnrid"/>
-		        <input type="hidden" id="editsvnrquantity"/>
-		        <input type="hidden" id="editsvnrcreaatedby"/>
-		        <input type="hidden" id="editsvnrcreateddate"/>
-		        <div class="form-row">
-				    <div class="col">
-				    	<label for="editsvnrcode">Souvenir Code</label>
- 						<input type="text" id="editsvnrcode" class="form-control" readonly="readonly">
- 						</div>
-				    <div class="col">
-				    	<label for="edit-souvenir">Unit</label><br/>
-			    		<select path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir">
-		      		  	<option value="" selected>Choose...</option>
-		      		  	<c:forEach var="unit" items="${units}">
-		      		  	<option value="${unit.id}">${unit.name}</option>
-		      		  	</c:forEach>
-		      		</select>
-				    </div>
-				</div>
-				<div class="form-row" style="margin-top: 10px">
-				    <div class="col">
-				    	<label for="editsvnrname">Souvenir Name</label>
-				      	<input type="text" id="editsvnrname" class="form-control" placeholder="Type name" required 
-				      	data-parsley-namecheck data-parsley-namecheck-message="Nama Souvenir sudah ada" 
-				      	data-parsley-maxlength="50" data-parsley-maxlength-message="Karakter harus kurang dari 50" 
-				      	data-parsley-required-message="Harap masukkan nama Souvenir">
- 						</div>
-				    <div class="col">
-				    	<label for="editsvnrdescription">Description</label>
-				      <input type="text" id="editsvnrdescription" class="form-control" placeholder="Type description">
-				    </div>
-				</div>
-		      </div>
-		      <div class="modal-footer">
-		     	<button type="button" class="btn btn-primary" id="btn-edit-sv">Save Update</button>
-		        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-		      </div>
-		      </form>
-		    </div>
-		  </div>
-		</div> <!-- End MODAL edit -- -->
 
 
 <!-- include file -->
 <%@include file="/WEB-INF/pages/modal/add-souvenir.html"%>
 <%@include file="/WEB-INF/pages/modal/souvenir-view.html"%>
 
+</body>
 
 <!-- jquery link -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -228,21 +126,25 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
 <!--  Notifications Plugin    -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap-notify.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.8.0/parsley.min.js"></script>
 <!--  PerfectScrollbar Library -->
 <script src="${pageContext.request.contextPath}/resources/assets/js/perfect-scrollbar.jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.js"></script>
+<script src="https://cdnjs.cloudfare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script> --%>
 	<script type="text/javascript">
 	
 	$(document).ready(function(){
 		//datepicker
 		$('#data4').datepicker({
-			format:('yyyy-mm-dd')
+			format:('yyyy-mm-dd'),
+			autoclose:true,
+			uiLibrary: 'bootstrap4'
 		});
 		
-		
+	//load list souvenir
 	loadData();
 	
 	//search
@@ -255,10 +157,34 @@
 			oTable
             .column( $('#data'+ i).data('index') )
             .search( $('#data'+ i).val() )
-            .draw();			
+            .draw();
+			$('#data'+i).val("");
 		}
 		
     } );	
+	
+	//validasi
+	Parsley.addValidator('namecheck',{
+    	validateString: function(value){
+	    	var namesplitcek = value.split(" ");
+	    	splitcek = namesplitcek[0];
+	    	 xhr= $.ajax({
+	    			url : '${pageContext.request.contextPath}/souvenir/getbyname/'+splitcek,
+	    			dataType : 'json',
+	    			type : 'GET'
+	    		});
+	    	 return xhr.then(function(data){
+	    		 if($('#editsvnrname').val()==$('#editsvnrnameCheck').val()){
+	    			 $('#editsvnrnameCheck').val(0)
+	    		 	 return true
+	    	   	 }else if(data.length==0){
+	    			 return true 
+	    		 }else{
+	    			 return $.Deferred().reject()
+	    		 }
+	    	 });
+    	}
+    	});
 	
 	//-- BUTTON POP UP ADD -->
 		$('#btn-add-souvenir').on('click', function(){
@@ -271,51 +197,56 @@
 				},
 				dataType: 'json'
 			});
+			$('#addForm').parsley().reset();
+  			$('#souvenircode').val("");
+  			$('#souvenirname').val("");
+  			$('#add-unit').val("");
+  			$('#souvenirdescription').val("");
 			$('#add-souvenir-modal').modal();
+			
 		});
-	});
 	
 	//SAVE and validasi
 	$('#btn-add-sv').on('click',function(ev){
 		//Fetch form to apply custom Bootstrap validation
- 		ev.preventDefault();
+ 		//ev.preventDefault();
  	    var validate = $('#addForm').parsley();
- 	    if (validate.validate()){
- 	    	var souvenir= {
- 	   			code:$('#souvenircode').val(),
- 	   			name:$('#souvenirname').val(),
- 	   			masterUnit : {
-					id :$('#add-unit').val()
-				},
- 	   			//mUnitId:$('#unit').val(),
- 	   			description:$('#souvenirdescription').val()
- 	   		}
- 	   		console.log(souvenir);
- 	   		$.ajax({
- 	   			url:'${pageContext.request.contextPath}/souvenir/save',
- 	   			type: 'POST',
- 	   			contentType: 'application/json',
- 	   			data : JSON.stringify(souvenir),
- 	   			beforeSend: function () {
- 	   				console.log('before sending data');
- 	   			},
- 	   			success: function (data) {
- 	   				console.log('data saved successfully')
- 	   				loadData();
- 	   				$('#souvenircode').val('');
- 	   				$('#souvenirname').val('');
- 	   				$('#add-unit').val('');
- 	   				$('#souvenirdescription').val('');
- 	   				$('#add-souvenir-modal').modal('hide');
- 	   			},
- 	   			error : function () {
- 	   				console.log('failed to save data')
- 	   			}
- 	   		});
- 	    }
-		
-		
+ 	    validate.validate();
 	});
+ 	   $('#addForm').parsley().on('form:success', function() {
+ 		  var souvenir= {
+ 	 	   			code:$('#souvenircode').val(),
+ 	 	   			name:$('#souvenirname').val(),
+ 	 	   			masterUnit : {
+ 						id :$('#add-unit').val()
+ 					},
+ 	 	   			//mUnitId:$('#unit').val(),
+ 	 	   			description:$('#souvenirdescription').val()
+ 	 	   		}
+ 	 	   		console.log(souvenir);
+ 	 	   		$.ajax({
+ 	 	   			url:'${pageContext.request.contextPath}/souvenir/save',
+ 	 	   			type: 'POST',
+ 	 	   			contentType: 'application/json',
+ 	 	   			data : JSON.stringify(souvenir),
+ 	 	   			beforeSend: function () {
+ 	 	   				console.log('before sending data');
+ 	 	   			},
+ 	 	   			success: function (data) {
+ 	 	   				console.log('data saved successfully')
+ 	 	   				loadData();
+ 	 	   				/* $('#addForm').parsley().reset();
+ 	 	   				$('#souvenircode').val("");
+ 	 	   				$('#souvenirname').val("");
+ 	 	   				$('#add-unit').val("");
+ 	 	   				$('#souvenirdescription').val(""); */
+ 	 	   				$('#add-souvenir-modal').modal('hide');
+ 	 	   			},
+ 	 	   			error : function () {
+ 	 	   				console.log('failed to save data')
+ 	 	   			}
+ 	 	   		});
+ 	   });
 	
 	//VIEW POP UP BUTTON
 	$(document).on('click', '.btn-view-souvenir', function(){
@@ -330,9 +261,11 @@
 					$('#souvenirnameview').val(outview.name);
 					$('#souvenirunitview').val(outview.masterUnit.name);
 					$('#souvenirdescriptionview').val(outview.description);
+					document.getElementById("viewTitle").innerHTML = "View Souvenir - "+outview.name+" ("+outview.code+") ";
 				},
 				dataType: 'json'
 			});
+			 
 			 $('#view-souvenir-modal').modal();
 		});
 	
@@ -349,11 +282,13 @@
 					$('#editsvnrid').val(outedit.id);
 					$('#editsvnrcode').val(outedit.code);
 					$('#editsvnrname').val(outedit.name);
+					$('#editsvnrnameCheck').val(outedit.name);
 					$('#edit-souvenir').val(outedit.masterUnit.id);
 					$('#editsvnrdescription').val(outedit.description);
 					$('#editsvnrquantity').val(outedit.quantity);
 					$('#editsvnrcreaatedby').val(outedit.createdBy);
 					$('#editsvnrcreateddate').val(outedit.createdDate);
+					document.getElementById("editTitle").innerHTML = "Edit Souvenir - "+outedit.name+" ("+outedit.code+") ";
 				},
 				dataType: 'json'
 			});
@@ -362,8 +297,10 @@
 	//ngesave EDIT
 	 $('#btn-edit-sv').on('click',function(){
 		var validate = $('#editForm').parsley();
-	 	if (validate.validate()){
-	 		var svnr= {
+		validate.validate();
+	 });
+	 $('#editForm').parsley().on('form:success',function(){
+		 var svnr= {
 	 				id:parseInt($('#editsvnrid').val()),
 	 				code:$('#editsvnrcode').val(),
 	 				name:$('#editsvnrname').val(),
@@ -395,11 +332,8 @@
 					console.log('error')
 				}
 			});
-			
-	 	}
-		
-		
-	});
+	 });
+	 	
  	//DElETE button
  	$(document).on('click', '.btn-delete-souvenir', function(){
 			var id =$(this).attr('id');
@@ -493,41 +427,10 @@
 			tRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-delete-souvenir"><span class="oi oi-trash"></span></a>';
 			oTable.row.add([index, mastersouvenir.code, mastersouvenir.name, mastersouvenir.masterUnit.name,
 				 mastersouvenir.createdDate, mastersouvenir.createdBy, tRow]);
-				 //mastersouvenir.unit,
-			//console.log(index, mastersouvenir);
-			/* var tableRow ="<tr>";
-				tableRow += "<td>";
-					tableRow += index;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.code;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.name;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.unit;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.createdDate;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += mastersouvenir.createdBy;
-				tableRow += "</td>";
-				tableRow += "<td>";
-					tableRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-view-souvenir">view</a>';
-					tableRow += " ";
-					tableRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-edit-souvenir">edit</a>';
-					tableRow += " ";
-					tableRow += '<a id="'+mastersouvenir.id+'" href="#" class="btn btn-warning btn-delete-souvenir">delete</a>';
-				tableRow += "</td>";
-			tableRow += "</tr>";
-		tBody.append(tableRow); */
 		});
 		oTable.draw();
 	};
-
+});
 	</script>
 	
-</body>
 </html>

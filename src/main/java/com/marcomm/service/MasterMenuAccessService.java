@@ -40,13 +40,14 @@ public class MasterMenuAccessService {
 	}
 
 	public void update(int id, MasterMenuAccess menuAccess) {
-		// TODO Auto-generated method stub
-		MasterMenuAccess menu=accessDao.getId(id);
-	/*	menu.setmRoleId(menuAccess.getmRoleId());*/
-		/*menu.setmMenuId(menuAccess.getmMenuId());*/
-		/*menu.setCreatedBy(menuAccess.getCreatedBy());
-		menu.setUpdatedBy(menuAccess.getUpdatedBy());*/
-		accessDao.update(menu);
+		MasterMenuAccess menuAccess2=accessDao.getId(id);
+		/*menuAccess2.setId(menuAccess.getId());
+		menuAccess.setId(menuAccess2.getId());*/
+		/*menuAccess2.removeAll();*/
+		menuAccess2.setRole(menuAccess.getRole());
+		menuAccess2.setMenus(menuAccess.getMenus());
+		/*accessDao.delete(menuAccess2);*/
+		accessDao.update(menuAccess2);
 		
 	}
 
@@ -71,6 +72,14 @@ public class MasterMenuAccessService {
 		List<MasterMenu> menus=accessDao.getMenuByMenuAccessId(access);
 		access.setMenus(menus);
 		return access; 
+	}
+
+	public MasterMenuAccess getMenuRole(int id) {
+		// ngambil role buat dashboard
+		MasterMenuAccess access=accessDao.getId(id);
+		List<MasterRole> role=accessDao.getRoleByMenuAcces(access);
+		/*access.setRole(role);*/
+		return null;
 	}
 
 }

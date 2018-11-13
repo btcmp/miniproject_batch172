@@ -33,7 +33,31 @@ public class MasterEmployee {
 	@ManyToOne
 	@JoinColumn(name="company_id")
 	private MasterCompany company;
+
+	//relasi ke souvenir mamad
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdBy")
+	private List<TransaksiSouvenir> createdByTransaksiSouvneir;
+	
+
+	public List<TransaksiSouvenir> getCreatedByTransaksiSouvneir() {
+		return createdByTransaksiSouvneir;
+	}
+
+	public void setCreatedByTransaksiSouvneir(List<TransaksiSouvenir> createdByTransaksiSouvneir) {
+		this.createdByTransaksiSouvneir = createdByTransaksiSouvneir;
+	}
+	
+	
+	//end relasi mamad
+	
+	
+
 	//relasi ke design table buat diaz
+
+
+	
+
+
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="assignTo")
 	private List<TransaksiDesign> assignToDesign;
 	
@@ -57,6 +81,19 @@ public class MasterEmployee {
 	public List<TransaksiDesign> getAssignToDesign() {
 		return assignToDesign;
 	}
+	
+	//KOLOM NAMBAH DARI EVENT
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="assignTo")
+	private List<TransaksiEvent> assigntoEvent;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="requestBy")
+	private List<TransaksiEvent> requestbyEvent;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="approvedBy")
+	private List<TransaksiEvent> approvedbyEvent;
+	//AKHIR KOLOM TAMBAHAN EVENT
+	
+	
 
 	public void setAssignToDesign(List<TransaksiDesign> assignToDesign) {
 		this.assignToDesign = assignToDesign;
@@ -77,7 +114,7 @@ public class MasterEmployee {
 	public void setApprovedByDesign(List<TransaksiDesign> approvedByDesign) {
 		this.approvedByDesign = approvedByDesign;
 	}
-	//end of relasi buat diaz kalau sudah gak konflik dihapus aja komen ini
+
 	public int getId() {
 		return id;
 	}
@@ -109,4 +146,30 @@ public class MasterEmployee {
 	public void setCompany(MasterCompany company) {
 		this.company = company;
 	}
+	
+	//KOLOM NAMBAH DARI EVENT
+	public List<TransaksiEvent> getAssigntoEvent() {
+		return assigntoEvent;
+	}
+
+	public void setAssigntoEvent(List<TransaksiEvent> assigntoEvent) {
+		this.assigntoEvent = assigntoEvent;
+	}
+
+	public List<TransaksiEvent> getRequestbyEvent() {
+		return requestbyEvent;
+	}
+
+	public void setRequestbyEvent(List<TransaksiEvent> requestbyEvent) {
+		this.requestbyEvent = requestbyEvent;
+	}
+	
+	public List<TransaksiEvent> getApprovedbyEvent() {
+		return approvedbyEvent;
+	}
+
+	public void setApprovedbyEvent(List<TransaksiEvent> approvedbyEvent) {
+		this.approvedbyEvent = approvedbyEvent;
+	}
+	//AKHIR KOLOM TAMBAHAN EVENT
 }

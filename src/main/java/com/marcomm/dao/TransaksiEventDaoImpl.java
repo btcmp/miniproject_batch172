@@ -12,7 +12,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.TransaksiEvent;
+import com.marcomm.service.FungsiService;
 
 @Repository
 public class TransaksiEventDaoImpl implements TransaksiEventDao {
@@ -21,15 +23,10 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 	SessionFactory sessionFactory;
 
 	public void save(TransaksiEvent event) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 		event.setIsDelete(false);
-		
-		event.setCreatedBy("Sahid Triambudhi");
-		event.setRequestBy(1);
 		event.setStatus(1);
-		
 		Date now = new Date();
-		event.setRequestDate(now);
 		event.setCreatedDate(now);
 		
 		Session session = sessionFactory.getCurrentSession();
@@ -79,14 +76,9 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
 		
-		event.setCreatedBy("Sahid Triambudhi");
-		event.setRequestBy(1);
-		event.setStatus(1);
-		
 		Date now = new Date();
-		event.setRequestDate(now);
-		event.setCreatedDate(now);
-
+		event.setUpdatedDate(now);
+		
 		Session session = sessionFactory.getCurrentSession();
 		session.update(event);
 	}
@@ -97,7 +89,7 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		event = getEventById(id);
 		event.setStatus(3);
 		Date now = new Date();
-		event.setUpdatedDate(now);
+		event.setCloseDate(now);
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.update(event);
@@ -106,13 +98,10 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 	public void accept(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
-		
-		event.setCreatedBy("Sahid Triambudhi");
-		event.setRequestBy(1);
 		event.setStatus(2);
 		
 		Date now = new Date();
-		event.setUpdatedDate(now);
+		event.setApprovedDate(now);
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.update(event);
@@ -123,7 +112,6 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		event.setIsDelete(false);
 		
 		event.setCreatedBy("Sahid Triambudhi");
-		event.setRequestBy(1);
 		event.setStatus(0);
 		
 		Date now = new Date();
@@ -131,6 +119,19 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.update(event);
+	}
+
+	public List<MasterEmployee> getAllEmployee() {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		List<MasterEmployee> allEmployee = session.createCriteria(MasterEmployee.class).list();
+		return allEmployee;
+	}
+
+	public String getUser() {
+		// TODO Auto-generated method stub
+		String user = FungsiService.getUserLog();
+		return user;
 	}
 
 }

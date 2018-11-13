@@ -4,14 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="t_design_item")
@@ -68,9 +72,9 @@ public class TransaksiDesignItem {
 	@JoinColumn(name = "m_product_id")
 	private MasterProduct masterProduct;
 	
-	/*@OneToOne(fetch=FetchType.LAZY,mappedBy="tDesignItemId")
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="tDesignItemId")
 	@JsonBackReference
-	private TransaksiDesignItemFile transaksiDesignItemFile;*/
+	private DesignItemFile designItemFile;
 
 	public TransaksiDesignItem() {
 	}
@@ -185,6 +189,14 @@ public class TransaksiDesignItem {
 
 	public void setMasterProduct(MasterProduct masterProduct) {
 		this.masterProduct = masterProduct;
+	}
+
+	public DesignItemFile getDesignItemFile() {
+		return designItemFile;
+	}
+
+	public void setDesignItemFile(DesignItemFile designItemFile) {
+		this.designItemFile = designItemFile;
 	}
 
 	

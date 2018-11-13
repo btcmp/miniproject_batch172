@@ -45,8 +45,7 @@ public class InitDBMarcom {
 		MasterRole role1=new MasterRole();
 		MasterRole role2=new MasterRole();
 		MasterRole role3=new MasterRole();
-		role1.setId(1);
-		role1.setRoleName("ROLE_ADMIN");
+		role1.setId(1); 
 		role1.setCode("RO0001");
 		role1.setRoleName("Administrator"); 
 		initDBService.saveRole(role1);
@@ -61,30 +60,81 @@ public class InitDBMarcom {
 		MasterMenu masterMenu1= new MasterMenu();
 		MasterMenu masterMenu2= new MasterMenu();
 		MasterMenu masterMenu3= new MasterMenu();
+		MasterMenu masterMenu4= new MasterMenu();
+		MasterMenu masterMenu5= new MasterMenu();
+		MasterMenu masterMenu6= new MasterMenu();
+		MasterMenu masterMenu7= new MasterMenu();
+		MasterMenu masterMenu8= new MasterMenu();
+		MasterMenu masterMenu9= new MasterMenu();
 		
 		masterMenu1.setCode("ME0001");
-		masterMenu1.setName("Menu Product");
+		masterMenu1.setName("Master Product");
 		masterMenu1.setController("product");
 		masterMenu1.setParentId(1);
 		
 		masterMenu2.setCode("ME0002");
-		masterMenu2.setName("Menu User");
+		masterMenu2.setName("Master User");
 		masterMenu2.setController("user");
 		masterMenu2.setParentId(1);
 		
 		masterMenu3.setCode("ME0003");
-		masterMenu3.setName("Menu Company");
+		masterMenu3.setName("Master Company");
 		masterMenu3.setController("company");
 		masterMenu3.setParentId(1);
+		
+		masterMenu4.setCode("ME0004");
+		masterMenu4.setName("Master Employee");
+		masterMenu4.setController("employee");
+		masterMenu4.setParentId(1);
+		
+		masterMenu5.setCode("ME0005");
+		masterMenu5.setName("Master Souvenir");
+		masterMenu5.setController("souvenir");
+		masterMenu5.setParentId(1);
+		
+		masterMenu6.setCode("ME0006");
+		masterMenu6.setName("Master Unit");
+		masterMenu6.setController("masterunit");
+		masterMenu6.setParentId(1);
+		
+		masterMenu7.setCode("ME0007");
+		masterMenu7.setName("Master Role");
+		masterMenu7.setController("role");
+		masterMenu7.setParentId(1);
+		
+		masterMenu8.setCode("ME0008");
+		masterMenu8.setName("Master Access");
+		masterMenu8.setController("access");
+		masterMenu8.setParentId(1);
+		
+		masterMenu9.setCode("ME0009");
+		masterMenu9.setName("Master Menu");
+		masterMenu9.setController("menu");
+		masterMenu9.setParentId(1);
+		
 		
 		menuService.save(masterMenu1);
 		menuService.save(masterMenu2);
 		menuService.save(masterMenu3);
+		menuService.save(masterMenu4);
+		menuService.save(masterMenu5);
+		menuService.save(masterMenu6);
+		menuService.save(masterMenu7);
+		menuService.save(masterMenu8);
+		menuService.save(masterMenu9);
 		
 		
 		//menu_acces
 		MasterMenuAccess menuAccess1=new MasterMenuAccess();
-	 
+		
+		List<MasterMenu> menus=new ArrayList<MasterMenu>();
+		menus.add(masterMenu3);
+		menus.add(masterMenu2);
+		menus.add(masterMenu1);
+		menuAccess1.setRole(role1);
+		menuAccess1.setMenus(menus);
+		menuAccessService.save(menuAccess1);
+		
 		
 		
 		//COMPANY
@@ -153,6 +203,7 @@ public class InitDBMarcom {
 		//insert user
 		MasterUser userAdmin = new MasterUser();
 		MasterUser userAdmin2 = new MasterUser();
+		MasterUser userAdmin3 = new MasterUser();
 		userAdmin.setUsername("Administrator"); 
 		userAdmin.setPassword(encodePassword("12345"));
 		userAdmin.setEmployee(employee1);
@@ -161,9 +212,13 @@ public class InitDBMarcom {
 		userAdmin2.setPassword(encodePassword("Abc123"));
 		userAdmin2.setEmployee(employee2);
 		userAdmin2.setmRole(role1);
+		userAdmin3.setUsername("MamadHAHA"); 
+		userAdmin3.setPassword(encodePassword("12345"));
+		userAdmin3.setEmployee(employee3);
+		userAdmin3.setmRole(role2);
 		userService.save(userAdmin);
 		userService.save(userAdmin2);
-		
+		userService.save(userAdmin3);
 		 
 		
 	

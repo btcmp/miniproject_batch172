@@ -10,6 +10,8 @@
 			</div>
 			<form id="editFormDesign">
 			<input type="hidden" id="designEditId">
+			
+			 
 				<div
 					class="modal-body border border-bottom-0 border-top-0 border-dark">
 					<div class="bg-light border rounded" style="height: 50%;">
@@ -105,7 +107,7 @@
 				</div>
 				<div class="modal-footer border border-top-0 border-dark">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="addBtnModal">Save Transaction</button>
+				<button type="button" class="btn btn-primary" id="saveBtnModalEdit">Save Transaction</button>
 			</div>
 			</form>
      </div>
