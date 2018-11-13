@@ -179,6 +179,8 @@ public class SouvenirRequestService {
 		
 		if(souvenir.getStatus()==2) {
 			souvenir1.setStatus(souvenir.getStatus());
+		}else if(souvenir.getStatus()==3){
+			souvenir1.setStatus(souvenir.getStatus());
 		}else {
 			souvenir1.setStatus(souvenir.getStatus());
 			souvenir1.setRejectReason(souvenir.getRejectReason());

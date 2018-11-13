@@ -500,7 +500,7 @@ $(document).ready(function(){
 		};
 		
 		/* Button Pop Up Approvel (REZA)*/
-		 $(document).on('click', '.btn-view-transaksiR', function(){
+		/*  $(document).on('click', '.btn-view-transaksiR', function(){
 		var id =$(this).attr('id');
 		$.ajax({
 			url : '${pageContext.request.contextPath}/souvenirrequest/getitemsbyid/'+id,
@@ -525,12 +525,12 @@ $(document).ready(function(){
 			}
 		});
 		$('#approveTranSouReqModal').modal();
-		});
+		}); */
 		
 		/* Button approve */
-		$(document).on('click','#approveBtnModal',function(){
+		/* $(document).on('click','#approveBtnModal',function(){ */
 			/* var id =$(this).attr('id'); */
-			var idTras = parseInt($('#approveTransaksiId').val());
+			/* var idTras = parseInt($('#approveTransaksiId').val());
 			var tsr={
 					status : 2
 			}
@@ -549,10 +549,10 @@ $(document).ready(function(){
 			document.getElementById("notification").innerHTML = "Data Approved! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been aprroved!";
 			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000);
 			
-		});
+		}); */
 		
 		/* Button reject */
-		$(document).on('click','#rejectBtnModal',function(){
+		/* $(document).on('click','#rejectBtnModal',function(){
 			$('#rejectSouvenirModal').modal();
 		});
 		$(document).on('click','#btn-reject-souvenir',function(){
@@ -579,10 +579,10 @@ $(document).ready(function(){
 			document.getElementById("notification").innerHTML = "Data Rejected! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been rejected!";
 			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000);
 			
-		});  
+		});  */ 
 		
 		/* Received by requester */
-		 $(document).on('click', '.btn-view-transaksiR', function(){
+		  $(document).on('click', '.btn-view-transaksiR', function(){
 			var id =$(this).attr('id');
 			$.ajax({
 				url : '${pageContext.request.contextPath}/souvenirrequest/getitemsbyid/'+id,
@@ -607,9 +607,9 @@ $(document).ready(function(){
 				}
 			});
 			$('#receivedTranSouReqModal').modal();
-			}); 
-	<!-- save received -->
-		 $(document).on('click','#receiveBtnModal',function(){
+			});  
+	 /* save received */ 
+		  $(document).on('click','#receiveBtnModal',function(){
 			$('#rejectSaveSouvenirModal').modal();
 		});
 		$(document).on('click','#btn-received-save-souvenir',function(){
@@ -634,8 +634,9 @@ $(document).ready(function(){
 			document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been received by requester!";
 			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000 );
 			
-		}); 
-}); /* batas akhir ready function */
+		});
+
+}) /* batas akhir ready function */
 
 </script> 
 
