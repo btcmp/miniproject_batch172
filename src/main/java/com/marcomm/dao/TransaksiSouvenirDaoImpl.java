@@ -90,9 +90,9 @@ public class TransaksiSouvenirDaoImpl implements TransaksiSouvenirDao{
 	}
 
 	/*UPDATE*/
-	public void updateTransSouvenir(TransaksiSouvenir transaksiSouvenir2) {
+	public void updateTransSouvenir(TransaksiSouvenir ts) {
 		Session session = sessionFactory.getCurrentSession();
-		session.update(transaksiSouvenir2);
+		session.update(ts);
 		
 	}
 
