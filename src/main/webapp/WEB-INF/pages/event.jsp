@@ -26,121 +26,138 @@
 </head>
 <body>
 	<div id="container">
-		<!-- HEADER -->
-		<div class="card text-white bg-primary mb-3" style="width: 100%">
-  			<div class="card-header">List Event Request</div>
-		</div>
-		
-		<!-- NAV -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		    <ul class="navbar-nav mr-auto">
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">Home</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled" href="#">/</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">Master</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled" href="#">/</a>
-		      </li>
-		      <li class="nav-item active">
-		        <a class="nav-link" href="#">List Event Request <span class="sr-only">(current)</span></a>
-		      </li>
-		    </ul>
-		  </div>
+	<div class="row">
+	
+		<!-- DASHBOARD -->
+		<nav class="col-md-2 d-none d-md-block bg-primary sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link text-white" href="#">Dashboard </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu" href="#"> Master</a>
+							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" ></ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2" href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" ></ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}"> Logout </a></li>
+					</ul>
+				</div>
 		</nav>
 		
-
-			<div class="form-row" style="padding-left:25px; padding-top:10px">
-				<p id="user-login" id="username" class="text-primary">Selamat Datang User!</p>
-				<form action="${logoutUrl}" method="post" id="logoutForm" style="width: 100%; padding: 5px">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<input style="float: right; width: 100px;" class="btn btn-warning" type="submit" value="logout" />
-				</form>
+		<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
+			<!-- HEADER -->
+			<div class="card text-white bg-primary mb-3" style="width: 100%">
+	  			<div class="card-header">List Event Request</div>
 			</div>
-		
-		
-		<!-- BUTTON ADD DAN NOTIFICATION -->
-		<div class="form-row" style="float:right; padding:5px;">
-			<a class="btn btn-primary" id="btn-add" href="#" style="width:100px;">Add</a>
-		</div>
-		<div class="form-row" style="float:left; padding:10px;">
-			<a id="notification" class="text-white bg-info border rounded"></a>
-			<a id="notification2" class="text-white bg-danger border rounded"></a>
-		</div>
-		
-		<!-- FORM -->
-		<form>
-		  <div class="form-row" style="width: 100%; margin:auto;">
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Request By" id="data2"data-index="2">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Request Date" id="data3"data-index="3">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Status" id="data4" data-index="4">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Created Date" id="data5" data-index="5">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Created By" id="data6" data-index="6">
-		    </div>
-		     <a class="btn btn-warning" id="btn-search" href="#" style="width:100px;">Search</a>
-		  </div>
-		</form>
-		
-		<!-- TABLE INPUT -->
-		<!-- <table id="inputTable" style="width: 95%; margin: auto">
-		<thead>
-			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><button class="btn btn-primary" id="btn-add" type="submit" style="width:100%;">Add</button></th>
-			</tr>
-			<tr>
-				<th></th>
-				<th><input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1" style="padding-right:10px;width:100%;"></th>
-				<th><input type="text" class="form-control" placeholder="Request By" id="data2"data-index="2" style="padding-right:10px;width:100%;"></th>
-				<th><input type="text" class="form-control" placeholder="Request Date" id="data3" data-index="3" style="padding-right:10px;width:70%;"></th>
-				<th><input type="text" class="form-control" placeholder="Status" id="data4" data-index="4" style="padding-right:10px;width:100%;"></th>
-				<th><input type="text" class="form-control" placeholder="Created Date" id="data5" data-index="5" style="padding-right:10px;width:70%;"></th>
-				<th><input type="text" class="form-control" placeholder="Created By" id="data6" data-index="6" style="padding-right:10px;width:100%;"></th>
-				<th><button class="btn btn-warning" id="btn-search" type="submit" style="width:100%;">Search</button></th>
-			</tr>
-		</thead>
-		</table> -->
-		
-		<!-- TABLE TAMPILAN -->
-		<table class="table table-striped table-hover" id="eventTable" style="width: 100%; margin-top: 5px ">
+			
+			<!-- NAV -->
+			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			    <ul class="navbar-nav mr-auto">
+			      <li class="nav-item">
+			        <a class="nav-link" href="#">Home</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link disabled" href="#">/</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="#">Master</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link disabled" href="#">/</a>
+			      </li>
+			      <li class="nav-item active">
+			        <a class="nav-link" href="#">List Event Request <span class="sr-only">(current)</span></a>
+			      </li>
+			    </ul>
+			  </div>
+			</nav>
+			
+	
+				<div class="form-row" style="padding-left:25px; padding-top:10px">
+					<p id="user-login" id="username" class="text-primary">Selamat Datang User!</p>
+				</div>
+			
+			
+			<!-- BUTTON ADD DAN NOTIFICATION -->
+			<div class="form-row" style="float:right; padding:5px;">
+				<a class="btn btn-primary" id="btn-add" href="#" style="width:100px;">Add</a>
+			</div>
+			<div class="form-row" style="float:left; padding:10px;">
+				<a id="notification" class="text-white bg-info border rounded"></a>
+				<a id="notification2" class="text-white bg-danger border rounded"></a>
+			</div>
+			
+			<!-- FORM -->
+			<form>
+			  <div class="form-row" style="width: 100%; margin:auto;">
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Request By" id="data2"data-index="2">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Request Date" id="data3"data-index="3">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Status" id="data4" data-index="4">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Created Date" id="data5" data-index="5">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Created By" id="data6" data-index="6">
+			    </div>
+			     <a class="btn btn-warning" id="btn-search" href="#" style="width:100px;">Search</a>
+			  </div>
+			</form>
+			
+			<!-- TABLE INPUT -->
+			<!-- <table id="inputTable" style="width: 95%; margin: auto">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th>Transaction Code</th>
-					<th>Request by</th>
-					<th>Request Date</th>
-					<th>Status</th>
-					<th>Created Date</th>
-					<th>Created By</th>
-					<th>Action</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th><button class="btn btn-primary" id="btn-add" type="submit" style="width:100%;">Add</button></th>
+				</tr>
+				<tr>
+					<th></th>
+					<th><input type="text" class="form-control" placeholder="Transaction Code" id="data1" data-index="1" style="padding-right:10px;width:100%;"></th>
+					<th><input type="text" class="form-control" placeholder="Request By" id="data2"data-index="2" style="padding-right:10px;width:100%;"></th>
+					<th><input type="text" class="form-control" placeholder="Request Date" id="data3" data-index="3" style="padding-right:10px;width:70%;"></th>
+					<th><input type="text" class="form-control" placeholder="Status" id="data4" data-index="4" style="padding-right:10px;width:100%;"></th>
+					<th><input type="text" class="form-control" placeholder="Created Date" id="data5" data-index="5" style="padding-right:10px;width:70%;"></th>
+					<th><input type="text" class="form-control" placeholder="Created By" id="data6" data-index="6" style="padding-right:10px;width:100%;"></th>
+					<th><button class="btn btn-warning" id="btn-search" type="submit" style="width:100%;">Search</button></th>
 				</tr>
 			</thead>
-			<tbody>
-			</tbody>
-		</table>
+			</table> -->
+			
+			<!-- TABLE TAMPILAN -->
+			<table class="table table-striped table-hover" id="eventTable" style="width: 100%; margin-top: 5px ">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Transaction Code</th>
+						<th>Request by</th>
+						<th>Request Date</th>
+						<th>Status</th>
+						<th>Created Date</th>
+						<th>Created By</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
 	</div>
 
 	<%@include file="/WEB-INF/pages/modal/event-add.html"%>
@@ -165,6 +182,7 @@
 $(document).ready(function(){
 	loadData();
 	getUser();
+	createMenu()
 
 
 	//DATEPICKER
@@ -238,6 +256,10 @@ $(document).ready(function(){
 	
 	//BUTTON SAVE PADA MODAL ADD UNTUK SAVE DATA
 	$('.btn-add-event').on('click', function(){
+		var validate = $('#addForm').parsley();
+		validate.validate();
+	});
+	$('#addForm').parsley().on('form:success', function(){
 			var event = {
 				code : $('#transactioncode').val(),
 				createdBy : $('#createdby').val(),
@@ -328,25 +350,30 @@ $(document).ready(function(){
 			index++;
 			
 			//CHOOSEN MODAL BASED ON STATUS AND ROLE
-			//NAMED STATUS 
-			var role="${rolename.mRole.roleName}"
+			//NAMED STATUS TO TABLE
+			var role="${rolename.mRole.roleName}";
+			var user="${rolename.employee.employeeName}";
+			var id="${rolename.employee.id}"
 			var modalview = "";
 			var modaledit = "";
 			var status="";
 			if(event.status==1){
 				status="Submitted";
-				modaledit="btn-edit-event";
 				if(role=="Administrator"){
 					modalview = "btn-acceptreject-event";
+					if(event.requestBy.employeeName==user){
+						modaledit="btn-edit-event";
+					}
 				} else{
+					modaledit="btn-edit-event";
 					modalview = "btn-view-event"; 
 				}
 			} else if(event.status==2){
 				status="In Progress";
-				if(role=="Administrator"){
-					modalview = "btn-viewapproved-event";
+				if(event.assignTo.id==id){
+					modalview = "btn-close-event";
 				} else{
-					modalview = "btn-close-event";	
+					modalview = "btn-viewapproved-event";
 				}
 			} else if(event.status==3){
 				status="Done";
@@ -363,6 +390,19 @@ $(document).ready(function(){
 		});
 				oTable.draw();
 	}
+	
+	//NAMED STATUS TO MODAL
+	function statusEvent(status){
+		if(status==1){
+			return "Submitted";
+		}else if(status==2){
+			return "In Progress"
+		}else if(status==3){
+			return "Done"
+		}else{
+			return "Rejected"
+		}
+	  }
 	
 	//BUTTON SEARCH
 	$('#btn-search').on('click', function(){
@@ -393,7 +433,7 @@ $(document).ready(function(){
 				$('#eventstartdateEdit').val(output.startDate);
 				$('#eventenddateEdit').val(output.endDate);
 				$('#budgetEdit').val(output.budget);
-				$('#statusEdit').val(output.status);
+				$('#statusEdit').val(statusEvent(output.status));
 			},
 			dataType: 'json'
 		});
@@ -462,7 +502,7 @@ $(document).ready(function(){
 					$('#eventstartdateView').val(output.startDate);
 					$('#eventenddateView').val(output.endDate);
 					$('#budgetView').val(output.budget);
-					$('#statusView').val(output.status);
+					$('#statusView').val(statusEvent(output.status));
 					},
 					dataType: 'json'
 			});
@@ -500,7 +540,7 @@ $(document).ready(function(){
 					$('#eventstartdateAR').val(output.startDate);
 					$('#eventenddateAR').val(output.endDate);
 					$('#budgetAR').val(output.budget);
-					$('#statusAR').val(output.status);
+					$('#statusAR').val(statusEvent(output.status));
 					$('#assigntoAR').val(output.assignTo);
 					$('#rejectreason').val(output.rejectReason);
 				},
@@ -612,7 +652,7 @@ $(document).ready(function(){
 					$('#eventstartdateVA').val(output.startDate);
 					$('#eventenddateVA').val(output.endDate);
 					$('#budgetVA').val(output.budget);
-					$('#statusVA').val(output.status);
+					$('#statusVA').val(statusEvent(output.status));
 					$('#assigntoVA').val(output.assignTo.employeeName);
 					},
 					dataType: 'json'
@@ -651,7 +691,7 @@ $(document).ready(function(){
 				$('#eventstartdateClose').val(output.startDate);
 				$('#eventenddateClose').val(output.endDate);
 				$('#budgetClose').val(output.budget);
-				$('#statusClose').val(output.status);
+				$('#statusClose').val(statusEvent(output.status));
 				$('#assigntoClose').val(output.assignTo);
 			},
 			dataType: 'json'
@@ -693,6 +733,72 @@ $(document).ready(function(){
 			}
 		});
 		$('#close2EventModal').modal('hide');
+	});
+	
+	//MENU DASHBOARD
+	function createMenu(){
+		var role=null;
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/getrole',
+			type : 'GET',
+			success : function(data){
+				role=data;
+				console.log('Ini adalah role nya');
+				console.log(role);
+				menusRole(role);			    
+			}
+		});
+	 }
+	
+	/* DROPDOWN MENU */
+	function menusRole(role2){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/access/getall',
+			type : 'GET',
+			success : function(data) {
+				var role1=null;
+					role1=role2;
+				console.log(role1);
+				console.log('harus sama');
+				console.log(data[1].role.roleName);
+				$.each(data,function(index,access){
+					 if(access.role.roleName == role1){
+						var idMenu=0;
+						idMenu=access.id;
+						getMenubyRole(idMenu);
+					 }
+				});
+				 
+			},
+			dataType : 'json'
+		});	
+		}
+	
+	function getMenubyRole(idMenu){
+		 $.ajax({
+				url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
+				type : 'GET',
+				success : function(data) {
+					$('#selectMenu').empty();
+					$('#selectMenu2').empty();
+					var tinggi=0;
+					var tinggi2=0;
+					 $.each(data.menus,function(index,menu){
+						if(menu.parentId==1){
+						$('#selectMenu').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+						}else if(menu.parentId==2){
+						$('#selectMenu2').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+						}			 
+					 }); 
+				},
+				dataType : 'json'
+			});
+	}		
+	$('#masterMenu').click(function(){
+		$('#selectMenu').toggle();
+	});
+	$('#masterMenu2').click(function(){
+		$('#selectMenu2').toggle();
 	});
 	
 });

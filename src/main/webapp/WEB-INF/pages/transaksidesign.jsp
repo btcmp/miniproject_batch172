@@ -556,7 +556,9 @@ $(document).ready(function(){
 	  /* UNTUK EDIT */
 	  /* memunculkan Modal edit */ 
 	  $(document).on('click','.btn-update-design-main',function(){
-		  var id = $(this).attr('id');
+		  	var id = $(this).attr('id');
+	  	 	$('#editFormDesign').trigger('reset');
+			$('#editFormDesign').parsley().reset();
 		   
 		  	$.ajax({
 				url : '${pageContext.request.contextPath}/design/getitembydesignid/'+id,
@@ -618,16 +620,24 @@ $(document).ready(function(){
 			var oTable = $('#itemsTableEdit');
 			var tBody = oTable.find('tbody');
 			var tRow =	'<tr id="items-edit-'+Ix+'">';
-			tRow += '<td><select class="custom-select"    id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
-								'<option value="'+data[index2].masterProduct.id+'" selected>'+data[index2].masterProduct.name+'</option>'+
-									'<c:forEach var="product" items="${products}">'+
+			tRow += '<td><select class="custom-select"  value="'+data[index2].masterProduct.id+'"  id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" disabled required data-parsley-required-message="Produk harus dipilih">'+
+								 '<c:forEach var="product" items="${products}">'+
 									'<option value="${product.id}">${product.name}</option>'+
 								'</c:forEach>'+
 							'</select></td>';
 			tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Ix+'" value="'+data[index2].masterProduct.description+'"	  placeholder="description" 	disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		disabled required data-parsley-required-message="Judul item design harus ada"></td>';
+			/* tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic.employeeName+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	disabled required data-parsley-required-message="anda harus menunjuk PIC"></td>';
+			 */
+			tRow += '<td><select id="requestPicEdit'+Ix+'" value="'+data[index2].requestPic.id+'" class="custom-select requestPic" style="width:150px" disabled required data-parsley-required-message="Harus memilih PIC">'+
+			'<c:forEach var="pic" items="${requestPics}">'+
+			'<c:if test="${pic.mRole.id == 3}">'+
+			'<option value="${pic.employee.id}">${pic.employee.employeeName}</option>'+
+			'</c:if>'+
+			'</c:forEach>'+
+			'</select></td>';
+			
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		disabled required data-parsley-required-message="Masukkan Due Date"></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" disabled></td>';
@@ -651,16 +661,27 @@ $(document).ready(function(){
 			  	var oTable = $('#itemsTableEdit');
 			    var tBody = oTable.find('tbody');
 			    var tRow =	'<tr id="items-edit-'+Id+'">';
-				tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+				tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled required data-parsley-required-message="Produk harus dipilih">'+
 								'<option value="" selected>Choose...</option>'+
 									'<c:forEach var="product" items="${products}">'+
 									'<option value="${product.id}">${product.name}</option>'+
 								'</c:forEach>'+
 							'</select></td>';
 				tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Id+'" placeholder="description" disabled></td>';
-				tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled></td>';
-				tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled></td>';
-				tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled required data-parsley-required-message="Judul item design harus ada"></td>';
+				 /* tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled required data-parsley-required-message="anda harus menunjuk PIC"></td>';
+				 */
+				tRow += '<td><select id="requestPicEdit'+Id+'"   class="custom-select requestPic" style="width:150px" disabled required data-parsley-required-message="Harus memilih PIC">'+
+				'<option value="" selected>Pilih PIC</option>'+
+				'<c:forEach var="pic" items="${requestPics}">'+
+				'<c:if test="${pic.mRole.id == 3}">'+
+				'<option value="${pic.employee.id}">${pic.employee.employeeName}</option>'+
+				'</c:if>'+
+				'</c:forEach>'+
+				'</select></td>';
+				
+				
+				tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled required data-parsley-required-message="Masukkan Due Date"></td>';
 				tRow += '<td><input type="text" class="form-control" id="startdateEdit'+Id+'" placeholder="Start Date" disabled></td>';
 				tRow += '<td><input type="text" class="form-control" id="enddateEdit'+Id+'" placeholder="End Date" disabled></td>';
 				tRow += '<td><input type="text" class="form-control" id="noteEdit'+Id+'" placeholder="Note" disabled></td>';
@@ -725,10 +746,22 @@ $(document).ready(function(){
 			$("#startdateEdit"+id).prop('disabled', true);
 			$("#enddateEdit"+id).prop('disabled', true);
 		});
-	  
+	 
 	  
 	  /* SAVE DATA DARI MODAL EDIT */
-	  $(document).on('click','#saveBtnModalEdit',function(){
+	  var parsleyConfigEdit = {
+		    errorsContainer: function(parsleyField) {
+		        return $('#parsleyValidasi');
+		    }
+			};
+	  
+	   $('#saveBtnModalEdit').on('click',function(e){
+		  
+			var validate=$('#editFormDesign').parsley(parsleyConfigEdit);
+			validate.validate();	
+			
+		});
+	   $('#editFormDesign').parsley().on('form:success',function(){
 		   var transaksiDesignItems=[];
 			$('.tableBody tr').each(function(){
 				tRow = $(this).find('td :input');
@@ -737,7 +770,10 @@ $(document).ready(function(){
 							id:tRow.eq(0).val()
 						},
 						titleItem:tRow.eq(2).val(),
-						requestPic:tRow.eq(3).val(),
+						requestPic:{
+							id:tRow.eq(3).val(),
+						},
+						 
 						requestDueDate:tRow.eq(4).val(),
 						startDate:tRow.eq(6).val(),
 						endDate:tRow.eq(8).val(),
@@ -772,8 +808,8 @@ $(document).ready(function(){
 			});	
 			$('#editDesignTransactionModal').modal('hide');	
 			loadData();
-	  });
-	  
+	   });
+	 
 	   
 	  /* APPROVE */
 	  
@@ -877,6 +913,7 @@ $(document).ready(function(){
 				data		:JSON.stringify(transaksiDesign),
 			  	success		:function(data){
 			  		console.log(data);
+			  		loadData();
 			  	}
 		  });
 		  
@@ -903,6 +940,7 @@ $(document).ready(function(){
 					data		:JSON.stringify(transaksiDesign),
 				  	success		:function(data){
 				  		console.log(data);
+				  		loadData();
 				  	}
 			  });
 		  		 $('#rejectDesignModal').modal('hide');

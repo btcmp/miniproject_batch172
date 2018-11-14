@@ -140,7 +140,7 @@
 						    <div class="col-sm-4">
 						    	<select class="custom-select" id="assigntoAR">
 						    		<option value="" selected>Select Employee</option>
-						    			<c:forEach var="assigntoAR" items="${allEmployee}">
+						    			<c:forEach var="assigntoAR" items="${employeeStaff}">
 						    				<option value="${assigntoAR.id}">${assigntoAR.employeeName}</option>
 						    			</c:forEach>
 						    	</select>

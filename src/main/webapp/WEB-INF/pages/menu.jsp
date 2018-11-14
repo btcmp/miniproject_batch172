@@ -26,7 +26,8 @@ input.parsley-error
 </style>
 </head>
 <body>
-	 <div id = "container" style="width : 1000px; margin: auto">
+	 <div class = "container-fluid">
+	 <div class="row">
 	 <!-- DASHBOARD -->
 			<nav class="col-md-2 d-none d-md-block bg-primary sidebar">
 				<div class="sidebar-sticky">
@@ -50,6 +51,7 @@ input.parsley-error
 			</nav><!-- END DASHBOARD --> 
 	
 		<!-- HEADER -->		
+		<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
 		<div class="card text-white bg-primary mb-3" style="width: 100%;">
   			<div class="card-header">List Menu</div>
 		</div>
@@ -114,8 +116,12 @@ input.parsley-error
 			</thead>
 			<tbody>
 			</tbody>
-		</table>
-	</div> 
+		</table> 
+	 </div>
+	
+	
+		</div>
+		</div> 
 	
 	<!-- MODAL SAVE-->
 		 <div class="modal fade" id="addMenuModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -591,14 +597,14 @@ input.parsley-error
 					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
 					var tinggi=0;
 					var tinggi2=0;
-					 $.each(data2.menus,function(index,menu){
+					 $.each(data2.menus,function(index,menu ){
 						 
 						
 						  if(menu.parentId==1){
-							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-white  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
 						 
 						  }else if(menu.parentId==2){
-							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-white  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
 						  }			 
 					 }); 
 				},
