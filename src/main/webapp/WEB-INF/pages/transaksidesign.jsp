@@ -504,6 +504,7 @@ $(document).ready(function(){
 					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
 					status="Done";
 				} else if(design.status==0){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
 					status="Rejected";
 				}
 			}else if(role==="Staff"){
@@ -517,6 +518,7 @@ $(document).ready(function(){
 					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
 					status="Done";
 				} else if(design.status==0){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
 					status="Rejected";
 				}
 				
