@@ -432,10 +432,10 @@ $(document).ready(function(){
 						 
 						
 						  if(menu.parentId==1){
-							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+							$('#selectMenu').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
 						 
 						  }else if(menu.parentId==2){
-							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-black  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+							 $('#selectMenu2').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
 						  }			 
 					 }); 
 				},

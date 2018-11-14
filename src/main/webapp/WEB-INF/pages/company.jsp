@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +11,9 @@
 <link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<c:url value="/j_spring_security_logout" var="logoutUrl" />
+
 <style>
 	input.parsley-error
 		{
@@ -33,99 +37,120 @@
 <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
 	
 	<div id = "container">
-		<!-- HEADER -->		
-		<div class="card text-white bg-primary mb-3" style="width: 100%">
-  			<div class="card-header">List Company</div>
-		</div>
-		
-		<!-- NAV -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		    <ul class="navbar-nav mr-auto">
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">Home</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled" href="#">/</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">Master</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link disabled" href="#">/</a>
-		      </li>
-		      <li class="nav-item active">
-		        <a class="nav-link" href="#">List Company <span class="sr-only">(current)</span></a>
-		      </li>
-		    </ul>
-		  </div>
+	<div class="row">
+	
+		<!-- DASHBOARD -->
+		<nav class="col-md-2 d-none d-md-block bg-primary sidebar">
+				<div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link text-white" href="#">Dashboard </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu" href="#"> Master</a>
+							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" ></ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2" href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" ></ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}"> Logout </a></li>
+					</ul>
+				</div>
 		</nav>
-		
-		<!-- BUTTON ADD DAN NOTIFICATION -->
-		<div class="form-row" style="float:right; padding:5px;">
-			<a class="btn btn-primary" id="btn-add" href="#" style="width:100px;">Add</a>
-		</div>
-		<div class="form-row" style="float:left; padding:10px;">
-			<a id="notification" class="text-white bg-info border rounded"></a>
-		</div>
-		
-		<!-- FORM -->		
-		<form>
-		  <div class="form-row" style="width: 100%; margin:auto;">
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="- Select Company Code -" id="data1" data-index="1">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="- Select Company Name -" id="data2"data-index="2">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="3">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" placeholder="Created By" id="data4" data-index="4">
-		    </div>
-		     <a class="btn btn-warning" id="btn-search" href="#" style="width:100px;">Search</a>
-		  </div>
-		</form>
-		
-		<!-- TABLE INPUT 
-		<table id="inputTable" style="width: 95%; margin: auto">
-		<thead>
-			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th><button class="btn btn-primary" id="btn-add" type="submit" style="width:100%;">Add</button></th>
-			</tr>
-			<tr>
-				<th></th>
-				<th><input type="text" class="form-control" placeholder="- Select Company Code -" id="data1" data-index="1" style="padding-right:10px;width:100%;"></th>
-				<th><input type="text" class="form-control" placeholder="- Select Company Name -" id="data2"data-index="2" style="padding-right:10px;width:100%;"></th>
-				<th><input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="3" style="padding-right:10px;width:70%;"></th>
-				<th><input type="text" class="form-control" placeholder="Created By" id="data4" data-index="4" style="padding-right:10px;width:100%;"></th>
-				<th><button class="btn btn-warning" id="btn-search" type="submit" style="width:100%;">Search</button></th>
-			</tr>
-		</thead>
-		</table>
-		-->
-				
-		<!-- TABLE TAMPILAN -->
-		<table class="table table-striped table-hover" id="companyTable" style="width: 100%">
+			
+		<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
+			<!-- HEADER -->	
+			<div class="card text-white bg-primary mb-3" style="width: 100%">
+	  			<div class="card-header">List Company</div>
+			</div>
+			
+			<!-- NAV -->
+			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			    <ul class="navbar-nav mr-auto">
+			      <li class="nav-item">
+			        <a class="nav-link" href="#">Home</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link disabled" href="#">/</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="#">Master</a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link disabled" href="#">/</a>
+			      </li>
+			      <li class="nav-item active">
+			        <a class="nav-link" href="#">List Company <span class="sr-only">(current)</span></a>
+			      </li>
+			    </ul>
+			  </div>
+			</nav>
+			
+			<!-- BUTTON ADD DAN NOTIFICATION -->
+			<div class="form-row" style="float:right; padding:5px;">
+				<a class="btn btn-primary" id="btn-add" href="#" style="width:100px;">Add</a>
+			</div>
+			<div class="form-row" style="float:left; padding:10px;">
+				<a id="notification" class="text-white bg-info border rounded"></a>
+			</div>
+			
+			<!-- FORM -->		
+			<form>
+			  <div class="form-row" style="width: 100%; margin:auto;">
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="- Select Company Code -" id="data1" data-index="1">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="- Select Company Name -" id="data2"data-index="2">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="3">
+			    </div>
+			    <div class="col">
+			      <input type="text" class="form-control" placeholder="Created By" id="data4" data-index="4">
+			    </div>
+			     <a class="btn btn-warning" id="btn-search" href="#" style="width:100px;">Search</a>
+			  </div>
+			</form>
+			
+			<!-- TABLE INPUT 
+			<table id="inputTable" style="width: 95%; margin: auto">
 			<thead>
 				<tr>
-					<th>No</th>
-					<th>Company Code</th>
-					<th>Company Name</th>
-					<th>Created Date</th>
-					<th>Created By</th>
-					<th>Action</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th><button class="btn btn-primary" id="btn-add" type="submit" style="width:100%;">Add</button></th>
+				</tr>
+				<tr>
+					<th></th>
+					<th><input type="text" class="form-control" placeholder="- Select Company Code -" id="data1" data-index="1" style="padding-right:10px;width:100%;"></th>
+					<th><input type="text" class="form-control" placeholder="- Select Company Name -" id="data2"data-index="2" style="padding-right:10px;width:100%;"></th>
+					<th><input type="text" class="form-control" placeholder="Created Date" id="data3" data-index="3" style="padding-right:10px;width:70%;"></th>
+					<th><input type="text" class="form-control" placeholder="Created By" id="data4" data-index="4" style="padding-right:10px;width:100%;"></th>
+					<th><button class="btn btn-warning" id="btn-search" type="submit" style="width:100%;">Search</button></th>
 				</tr>
 			</thead>
-			<tbody>
-			</tbody>
-		</table>
+			</table>
+			-->
+					
+			<!-- TABLE TAMPILAN -->
+			<table class="table table-striped table-hover" id="companyTable" style="width: 100%">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Company Code</th>
+						<th>Company Name</th>
+						<th>Created Date</th>
+						<th>Created By</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
 	</div>
 
 	<%@include file="/WEB-INF/pages/modal/company-add.html"%>
@@ -143,6 +168,7 @@
 	
 	$(document).ready(function(){
 		loadData();
+		createMenu()
 		
 		//DATEPICKER
 		$('#data3').datepicker({
@@ -457,6 +483,73 @@
 				}
 			});
 		});
+		
+		//MENU DASHBOARD
+		function createMenu(){
+			var role=null;
+			$.ajax({
+				url : '${pageContext.request.contextPath}/user/getrole',
+				type : 'GET',
+				success : function(data){
+					role=data;
+					console.log('Ini adalah role nya');
+					console.log(role);
+					menusRole(role);			    
+				}
+			});
+		 }
+		
+		/* DROPDOWN MENU */
+		function menusRole(role2){
+			$.ajax({
+				url : '${pageContext.request.contextPath}/access/getall',
+				type : 'GET',
+				success : function(data) {
+					var role1=null;
+						role1=role2;
+					console.log(role1);
+					console.log('harus sama');
+					console.log(data[1].role.roleName);
+					$.each(data,function(index,access){
+						 if(access.role.roleName == role1){
+							var idMenu=0;
+							idMenu=access.id;
+							getMenubyRole(idMenu);
+						 }
+					});
+					 
+				},
+				dataType : 'json'
+			});	
+			}
+		
+		function getMenubyRole(idMenu){
+			 $.ajax({
+					url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
+					type : 'GET',
+					success : function(data) {
+						$('#selectMenu').empty();
+						$('#selectMenu2').empty();
+						var tinggi=0;
+						var tinggi2=0;
+						 $.each(data.menus,function(index,menu){
+							if(menu.parentId==1){
+							$('#selectMenu').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+							}else if(menu.parentId==2){
+							$('#selectMenu2').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+							}			 
+						 }); 
+					},
+					dataType : 'json'
+				});
+		}		
+		$('#masterMenu').click(function(){
+			$('#selectMenu').toggle();
+		});
+		$('#masterMenu2').click(function(){
+			$('#selectMenu2').toggle();
+		});
+		
 	});
 	</script>			
 </html>
