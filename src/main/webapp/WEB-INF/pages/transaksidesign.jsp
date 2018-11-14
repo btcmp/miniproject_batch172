@@ -50,17 +50,19 @@ input.parsley-error {
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
 						<li class="nav-item"><a class="nav-link text-white" href="#">
-								 Dashboard	
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="#"> Master
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath }/product">
-								Products
-						</a></li>
-						<li class="nav-item"><a class="nav-link bg-danger text-white" href="${pageContext.request.contextPath}/design"> Transaction	
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
-						</a></li>
+								Dashboard </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu"
+							href="#"> Master</a>
+							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
+							href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white"
+							href="${logoutUrl}"> Logout </a></li>
 					</ul>
 					</div>
 			</nav><!-- END DASHBOARD -->
@@ -157,13 +159,17 @@ $(document).ready(function(){
 	});
 	Parsley.addValidator('cekend',{
     	validateString: function(value,date){
-    	var endDate = value.split("-");
-    	var startDate = $('#'+date).val().split("-");
-    	var endYear = parseInt(endDate[0]);
-    	var startYear = parseInt(startDate[0]);
+    	var end = value.split("-");
+    	var start = $('#'+date).val().split("-");
+    	var endYear = parseInt(end[0]);
+    	var startYear = parseInt(start[0]);
+    	var endMonth = parseInt(end[1]);
+    	var startMonth = parseInt(start[1]);
+    	var endDate = parseInt(end[2]);
+    	var startDate = parseInt(start[2]);
     	if(endYear>=startYear){
-    		if(parseInt(endDate[1])>=parseInt(startDate[1])){
-    			 if(parseInt(endDate[2])>=parseInt(startDate[2])){
+    		if(endMonth>=startMonth){
+    			 if(endDate>=startDate){
     		    		return true;
     		    	}	
         	}	
@@ -519,6 +525,14 @@ $(document).ready(function(){
 			}
 			tRow +=' ';
 			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design-main"><span class="oi oi-pencil"></span></a>';
+			if(design.status==1){
+				status="Submitted";
+			} else if(design.status==2){
+				status="In Progress";
+			} else if(design.status==3){
+				status="Done";
+			} else if(design.status==0){
+			}
 			if(design.assignTo!=null){
 				oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,design.assignTo.employeeName,status,design.createdDate,design.createdBy,tRow]);	
 			}else{
@@ -558,7 +572,7 @@ $(document).ready(function(){
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic.employeeName+'"disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestDueDate+'"disabled></td>';
 			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date" required></td>';
-			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date" required data-parsley-cekend="closeStartDate'+i+'" data-parsley-cekend-message="tanggal harus lebih besar dari start date"></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date" required data-parsley-trigger="change focusout" data-parsley-cekend="closeStartDate'+i+'" data-parsley-cekend-message="tanggal harus lebih besar dari start date"></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
 			tRow += '<td><input type="hidden" value="'+designItem.id+'"></td>';
 			tRow += '<td><div id="file-click'+i+'" class="btn close-file-upload btn-primary">';
@@ -576,9 +590,12 @@ $(document).ready(function(){
 				format:'yyyy-mm-dd',
 				autoclose:true,
 				uiLibrary: 'bootstrap4',
-				close: function (e) {
-		             $('#closeFormDesign').parsley();
-		         }
+				select: function() {
+					this.focus();
+					},
+				close: function() {
+					this.blur();
+					}
 			});
 			$('#file-click'+i).click(function(){
 				$('#file-upload'+i).click();
@@ -1034,8 +1051,77 @@ $(document).ready(function(){
 			  	loadData();
 		
 	});
-	  
-	  
+	createMenu();
+	function createMenu(){
+		var relee=null;
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
+			type : 'GET',
+			success : function(data1){
+			 
+			 relee=data1;
+			 console.log('Ini adalah role nya');
+			 console.log(relee);
+			 menusRole(relee);			  
+				  
+			}
+		});
+	 }
+	
+	/* DROPDOWN MENU */
+	function menusRole(role22){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/access/getall',
+			type : 'GET',
+			success : function(data4) {
+				var role1=null;
+					role1=role22;
+				console.log(role1);
+				console.log('harus sama');
+				 
+				$.each(data4,function(index,access){
+					 if(access.role.roleName == role1){
+						  var idMenu=0;
+						  idMenu=access.id;
+						   getMenubyRole(idMenu);
+					 }
+				});
+				 
+			},
+			dataType : 'json'
+		});	
+		}
+	
+	function getMenubyRole(idMenu){
+		 $.ajax({
+				url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
+				type : 'GET',
+				success : function(data2) {
+					$('#selectMenu').empty();
+					$('#selectMenu2').empty();
+					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
+					var tinggi=0;
+					var tinggi2=0;
+					 $.each(data2.menus,function(index,menu){
+						 
+						
+						  if(menu.parentId==1){
+							$('#selectMenu').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+						 
+						  }else if(menu.parentId==2){
+							 $('#selectMenu2').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+						  }			 
+					 }); 
+				},
+				dataType : 'json'
+			});
+	}		
+	$('#masterMenu').click(function(){
+		$('#selectMenu').toggle();
+	});
+	$('#masterMenu2').click(function(){
+		$('#selectMenu2').toggle();
+	}); 
 });
 
 </script>
