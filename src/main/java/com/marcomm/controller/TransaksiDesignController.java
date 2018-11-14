@@ -29,6 +29,7 @@ import com.marcomm.model.TransaksiDesignItem;
 import com.marcomm.model.TransaksiEvent;
 import com.marcomm.service.MasterEmployeeService;
 import com.marcomm.service.MasterProductService;
+import com.marcomm.service.MasterUserService;
 import com.marcomm.service.TransaksiDesignService;
 import com.marcomm.service.TransaksiEventService;
 
@@ -43,6 +44,8 @@ public class TransaksiDesignController {
 	@Autowired
 	TransaksiDesignService transaksiDesignService;
 	@Autowired
+	MasterUserService masterUserService;
+	@Autowired
 	MasterEmployeeService employeeService;
 	
 	ServletContext servletContext;
@@ -51,10 +54,14 @@ public class TransaksiDesignController {
 		ModelAndView modelAndView = new ModelAndView("transaksidesign");
 		List<MasterProduct> products = masterProductService.getAll();
 		List<TransaksiEvent> events = eventService.getAllService();
+		List<MasterUser> pic = masterUserService.getAll();
 		List<MasterEmployee> employees = employeeService.getAllEmployeeStaff();
+		MasterUser userLog = masterUserService.getUserLog();
 		modelAndView.addObject("events", events);
 		modelAndView.addObject("products", products);
+		modelAndView.addObject("requestPics",pic );
 		modelAndView.addObject("employeesStaff", employees);
+		modelAndView.addObject("userLog",userLog);
 		return modelAndView;
 	}
 	
@@ -101,6 +108,12 @@ public class TransaksiDesignController {
 		return transaksiDesignService.getByIdItem(id);
 	}
 	
+	@RequestMapping(value="/closeupdate",method=RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void closeDesignUpdate(@RequestBody TransaksiDesign transaksiDesign) {
+		transaksiDesignService.closeDesignUpdate(transaksiDesign);
+	}
+	
 	@RequestMapping(value="/getitembydesignid/{id}",method=RequestMethod.GET)
 	@ResponseBody
 	public List<TransaksiDesignItem> getItemByDesignId(@PathVariable("id") int id){
@@ -113,6 +126,9 @@ public class TransaksiDesignController {
 		
 		try {
 			for (CommonsMultipartFile file : files) {
+				/*String originalName = file.getOrigina();
+				int size = (int) file.getSize();
+				String */
 				byte[] bytes = file.getBytes();
 				Path path =Paths.get("H://Bootcamp//UploadFile//"+file.getOriginalFilename());
 				Files.write(path, bytes);

@@ -102,7 +102,10 @@
 							</thead>
 							<tbody class="tableBody">
 							</tbody>
+							
 						</table>
+						<div id="parsleyValidasi">
+							</div>
 					</div>
 				</div>
 				<div class="modal-footer border border-top-0 border-dark">

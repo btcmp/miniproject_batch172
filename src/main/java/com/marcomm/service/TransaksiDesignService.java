@@ -1,6 +1,7 @@
 package com.marcomm.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -8,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bankmega.traning.service.EmployeeService;
 import com.marcomm.dao.MasterProductDao;
 import com.marcomm.dao.MasterUserDao;
 import com.marcomm.dao.TransaksiDesignDao;
 import com.marcomm.dao.TransaksiDesignItemDao;
 import com.marcomm.dao.TransaksiEventDao;
+import com.marcomm.model.DesignItemFile;
 import com.marcomm.model.MasterEmployee;
 import com.marcomm.model.MasterProduct;
 import com.marcomm.model.MasterUser;
@@ -80,6 +81,8 @@ public class TransaksiDesignService {
 			tdi.setMasterProduct(transaksiDesignItem.getMasterProduct());
 			tdi.setTitleItem(transaksiDesignItem.getTitleItem());
 			tdi.setRequestPic(transaksiDesignItem.getRequestPic());
+			tdi.setCreatedBy(transaksiDesign.getCreatedBy());
+			tdi.setCreatedDate(new Date());
 			tdi.setRequestDueDate(transaksiDesignItem.getRequestDueDate());
 			tdi.setNote(transaksiDesignItem.getNote());
 			tdi.setTransaksiDesign(td);
@@ -103,6 +106,32 @@ public class TransaksiDesignService {
 		TransaksiDesign transaksiDesign = transaksiDesignDao.getById(id);
 		List<TransaksiDesignItem> transaksiDesignItems = transaksiDesignItemDao.getItemByDesign(transaksiDesign);
 		return transaksiDesignItems;
+	}
+	
+	public void closeDesignUpdate(TransaksiDesign transaksiDesign) {
+		TransaksiDesign tDesign = transaksiDesignDao.getById(transaksiDesign.getId());
+		tDesign.setStatus(3);
+		List<TransaksiDesignItem> itemsBaru = transaksiDesign.getTransaksiDesignItems();
+		List<TransaksiDesignItem> transaksiDesignItems = transaksiDesignItemDao.getItemByDesign(tDesign);
+		transaksiDesignDao.update(tDesign);
+		int i=0;
+		for (TransaksiDesignItem transaksiDesignItem : itemsBaru) {
+			DesignItemFile itemFile = transaksiDesignItem.getDesignItemFile();
+			String fileName = itemFile.getFileName();
+			int index = fileName.indexOf(".");
+			String name=fileName.substring(0, index);
+			String extension = fileName.substring(index+1);
+			itemFile.setFileName(name);
+			itemFile.setExtension(extension);
+			MasterUser user = masterUserDao.getUserByUserLog();
+			itemFile.setCreatedBy(user.getEmployee().getEmployeeName());
+			itemFile.setCreatedDate(new Date());
+			transaksiDesignItemDao.saveUpload(itemFile);
+			transaksiDesignItems.get(i).setStartDate(transaksiDesignItem.getStartDate());
+			transaksiDesignItems.get(i).setEndDate(transaksiDesignItem.getEndDate());
+			transaksiDesignItemDao.closeDesignUpdate(transaksiDesignItems.get(i));
+			i++;
+		}
 	}
 
 	
@@ -174,6 +203,5 @@ public class TransaksiDesignService {
 		
 		System.out.println(transaksiDesign.getRejectReason());
 		transaksiDesignDao.update(transaksiDesign1);
-		
 	}
 }

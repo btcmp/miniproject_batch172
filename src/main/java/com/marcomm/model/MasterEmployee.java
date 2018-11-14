@@ -38,6 +38,8 @@ public class MasterEmployee {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="createdBy")
 	private List<TransaksiSouvenir> createdByTransaksiSouvneir;
 	
+	
+	
 
 	public List<TransaksiSouvenir> getCreatedByTransaksiSouvneir() {
 		return createdByTransaksiSouvneir;
@@ -46,7 +48,6 @@ public class MasterEmployee {
 	public void setCreatedByTransaksiSouvneir(List<TransaksiSouvenir> createdByTransaksiSouvneir) {
 		this.createdByTransaksiSouvneir = createdByTransaksiSouvneir;
 	}
-	
 	
 	//end relasi mamad
 	
@@ -58,6 +59,11 @@ public class MasterEmployee {
 	
 
 
+	
+
+
+
+
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="assignTo")
 	private List<TransaksiDesign> assignToDesign;
 	
@@ -66,6 +72,17 @@ public class MasterEmployee {
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="approvedBy")
 	private List<TransaksiDesign> approvedByDesign;
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="requestPic")
+	private List<TransaksiDesignItem> requestPicDesignItem;
+	
+	public List<TransaksiDesignItem> getRequestPicDesignItem() {
+		return requestPicDesignItem;
+	}
+
+	public void setRequestPicDesignItem(List<TransaksiDesignItem> requestPicDesignItem) {
+		this.requestPicDesignItem = requestPicDesignItem;
+	}
 	
 	public List<TransaksiDesign> getAssignToDesign() {
 		return assignToDesign;

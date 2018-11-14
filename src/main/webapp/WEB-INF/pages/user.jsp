@@ -177,7 +177,8 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	loadData();
-	getUser();
+	getUser(); 
+	createMenu();//fungsi untuk create menu
 	/* date picker */
 	/* $('#createdDate').datepicker(); */
 	 $('.date-picker').datepicker({
@@ -346,6 +347,8 @@ $(document).ready(function(){
 				 type: 'DELETE',
 				 success: function(data){
 					 loadData();
+					 document.getElementById("notification").innerHTML = "Data Deleted! New User has been deleted with id: "+id+"!";
+						$('#notification').show('slow').delay(3500).hide('slow');
 					 /* window.location = "${pageContext.request.contextPath}/user"; */
 				 }, error : function(){
 					 alert('delete data failed..!!');
@@ -426,22 +429,24 @@ $(document).ready(function(){
 				}
 			}) 
 		 }
-		function getRole(){
-			var relee;
+ 
+		function createMenu(){
+			var relee=null; 
 			$.ajax({
 				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
 				type : 'GET',
 				success : function(data1){
-				 console.log('Ini adalah role nya');
-				 console.log(data1);
-				 relee=data1;
 				 
+				 relee=data1;
+				 console.log('Ini adalah role nya');
+				 console.log(relee);
+				 menusRole(relee);
 					 
 					  
 					  
 				}
-			}) ;
-			return relee;
+			});
+			
 		 }
 	 
 	 
@@ -551,26 +556,27 @@ $(document).ready(function(){
 	}
 		
 		/* DROPDOWN MENU */
-		
-	$.ajax({
-		url : '${pageContext.request.contextPath}/access/getall',
-		type : 'GET',
-		success : function(data4) {
-			var role1;
-				role1=getRole();
-			console.log(role1);
-			console.log('harus sama');
-			console.log(data4[0].role.roleName);
-			 if(data4[0].role.roleName == role1){
-				  var idMenu=0;
-				  idMenu=data4[0].id;
-				   getMenubyRole(idMenu);
-				   
-				  
-			 }
-		},
-		dataType : 'json'
-	});
+	function menusRole(role22){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/access/getall',
+			type : 'GET',
+			success : function(data4) {
+				var role1=null;
+					role1=role22;
+				 
+				$.each(data4,function(index,access){
+					 if(access.role.roleName == role1){
+						  var idMenu=0;
+						  idMenu=access.id;
+						   getMenubyRole(idMenu);
+					 }
+				});
+				 
+			},
+			dataType : 'json'
+		});	
+		}
+	
 		
 	function getMenubyRole(idMenu){
 		

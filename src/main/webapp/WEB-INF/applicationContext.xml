@@ -35,6 +35,7 @@
 				<value>com.marcomm.model.MasterUser</value>
 				<value>com.marcomm.model.TransaksiDesign</value>
 				<value>com.marcomm.model.TransaksiDesignItem</value>
+				<value>com.marcomm.model.DesignItemFile</value>
 				<value>com.marcomm.model.MasterEmployee</value>
 				<value>com.marcomm.model.MasterRole</value>
 				<value>com.marcomm.model.MasterSouvenir</value>

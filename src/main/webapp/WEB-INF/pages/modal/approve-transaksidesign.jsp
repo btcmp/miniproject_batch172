@@ -51,7 +51,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="asignTo" class="col-sm-4 col-form-label">Status
+									<label for="assignTo" class="col-sm-4 col-form-label">Assign To
 										</label>
 									<div class="col-sm-7">
 										<select class="form-control" id="assignTo">

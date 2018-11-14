@@ -39,8 +39,10 @@ input.parsley-error {
 }
 }
 </style>
+<meta name="userlog" content="${userLog.mRole.roleName}"/>
 </head>
 <body>
+<input type="hidden" id="userlog" value="${userLog.mRole.roleName}">
 	<div class="container-fluid">
 		<div class="row">
 		<!-- DASHBOARD -->
@@ -93,7 +95,7 @@ input.parsley-error {
 						<th><input type="text" class="form-control"	placeholder="Request Date" id="data3" data-index="3" style="padding-right:10px;"></th>
 						<th><input type="text" class="form-control" placeholder="-Assign To-" id="data4" data-index="4" style="padding-right:10px;width:100%;"></th>
 						<th><input type="text" class="form-control" placeholder="Status" id="data5" data-index="5" style="padding-right:10px;width:100%;"></th>
-						<th><input type="text" class="form-control" placeholder="Created" id="data6" data-index="6" style="padding-right:10px;width:100%;"></th>
+						<th><input type="text" class="form-control" placeholder="Created Date" id="data6" data-index="6" style="padding-right:10px;width:75%;"></th>
 						<th><input type="text" class="form-control" placeholder="Created By" id="data7" data-index="7" style="padding-right:10px;width:100%;"></th>
 						<th><a class="btn btn-danger" id="searchBtn" href="#" style="width:100px;">Search</a></th>
 					</tr>
@@ -124,6 +126,7 @@ input.parsley-error {
 	<%@include file="/WEB-INF/pages/modal/approve-transaksidesign.jsp" %>
 	<%@include file="/WEB-INF/pages/modal/close-design.jsp" %>
 	<%@include file="/WEB-INF/pages/modal/rejected-transaksidesignjsp.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/view-transaksidesign.jsp" %>
 	
 </body>
 <!--   Core JS Files   -->
@@ -147,11 +150,50 @@ input.parsley-error {
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">	
 $(document).ready(function(){
+	//data table
 	$('#designTable').DataTable({
 		'sDom':'tip',
 		'ordering':false
 	});
+	Parsley.addValidator('cekend',{
+    	validateString: function(value,date){
+    	var endDate = value.split("-");
+    	var startDate = $('#'+date).val().split("-");
+    	var endYear = parseInt(endDate[0]);
+    	var startYear = parseInt(startDate[0]);
+    	if(endYear>=startYear){
+    		if(parseInt(endDate[1])>=parseInt(startDate[1])){
+    			 if(parseInt(endDate[2])>=parseInt(startDate[2])){
+    		    		return true;
+    		    	}	
+        	}	
+    	}
+    	 return false;
+    	}
+    	});
+	$('#data3').datepicker({
+		format:'yyyy-mm-dd',
+		autoclose:true,
+		uiLibrary: 'bootstrap4'
+	});
+	$('#data6').datepicker({
+		format:'yyyy-mm-dd',
+		autoclose:true,
+		uiLibrary: 'bootstrap4'
+	});
+	//end of data table
+	//load data
 	loadData();
+	$('#searchBtn').on( 'click', function () {
+		for(var i = 1 ; i <= 7; i++){
+			oTable
+            .column( $('#data'+ i).data('index') )
+            .search( $('#data'+ i).val() )
+            .draw();
+			$('#data'+i).val("");
+		}
+    });
+	//get add modal
 	$(document).on('click','#addBtn',function(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/design/getcode',
@@ -166,12 +208,42 @@ $(document).ready(function(){
 			type : 'GET',
 			dataType : 'json',
 			success : function(data){
-				$('#addRequestBy').val(data.mRole.roleName);
+				$('#addRequestBy').val(data.employee.employeeName);
 				$('#addRequestById').val(data.employee.id);
-				$('#addCreatedBy').val(data.employee.employeeName);
+				$('#addCreatedBy').val(data.mRole.roleName);
+				$('#userlog').val(data.mRole.roleName);
 			}
 		});
 		$('#addFormDesign').trigger('reset');
+		$('#addFormDesign').parsley().reset();
+		var oTable = $('#itemsTable');
+	    var tBody = oTable.find('tbody');
+	    	tBody.empty();
+	    var tRow =	'<tr>';
+		tRow += '<td><select class="custom-select productItems" style="width:150px" disabled required data-parsley-required-message="Produk harus dipilih">'+
+						'<option value="" selected>Choose...</option>'+
+							'<c:forEach var="product" items="${products}">'+
+							'<option value="${product.id}">${product.name}</option>'+
+						'</c:forEach>'+
+					'</select></td>';
+		tRow += '<td><input type="text" class="form-control description" placeholder="description" disabled></td>';
+		tRow += '<td><input type="text" class="form-control" placeholder="Title" disabled required data-parsley-required-message="Judul item design harus ada"></td>';
+		tRow += '<td><select class="custom-select requestPic" style="width:150px" disabled required data-parsley-required-message="Harus memilih PIC">'+
+		'<option value="" selected>Choose PIC...</option>'+
+		'<c:forEach var="pic" items="${requestPics}">'+
+		'<c:if test="${pic.mRole.id == 3}">'+
+		'<option value="${pic.employee.id}">${pic.employee.employeeName}</option>'+
+		'</c:if>'+
+		'</c:forEach>'+
+		'</select></td>';
+		tRow += '<td><input type="text" class="form-control duedate placeholder="Due Date" disabled required data-parsley-required-message="Pilih Due Date"></td>';
+		tRow += '<td><input type="text" class="form-control startdate" placeholder="Start Date" disabled></td>';
+		tRow += '<td><input type="text" class="form-control enddate" placeholder="End Date" disabled></td>';
+		tRow += '<td><input type="text" class="form-control" placeholder="Note" disabled></td>';
+		tRow += '<td><a href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a></td>';
+		tRow += '<td><a href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+		tRow +=	'</tr>';
+		tBody.append(tRow);
 		Id = 1;
 		loadEvent();
 		var now = new Date();
@@ -182,29 +254,39 @@ $(document).ready(function(){
 		$('#requestDate').val(tahun+'-'+bulan+'-'+formatTanggal);
 		$('#addDesignTransactionModal').modal();
 	});	
+	
+	//add item on modal
 	$('#addItemBtn').on('click',function(){
 		    Id++;
 		  	var oTable = $('#itemsTable');
 		    var tBody = oTable.find('tbody');
-		    var tRow =	'<tr id="items-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="productItem'+Id+'" style="width:150px" disabled>'+
+		    var tRow =	'<tr>';
+			tRow += '<td><select class="custom-select productItems" style="width:150px" disabled required data-parsley-required-message="Produk harus dipilih">'+
 							'<option value="" selected>Choose...</option>'+
 								'<c:forEach var="product" items="${products}">'+
 								'<option value="${product.id}">${product.name}</option>'+
 							'</c:forEach>'+
 						'</select></td>';
-			tRow += '<td><input type="text" class="form-control description" id="description'+Id+'" placeholder="description" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Title" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" placeholder="Request PIC" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="duedate'+Id+'" placeholder="Due Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="startdate'+Id+'" placeholder="Start Date" disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="enddate'+Id+'" placeholder="End Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control description" placeholder="description" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" placeholder="Title" disabled required data-parsley-required-message="Judul item design harus ada"></td>';
+			tRow += '<td><select class="custom-select requestPic" style="width:150px" disabled required data-parsley-required-message="Harus memilih PIC">'+
+			'<option value="" selected>Choose PIC...</option>'+
+			'<c:forEach var="pic" items="${requestPics}">'+
+			'<c:if test="${pic.mRole.id == 3}">'+
+			'<option value="${pic.employee.id}">${pic.employee.employeeName}</option>'+
+			'</c:if>'+
+			'</c:forEach>'+
+			'</select></td>';
+			tRow += '<td><input type="text" class="form-control duedate" placeholder="Due Date" disabled required data-parsley-required-message="Pilih Due Date"></td>';
+			tRow += '<td><input type="text" class="form-control startdate" placeholder="Start Date" disabled></td>';
+			tRow += '<td><input type="text" class="form-control enddate" placeholder="End Date" disabled></td>';
 			tRow += '<td><input type="text" class="form-control" placeholder="Note" disabled></td>';
-			tRow += '<td><a id="'+Id+'" href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
-			tRow += '<a id="'+Id+'" href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
+			tRow += '<td><a href="#" class="btn-edit-design"><span class="oi oi-pencil"></span></a>';
+			tRow += '<a href="#" class="btn-delete-design"><span class="oi oi-trash"></span></a></td>';
 			tRow +=	'</tr>';
 			tBody.append(tRow);
 	});
+	//view design
 	$(document).on('click','.btn-view-design',function(){
 		var id = $(this).attr('id');
 		$.ajax({
@@ -212,6 +294,7 @@ $(document).ready(function(){
 			type:'GET',
 			dataType:'json',
 			success:function(data){
+				$('#closeDesignId').val(data[0].transaksiDesign.id);
 				$('#closeCode').val(data[0].transaksiDesign.code);
 				$('#closeEventCode').val(data[0].transaksiDesign.transaksiEvent.code);
 				$('#closeDesignTitle').val(data[0].transaksiDesign.titleHeader);
@@ -219,15 +302,63 @@ $(document).ready(function(){
 				$('#closeAssignTo').val(data[0].transaksiDesign.assignTo);
 				$('#closeRequestBy').val(data[0].transaksiDesign.requestBy.employeeName);
 				$('#closeRequestDate').val(data[0].transaksiDesign.requestDate);
-				$('closeNote').val(data[0].transaksiDesign.note);
+				$('#closeNote').val(data[0].transaksiDesign.note);
 				closeDesign(data);
+				
 			}
 		});
 		$('#closeDesignModal').modal();
 	});
 	$('#closeBtnModal').on('click',function(){
+		var validate=$('#closeFormDesign').parsley();
+		validate.validate();		
+	});
+	$('#closeFormDesign').parsley().on('form:success',function(){
+		var transaksiDesignItems=[];
+		$('.closeTableBody tr').each(function(){
+			tRow = $(this).find('td :input');
+			var id =$(this).find('input[type=hidden]');
+			var files=$(this).find('input[type=file]');
+			if(files[0].files[0]!=null){
+			items={
+					startDate:tRow.eq(5).val(),
+					endDate:tRow.eq(7).val(),
+					designItemFile:{
+						tDesignItemId:{
+							id:id.val()
+						},
+						fileName:files[0].files[0].name,
+						fileSize:(files[0].files[0].size/1000)+' KB'
+						}
+			}
+			}else{
+				items={
+						startDate:tRow.eq(5).val(),
+						endDate:tRow.eq(7).val(),
+						transaksiDesignItemFile:{
+							tDesignItemId:id.val(),
+							fileName:"",
+							fileSize:""
+							}
+				}	
+			}
+			transaksiDesignItems.push(items);
+		});
+		var transaksiDesign={
+				id:$('#closeDesignId').val(),
+				transaksiDesignItems:transaksiDesignItems
+		}
+		$.ajax({
+			url:'${pageContext.request.contextPath}/design/closeupdate',
+			type:'POST',
+			contentType:'application/json',
+			data:JSON.stringify(transaksiDesign),
+			success:function(data){
+			},
+			error:function(){
+			}
+		});
 		var forms = new FormData($('#closeFormDesign')[0]);
-		forms.append('file',$('input[type=file]')[0].files[0]);
 		$.ajax({
 			url:'${pageContext.request.contextPath}/design/upload',
 			type:'POST',
@@ -236,53 +367,65 @@ $(document).ready(function(){
 			data:forms,
 			cache:false,
 			success:function(data){
-				alert('success');
+				loadData();
 				$('#closeDesignModal').modal('hide');
 			},
 			error:function(e){
-				alert('error');
 			}
 		})
-		
-	})
+	});
+	//edit on add modal
 	$(document).on('click','.btn-edit-design',function(){
-		var id =$(this).attr('id');
-		$("#items-"+id).find(':input').prop('disabled', false);
-		$("#startdate"+id).prop('disabled', true);
-		$("#enddate"+id).prop('disabled', true);
-		$('#duedate'+id).datepicker({
+		$(this).closest('tr').find(':input').prop('disabled', false);
+		$(this).closest('tr').find('.description').prop('readonly', true);
+		$(this).closest('tr').find('.startdate').prop('disabled', true);
+		$(this).closest('tr').find('.enddate').prop('disabled', true);
+		$(this).closest('tr').find('.duedate').datepicker({
 			format:'yyyy-mm-dd',
 			autoclose:true,
 			uiLibrary: 'bootstrap4'
 		});
-		$('#startdate'+id).datepicker({
+		$(this).closest('tr').find('.startdate').datepicker({
 			format:'yyyy-mm-dd',
 			autoclose:true,
 			uiLibrary: 'bootstrap4'
 		});
-		$('#enddate'+id).datepicker({
+		$(this).closest('tr').find('.enddate').datepicker({
 			format:'yyyy-mm-dd',
 			autoclose:true,
 			uiLibrary: 'bootstrap4'
-		});
-		$('#productItem'+id).on('change',function(){
-			var select = this;
-			var productId = select[select.selectedIndex].value;
-			$.ajax({
-				url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
-				type : 'GET',
-				success : function(data){
-					$('#description'+id).val(data.description);
-				}
-			});
 		});
 	});
+	$(document).on('change','.productItems',function(){
+		var select = this;
+		var oSelect =$(this);
+		var productId = select[select.selectedIndex].value;
+		$.ajax({
+			url : '${pageContext.request.contextPath}/product/getbyid/'+productId,
+			type : 'GET',
+			success : function(data){
+				oSelect.closest('tr').find('.description').val(data.description);
+			}
+		});
+	});
+
 	$(document).on('click','.btn-delete-design',function(){
-		var id =$(this).attr('id');
-		$('#items-'+id).remove();
+		var id =$(this).closest('tr').remove();
+		//$('#items-'+id).remove();
 	});
-	
+	//end of edit on add modal
+	//send to database add modal
+	var parsleyConfig = {
+    errorsContainer: function(parsleyField) {
+        return $('#tempatError');
+    }
+	};
 	$('#addBtnModal').on('click',function(e){
+		var validate=$('#addFormDesign').parsley(parsleyConfig);
+		validate.validate();	
+		
+	});
+	$('#addFormDesign').parsley().on('form:success',function(){
 		var transaksiDesignItems=[];
 		$('.tableBody tr').each(function(){
 			tRow = $(this).find('td :input');
@@ -291,7 +434,9 @@ $(document).ready(function(){
 						id:tRow.eq(0).val()
 					},
 					titleItem:tRow.eq(2).val(),
-					requestPic:tRow.eq(3).val(),
+					requestPic:{
+						id:tRow.eq(3).val(),
+					},
 					requestDueDate:tRow.eq(4).val(),
 					note:tRow.eq(10).val()
 			}
@@ -319,11 +464,11 @@ $(document).ready(function(){
 			data:JSON.stringify(transaksiDesign),
 			success:function(data){
 				loadData();
-				console.log(data);
 				$('#addDesignTransactionModal').modal('hide');
 			}
-		});	
+		});
 	});
+	//get all data
 	function loadData(){
 		$.ajax({
 			url : '${pageContext.request.contextPath}/design/getall',
@@ -337,21 +482,49 @@ $(document).ready(function(){
 	function convertToTable(data){
 		oTable = $('#designTable').DataTable();
 		oTable.rows( 'tr' ).remove();
+		var role = $('#userlog').val();
+		console.log(role);
 		$.each(data,function(increment,design){
 			increment++;
-			var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-main"><span class="oi oi-magnifying-glass"></span></a>';	
+
+			if(role==="Administrator"){
+				if(design.status==1){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-main"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Submitted";
+				} else if(design.status==2){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="In Progress";
+				} else if(design.status==3){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Done";
+				} else if(design.status==0){
+					status="Rejected";
+				}
+			}else if(role==="Staff"){
+				if(design.status==1){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Submitted";
+				} else if(design.status==2){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';
+					status="In Progress";
+				} else if(design.status==3){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Done";
+				} else if(design.status==0){
+					status="Rejected";
+				}
+				
+			}else{
+				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+			}
 			tRow +=' ';
 			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design-main"><span class="oi oi-pencil"></span></a>';
-			if(design.status==1){
-				status="Submitted";
-			} else if(design.status==2){
-				status="In Progress";
-			} else if(design.status==3){
-				status="Done";
-			} else if(design.status==0){
-				status="Rejected";
+			if(design.assignTo!=null){
+				oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,design.assignTo.employeeName,status,design.createdDate,design.createdBy,tRow]);	
+			}else{
+				oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,"belum ada assign",status,design.createdDate,design.createdBy,tRow]);
 			}
-			oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,design.assignTo,status,design.createdDate,design.createdBy,tRow]);
+			
 		});
 		oTable.draw();
 	}
@@ -365,6 +538,7 @@ $(document).ready(function(){
 			}
 		});
 	}
+	//selected event on add modal
 	function convertToSelect(data){
 		$('#eventCode').empty();
 		$('#eventCode').append('<option value="">Choose...</option>');
@@ -381,11 +555,12 @@ $(document).ready(function(){
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.name+'"disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.description+'"disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.titleItem+'"disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic.employeeName+'"disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestDueDate+'"disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date"></td>';
-			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date"></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date" required></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date" required data-parsley-cekend="closeStartDate'+i+'" data-parsley-cekend-message="tanggal harus lebih besar dari start date"></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
+			tRow += '<td><input type="hidden" value="'+designItem.id+'"></td>';
 			tRow += '<td><div id="file-click'+i+'" class="btn close-file-upload btn-primary">';
 			
 			tRow += 'Browse</div><input type="file" name="file" id="file-upload'+i+'"></td>';
@@ -400,7 +575,10 @@ $(document).ready(function(){
 			$('#closeEndDate'+i).datepicker({
 				format:'yyyy-mm-dd',
 				autoclose:true,
-				uiLibrary: 'bootstrap4'
+				uiLibrary: 'bootstrap4',
+				close: function (e) {
+		             $('#closeFormDesign').parsley();
+		         }
 			});
 			$('#file-click'+i).click(function(){
 				$('#file-upload'+i).click();
@@ -412,13 +590,61 @@ $(document).ready(function(){
 	    });
 	}
 	
-	
+	$(document).on('click','.btn-view-design-views',function(){
+		var id = $(this).attr('id');
+		$.ajax({
+			url :'${pageContext.request.contextPath}/design/getitembydesignid/'+id,
+			type:'GET',
+			dataType:'json',
+			success:function(data){
+				$('#viewDesignId').val(data[0].transaksiDesign.id);
+				$('#viewTransactionCode').val(data[0].transaksiDesign.code);
+				$('#viewEventCode').val(data[0].transaksiDesign.transaksiEvent.code);
+				$('#viewTitleHeader').val(data[0].transaksiDesign.titleHeader);
+				$('#viewStatus').val(data[0].transaksiDesign.status);
+				if(data[0].transaksiDesign.assignTo!=null){
+					$('#viewAssignTo').val(data[0].transaksiDesign.assignTo.employeeName);	
+				}
+				$('#viewRequestBy').val(data[0].transaksiDesign.requestBy.employeeName);
+				$('#viewRequestDate').val(data[0].transaksiDesign.requestDate);
+				$('#viewNote').val(data[0].transaksiDesign.note);
+				viewDesign(data);
+				
+			}
+		});
+		$('#viewTransactionModal').modal();
+	});
+	function viewDesign(data){
+		var oTable = $('#viewItemsTable');
+	    var tBody = oTable.find('tbody');
+	    tBody.empty();
+	    $.each(data,function(i,designItem){
+	    	var tRow =	'<tr>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.name+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.description+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.titleItem+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic.employeeName+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestDueDate+'"disabled></td>';
+			if(data[0].transaksiDesign.status==3){
+				tRow += '<td><input type="text" class="form-control" value="'+designItem.startDate+'" id="closeStartDate'+i+'" placeholder="Start Date"disabled></td>';
+				tRow += '<td><input type="text" class="form-control" value="'+designItem.endDate+'" id="closeEndDate'+i+'" placeholder="End Date"disabled></td>';				
+			}else{
+				tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date"disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date"disabled></td>';	
+			}
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
+			tRow += '<td><input type="hidden" value="'+designItem.id+'"></td>';
+			tBody.append(tRow);
+	    });
+	}
 	
 	/*  KOLOM ANGGI*/
 	  /* UNTUK EDIT */
 	  /* memunculkan Modal edit */ 
 	  $(document).on('click','.btn-update-design-main',function(){
-		  var id = $(this).attr('id');
+		  	var id = $(this).attr('id');
+	  	 	$('#editFormDesign').trigger('reset');
+			$('#editFormDesign').parsley().reset();
 		   
 		  	$.ajax({
 				url : '${pageContext.request.contextPath}/design/getitembydesignid/'+id,
@@ -480,16 +706,24 @@ $(document).ready(function(){
 			var oTable = $('#itemsTableEdit');
 			var tBody = oTable.find('tbody');
 			var tRow =	'<tr id="items-edit-'+Ix+'">';
-			tRow += '<td><select class="custom-select"    id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
-								'<option value="'+data[index2].masterProduct.id+'" selected>'+data[index2].masterProduct.name+'</option>'+
-									'<c:forEach var="product" items="${products}">'+
+			tRow += '<td><select class="custom-select"  value="'+data[index2].masterProduct.id+'"  id="productEditItem'+Ix+'" name="details['+index+'].mProductId" style="width:150px" disabled required data-parsley-required-message="Produk harus dipilih">'+
+								 '<c:forEach var="product" items="${products}">'+
 									'<option value="${product.id}">${product.name}</option>'+
 								'</c:forEach>'+
 							'</select></td>';
 			tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Ix+'" value="'+data[index2].masterProduct.description+'"	  placeholder="description" 	disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit'+Ix+'" 			placeholder="Title" 		disabled required data-parsley-required-message="Judul item design harus ada"></td>';
+			/* tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic.employeeName+'" id="requestPicEdit'+Ix+'" 	placeholder="Request PIC" 	disabled required data-parsley-required-message="anda harus menunjuk PIC"></td>';
+			 */
+			tRow += '<td><select id="requestPicEdit'+Ix+'" value="'+data[index2].requestPic.id+'" class="custom-select requestPic" style="width:150px" disabled required data-parsley-required-message="Harus memilih PIC">'+
+			'<c:forEach var="pic" items="${requestPics}">'+
+			'<c:if test="${pic.mRole.id == 3}">'+
+			'<option value="${pic.employee.id}">${pic.employee.employeeName}</option>'+
+			'</c:if>'+
+			'</c:forEach>'+
+			'</select></td>';
+			
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit'+Ix+'" 	placeholder="Due Date" 		disabled required data-parsley-required-message="Masukkan Due Date"></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].startDate+'" id="startdateEdit'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].endDate+'"id="enddateEdit'+Ix+'" 			placeholder="End Date" 		disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].note+'" id="noteEdit'+Ix+'" 				placeholder="Note" disabled></td>';
@@ -513,16 +747,27 @@ $(document).ready(function(){
 			  	var oTable = $('#itemsTableEdit');
 			    var tBody = oTable.find('tbody');
 			    var tRow =	'<tr id="items-edit-'+Id+'">';
-				tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled>'+
+				tRow += '<td><select class="custom-select" id="productEditItem'+Id+'" name="details['+index+'].mProductId" style="width:150px" disabled required data-parsley-required-message="Produk harus dipilih">'+
 								'<option value="" selected>Choose...</option>'+
 									'<c:forEach var="product" items="${products}">'+
 									'<option value="${product.id}">${product.name}</option>'+
 								'</c:forEach>'+
 							'</select></td>';
 				tRow += '<td><input type="text" class="form-control description" id="descriptionEdit'+Id+'" placeholder="description" disabled></td>';
-				tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled></td>';
-				tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled></td>';
-				tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="titleEdit'+Id+'" placeholder="Title" disabled required data-parsley-required-message="Judul item design harus ada"></td>';
+				 /* tRow += '<td><input type="text" class="form-control" id="requestPicEdit'+Id+'" placeholder="Request PIC" disabled required data-parsley-required-message="anda harus menunjuk PIC"></td>';
+				 */
+				tRow += '<td><select id="requestPicEdit'+Id+'"   class="custom-select requestPic" style="width:150px" disabled required data-parsley-required-message="Harus memilih PIC">'+
+				'<option value="" selected>Pilih PIC</option>'+
+				'<c:forEach var="pic" items="${requestPics}">'+
+				'<c:if test="${pic.mRole.id == 3}">'+
+				'<option value="${pic.employee.id}">${pic.employee.employeeName}</option>'+
+				'</c:if>'+
+				'</c:forEach>'+
+				'</select></td>';
+				
+				
+				tRow += '<td><input type="text" class="form-control" id="duedateEdit'+Id+'" placeholder="Due Date" disabled required data-parsley-required-message="Masukkan Due Date"></td>';
 				tRow += '<td><input type="text" class="form-control" id="startdateEdit'+Id+'" placeholder="Start Date" disabled></td>';
 				tRow += '<td><input type="text" class="form-control" id="enddateEdit'+Id+'" placeholder="End Date" disabled></td>';
 				tRow += '<td><input type="text" class="form-control" id="noteEdit'+Id+'" placeholder="Note" disabled></td>';
@@ -587,10 +832,22 @@ $(document).ready(function(){
 			$("#startdateEdit"+id).prop('disabled', true);
 			$("#enddateEdit"+id).prop('disabled', true);
 		});
-	  
+	 
 	  
 	  /* SAVE DATA DARI MODAL EDIT */
-	  $(document).on('click','#saveBtnModalEdit',function(){
+	  var parsleyConfigEdit = {
+		    errorsContainer: function(parsleyField) {
+		        return $('#parsleyValidasi');
+		    }
+			};
+	  
+	   $('#saveBtnModalEdit').on('click',function(e){
+		  
+			var validate=$('#editFormDesign').parsley(parsleyConfigEdit);
+			validate.validate();	
+			
+		});
+	   $('#editFormDesign').parsley().on('form:success',function(){
 		   var transaksiDesignItems=[];
 			$('.tableBody tr').each(function(){
 				tRow = $(this).find('td :input');
@@ -599,7 +856,10 @@ $(document).ready(function(){
 							id:tRow.eq(0).val()
 						},
 						titleItem:tRow.eq(2).val(),
-						requestPic:tRow.eq(3).val(),
+						requestPic:{
+							id:tRow.eq(3).val(),
+						},
+						 
 						requestDueDate:tRow.eq(4).val(),
 						startDate:tRow.eq(6).val(),
 						endDate:tRow.eq(8).val(),
@@ -634,8 +894,8 @@ $(document).ready(function(){
 			});	
 			$('#editDesignTransactionModal').modal('hide');	
 			loadData();
-	  });
-	  
+	   });
+	 
 	   
 	  /* APPROVE */
 	  
@@ -702,10 +962,10 @@ $(document).ready(function(){
 							'</select></td>';
 			tRow += '<td><input type="text" class="form-control description" value="'+data[index2].masterProduct.description+'"		placeholder="description" 	disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].titleItem+'" id="titleEdit2'+Ix+'" 			placeholder="Title" 		disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic+'" id="requestPicEdit2'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestPic.employeeName+'" id="requestPicEdit2'+Ix+'" 	placeholder="Request PIC" 	disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].requestDueDate+'" id="duedateEdit2'+Ix+'" 	placeholder="Due Date" 		disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].startDate+'" id="startdateEdit2'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
-			tRow += '<td><input type="text" class="form-control" value="'+data[index2].endDate+'"id="enddateEdit2'+Ix+'" 			placeholder="End Date" 		disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="" id="startdateEdit2'+Ix+'" 		placeholder="Start Date" 	disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="" id="enddateEdit2'+Ix+'" 			placeholder="End Date" 		disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+data[index2].note+'" id="noteEdit2'+Ix+'" 				placeholder="Note" disabled></td>';
 			tRow +=	'</tr>';
 			index2++;
@@ -739,6 +999,7 @@ $(document).ready(function(){
 				data		:JSON.stringify(transaksiDesign),
 			  	success		:function(data){
 			  		console.log(data);
+			  		loadData();
 			  	}
 		  });
 		  
@@ -765,6 +1026,7 @@ $(document).ready(function(){
 					data		:JSON.stringify(transaksiDesign),
 				  	success		:function(data){
 				  		console.log(data);
+				  		loadData();
 				  	}
 			  });
 		  		 $('#rejectDesignModal').modal('hide');
@@ -772,7 +1034,7 @@ $(document).ready(function(){
 			  	loadData();
 		
 	});
-	  
+	   
 	     
 });
 

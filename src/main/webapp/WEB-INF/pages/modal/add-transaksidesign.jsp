@@ -29,7 +29,7 @@
 									<label for="eventCode" class="col-sm-4 col-form-label">Event
 										Code</label>
 									<div class="col-sm-7">
-										<select class="form-control" id="eventCode">
+										<select class="form-control" id="eventCode" required data-parsley-required-message="Kode event harus ada">
 											<option value="">Choose...</option>
 											<%--	<c:forEach var="event" items="${events}">
 											<option value="${event.id}">${event.code}</option>
@@ -42,11 +42,11 @@
 										Title</label>
 									<div class="col-sm-7">
 										<input type="text" class="form-control" id="titleHeader"
-											placeholder="Design Title">
+											placeholder="Design Title" required data-parsley-required-message="Judul desain harus ada">
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-5" style="margin-top:10px;">
+							<div class="col-sm-4" style="margin-top:10px;">
 								<div class="form-group row">
 									<label for="addRequestBy" class="col-sm-4 col-form-label">Request
 										By</label>
@@ -71,6 +71,8 @@
 									</div>
 								</div>
 							</div>
+							<div class="col" style="margin-top:10px;margin-left:10px;" id="tempatError">
+							</div>
 						</div>
 					</div>
 					<br>
@@ -93,34 +95,7 @@
 									<th></th>
 								</tr>
 							</thead>
-							<tbody class="tableBody">
-								<tr id="items-1">
-									<td><select class="custom-select" id="productItem1"
-										style="width: 150px" data-parsley-required disabled>
-											<option value="">Choose...</option>
-											<c:forEach var="product" items="${products}">
-												<option value="${product.id}">${product.name}</option>
-											</c:forEach>
-									</select></td>
-									<td><input type="text" class="form-control description"
-										id="description1" placeholder="description" disabled></td>
-									<td><input type="text" class="form-control" id="title1"
-										placeholder="Title" disabled></td>
-									<td><input type="text" class="form-control"
-										id="requestPic1" placeholder="Request PIC" disabled></td>
-									<td><input type="text" class="form-control" id="duedate1"
-										placeholder="Due Date" disabled></td>
-									<td><input type="text" class="form-control"
-										id="startdate1" placeholder="Start Date" disabled></td>
-									<td><input type="text" class="form-control" id="enddate1"
-										placeholder="End Date" disabled></td>
-									<td><input type="text" class="form-control" id="note1"
-										placeholder="Note" disabled></td>
-									<td><a href="#" id="1" class="btn-edit-design"><span
-											class="oi oi-pencil"></span></a> <a href="#" id="1"
-										class="btn-delete-design"><span class="oi oi-trash"></span></a>
-									</td>
-								</tr>
+							<tbody class="tableBody" style="line-height: 1">
 							</tbody>
 						</table>
 					</div>

@@ -4,15 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="t_design_item")
@@ -25,8 +28,10 @@ public class TransaksiDesignItem {
 	@Column(name="title_item")
 	private String titleItem;
 	
-	@Column(name="request_pic")
-	private int requestPic;
+	/*@Column(name="request_pic")*/
+	@ManyToOne
+	@JoinColumn(name="request_pic")
+	private MasterEmployee requestPic;
 	
 	@Column(name="start_date")
 	@Temporal(TemporalType.DATE)
@@ -66,9 +71,14 @@ public class TransaksiDesignItem {
 	@ManyToOne
 	@JoinColumn(name = "m_product_id")
 	private MasterProduct masterProduct;
+	
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="tDesignItemId")
+	@JsonBackReference
+	private DesignItemFile designItemFile;
 
 	public TransaksiDesignItem() {
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -85,11 +95,11 @@ public class TransaksiDesignItem {
 		this.titleItem = titleItem;
 	}
 
-	public int getRequestPic() {
+	public MasterEmployee getRequestPic() {
 		return requestPic;
 	}
 
-	public void setRequestPic(int requestPic) {
+	public void setRequestPic(MasterEmployee requestPic) {
 		this.requestPic = requestPic;
 	}
 
@@ -180,5 +190,15 @@ public class TransaksiDesignItem {
 	public void setMasterProduct(MasterProduct masterProduct) {
 		this.masterProduct = masterProduct;
 	}
+
+	public DesignItemFile getDesignItemFile() {
+		return designItemFile;
+	}
+
+	public void setDesignItemFile(DesignItemFile designItemFile) {
+		this.designItemFile = designItemFile;
+	}
+
+	
 		
 }

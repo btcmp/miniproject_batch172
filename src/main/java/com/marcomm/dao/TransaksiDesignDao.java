@@ -18,4 +18,5 @@ public interface TransaksiDesignDao {
 	public void update(TransaksiDesign transaksiDesign1);
 	
 	
+	
 }
