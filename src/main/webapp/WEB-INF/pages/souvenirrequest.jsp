@@ -5,10 +5,6 @@
 <!DOCTYPE html>
 <html> 
 <head>
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<c:url value="/j_spring_security_logout" var="logoutUrl" />
 <meta charset="ISO-8859-1">
 <title>SOUVENIR REQUEST</title>
 </head>
@@ -41,19 +37,17 @@
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
 						<li class="nav-item"><a class="nav-link text-white" href="#">
-								Dashboard </a></li>
-						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu"
-							href="#"> Master</a>
-							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
-							</ul>
-						</li>
-						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
-							href="#"> Transaksi</a>
-							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
-							</ul>
-						</li>
-						<li class="nav-item"><a class="nav-link text-white"
-							href="${logoutUrl}"> Logout </a></li>
+								 Dashboard	
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="#"> Master
+						</a></li>
+						<li class="nav-item"><a class="nav-link bg-warning text-white" href="#">
+								Souvenir
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="#"> Transaction	
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
+						</a></li>
 					</ul>
 					</div>
 			</nav><!-- END DASHBOARD -->
@@ -151,7 +145,6 @@ $(document).ready(function(){
 		'ordering':false
 	});
 	loadData();
-	createMenu();
 	/* DATE PICKER */
 	//due date
 	$('#data4').datepicker({
@@ -276,15 +269,12 @@ $(document).ready(function(){
 				console.log(data);
 				loadData();
 				//$('#addTranSouReqModal').modal('hide');
-				$('#addTranSouReqModal').modal('hide');
-				document.getElementById("notification").innerHTML = "Data Saved! Transaction Souvenir request has been added with code: "+transaksiSouvenir.code+"!";
-				$('#notification').show('slow').delay(1500).hide('slow');
 			}
 		});
 		
-		/* $('#addTranSouReqModal').modal('hide');
+		$('#addTranSouReqModal').modal('hide');
 		document.getElementById("notification").innerHTML = "Data Saved! Transaction Souvenir request has been added with code: "+transaksiSouvenir.code+"!";
-		$('#notification').show('slow').delay(1500).hide('slow'); */
+		$('#notification').show('slow').delay(1500).hide('slow');
 	});
 	
 	/* BUTTON SEARCH */
@@ -316,7 +306,7 @@ $(document).ready(function(){
 				$('#editRequestDate').val(data[0].transaksiSouvenir.requestDate);
 				$('#editDueDate').val(data[0].transaksiSouvenir.requestDueDate);
 				$('#editNote').val(data[0].transaksiSouvenir.note);
-				$('#editStatus').val(statusTransaksi(data[0].transaksiSouvenir.status));
+				$('#editStatus').val(data[0].transaksiSouvenir.status);
 				
 				$('#editTransaksiId').val(data[0].transaksiSouvenir.id);
 				$('.tableBodyEdit').empty();
@@ -368,14 +358,14 @@ $(document).ready(function(){
 		 var oTable = $('#modalTableEditItems');
 			var tBody = oTable.find('tbody');
 			var tRow ='<tr id="itemsEdit-'+Id+'">';
-			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" style="width:150px" disabled required>'+
+			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" style="width:150px" disabled>'+
 					'<option value="" selected>Select Souvenir</option>'+
 					'<c:forEach var="souvenir" items="${souvenirs}">'+
 					'<option value="${souvenir.id}">${souvenir.name}</option>'+
 					'</c:forEach>'+
 					'</select></td>';
-			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'" placeholder="Qty" disabled required></td>';
-			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note" disabled required></td>';
+			tRow += '<td><input type="number" class="form-control" id="qty'+Id+'" placeholder="Qty" disabled></td>';
+			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note" disabled></td>';
 			tRow += '<td><input type="hidden" class="form-control" id="itemIdEdit'+Id+'" value="0" ></td>';
 			tRow += '<td><input type="hidden" class="form-control" id="itemDeleteEdit'+Id+'" value=false ></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalEdit"><span class="oi oi-pencil"></span></a>'+' ';
@@ -448,18 +438,6 @@ $(document).ready(function(){
 		document.getElementById("notification").innerHTML = "Data Updated! Transaction Souvenir request  with code: "+transaksiSouvenir.code+" has been updated!";
 		$('#notification').fadeIn(1000).delay(4000).fadeOut(3000);
 	});
-	/* FUNGSI STATUS */
-	 function statusTransaksi(i){
-		if(i==1){
-			return "Submitted";
-		 }else if(i==2){
-			 return "in proggress"
-		 }else if(i==3){
-			 return "Received by requester"
-		 }else if(i==0){
-			  return "rejected"}
-	};
-	
 	/* LOAD EVENTS */
 	function loadEvents(){
 		$.ajax({
@@ -686,7 +664,7 @@ $(document).ready(function(){
 					Id=keys.length;
 					$('#transactionRecCode').val(data[0].transaksiSouvenir.code);
 					$('#eventRecCode').val(data[0].transaksiSouvenir.tEventId.code);
-					/* $('#editEventId').val(data[0].transaksiSouvenir.tEventId.id); */
+					//$('#editEventId').val(data[0].transaksiSouvenir.tEventId.id);
 					$('#recTransBy').val(data[0].transaksiSouvenir.requestBy.employeeName);
 					$('#recTransDate').val(data[0].transaksiSouvenir.requestDate);
 					$('#DueRecTransDate').val(data[0].transaksiSouvenir.requestDueDate);
@@ -727,79 +705,6 @@ $(document).ready(function(){
 			$('#notification').fadeIn(3000).delay(1500).fadeOut(3000 );
 			
 		}); 
-		
-
-		/* dropdown menu */
-		function createMenu(){
-			var relee=null;
-			$.ajax({
-				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
-				type : 'GET',
-				success : function(data1){
-				 
-				 relee=data1;
-				 console.log('Ini adalah role nya');
-				 console.log(relee);
-				 menusRole(relee);			  
-					  
-				}
-			});
-		 }
-		
-		/* DROPDOWN MENU */
-		function menusRole(role22){
-			$.ajax({
-				url : '${pageContext.request.contextPath}/access/getall',
-				type : 'GET',
-				success : function(data4) {
-					var role1=null;
-						role1=role22;
-					console.log(role1);
-					console.log('harus sama');
-					console.log(data4[1].role.roleName);
-					$.each(data4,function(index,access){
-						 if(access.role.roleName == role1){
-							  var idMenu=0;
-							  idMenu=access.id;
-							   getMenubyRole(idMenu);
-						 }
-					});
-					 
-				},
-				dataType : 'json'
-			});	
-			}
-		
-		function getMenubyRole(idMenu){
-			 $.ajax({
-					url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
-					type : 'GET',
-					success : function(data2) {
-						$('#selectMenu').empty();
-						$('#selectMenu2').empty();
-						/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
-						var tinggi=0;
-						var tinggi2=0;
-						 $.each(data2.menus,function(index,menu){
-							 
-							
-							  if(menu.parentId==1){
-								$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-white  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
-							 
-							  }else if(menu.parentId==2){
-								 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-white  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
-							  }			 
-						 }); 
-					},
-					dataType : 'json'
-				});
-		}		
-		$('#masterMenu').click(function(){
-			$('#selectMenu').toggle();
-		});
-		$('#masterMenu2').click(function(){
-			$('#selectMenu2').toggle();
-		});
 		
 }); /* batas akhir ready function */
 

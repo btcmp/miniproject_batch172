@@ -5,10 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<c:url value="/j_spring_security_logout" var="logoutUrl" />
 <meta charset="ISO-8859-1">
 <title>***TRANSAKSI SOUVNEIR***</title>
 </head>
@@ -43,22 +39,21 @@
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
 						<li class="nav-item"><a class="nav-link text-white" href="#">
-								Dashboard </a></li>
-						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu"
-							href="#"> Master</a>
-							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
-							</ul>
-						</li>
-						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
-							href="#"> Transaksi</a>
-							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
-							</ul>
-						</li>
-						<li class="nav-item"><a class="nav-link text-white"
-							href="${logoutUrl}"> Logout </a></li>
+								 Dashboard	
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="#"> Master
+						</a></li>
+						<li class="nav-item"><a class="nav-link bg-warning text-white" href="#">
+								Souvenir
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="#"> Transaction	
+						</a></li>
+						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
+						</a></li>
 					</ul>
 					</div>
 			</nav><!-- END DASHBOARD -->
+			
 			<div role="main" class="col-md-8 ml-sm-auto col-lg-10">
 				<div class="card text-white bg-primary mb-3">
 					<div class="card-header">List Souvenir Stock</div>
@@ -106,8 +101,7 @@
 		</div>
 	</div>
 	
-<!-- INCLUDE FILE -->
-<%@include file="/WEB-INF/pages/modal/modal_transaksi_souvenir.jsp" %>
+	
 		
 </body>
 
@@ -129,21 +123,14 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
 
-
+<!-- INCLUDE FILE -->
+<%@include file="/WEB-INF/pages/modal/modal_transaksi_souvenir.jsp" %>
 
 <!-- CODE JAVA SCRIPT START HERE -->
 <script type="text/javascript">
 
 $(document).ready(function(){
 	loadData();
-	createMenu();
-	
-	/* FUNGSI DATA TABLE */
-	$('#transSouTable').DataTable({
-		'sDom':'tip',
-		'ordering':false
-	});
-	
 	/* DATE PICKER */
 	//created date
 	$('#data4').datepicker({
@@ -166,9 +153,7 @@ $(document).ready(function(){
 			url : '${pageContext.request.contextPath}/transaksisouvenir/getcode',
 			type : 'GET',
 			success : function(data){
-				$('#addUnitForm').trigger('reset');
 				$('#transactionCode').val(data);
-				
 			},
 			dataType : 'json'
 		});
@@ -204,14 +189,14 @@ $(document).ready(function(){
 		var oTable = $('#modalTableSouTrans');
 		var tBody = oTable.find('tbody');
 		var tRow = '<tr id="items-'+Id+'">';
-			tRow += '<td><select required disabled class="custom-select" id="souvenirItem'+Id+'" name="details['+index+'].mSouvenirId">'+
-						'<option value=" " selected>-choose-</option>'+
+			tRow += '<td><select class="custom-select" id="souvenirItem'+Id+'" name="details['+index+'].mSouvenirId">'+
+						'<option value=" " selected>-Select Souvenir-</option>'+
 						'<c:forEach var="souvenir" items="${souvenirs}">'+
 						'<option value="${souvenir.id}">${souvenir.name}</option>'+
 						'</c:forEach>'+
 					'</select></td>';
-			tRow += '<td><input required disabled type="number" class="form-control" id="quantity'+Id+'" placeholder="Qty"></td>';
-			tRow += '<td><input disabled type="text" class="form-control" id="note'+Id+'" placeholder="Note"></td>';
+			tRow += '<td><input type="number" class="form-control" id="quantity'+Id+'" placeholder="Qty"></td>';
+			tRow += '<td><input type="text" class="form-control" id="note'+Id+'" placeholder="Note"></td>';
 			tRow += '<td><a id="'+Id+'" href="#" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>'+' ';
 			tRow +=	'<a id="'+Id+'" href="#" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>';
 			tRow += '</tr>';
@@ -235,9 +220,7 @@ $(document).ready(function(){
 		console.log(transaksiSouvenirItems);
 		var transaksiSouvenir = {
 				code : $('#transactionCode').val(),
-				receivedBy : {
-					id:$('#receivedTransSBy').val()	
-				},
+				//receivedBy : $('#receivedTransSBy').val(),
 				receivedDate : $('#receivedTransSDate').val(),
 				note : $('#noteTransSou').val(),
 				transaksiSouvenirItems:transaksiSouvenirItems
@@ -264,13 +247,7 @@ $(document).ready(function(){
 		
 	});
 	
-	//icon edit added item
-	$(document).on('click','.editBtnModalTransS',function(){
-		var id = $(this).attr('id');
-		$('#items-'+id).find(':input').prop('disabled', false);
-	});
-	
-	//icon remove added item
+	//remove added item
 	$(document).on('click', '.deleteBtnModalTransS', function(){
 		var id = $(this).attr('id');
 		$('#items-'+id).remove();
@@ -299,7 +276,7 @@ $(document).ready(function(){
 			var tRow = '<a id="'+souvenir.id+'" href="#" class="btn-view-souvenir"><span class="oi oi-magnifying-glass"></span></a>';
 				tRow += ' ';
 				tRow += '<a id="'+souvenir.id+'" href="#" class="btn-update-souvenir"><span class="oi oi-pencil"></span></a>';
-			oTable.row.add([increment, souvenir.code, souvenir.receivedBy.employeeName, souvenir.receivedDate, souvenir.createdDate, souvenir.createdBy.employeeName, tRow]);
+			oTable.row.add([increment, souvenir.code, souvenir.receivedBy, souvenir.receivedDate, souvenir.createdDate, souvenir.createdBy.employeeName, tRow]);
 		});
 		oTable.draw();
 	}
@@ -320,7 +297,7 @@ $(document).ready(function(){
 					
 						//Data atas
 						$('#viewTransCode').val(data[0].transaksiSouvenir.code);
-						$('#viewReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy.employeeName);
+						$('#viewReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy);
 						$('#viewReceivedTransSDate').val(data[0].transaksiSouvenir.receivedDate);
 						$('#viewNoteTransSou').val(data[0].transaksiSouvenir.note);
 						$('.viewTableBody').empty();
@@ -367,13 +344,13 @@ $(document).ready(function(){
 					//Data atas
 					$('#idEditTransSou').val(data[0].transaksiSouvenir.id);
 					$('#editTransactionCode').val(data[0].transaksiSouvenir.code);
-					$('#editReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy.id);
+					$('#editReceivedTransSBy').val(data[0].transaksiSouvenir.receivedBy);
 					$('#editReceivedTransSDate').val(data[0].transaksiSouvenir.receivedDate);
 					$('#editNoteTransSou').val(data[0].transaksiSouvenir.note);
 					
 					$('.editTableBody').empty();
 					
-					itemBawah(len1,data);
+					itemBawah(len,data);
 				}
 			
 		}); /* batas akhir ajax */	
@@ -464,9 +441,7 @@ $(document).ready(function(){
 		var transaksiSouvenir = {
 				id: parseInt($('#idEditTransSou').val()),
 				code : $('#editTransactionCode').val(),
-				receivedBy : {
-					id:parseInt($('#editReceivedTransSBy').val())	
-				},
+				//receivedBy : $('#editReceivedTransSBy').val(),
 				receivedDate : $('#editReceivedTransSDate').val(),
 				note : $('#editNoteTransSou').val(),
 				transaksiSouvenirItems:transaksiSouvenirItems
@@ -484,9 +459,9 @@ $(document).ready(function(){
 			data:JSON.stringify(transaksiSouvenir),
 			success:function(data){
 				//console.log(data);
-				console.log("data berhasil disimpan....");	
+				console.log("data berhasil disimpan....");
+				
 			}
-			
 			/* error:function(){
 				console.log("data gagal disimpan...");
 			} */
@@ -498,83 +473,8 @@ $(document).ready(function(){
 		document.getElementById("notif").innerHTML = "Data updated! Transaction stock with code: "+transaksiSouvenir.code+" has been updated!";
 		$('#notif').show('slow').delay(1500).hide('slow');
 		
-		//window.location='${pageContext.request.contextPath}/transaksisouvenir';
 	});
 	
-	/* SECTION DASHBOARD */
-	/* dropdown menu */
-	function createMenu(){
-		var relee=null;
-		$.ajax({
-			url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
-			type : 'GET',
-			success : function(data1){
-			 
-			 relee=data1;
-			 console.log('Ini adalah role nya');
-			 console.log(relee);
-			 menusRole(relee);			  
-				  
-			}
-		});
-	 }
-	
-	/* DROPDOWN MENU */
-	function menusRole(role22){
-		$.ajax({
-			url : '${pageContext.request.contextPath}/access/getall',
-			type : 'GET',
-			success : function(data4) {
-				var role1=null;
-					role1=role22;
-				console.log(role1);
-				console.log('harus sama');
-				 
-				$.each(data4,function(index,access){
-					 if(access.role.roleName == role1){
-						  var idMenu=0;
-						  idMenu=access.id;
-						   getMenubyRole(idMenu);
-					 }
-				});
-				 
-			},
-			dataType : 'json'
-		});	
-		}
-	
-	function getMenubyRole(idMenu){
-		 $.ajax({
-				url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
-				type : 'GET',
-				success : function(data2) {
-					$('#selectMenu').empty();
-					$('#selectMenu2').empty();
-					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
-					var tinggi=0;
-					var tinggi2=0;
-					 $.each(data2.menus,function(index,menu){
-						 
-						
-						  if(menu.parentId==1){
-							$('#selectMenu').append('<li   class="nav-item"><a class="nav-link text-white  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
-						 
-						  }else if(menu.parentId==2){
-							 $('#selectMenu2').append('<li   class="nav-item"><a class="nav-link text-white  " href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
-						  }			 
-					 }); 
-				},
-				dataType : 'json'
-			});
-	}		
-	$('#masterMenu').click(function(){
-		$('#selectMenu').toggle();
-	});
-	$('#masterMenu2').click(function(){
-		$('#selectMenu2').toggle();
-	});
-
-	 
 	
 }); /* batas akhir ready function */
 

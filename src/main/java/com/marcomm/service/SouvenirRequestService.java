@@ -181,12 +181,6 @@ public class SouvenirRequestService {
 			souvenir1.setStatus(souvenir.getStatus());
 		}else if(souvenir.getStatus()==3){
 			souvenir1.setStatus(souvenir.getStatus());
-			List<TransaksiSouvenirItem> tsi=transaksiSouvenirItemDao.getItemBySouvenir(souvenir1);
-			for (TransaksiSouvenirItem transaksiSouvenirItem : tsi) {
-				MasterSouvenir ms = masterSouvenirDao.getSouvenirById(transaksiSouvenirItem.getMasterSouvenir().getId());
-				ms.setQuantity(ms.getQuantity()+Math.toIntExact(transaksiSouvenirItem.getQty()));
-				masterSouvenirDao.update(ms);
-			}
 		}else {
 			souvenir1.setStatus(souvenir.getStatus());
 			souvenir1.setRejectReason(souvenir.getRejectReason());

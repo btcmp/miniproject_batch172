@@ -29,8 +29,8 @@ public class MasterMenuAccessDaoImpl implements MasterMenuAccessDao{
 		menuAccess.setCreatedDate(now);
 		menuAccess.setUpdatedDate(now);
 		menuAccess.setDelete(false);
-		menuAccess.setCreatedBy("Administrator");
-		menuAccess.setUpdatedBy("Administrator");
+		menuAccess.setCreatedBy("admin");
+		menuAccess.setUpdatedBy("admin");
 		Session session=sessionFactory.getCurrentSession();
 		session.save(menuAccess);
 	}

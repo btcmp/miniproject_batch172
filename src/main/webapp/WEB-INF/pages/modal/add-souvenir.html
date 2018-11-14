@@ -18,8 +18,8 @@
  				</div>
  				<div class="col">
 			    <label for="add-unit">Unit</label><br/>
-			    	<select class="form-control" path="unit.id" style="width: 100%;height:34px" name="unit" id="add-unit" required data-parsley-required-message="Harap memilih unit">
-		      		  	<option value="" selected>--Select Unit--</option>
+			    	<select class="form-control" path="unit.id" style="width: 100%;" name="unit" id="add-unit" required data-parsley-required-message="Harap memilih unit">
+		      		  	<option value="" selected>Choose...</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
 		      		  	</c:forEach>
@@ -74,8 +74,8 @@
  						</div>
 				    <div class="col">
 				    	<label for="edit-souvenir">Unit</label><br/>
-			    		<select class="form-control" path="unit.id" style="width: 100%;height:34px" name="unit" id="edit-souvenir">
-		      		  	<option value="" selected>--Pilih Unit--</option>
+			    		<select class="form-control" path="unit.id" style="width: 100%;" name="unit" id="edit-souvenir">
+		      		  	<option value="" selected>Pilih Unit</option>
 		      		  	<c:forEach var="unit" items="${units}">
 		      		  	<option value="${unit.id}">${unit.name}</option>
 		      		  	</c:forEach>

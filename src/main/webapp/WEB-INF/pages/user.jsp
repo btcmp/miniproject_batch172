@@ -429,8 +429,9 @@ $(document).ready(function(){
 				}
 			}) 
 		 }
+ 
 		function createMenu(){
-			var relee=null;
+			var relee=null; 
 			$.ajax({
 				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
 				type : 'GET',
@@ -562,9 +563,7 @@ $(document).ready(function(){
 			success : function(data4) {
 				var role1=null;
 					role1=role22;
-				console.log(role1);
-				console.log('harus sama');
-				console.log(data4[1].role.roleName);
+				 
 				$.each(data4,function(index,access){
 					 if(access.role.roleName == role1){
 						  var idMenu=0;

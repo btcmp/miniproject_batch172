@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marcomm.dao.MasterUnitDao;
-import com.marcomm.dao.MasterUserDao;
 import com.marcomm.model.MasterUnit;
-import com.marcomm.model.MasterUser;
 
 @Service
 @Transactional
@@ -21,13 +19,8 @@ public class MasterUnitService {
 	@Autowired
 	MasterUnitDao masterUnitDao;
 	
-	@Autowired
-	MasterUserDao masterUserDao;
-	
 	/*save*/
 	public void saveMasterUnit(MasterUnit masterUnit) {
-		MasterUser mu = masterUserDao.getUserByUserLog();
-		masterUnit.setCreatedBy(mu.getmRole().getRoleName());
 		masterUnitDao.saveMasterUnit(masterUnit);
 	}
 	
@@ -52,8 +45,7 @@ public class MasterUnitService {
 	/*update unit*/
 	public void updateUnit(MasterUnit masterUnit) {
 		MasterUnit mut = masterUnit;
-		MasterUser mu = masterUserDao.getUserByUserLog();
-		mut.setUpdatedBy(mu.getmRole().getRoleName());
+		mut.setUpdatedBy("admin");
 		Date date = new Date();
 		mut.setUpdatedDate(date);
 		masterUnitDao.updateUnit(mut);

@@ -107,11 +107,16 @@ public class TransaksiEventDaoImpl implements TransaksiEventDao {
 		session.update(event);
 	}
 
+
 	public void reject(TransaksiEvent event) {
 		// TODO Auto-generated method stub
 		event.setIsDelete(false);
 		
+		event.setCreatedBy("Sahid Triambudhi");
 		event.setStatus(0);
+		
+		Date now = new Date();
+		event.setUpdatedDate(now);
 		
 		Session session = sessionFactory.getCurrentSession();
 		session.update(event);

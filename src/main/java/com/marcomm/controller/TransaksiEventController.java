@@ -39,10 +39,8 @@ public class TransaksiEventController {
 	public String index(Model model) {
 		MasterUser user = eventService.getUser();
 		List<MasterEmployee> allEmployee = employeeService.getAllEmployee();
-		List<MasterEmployee> employeeStaff = employeeService.getAllEmployeeStaff();
 		model.addAttribute("rolename", user);
 		model.addAttribute("allEmployee", allEmployee);
-		model.addAttribute("employeeStaff", employeeStaff);
 		return "event";
 	}
 	
