@@ -1,4 +1,4 @@
-<div class="modal fade" id="approveDesignTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addDesignTransactionTitle" aria-hidden="true">
+<div class="modal fade" id="viewTransactionModal" tabindex="-1" role="dialog" aria-labelledby="DesignTransactionTitle" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white border border-bottom-0 border-dark">
@@ -29,9 +29,7 @@
 									<label for="viewEventCode" class="col-sm-4 col-form-label">Event
 										Code</label>
 									<div class="col-sm-7">
-										<select class="form-control" id="viewEventCode" disabled>
-										 
-										</select>
+										<input type="text" class="form-control" id="viewEventCode" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -46,7 +44,7 @@
 									<label for="viewStatus" class="col-sm-4 col-form-label">Status
 										</label>
 									<div class="col-sm-7">
-										<input type="text" class="form-control" id="status2"
+										<input type="text" class="form-control" id="viewStatus"
 											placeholder="status" readonly>
 									</div>
 								</div>
@@ -54,7 +52,7 @@
 									<label for="viewAssignTo" class="col-sm-4 col-form-label">Assign To
 										</label>
 									<div class="col-sm-7">
-										<input class="form-control" id="viewAssignTo">
+										<input type="text" class="form-control" id="viewAssignTo" disabled>
 									</div>
 								</div>
 							</div>
@@ -88,7 +86,7 @@
 					<br>
 					<div class="bg-light border rounded" style="height: 50%;">
 						 
-						<table id="itemsTable2">
+						<table id="viewItemsTable">
 							<thead>
 								<tr>
 									<th>Product Name</th>
