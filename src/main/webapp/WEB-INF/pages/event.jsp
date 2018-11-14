@@ -444,7 +444,7 @@ $(document).ready(function(){
 			type : 'GET',
 			success : function(data){
 				$('#updatedby').val(data.employee.employeeName);
-				$('#requestbyEdit').val(data.employee.employeeName);
+				$('#requestbyEdit').val(data.employee.employeeName); 
 			}
 		});
 		$('#editEventModal').modal();

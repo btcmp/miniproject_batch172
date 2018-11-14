@@ -509,7 +509,7 @@
 					var role1=null;
 						role1=role2;
 					console.log(role1);
-					$.each(data,function(index,access){
+					$.each(data,function(index,access){ 
 						 if(access.role.roleName == role1){
 							var idMenu=0;
 							idMenu=access.id;
