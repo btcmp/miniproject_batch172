@@ -81,18 +81,18 @@
 				</tr>
 			</thead>
 			<tbody class="tableBody">
-			<tr id='items-1'>
+			<tr id='items1'>
 				<td>
-				<select class="custom-select" id="souvenirItem" style="width:150px" data-parsley-required>
+				<select class="custom-select" id="souvenirItem1" style="width:150px" data-parsley-required disabled>
 					<option value="">Select Souvenir</option>
 					<c:forEach var="souvenir" items="${souvenirs}">
 						<option value="${souvenir.id}">${souvenir.name}</option>
 					</c:forEach>
 				</select></td>
-				<td><input type="text" class="form-control" placeholder="Qty"></td>
-				<td><input type="text" class="form-control" placeholder="Note"></td>
-				<td><a href="#" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
-					<a href="#" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>
+				<td><input type="text" class="form-control" id="qty1" placeholder="Qty1" required disabled></td>
+				<td><input type="text" class="form-control" id="note1" placeholder="Note1" required disabled></td>
+				<td><a href="#" id="1" class="editBtnModalTransSR"><span class="oi oi-pencil"></span></a>
+					<a href="#" id="1" class="deleteBtnModalTransSR"><span class="oi oi-trash"></span></a></td>
 			</tr>
 			</tbody>
 		</table>
