@@ -110,8 +110,10 @@ public class TransaksiDesignService {
 	
 	public void closeDesignUpdate(TransaksiDesign transaksiDesign) {
 		TransaksiDesign tDesign = transaksiDesignDao.getById(transaksiDesign.getId());
+		tDesign.setStatus(3);
 		List<TransaksiDesignItem> itemsBaru = transaksiDesign.getTransaksiDesignItems();
 		List<TransaksiDesignItem> transaksiDesignItems = transaksiDesignItemDao.getItemByDesign(tDesign);
+		transaksiDesignDao.update(tDesign);
 		int i=0;
 		for (TransaksiDesignItem transaksiDesignItem : itemsBaru) {
 			DesignItemFile itemFile = transaksiDesignItem.getDesignItemFile();

@@ -404,7 +404,7 @@ $(document).ready(function(){
 					role1=role22;
 				console.log(role1);
 				console.log('harus sama');
-				console.log(data4[1].role.roleName);
+				 
 				$.each(data4,function(index,access){
 					 if(access.role.roleName == role1){
 						  var idMenu=0;

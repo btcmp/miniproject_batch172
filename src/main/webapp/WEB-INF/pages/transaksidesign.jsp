@@ -50,17 +50,19 @@ input.parsley-error {
 				<div class="sidebar-sticky">
 					<ul class="nav flex-column">
 						<li class="nav-item"><a class="nav-link text-white" href="#">
-								 Dashboard	
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="#"> Master
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath }/product">
-								Products
-						</a></li>
-						<li class="nav-item"><a class="nav-link bg-danger text-white" href="${pageContext.request.contextPath}/design"> Transaction	
-						</a></li>
-						<li class="nav-item"><a class="nav-link text-white" href="${logoutUrl}" > Logout	
-						</a></li>
+								Dashboard </a></li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu"
+							href="#"> Master</a>
+							<ul class=" nav flex-column" id="selectMenu" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white master" id="masterMenu2"
+							href="#"> Transaksi</a>
+							<ul class=" nav flex-column" id="selectMenu2" data-index="1" style="width :100%; display: none;" >
+							</ul>
+						</li>
+						<li class="nav-item"><a class="nav-link text-white"
+							href="${logoutUrl}"> Logout </a></li>
 					</ul>
 					</div>
 			</nav><!-- END DASHBOARD -->
@@ -126,6 +128,7 @@ input.parsley-error {
 	<%@include file="/WEB-INF/pages/modal/approve-transaksidesign.jsp" %>
 	<%@include file="/WEB-INF/pages/modal/close-design.jsp" %>
 	<%@include file="/WEB-INF/pages/modal/rejected-transaksidesignjsp.jsp" %>
+	<%@include file="/WEB-INF/pages/modal/view-transaksidesign.jsp" %>
 	
 </body>
 <!--   Core JS Files   -->
@@ -154,6 +157,26 @@ $(document).ready(function(){
 		'sDom':'tip',
 		'ordering':false
 	});
+	Parsley.addValidator('cekend',{
+    	validateString: function(value,date){
+    	var end = value.split("-");
+    	var start = $('#'+date).val().split("-");
+    	var endYear = parseInt(end[0]);
+    	var startYear = parseInt(start[0]);
+    	var endMonth = parseInt(end[1]);
+    	var startMonth = parseInt(start[1]);
+    	var endDate = parseInt(end[2]);
+    	var startDate = parseInt(start[2]);
+    	if(endYear>=startYear){
+    		if(endMonth>=startMonth){
+    			 if(endDate>=startDate){
+    		    		return true;
+    		    	}	
+        	}	
+    	}
+    	 return false;
+    	}
+    	});
 	$('#data3').datepicker({
 		format:'yyyy-mm-dd',
 		autoclose:true,
@@ -293,6 +316,10 @@ $(document).ready(function(){
 		$('#closeDesignModal').modal();
 	});
 	$('#closeBtnModal').on('click',function(){
+		var validate=$('#closeFormDesign').parsley();
+		validate.validate();		
+	});
+	$('#closeFormDesign').parsley().on('form:success',function(){
 		var transaksiDesignItems=[];
 		$('.closeTableBody tr').each(function(){
 			tRow = $(this).find('td :input');
@@ -346,13 +373,13 @@ $(document).ready(function(){
 			data:forms,
 			cache:false,
 			success:function(data){
+				loadData();
 				$('#closeDesignModal').modal('hide');
 			},
 			error:function(e){
 			}
 		})
-		
-	})
+	});
 	//edit on add modal
 	$(document).on('click','.btn-edit-design',function(){
 		$(this).closest('tr').find(':input').prop('disabled', false);
@@ -454,6 +481,7 @@ $(document).ready(function(){
 			type : 'GET',
 			dataType : 'json',
 			success : function(data){
+				console.log("getall")
 				convertToTable(data);
 			}
 		});
@@ -467,14 +495,36 @@ $(document).ready(function(){
 			increment++;
 
 			if(role==="Administrator"){
-				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-main"><span class="oi oi-magnifying-glass"></span></a>';
+				if(design.status==1){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-main"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Submitted";
+				} else if(design.status==2){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="In Progress";
+				} else if(design.status==3){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Done";
+				} else if(design.status==0){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Rejected";
+				}
 			}else if(role==="Staff"){
-				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';
-			}else{
-				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';
-				$('#closeBtnModal').hide();
-				$("#closeFormDesign").find(':input').prop('disabled',true);
+				if(design.status==1){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Submitted";
+				} else if(design.status==2){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design"><span class="oi oi-magnifying-glass"></span></a>';
+					status="In Progress";
+				} else if(design.status==3){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Done";
+				} else if(design.status==0){
+					var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
+					status="Rejected";
+				}
 				
+			}else{
+				var tRow ='<a id="'+design.id+'" href="#" class="btn-view-design-views"><span class="oi oi-magnifying-glass"></span></a>';
 			}
 			tRow +=' ';
 			tRow +='<a id="'+design.id+'" href="#" class="btn-update-design-main"><span class="oi oi-pencil"></span></a>';
@@ -485,9 +535,13 @@ $(document).ready(function(){
 			} else if(design.status==3){
 				status="Done";
 			} else if(design.status==0){
-				status="Rejected";
 			}
-			oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,design.assignTo,status,design.createdDate,design.createdBy,tRow]);
+			if(design.assignTo!=null){
+				oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,design.assignTo.employeeName,status,design.createdDate,design.createdBy,tRow]);	
+			}else{
+				oTable.row.add([increment,design.code,design.requestBy.employeeName,design.requestDate,"belum ada assign",status,design.createdDate,design.createdBy,tRow]);
+			}
+			
 		});
 		oTable.draw();
 	}
@@ -520,8 +574,8 @@ $(document).ready(function(){
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.titleItem+'"disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic.employeeName+'"disabled></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestDueDate+'"disabled></td>';
-			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date"></td>';
-			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date"></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date" required></td>';
+			tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date" required data-parsley-trigger="change focusout" data-parsley-cekend="closeStartDate'+i+'" data-parsley-cekend-message="tanggal harus lebih besar dari start date"></td>';
 			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
 			tRow += '<td><input type="hidden" value="'+designItem.id+'"></td>';
 			tRow += '<td><div id="file-click'+i+'" class="btn close-file-upload btn-primary">';
@@ -538,7 +592,13 @@ $(document).ready(function(){
 			$('#closeEndDate'+i).datepicker({
 				format:'yyyy-mm-dd',
 				autoclose:true,
-				uiLibrary: 'bootstrap4'
+				uiLibrary: 'bootstrap4',
+				select: function() {
+					this.focus();
+					},
+				close: function() {
+					this.blur();
+					}
 			});
 			$('#file-click'+i).click(function(){
 				$('#file-upload'+i).click();
@@ -550,7 +610,53 @@ $(document).ready(function(){
 	    });
 	}
 	
-	
+	$(document).on('click','.btn-view-design-views',function(){
+		var id = $(this).attr('id');
+		$.ajax({
+			url :'${pageContext.request.contextPath}/design/getitembydesignid/'+id,
+			type:'GET',
+			dataType:'json',
+			success:function(data){
+				$('#viewDesignId').val(data[0].transaksiDesign.id);
+				$('#viewTransactionCode').val(data[0].transaksiDesign.code);
+				$('#viewEventCode').val(data[0].transaksiDesign.transaksiEvent.code);
+				$('#viewTitleHeader').val(data[0].transaksiDesign.titleHeader);
+				$('#viewStatus').val(data[0].transaksiDesign.status);
+				if(data[0].transaksiDesign.assignTo!=null){
+					$('#viewAssignTo').val(data[0].transaksiDesign.assignTo.employeeName);	
+				}
+				$('#viewRequestBy').val(data[0].transaksiDesign.requestBy.employeeName);
+				$('#viewRequestDate').val(data[0].transaksiDesign.requestDate);
+				$('#viewNote').val(data[0].transaksiDesign.note);
+				viewDesign(data);
+				
+			}
+		});
+		$('#viewTransactionModal').modal();
+	});
+	function viewDesign(data){
+		var oTable = $('#viewItemsTable');
+	    var tBody = oTable.find('tbody');
+	    tBody.empty();
+	    $.each(data,function(i,designItem){
+	    	var tRow =	'<tr>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.name+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.masterProduct.description+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.titleItem+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestPic.employeeName+'"disabled></td>';
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.requestDueDate+'"disabled></td>';
+			if(data[0].transaksiDesign.status==3){
+				tRow += '<td><input type="text" class="form-control" value="'+designItem.startDate+'" id="closeStartDate'+i+'" placeholder="Start Date"disabled></td>';
+				tRow += '<td><input type="text" class="form-control" value="'+designItem.endDate+'" id="closeEndDate'+i+'" placeholder="End Date"disabled></td>';				
+			}else{
+				tRow += '<td><input type="text" class="form-control" id="closeStartDate'+i+'" placeholder="Start Date"disabled></td>';
+				tRow += '<td><input type="text" class="form-control" id="closeEndDate'+i+'" placeholder="End Date"disabled></td>';	
+			}
+			tRow += '<td><input type="text" class="form-control" value="'+designItem.note+'"disabled></td>';
+			tRow += '<td><input type="hidden" value="'+designItem.id+'"></td>';
+			tBody.append(tRow);
+	    });
+	}
 	
 	/*  KOLOM ANGGI*/
 	  /* UNTUK EDIT */
@@ -948,8 +1054,77 @@ $(document).ready(function(){
 			  	loadData();
 		
 	});
-	  
-	  
+	createMenu();
+	function createMenu(){
+		var relee=null;
+		$.ajax({
+			url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
+			type : 'GET',
+			success : function(data1){
+			 
+			 relee=data1;
+			 console.log('Ini adalah role nya');
+			 console.log(relee);
+			 menusRole(relee);			  
+				  
+			}
+		});
+	 }
+	
+	/* DROPDOWN MENU */
+	function menusRole(role22){
+		$.ajax({
+			url : '${pageContext.request.contextPath}/access/getall',
+			type : 'GET',
+			success : function(data4) {
+				var role1=null;
+					role1=role22;
+				console.log(role1);
+				console.log('harus sama');
+				 
+				$.each(data4,function(index,access){
+					 if(access.role.roleName == role1){
+						  var idMenu=0;
+						  idMenu=access.id;
+						   getMenubyRole(idMenu);
+					 }
+				});
+				 
+			},
+			dataType : 'json'
+		});	
+		}
+	
+	function getMenubyRole(idMenu){
+		 $.ajax({
+				url : '${pageContext.request.contextPath}/access/getmenuaccess/'+idMenu,
+				type : 'GET',
+				success : function(data2) {
+					$('#selectMenu').empty();
+					$('#selectMenu2').empty();
+					/* $('#selectMenu').append('<option value="" selected> Menu Anda</option>');	 */
+					var tinggi=0;
+					var tinggi2=0;
+					 $.each(data2.menus,function(index,menu){
+						 
+						
+						  if(menu.parentId==1){
+							$('#selectMenu').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');						 
+						 
+						  }else if(menu.parentId==2){
+							 $('#selectMenu2').append('<li class="nav-item"><a class="nav-link text-black" href="${pageContext.request.contextPath}/'+menu.controller+'"> '+menu.name+'</a></li>');  
+						  }			 
+					 }); 
+				},
+				dataType : 'json'
+			});
+	}		
+	$('#masterMenu').click(function(){
+		$('#selectMenu').toggle();
+	});
+	$('#masterMenu2').click(function(){
+		$('#selectMenu2').toggle();
+	}); 
 });
 
 </script>

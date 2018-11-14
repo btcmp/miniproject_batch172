@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.marcomm.model.MasterUnit;
 import com.marcomm.service.FungsiService;
+import com.marcomm.service.MasterUserService;
 
 @Repository
 public class MasterUnitDaoImpl implements MasterUnitDao{
@@ -23,6 +24,7 @@ public class MasterUnitDaoImpl implements MasterUnitDao{
 	
 	@Autowired
 	FungsiService fungsiService;
+	
 	
 	/*save data*/
 	public void saveMasterUnit(MasterUnit masterUnit) {
@@ -34,9 +36,6 @@ public class MasterUnitDaoImpl implements MasterUnitDao{
 		masterUnit.setDelete(false);
 		//set code
 		//masterUnit.setCode(getCode());
-		//session user login ---> belum fix
-		masterUnit.setCreatedBy(fungsiService.getUserLog());
-		masterUnit.setUpdatedBy(fungsiService.getUserLog());
 		Session session = sessionFactory.getCurrentSession();
 		session.save(masterUnit);	
 	}

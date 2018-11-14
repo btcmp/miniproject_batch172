@@ -28,10 +28,10 @@
 						</div>    
 					</div>
 					<div class="form-group row">
-						<label for="receivedTransSBy" class="col-sm-3 col-form-label">Received By</label>
+						<label for="receivedTransSBy" class="col-sm-3 col-form-label" >Received By</label>
 						<div class="col-sm-4">
-							<select class="form-control custom select" id="receivedTransSBy">
-								<option value=" " selected>Select Employee</option>
+							<select required class="form-control custom select" id="receivedTransSBy">
+								<option value=" " selected >Select Employee</option>
 								<c:forEach var="employee" items="${employees }">
 									<option value="${employee.id }">${employee.employeeName }</option>
 								</c:forEach>
@@ -39,16 +39,16 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="receivedTransSDate" class="col-sm-3 col-form-label">Received Date</label>
+						<label for="receivedTransSDate" class="col-sm-3 col-form-label" >Received Date</label>
 						<div class="col-sm-4">
 							<input type="text" class="form-control" id="receivedTransSDate"
-								placeholder="Select Date">
+								placeholder="Select Date" required>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="noteTransSou" class="col-sm-3 col-form-label">Note</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="noteTransSou" style="height: 80px;"
+							<input  type="text" class="form-control" id="noteTransSou" style="height: 80px;"
 								placeholder="Type Note">
 						</div>
 					</div>
@@ -73,13 +73,13 @@
 			</thead>
 			<tbody class="tableBody">
 			<tr id="items-1">
-				<td><select class="custom-select" id="souvenirItem">
-					<option disabled value=" " selected>-Select Souvenir-</option>
+				<td><select required class="custom-select" id="souvenirItem">
+					<option disabled value=" " selected>-Choose-</option>
 						<c:forEach var="souvenir" items="${souvenirs }">
 							<option value="${souvenir.id}">${souvenir.name}</option>
 						</c:forEach>
 					</select></td>
-				<td><input disabled type="number" class="form-control" id="quantity" placeholder="Qty"></td>
+				<td><input disabled type="number" class="form-control" id="quantity" placeholder="Qty" required></td>
 				<td><input disabled type="text" class="form-control" id="note" placeholder="Note"></td>
 				<td><a href="#" id="1" class="editBtnModalTransS"><span class="oi oi-pencil"></span></a>
 					<a href="#" id="1" class="deleteBtnModalTransS"><span class="oi oi-trash"></span></a></td>
