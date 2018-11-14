@@ -12,6 +12,7 @@
 <link href="${pageContext.request.contextPath}/resources/assets/datepicker/dist/datepicker.min.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/resources/assets/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/assets/css/dashboard.css" rel="stylesheet" />
 
 <c:url value="/j_spring_security_logout" var="logoutUrl" /> 
 
@@ -461,7 +462,6 @@ $(document).ready(function(){
 				startDate: $('#eventstartdateEdit').val(),
 				endDate: $('#eventenddateEdit').val(),
 				budget: $('#budgetEdit').val(),
-				status: $('#statusEdit').val()
 		};
 		console.log(event);
 		
@@ -759,8 +759,6 @@ $(document).ready(function(){
 				var role1=null;
 					role1=role2;
 				console.log(role1);
-				console.log('harus sama');
-				console.log(data[1].role.roleName);
 				$.each(data,function(index,access){
 					 if(access.role.roleName == role1){
 						var idMenu=0;
