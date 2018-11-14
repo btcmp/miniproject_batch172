@@ -427,7 +427,7 @@ $(document).ready(function(){
 			}) 
 		 }
 		function getRole(){
-			var relee="Administrator";
+			var relee;
 			$.ajax({
 				url : '${pageContext.request.contextPath}/user/getrole',/* fungsi/getuserlogin *//*user/getrole*/
 				type : 'GET',
