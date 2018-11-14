@@ -128,7 +128,7 @@ input.parsley-error {
 	<%@include file="/WEB-INF/pages/modal/approve-transaksidesign.jsp" %>
 	<%@include file="/WEB-INF/pages/modal/close-design.jsp" %>
 	<%@include file="/WEB-INF/pages/modal/rejected-transaksidesignjsp.jsp" %>
-	<%-- <%@include file="/WEB-INF/pages/modal/view-transaksidesign.jsp" %> --%>
+	<%@include file="/WEB-INF/pages/modal/view-transaksidesign.jsp" %>
 	
 </body>
 <!--   Core JS Files   -->
@@ -1051,7 +1051,6 @@ $(document).ready(function(){
 			  	loadData();
 		
 	});
-<<<<<<< HEAD
 	createMenu();
 	function createMenu(){
 		var relee=null;
