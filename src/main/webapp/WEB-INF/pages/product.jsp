@@ -142,7 +142,6 @@ $(document).ready(function(){
     		});
     	 return xhr.then(function(data){
     		 if($('#nameUpdate').val()==$('#nameUpdateCheck').val()){
-    			 $('#nameUpdateCheck').val(0)
     		 	 return true
     	   	 }else if(data.length==0){
     			 return true 

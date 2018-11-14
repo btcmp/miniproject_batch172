@@ -91,12 +91,13 @@
 		<form>
 			<div class="row" style="width: 100%; margin : auto">
    				<div class="col">
-      				<select class="form-control custom select" id="data1" data-index="1"> 
+      				<%-- <select class="form-control custom select" id="data1" data-index="1"> 
       					<option value=" " selected>Select Unit Code</option>
       					<c:forEach var="masterunit" items="${masterunits}">
       						<option value="${masterunit.code }">${masterunit.code }</option>
       					</c:forEach>
-      				</select>
+      				</select> --%>
+      				<input type="text" class="form-control" id="data1" data-index="1" placeholder="Select Unit Code">
    				</div>
     			<div class="col">
       				<input type="text" class="form-control" id="data2" data-index="2" placeholder="Select Unit Name">
@@ -196,9 +197,10 @@ $(document).ready(function(){
 	$('#btn-search-unit').on('click', function(){
 		for (var i =1; i<=4, i++;){
 			oTable
-			.column($('#data'+i).data('index'))
-			.search($('#data'+i).val() )
-			.draw();
+			.column($('#data'+ i).data('index'))
+			.search($('#data'+ i).val() )
+			.draw()
+			$('#data'+i).val("");
 			}
 		});
 	

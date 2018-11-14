@@ -44,11 +44,14 @@ public class TransaksiSouvenirController {
 	@Autowired
 	MasterEmployeeService masterEmployeeService;
 	
+	
 	@RequestMapping
 	
 	public String index (Model model) {
 		List<MasterSouvenir> souvenirs = masterSouvenirService.gelAllSouvenir();
+		List<MasterEmployee> employees = masterEmployeeService.getAllEmployee();
 		model.addAttribute("souvenirs", souvenirs);
+		model.addAttribute("employees", employees);
 		return "transaksi_souvenir";
 	}
 	

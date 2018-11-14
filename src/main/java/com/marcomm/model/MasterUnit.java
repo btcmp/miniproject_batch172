@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,16 +45,22 @@ public class MasterUnit {
 	//isDelete
 	@Column(name="is_delete", nullable=false, columnDefinition="number(1,0) default 0")
 	private boolean isDelete;
+	
 	//created by
 	@Column(name="created_by", length=50, nullable=false)
 	private String createdBy;
+	
+	
 	//created date
 	@Column(name="created_date", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date createdDate;
+	
 	//updated by
 	@Column(name="updated_by", length=50)
 	private String updatedBy;
+	
+	
 	//update date
 	@Column(name="updated_date")
 	@Temporal(TemporalType.DATE)
@@ -100,17 +108,25 @@ public class MasterUnit {
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 	public String getUpdatedBy() {
 		return updatedBy;
@@ -118,12 +134,7 @@ public class MasterUnit {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
+	
 	
 	
 	

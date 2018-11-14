@@ -9,6 +9,7 @@
 				</button>
 			</div>
 			<form id="closeFormDesign">
+			<input type="hidden" id="closeDesignId">
 				<div
 					class="modal-body border border-bottom-0 border-top-0 border-dark">
 					<div class="bg-light border rounded" style="height: 50%;">
