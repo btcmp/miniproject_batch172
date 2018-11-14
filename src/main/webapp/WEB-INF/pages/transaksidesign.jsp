@@ -481,6 +481,7 @@ $(document).ready(function(){
 			type : 'GET',
 			dataType : 'json',
 			success : function(data){
+				console.log("getall")
 				convertToTable(data);
 			}
 		});
