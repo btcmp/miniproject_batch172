@@ -391,7 +391,7 @@ $(document).ready(function(){
 	//icon delete items
 	$(document).on('click','.deleteBtnModalEdit',function(){
 			var id =$(this).attr('id');
-			if ($('#itemsEdit-'+id).val()==0){
+			if ($('#itemIdEdit-'+id).val()==0){
 				$('#itemsEdit-'+id).remove();
 			}else{
 				$("#itemDeleteEdit"+id).val(true);
